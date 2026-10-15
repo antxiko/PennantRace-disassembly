@@ -52,7 +52,7 @@ C 0xA2FF apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][c
 C 0xA312 marco: un marco de lineas: HL la esquina, DE el tamano
 C 0xA31D marco: un marco de lineas: HL la esquina, DE el tamano
 C 0xA323 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0xA373 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0xA373 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0xA3C7 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0xA3FB caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0xA407 siguiente_columna: D += 8; si da la vuelta, E += 8
@@ -70,12 +70,12 @@ C 0xA4E2 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC
 C 0xA4ED marco: un marco de lineas: HL la esquina, DE el tamano
 C 0xA4F3 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xA516 copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
-C 0xA525 lee la marca de 'acabado' que dejan las rutinas de cada paso
+C 0xA525 lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0xA528 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0xA55B apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0xA566 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 C 0xA571 apunta a las carreras del visitante por entrada (10 casillas, 12-13 el total)
-C 0xA592 apunta a la marca de 'acabado' que dejan las rutinas de cada paso
+C 0xA592 apunta a la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0xA5E4 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xA694 lee los strikes de la cuenta (3 = eliminado)
 C 0xA69E lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
@@ -85,7 +85,7 @@ C 0xA70A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vue
 C 0xA713 apunta a los strikes de la cuenta (3 = eliminado)
 C 0xA729 apunta a los strikes de la cuenta (3 = eliminado)
 C 0xA77E lee los strikes de la cuenta (3 = eliminado)
-C 0xA789 apunta a la marca de 'acabado' que dejan las rutinas de cada paso
+C 0xA789 apunta a la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0xA837 hl_mas_a: HL = HL + A
 C 0xA88A lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0xA894 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
@@ -98,15 +98,24 @@ C 0xAAD7 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la
 C 0xAC23 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0xAC2F lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0xAC5F lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
-C 0xAC92 apunta a la marca de 'acabado' que dejan las rutinas de cada paso
+C 0xAC92 apunta a la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0xACBA apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
 C 0xACCF guarda el desplazamiento de la pantalla (16 bits)
 C 0xACD2 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 C 0xAD06 enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
 C 0xAD1A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0xAD7B lee las marcas
+C 0xAD84 lee la y (vertical)
+C 0xAD87 lee la y, byte alto
+C 0xAD99 lee la x (horizontal)
+C 0xAD9C lee la x, byte alto
 C 0xADD4 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xADFD apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
+C 0xAE09 lee las marcas
+C 0xAE16 mira el bit 6 de las marcas
 C 0xAE31 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
+C 0xAE46 las marcas = 0x00
+C 0xAE4A el numero (bits 0-3) y el estado (bits 4-7) = 0x00
 C 0xAE5A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xAF01 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0xAF81 lee los outs de la media entrada
@@ -131,7 +140,7 @@ C 0xB42F lee el desplazamiento de la pantalla (16 bits)
 C 0xB439 guarda el desplazamiento de la pantalla (16 bits)
 C 0xB440 lee el desplazamiento de la pantalla (16 bits)
 C 0xB44A guarda el desplazamiento de la pantalla (16 bits)
-C 0xB450 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0xB450 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0xB45E apunta a el desplazamiento de la pantalla (16 bits)
 C 0xB46A guarda el desplazamiento de la pantalla (16 bits)
 C 0xB478 enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)

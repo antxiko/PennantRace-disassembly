@@ -163,7 +163,7 @@ RAM.update({
     0xE19B: ("la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)", "p00:46C4, p00:46E2"),
     0xEDA1: ("si no es 0, el partido vuelve al menu", "p00:46A7"),
     0xED87: ("si no es 0, el partido se acaba", "p00:46A1"),
-    0xE1D1: ("la marca de 'acabado' que dejan las rutinas de cada paso", "p00:44D8, p00:4652"),
+    0xE1D1: ("la marca de acabado de los pasos (y la x guardada en p01:72D3)", "p00:44D8, p00:4652, p01:72D3"),
     0xE198: ("los strikes de la cuenta (3 = eliminado)", "p01:6127"),
     0xE199: ("las bolas de la cuenta (4 = base por bolas, FOUR BALL)", "p01:6134, p13:7DF9"),
     0xE19A: ("los outs de la media entrada", "p01:6151"),
@@ -190,4 +190,29 @@ RAM.update({
 
 RAM16 = {}
 
-FICHAS = ()
+# Las fichas de 16 bytes de los que se mueven por el campo: la pelota
+# (0xE211), los 4 corredores (0xE231) y los 9 de campo (0xE271, p01:6ACF).
+# La y es la vertical (p01:7561 la pone como Y del sprite restando el
+# desplazamiento 0xE1A2) y la x la horizontal.
+CAMPOS_JUGADOR = {
+    0x00: "el numero (bits 0-3) y el estado (bits 4-7)",
+    0x01: "la y, fraccion",
+    0x02: "la y (vertical)",
+    0x03: "la y, byte alto",
+    0x04: "la velocidad y, byte bajo",
+    0x05: "la velocidad y, byte alto",
+    0x06: "la x, fraccion",
+    0x07: "la x (horizontal)",
+    0x08: "la x, byte alto",
+    0x09: "la velocidad x, byte bajo",
+    0x0A: "la velocidad x, byte alto",
+    0x0B: "las marcas",
+    0x0C: "el dibujo de su sprite",
+    0x0D: "la base de destino (nibble alto; 2 abajo: llegado)",
+    0x0E: "la y de destino",
+    0x0F: "la x de destino",
+}
+CARGAS_JUGADOR = (0xE211, 0xE231, 0xE271, 0xE281)
+IX_JUGADOR_POR_DEFECTO = {1: ((0x6AEA, 0x75D5), (0x78F2, 0x7B79))}
+
+FICHAS = ((CARGAS_JUGADOR, IX_JUGADOR_POR_DEFECTO, CAMPOS_JUGADOR),)

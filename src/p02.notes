@@ -39,10 +39,17 @@ F 0x9F79 16
 # --- fin de los bloques de bloques.py ---
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+C 0x808D lee la x (horizontal)
+C 0x8090 lee la x, byte alto
+C 0x809A lee la y (vertical)
+C 0x809D lee la y, byte alto
 C 0x817E hl_mas_a: HL = HL + A
 C 0x824A apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
+C 0x8258 lee las marcas
+C 0x825F mira el bit 6 de la base de destino (nibble alto; 2 abajo: llegado)
 C 0x827B lee los outs de la media entrada
 C 0x82BC apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
+C 0x82C5 lee las marcas
 C 0x83CF lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x83D7 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x83DF lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
@@ -54,15 +61,15 @@ C 0x8497 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la
 C 0x849E lee las carreras del visitante (BCD; 0x99 acaba el partido)
 C 0x84A2 lee las carreras del local (BCD; 0x99 acaba el partido)
 C 0x84C0 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
-C 0x84E5 lee la marca de 'acabado' que dejan las rutinas de cada paso
-C 0x8511 guarda la marca de 'acabado' que dejan las rutinas de cada paso
-C 0x8537 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x84E5 lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
+C 0x8511 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+C 0x8537 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x8559 hl_mas_a: HL = HL + A
 C 0x8564 lee el contador de cuadros del juego (sube uno por cuadro)
 C 0x8589 lee el contador de cuadros del juego (sube uno por cuadro)
 C 0x8666 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x86AC sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0x86DE lee la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x86DE lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x8749 lee la formacion del campo (0-6)
 C 0x8765 hl_mas_a: HL = HL + A
 C 0x87AC sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -92,13 +99,18 @@ C 0x8A76 lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, 
 C 0x8AA4 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x8AA9 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x8AB2 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0x8AC4 lee la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x8AC4 lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x8AD4 lee el contador de cuadros del juego (sube uno por cuadro)
 C 0x8AFE lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x8B06 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x8B23 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
+C 0x8B2C lee el numero (bits 0-3) y el estado (bits 4-7)
+C 0x8B37 lee el numero (bits 0-3) y el estado (bits 4-7)
 C 0x8B5A apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0x8B8D apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
+C 0x8B96 lee las marcas
+C 0x8B9C mira el bit 6 de la base de destino (nibble alto; 2 abajo: llegado)
+C 0x8BAB pone a uno el bit 6 de la base de destino (nibble alto; 2 abajo: llegado)
 C 0x8BBB despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x8C24 hl_mas_a: HL = HL + A
 C 0x8C7F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -133,6 +145,8 @@ C 0x920C guarda cuantos sprites rotan (9 o 10)
 C 0x9228 lee el contador de cuadros del juego (sube uno por cuadro)
 C 0x9241 lee los outs de la media entrada
 C 0x92A1 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
+C 0x92A5 lee el numero (bits 0-3) y el estado (bits 4-7)
+C 0x92AB lee las marcas
 C 0x92C5 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0x92D0 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 C 0x92DB apunta a las carreras del visitante por entrada (10 casillas, 12-13 el total)
@@ -157,7 +171,7 @@ C 0x9432 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 C 0x9447 guarda si no es 0, el partido se acaba
 C 0x9461 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9468 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0x9471 lee la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x9471 lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x947E apunta a la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x9491 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x94A1 guarda el estado del juego (indice del despachador principal)
@@ -182,13 +196,14 @@ C 0x95E7 lee el contador de cuadros del juego (sube uno por cuadro)
 C 0x9600 lee el contador de cuadros del juego (sube uno por cuadro)
 C 0x960D lee el contador de cuadros del juego (sube uno por cuadro)
 C 0x9625 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
-C 0x9645 lee la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x9645 lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x964C sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x96BC lee el contador de cuadros del juego (sube uno por cuadro)
 C 0x96E3 lee el contador de cuadros del juego (sube uno por cuadro)
 C 0x9708 lee el contador de cuadros del juego (sube uno por cuadro)
 C 0x9744 apunta a el desplazamiento de la pantalla (16 bits)
 C 0x976B apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
+C 0x9771 lee las marcas
 C 0x9793 de_mas_a: DE = DE + A
 C 0x97E2 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x98B3 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
@@ -200,7 +215,7 @@ C 0x9A73 lee el desplazamiento de la pantalla (16 bits)
 C 0x9AC5 lee el desplazamiento de la pantalla (16 bits)
 C 0x9AD4 de_mas_a: DE = DE + A
 C 0x9B1F guarda los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color]) y el byte siguiente (16 bits)
-C 0x9D56 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x9D56 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x9DBC sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9DCC hl_mas_a: HL = HL + A
 C 0x9DE0 de_mas_a: DE = DE + A
@@ -218,9 +233,9 @@ C 0x9ECC texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos
 C 0x9ED7 marco: un marco de lineas: HL la esquina, DE el tamano
 C 0x9EE2 marco: un marco de lineas: HL la esquina, DE el tamano
 C 0x9F19 guarda la cuenta atras del estado
-C 0x9F1C guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x9F1C guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x9F35 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
-C 0x9FA6 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x9FA6 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x9FC2 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9FEA sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 # --- fin de las anotaciones de anota.py ---

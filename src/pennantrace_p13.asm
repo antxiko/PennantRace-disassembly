@@ -27,7 +27,7 @@ L_6000:
 	ret z			;6015
 	dec a			;6016
 	jr nz,$+111		;6017
-	ld (0e1d1h),a		;6019   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
+	ld (0e1d1h),a		;6019   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	ld a,(0dd8fh)		;601c
 	or a			;601f
 	jr z,L_6041		;6020
@@ -634,7 +634,7 @@ L_64B4:
 	jr nz,L_64D9		;64cb
 	res 5,(hl)		;64cd
 	ld a,001h		;64cf
-	ld (0e1d1h),a		;64d1   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
+	ld (0e1d1h),a		;64d1   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	xor a			;64d4
 	ld (0d6dch),a		;64d5
 	ret			;64d8
@@ -648,7 +648,7 @@ L_64DF:
 	dec a			;64e5
 	jp nz,L_64EF		;64e6
 	ld a,001h		;64e9
-	ld (0e1d1h),a		;64eb   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
+	ld (0e1d1h),a		;64eb   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	ret			;64ee
 L_64EF:
 	xor a			;64ef
@@ -858,7 +858,7 @@ L_6677:
 	ld hl,065b8h		;667a
 	call 04ea6h		;667d   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,001h		;6680
-	ld (0e1d1h),a		;6682   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
+	ld (0e1d1h),a		;6682   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	ret			;6685
 L_6686:
 	ld a,(0d74fh)		;6686

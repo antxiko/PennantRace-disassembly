@@ -2259,7 +2259,7 @@ L_99A4:
 	dec (hl)			;99a7
 	ret nz			;99a8
 	ld a,001h		;99a9
-	ld (0e1d1h),a		;99ab   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
+	ld (0e1d1h),a		;99ab   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	call 0406fh		;99ae
 	call 0404bh		;99b1
 	ret			;99b4
@@ -2742,7 +2742,7 @@ L_9CF6:
 	ld hl,07b63h		;9d1b
 	call 04ea6h		;9d1e   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	xor a			;9d21
-	ld (0e1d1h),a		;9d22   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
+	ld (0e1d1h),a		;9d22   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	ld (0de0dh),a		;9d25
 	ld (0de0eh),a		;9d28
 	ld (0e304h),a		;9d2b

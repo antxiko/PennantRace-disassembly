@@ -1000,14 +1000,14 @@ C 0x460B guarda la cuenta atras del estado
 C 0x4613 apunta a la cuenta atras del estado
 C 0x4628 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x463C sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0x4652 lee la marca de 'acabado' que dejan las rutinas de cada paso
-C 0x4662 lee la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x4652 lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
+C 0x4662 lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x4679 apunta a los bateadores del visitante (BCD; uno mas por turno, p01:6316)
 C 0x4695 apunta a el estado del juego (indice del despachador principal)
 C 0x46B5 lee las carreras del local (BCD; 0x99 acaba el partido)
 C 0x46F0 guarda el estado del juego (indice del despachador principal)
 C 0x46F5 guarda la cuenta atras del estado
-C 0x4706 lee la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x4706 lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x4712 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x4718 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x471D guarda la cuenta atras del estado
@@ -1062,7 +1062,7 @@ C 0x49AB borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM
 C 0x49B1 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x49B7 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x49BC guarda el paso dentro del estado
-C 0x49C3 lee la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x49C3 lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x49CB apunta a el bufer de un dibujo a 4 bits antes de la VRAM
 C 0x4A1D guarda el estado del juego (indice del despachador principal)
 C 0x4A34 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -1308,6 +1308,7 @@ C 0x5A3E bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3);
 C 0x5A4F hl_mas_a: HL = HL + A
 C 0x5A70 hl_mas_a: HL = HL + A
 C 0x5B0E apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
+C 0x5B12 OR con las marcas
 C 0x5B54 hl_mas_a: HL = HL + A
 C 0x5B5F bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x5B6F hl_mas_a: HL = HL + A

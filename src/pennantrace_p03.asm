@@ -494,7 +494,7 @@ L_A2ED:
 	ld hl,0d48ah		;a36c
 	call L_A220		;a36f
 	xor a			;a372
-	ld (0e1d1h),a		;a373   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
+	ld (0e1d1h),a		;a373   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	ld (0de0dh),a		;a376
 	ld (0de0eh),a		;a379
 	ld (0e304h),a		;a37c
@@ -745,7 +745,7 @@ L_A519:
 	call 09566h		;a51c
 	call L_A876		;a51f
 	call 08636h		;a522
-	ld a,(0e1d1h)		;a525   ; lee la marca de 'acabado' que dejan las rutinas de cada paso
+	ld a,(0e1d1h)		;a525   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	call 04220h		;a528   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
@@ -801,7 +801,7 @@ L_A57E:
 	ld a,001h		;a58d
 	ld (0e337h),a		;a58f
 L_A592:
-	ld hl,0e1d1h		;a592   ; apunta a la marca de 'acabado' que dejan las rutinas de cada paso
+	ld hl,0e1d1h		;a592   ; apunta a la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	inc (hl)			;a595
 	ret			;a596
 L_A597:
@@ -1070,7 +1070,7 @@ L_A76C:
 	jp nc,051a1h		;a783
 	jp 05185h		;a786
 L_A789:
-	ld hl,0e1d1h		;a789   ; apunta a la marca de 'acabado' que dejan las rutinas de cada paso
+	ld hl,0e1d1h		;a789   ; apunta a la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	ld (hl),006h		;a78c
 	inc hl			;a78e
 	ld (hl),0c0h		;a78f
@@ -1812,7 +1812,7 @@ L_AC7C:
 	call 06194h		;ac8e
 L_AC91:
 	xor a			;ac91
-	ld hl,0e1d1h		;ac92   ; apunta a la marca de 'acabado' que dejan las rutinas de cada paso
+	ld hl,0e1d1h		;ac92   ; apunta a la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	ld de,0e1d2h		;ac95
 	ld bc,0005eh		;ac98
 	ld (hl),a			;ac9b
@@ -1939,12 +1939,12 @@ L_AD60:
 	ld b,009h		;ad78
 L_AD7A:
 	push bc			;ad7a
-	ld a,(ix+00bh)		;ad7b
+	ld a,(ix+00bh)		;ad7b   ; lee las marcas
 	or a			;ad7e
 	jr nz,L_ADAC		;ad7f
 	ld hl,(0e213h)		;ad81
-	ld e,(ix+002h)		;ad84
-	ld d,(ix+003h)		;ad87
+	ld e,(ix+002h)		;ad84   ; lee la y (vertical)
+	ld d,(ix+003h)		;ad87   ; lee la y, byte alto
 	call L_AEBD		;ad8a
 	ld a,h			;ad8d
 	or a			;ad8e
@@ -1953,8 +1953,8 @@ L_AD7A:
 	cp 00ah		;ad92
 	jr nc,L_ADAC		;ad94
 	ld hl,(0e218h)		;ad96
-	ld e,(ix+007h)		;ad99
-	ld d,(ix+008h)		;ad9c
+	ld e,(ix+007h)		;ad99   ; lee la x (horizontal)
+	ld d,(ix+008h)		;ad9c   ; lee la x, byte alto
 	call L_AEBD		;ad9f
 	ld b,a			;ada2
 	ld a,h			;ada3
@@ -2009,14 +2009,14 @@ L_ADC3:
 	ld bc,00405h		;ae04
 	ld h,001h		;ae07
 L_AE09:
-	ld a,(ix+00bh)		;ae09
+	ld a,(ix+00bh)		;ae09   ; lee las marcas
 	and 00fh		;ae0c
 	jr z,L_AE23		;ae0e
 	dec a			;ae10
 	jr z,L_AE37		;ae11
 	cp c			;ae13
 	jr nz,L_AE1E		;ae14
-	bit 6,(ix+00bh)		;ae16
+	bit 6,(ix+00bh)		;ae16   ; mira el bit 6 de las marcas
 	jr nz,L_AE21		;ae1a
 	jr L_AE23		;ae1c
 L_AE1E:
@@ -2047,8 +2047,8 @@ L_AE37:
 	jr nz,L_AE46		;ae41
 	call 062f7h		;ae43
 L_AE46:
-	ld (ix+00bh),000h		;ae46
-	ld (ix+000h),000h		;ae4a
+	ld (ix+00bh),000h		;ae46   ; las marcas = 0x00
+	ld (ix+000h),000h		;ae4a   ; el numero (bits 0-3) y el estado (bits 4-7) = 0x00
 	pop ix		;ae4e
 	ld a,001h		;ae50
 	ld (0ed02h),a		;ae52
@@ -2956,7 +2956,7 @@ L_B449:
 	jr L_B443		;b44d
 L_B44F:
 	xor a			;b44f
-	ld (0e1d1h),a		;b450   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
+	ld (0e1d1h),a		;b450   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	ld hl,0e331h		;b453
 	ld (hl),080h		;b456
 	ld a,(0e1a6h)		;b458

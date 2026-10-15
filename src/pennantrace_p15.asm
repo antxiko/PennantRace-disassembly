@@ -743,7 +743,7 @@ L_A5CB:
 	ld hl,0a76ah		;a5ce
 	call 04ea6h		;a5d1   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,001h		;a5d4
-	ld (0e1d1h),a		;a5d6   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
+	ld (0e1d1h),a		;a5d6   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	ret			;a5d9
 L_A5DA:
 	ld a,(0d74fh)		;a5da
@@ -3869,7 +3869,7 @@ L_BB97:
 	call 0541bh		;bba9
 	call 052e1h		;bbac
 	xor a			;bbaf
-	ld (0e1d1h),a		;bbb0   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
+	ld (0e1d1h),a		;bbb0   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	ld (0e1a2h),a		;bbb3   ; guarda el desplazamiento de la pantalla (16 bits)
 	ld a,020h		;bbb6
 	ld (0de04h),a		;bbb8   ; guarda la cuenta atras del estado
@@ -3956,7 +3956,7 @@ L_BC64:
 	ret nz			;bc68
 	call 05dbbh		;bc69
 	ld a,001h		;bc6c
-	ld (0e1d1h),a		;bc6e   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
+	ld (0e1d1h),a		;bc6e   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	ret			;bc71
 L_BC72:
 	ld hl,(0ecf0h)		;bc72

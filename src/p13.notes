@@ -140,7 +140,7 @@ F 0x7E61 16
 # --- fin de los bloques de bloques.py ---
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
-C 0x6019 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x6019 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x604A despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x607E texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x608A guarda el estado del juego (indice del despachador principal)
@@ -183,9 +183,9 @@ C 0x646A numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0x648A despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x649C lee los botones recien pulsados del mando 1 / cursores
 C 0x64AD texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0x64D1 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x64D1 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x64DF borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
-C 0x64EB guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x64EB guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x6538 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x6548 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6552 linea: orden LINE (0x70) del VDP desde HL
@@ -200,7 +200,7 @@ C 0x663C lee los botones recien pulsados del mando 1 / cursores
 C 0x6653 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x6665 lee los botones recien pulsados del mando 1 / cursores
 C 0x667D texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0x6682 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x6682 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x66BC hl_mas_a: HL = HL + A
 C 0x6734 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x67C6 hl_mas_a: HL = HL + A

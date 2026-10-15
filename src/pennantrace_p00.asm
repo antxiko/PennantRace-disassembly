@@ -856,7 +856,7 @@ L_4645:
 L_464D:
 	djnz L_465D		;464d   ; paso siguiente: p14:9D49 hasta que marque 0xE1D1
 	call 09d49h		;464f
-	ld a,(0e1d1h)		;4652   ; lee la marca de 'acabado' que dejan las rutinas de cada paso
+	ld a,(0e1d1h)		;4652   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	or a			;4655
 	ret z			;4656
 	call 0a2edh		;4657   ; y p15:A2ED
@@ -864,7 +864,7 @@ L_464D:
 L_465D:
 	djnz L_468A		;465d   ; p14:9F8A hasta que marque 0xE1D1
 	call 09f8ah		;465f
-	ld a,(0e1d1h)		;4662   ; lee la marca de 'acabado' que dejan las rutinas de cada paso
+	ld a,(0e1d1h)		;4662   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	or a			;4665
 	ret z			;4666
 	call L_4448		;4667   ; el reloj de juego a cero
@@ -955,7 +955,7 @@ L_46FB:
 	cp 003h		;46fe
 	jp z,0b694h		;4700
 	call L_596F		;4703   ; p00:596F hasta que marque 0xE1D1
-	ld a,(0e1d1h)		;4706   ; lee la marca de 'acabado' que dejan las rutinas de cada paso
+	ld a,(0e1d1h)		;4706   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	or a			;4709
 	ret z			;470a
 	ld a,(0de02h)		;470b   ; con el bit 4 de 0xDE02, p14:9697
@@ -1283,7 +1283,7 @@ L_49A6:
 	ret			;49bf
 L_49C0:
 	call 066b3h		;49c0   ; p01:66B3 hasta que el bit 7 de 0xE1D1 lo marque
-	ld a,(0e1d1h)		;49c3   ; lee la marca de 'acabado' que dejan las rutinas de cada paso
+	ld a,(0e1d1h)		;49c3   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	rla			;49c6
 	ret nc			;49c7
 	ld hl,06003h		;49c8   ; copia los 45 bytes de p07:6003 a 0xE400 (con 7-8-9, p00:535A)
@@ -3951,7 +3951,7 @@ L_5B07:
 L_5B0D:
 	xor a			;5b0d   ; A = el OR de IX+11 de las 4 fichas de 0xE231 (0 si ninguna)
 	ld ix,0e231h		;5b0e   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
-	or (ix+00bh)		;5b12
+	or (ix+00bh)		;5b12   ; OR con las marcas
 	or (ix+01bh)		;5b15
 	or (ix+02bh)		;5b18
 	or (ix+03bh)		;5b1b

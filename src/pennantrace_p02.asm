@@ -101,13 +101,13 @@ L_8081:
 	add ix,de		;8088
 L_808A:
 	ld hl,(0e218h)		;808a
-	ld c,(ix+007h)		;808d
-	ld b,(ix+008h)		;8090
+	ld c,(ix+007h)		;808d   ; lee la x (horizontal)
+	ld b,(ix+008h)		;8090   ; lee la x, byte alto
 	call L_80B1		;8093
 	ex de,hl			;8096
 	ld hl,(0e213h)		;8097
-	ld c,(ix+002h)		;809a
-	ld b,(ix+003h)		;809d
+	ld c,(ix+002h)		;809a   ; lee la y (vertical)
+	ld b,(ix+003h)		;809d   ; lee la y, byte alto
 	call L_80B1		;80a0
 	ld b,h			;80a3
 	ld c,l			;80a4
@@ -380,10 +380,10 @@ L_824A:
 	ld bc,00400h		;8252
 	ld de,00010h		;8255
 L_8258:
-	ld a,(ix+00bh)		;8258
+	ld a,(ix+00bh)		;8258   ; lee las marcas
 	and 00fh		;825b
 	jr z,L_8271		;825d
-	bit 6,(ix+00dh)		;825f
+	bit 6,(ix+00dh)		;825f   ; mira el bit 6 de la base de destino (nibble alto; 2 abajo: llegado)
 	jr nz,L_8271		;8263
 	ld a,(iy+00bh)		;8265
 	and 00fh		;8268
@@ -438,7 +438,7 @@ L_82A7:
 	ld b,004h		;82c0
 	ld de,00010h		;82c2
 L_82C5:
-	ld a,(ix+00bh)		;82c5
+	ld a,(ix+00bh)		;82c5   ; lee las marcas
 	and 00fh		;82c8
 	jr z,L_82D0		;82ca
 	ld c,a			;82cc
@@ -787,7 +787,7 @@ L_84D5:
 L_84E2:
 	call L_8515		;84e2
 L_84E5:
-	ld a,(0e1d1h)		;84e5   ; lee la marca de 'acabado' que dejan las rutinas de cada paso
+	ld a,(0e1d1h)		;84e5   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	or a			;84e8
 	ret z			;84e9
 	xor a			;84ea
@@ -810,7 +810,7 @@ L_84EF:
 	cp 010h		;850c
 	ret nz			;850e
 	ld a,001h		;850f
-	ld (0e1d1h),a		;8511   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
+	ld (0e1d1h),a		;8511   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	ret			;8514
 L_8515:
 	ld hl,0e340h		;8515
@@ -829,7 +829,7 @@ L_8515:
 	cp 010h		;8532
 	ret nz			;8534
 	ld a,001h		;8535
-	ld (0e1d1h),a		;8537   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
+	ld (0e1d1h),a		;8537   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	ret			;853a
 L_853B:
 	xor a			;853b
@@ -1075,7 +1075,7 @@ L_86D8:
 	ld a,(0e338h)		;86d8
 	cp 003h		;86db
 	ret nc			;86dd
-	ld a,(0e1d1h)		;86de   ; lee la marca de 'acabado' que dejan las rutinas de cada paso
+	ld a,(0e1d1h)		;86de   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	cp 003h		;86e1
 	ret nz			;86e3
 	ld a,(0e1fah)		;86e4
@@ -1624,7 +1624,7 @@ L_8AB5:
 	jr nc,L_8A89		;8ac1
 	ret			;8ac3
 L_8AC4:
-	ld a,(0e1d1h)		;8ac4   ; lee la marca de 'acabado' que dejan las rutinas de cada paso
+	ld a,(0e1d1h)		;8ac4   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	or a			;8ac7
 	ret z			;8ac8
 	ld a,(0ecdbh)		;8ac9
@@ -1683,13 +1683,13 @@ L_8B20:
 	ld a,004h		;8b27
 	ld (0e301h),a		;8b29
 L_8B2C:
-	ld a,(ix+000h)		;8b2c
+	ld a,(ix+000h)		;8b2c   ; lee el numero (bits 0-3) y el estado (bits 4-7)
 	ld c,a			;8b2f
 	and 0f0h		;8b30
 	jr z,L_8B37		;8b32
 	call L_8BB8		;8b34
 L_8B37:
-	ld a,(ix+000h)		;8b37
+	ld a,(ix+000h)		;8b37   ; lee el numero (bits 0-3) y el estado (bits 4-7)
 	cp 0f0h		;8b3a
 	call z,L_8FB2		;8b3c
 	ld de,00010h		;8b3f
@@ -1742,10 +1742,10 @@ L_8B88:
 	ld hl,0eca3h		;8b91
 	ld b,004h		;8b94
 L_8B96:
-	ld a,(ix+00bh)		;8b96
+	ld a,(ix+00bh)		;8b96   ; lee las marcas
 	or a			;8b99
 	jr z,L_8BAF		;8b9a
-	bit 6,(ix+00dh)		;8b9c
+	bit 6,(ix+00dh)		;8b9c   ; mira el bit 6 de la base de destino (nibble alto; 2 abajo: llegado)
 	jr nz,L_8BAF		;8ba0
 	and 04fh		;8ba2
 	ld c,a			;8ba4
@@ -1753,7 +1753,7 @@ L_8B96:
 	and 04fh		;8ba6
 	cp c			;8ba8
 	jr nz,L_8BAF		;8ba9
-	set 6,(ix+00dh)		;8bab
+	set 6,(ix+00dh)		;8bab   ; pone a uno el bit 6 de la base de destino (nibble alto; 2 abajo: llegado)
 L_8BAF:
 	ld de,00010h		;8baf
 	add ix,de		;8bb2
@@ -2727,10 +2727,10 @@ L_9293:
 	ld b,004h		;929f
 	ld ix,0e231h		;92a1   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 L_92A5:
-	ld a,(ix+000h)		;92a5
+	ld a,(ix+000h)		;92a5   ; lee el numero (bits 0-3) y el estado (bits 4-7)
 	or a			;92a8
 	jr z,L_92B5		;92a9
-	ld a,(ix+00bh)		;92ab
+	ld a,(ix+00bh)		;92ab   ; lee las marcas
 	and 007h		;92ae
 	cp 005h		;92b0
 	call z,L_8F96		;92b2
@@ -2977,7 +2977,7 @@ L_946B:
 	jp 0668fh		;946b
 L_946E:
 	call 066b3h		;946e
-	ld a,(0e1d1h)		;9471   ; lee la marca de 'acabado' que dejan las rutinas de cada paso
+	ld a,(0e1d1h)		;9471   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	rra			;9474
 	ret nc			;9475
 	ld c,001h		;9476
@@ -3255,7 +3255,7 @@ L_9635:
 	ld a,b			;9641
 	and 00fh		;9642
 	ret z			;9644
-	ld a,(0e1d1h)		;9645   ; lee la marca de 'acabado' que dejan las rutinas de cada paso
+	ld a,(0e1d1h)		;9645   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	or a			;9648
 	ret z			;9649
 	ld a,025h		;964a
@@ -3446,7 +3446,7 @@ L_975D:
 	ld ix,0e231h		;976b   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld b,004h		;976f
 L_9771:
-	ld a,(ix+00bh)		;9771
+	ld a,(ix+00bh)		;9771   ; lee las marcas
 	bit 6,a		;9774
 	jr z,L_977D		;9776
 	call L_978A		;9778
@@ -4323,7 +4323,7 @@ L_9D49:
 	dec (hl)			;9d52
 	ret nz			;9d53
 	ld a,001h		;9d54
-	ld (0e1d1h),a		;9d56   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
+	ld (0e1d1h),a		;9d56   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	ret			;9d59
 L_9D5A:
 	call 05c73h		;9d5a
@@ -4566,7 +4566,7 @@ L_9EA9:
 	ld (0e308h),a		;9f15
 	xor a			;9f18
 	ld (0de04h),a		;9f19   ; guarda la cuenta atras del estado
-	ld (0e1d1h),a		;9f1c   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
+	ld (0e1d1h),a		;9f1c   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	ret			;9f1f
 L_9F20:
 	ld c,004h		;9f20
@@ -4656,7 +4656,7 @@ L_9F8A:
 	call 0aa74h		;9f9e
 	call 0ab77h		;9fa1
 	ld a,001h		;9fa4
-	ld (0e1d1h),a		;9fa6   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
+	ld (0e1d1h),a		;9fa6   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	ret			;9fa9
 L_9FAA:
 	call L_9FC5		;9faa

@@ -104,7 +104,7 @@ C 0xA58F lee los botones recien pulsados del mando 1 / cursores
 C 0xA5A6 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0xA5B8 lee los botones recien pulsados del mando 1 / cursores
 C 0xA5D1 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0xA5D6 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0xA5D6 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0xA600 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xA657 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0xA663 lee los botones recien pulsados del mando 1 / cursores
@@ -196,7 +196,7 @@ C 0xBB8A despacha: salta a la palabra A de la tabla que va pegada detras del `ca
 C 0xBB97 borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
 C 0xBB9A esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 C 0xBBA6 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
-C 0xBBB0 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0xBBB0 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0xBBB3 guarda el desplazamiento de la pantalla (16 bits)
 C 0xBBB8 guarda la cuenta atras del estado
 C 0xBBBD apunta a la cuenta atras del estado
@@ -212,7 +212,7 @@ C 0xBC4E copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x,
 C 0xBC57 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 C 0xBC5F guarda la cuenta atras del estado
 C 0xBC64 apunta a la cuenta atras del estado
-C 0xBC6E guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0xBC6E guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0xBC9E lee el contador de cuadros del juego (sube uno por cuadro)
 C 0xBCB5 hl_mas_a: HL = HL + A
 C 0xBCBF hl_mas_a: HL = HL + A
