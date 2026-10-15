@@ -1135,6 +1135,7 @@ C 0xA500 lista_de_jugadores: la lista de jugadores desde 0xDAAE
 C 0xA519 copia_a_vram: copia BC bytes de HL a la VRAM DE
 C 0xA521 byte_a_vram: escribe A en la VRAM HL
 C 0xA535 apunta a los nombres de los equipos (11 letras cada uno)
+C 0xA542 guarda cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 C 0xA54A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xA54D apunta a los 6 equipos elegidos (0xFF libre)
 C 0xA55E lee la opcion del menu de PENNANT
@@ -1308,7 +1309,6 @@ C 0xB1CC caracter_lmmm: un caracter de la fuente con LMMM (sin el color 0)
 C 0xB1D5 caracter_lmmm: un caracter de la fuente con LMMM (sin el color 0)
 C 0xB238 copia_logica: orden LMMM (0x90 + operacion) del VDP: copia el rectangulo HL a DE, BC de tamano; las paginas en los bits 4-7 de A' y la operacion logica en los 0-3
 C 0xB263 guarda el paso de la defensa del ordenador
-C 0xB287 apunta a la y, fraccion del jardinero derecho (ficha 0xE271, defensor 9)
 C 0xB2AD guarda el dibujo de su sprite del receptor (ficha 0xE2E1, defensor 2)
 C 0xB2D6 hl_mas_a: HL = HL + A
 C 0xB2F4 pelota_tras_robo: tras un robo, la pelota al lanzador o al receptor
@@ -1320,7 +1320,7 @@ C 0xB341 guarda la x (horizontal) del parador en corto (ficha 0xE2A1, defensor 6
 C 0xB34C velocidad_hacia: con los bancos 7-8-9, la velocidad de HL (x, y) a DE (p00:5E9F); vuelve a 13-14-15
 C 0xB34F guarda la velocidad y, byte bajo del parador en corto (ficha 0xE2A1, defensor 6) y el byte siguiente (16 bits)
 C 0xB352 guarda la velocidad x, byte bajo del parador en corto (ficha 0xE2A1, defensor 6) y el byte siguiente (16 bits)
-C 0xB358 guarda el numero (bits 0-3) y el estado (bits 4-7) del parador en corto (ficha 0xE2A1, defensor 6)
+C 0xB358 guarda la ficha del parador en corto (defensor 6) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 C 0xB35D guarda la base de destino (nibble alto; 2 abajo: llegado) del parador en corto (ficha 0xE2A1, defensor 6)
 C 0xB363 guarda la y de destino del parador en corto (ficha 0xE2A1, defensor 6) y el byte siguiente (16 bits)
 C 0xB36A guarda la y (vertical) del parador en corto (ficha 0xE2A1, defensor 6) y el byte siguiente (16 bits)
@@ -1328,7 +1328,7 @@ C 0xB370 guarda la x (horizontal) del parador en corto (ficha 0xE2A1, defensor 6
 C 0xB37B velocidad_hacia: con los bancos 7-8-9, la velocidad de HL (x, y) a DE (p00:5E9F); vuelve a 13-14-15
 C 0xB37E guarda la velocidad y, byte bajo del parador en corto (ficha 0xE2A1, defensor 6) y el byte siguiente (16 bits)
 C 0xB381 guarda la velocidad x, byte bajo del parador en corto (ficha 0xE2A1, defensor 6) y el byte siguiente (16 bits)
-C 0xB387 guarda el numero (bits 0-3) y el estado (bits 4-7) del parador en corto (ficha 0xE2A1, defensor 6)
+C 0xB387 guarda la ficha del parador en corto (defensor 6) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 C 0xB38C guarda la base de destino (nibble alto; 2 abajo: llegado) del parador en corto (ficha 0xE2A1, defensor 6)
 C 0xB392 guarda la y de destino del parador en corto (ficha 0xE2A1, defensor 6) y el byte siguiente (16 bits)
 C 0xB39F guarda la y (vertical) del segunda base (ficha 0xE2C1, defensor 4) y el byte siguiente (16 bits)
@@ -1336,61 +1336,61 @@ C 0xB3A5 guarda la x (horizontal) del segunda base (ficha 0xE2C1, defensor 4) y 
 C 0xB3B0 velocidad_hacia: con los bancos 7-8-9, la velocidad de HL (x, y) a DE (p00:5E9F); vuelve a 13-14-15
 C 0xB3B3 guarda la velocidad y, byte bajo del segunda base (ficha 0xE2C1, defensor 4) y el byte siguiente (16 bits)
 C 0xB3B6 guarda la velocidad x, byte bajo del segunda base (ficha 0xE2C1, defensor 4) y el byte siguiente (16 bits)
-C 0xB3BC guarda el numero (bits 0-3) y el estado (bits 4-7) del segunda base (ficha 0xE2C1, defensor 4)
+C 0xB3BC guarda la ficha del segunda base (defensor 4) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 C 0xB3C1 guarda la base de destino (nibble alto; 2 abajo: llegado) del segunda base (ficha 0xE2C1, defensor 4)
 C 0xB3C7 guarda la y de destino del segunda base (ficha 0xE2C1, defensor 4) y el byte siguiente (16 bits)
 C 0xB3CE guarda la y (vertical) del receptor (ficha 0xE2E1, defensor 2) y el byte siguiente (16 bits)
 C 0xB3D4 guarda la x (horizontal) del receptor (ficha 0xE2E1, defensor 2) y el byte siguiente (16 bits)
-C 0xB3DC guarda el numero (bits 0-3) y el estado (bits 4-7) del receptor (ficha 0xE2E1, defensor 2)
+C 0xB3DC guarda la ficha del receptor (defensor 2) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 C 0xB3E1 guarda la base de destino (nibble alto; 2 abajo: llegado) del receptor (ficha 0xE2E1, defensor 2)
 C 0xB3E6 guarda el dibujo de su sprite del receptor (ficha 0xE2E1, defensor 2)
 C 0xB3F2 velocidad_hacia: con los bancos 7-8-9, la velocidad de HL (x, y) a DE (p00:5E9F); vuelve a 13-14-15
 C 0xB3F5 guarda la velocidad y, byte bajo del receptor (ficha 0xE2E1, defensor 2) y el byte siguiente (16 bits)
 C 0xB3F8 guarda la velocidad x, byte bajo del receptor (ficha 0xE2E1, defensor 2) y el byte siguiente (16 bits)
-C 0xB3FE guarda el numero (bits 0-3) y el estado (bits 4-7) del receptor (ficha 0xE2E1, defensor 2)
+C 0xB3FE guarda la ficha del receptor (defensor 2) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 C 0xB403 guarda la base de destino (nibble alto; 2 abajo: llegado) del receptor (ficha 0xE2E1, defensor 2)
 C 0xB408 guarda las marcas del receptor (ficha 0xE2E1, defensor 2)
 C 0xB40E guarda la y de destino del receptor (ficha 0xE2E1, defensor 2) y el byte siguiente (16 bits)
 C 0xB41F velocidad_hacia: con los bancos 7-8-9, la velocidad de HL (x, y) a DE (p00:5E9F); vuelve a 13-14-15
 C 0xB422 guarda la velocidad y, byte bajo del lanzador (ficha 0xE2F1, defensor 1) y el byte siguiente (16 bits)
 C 0xB425 guarda la velocidad x, byte bajo del lanzador (ficha 0xE2F1, defensor 1) y el byte siguiente (16 bits)
-C 0xB42B guarda el numero (bits 0-3) y el estado (bits 4-7) del lanzador (ficha 0xE2F1, defensor 1)
+C 0xB42B guarda la ficha del lanzador (defensor 1) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 C 0xB430 guarda la base de destino (nibble alto; 2 abajo: llegado) del lanzador (ficha 0xE2F1, defensor 1)
 C 0xB436 guarda la y de destino del lanzador (ficha 0xE2F1, defensor 1) y el byte siguiente (16 bits)
 C 0xB442 velocidad_hacia: con los bancos 7-8-9, la velocidad de HL (x, y) a DE (p00:5E9F); vuelve a 13-14-15
 C 0xB445 guarda la velocidad y, byte bajo del lanzador (ficha 0xE2F1, defensor 1) y el byte siguiente (16 bits)
 C 0xB448 guarda la velocidad x, byte bajo del lanzador (ficha 0xE2F1, defensor 1) y el byte siguiente (16 bits)
-C 0xB44E guarda el numero (bits 0-3) y el estado (bits 4-7) del lanzador (ficha 0xE2F1, defensor 1)
+C 0xB44E guarda la ficha del lanzador (defensor 1) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 C 0xB453 guarda la base de destino (nibble alto; 2 abajo: llegado) del lanzador (ficha 0xE2F1, defensor 1)
 C 0xB459 guarda la y de destino del lanzador (ficha 0xE2F1, defensor 1) y el byte siguiente (16 bits)
 C 0xB465 velocidad_hacia: con los bancos 7-8-9, la velocidad de HL (x, y) a DE (p00:5E9F); vuelve a 13-14-15
 C 0xB468 guarda la velocidad y, byte bajo del lanzador (ficha 0xE2F1, defensor 1) y el byte siguiente (16 bits)
 C 0xB46B guarda la velocidad x, byte bajo del lanzador (ficha 0xE2F1, defensor 1) y el byte siguiente (16 bits)
-C 0xB471 guarda el numero (bits 0-3) y el estado (bits 4-7) del lanzador (ficha 0xE2F1, defensor 1)
+C 0xB471 guarda la ficha del lanzador (defensor 1) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 C 0xB476 guarda la base de destino (nibble alto; 2 abajo: llegado) del lanzador (ficha 0xE2F1, defensor 1)
 C 0xB47C guarda la y de destino del lanzador (ficha 0xE2F1, defensor 1) y el byte siguiente (16 bits)
 C 0xB488 velocidad_hacia: con los bancos 7-8-9, la velocidad de HL (x, y) a DE (p00:5E9F); vuelve a 13-14-15
 C 0xB48B guarda la velocidad y, byte bajo del tercera base (ficha 0xE2B1, defensor 5) y el byte siguiente (16 bits)
 C 0xB48E guarda la velocidad x, byte bajo del tercera base (ficha 0xE2B1, defensor 5) y el byte siguiente (16 bits)
-C 0xB494 guarda el numero (bits 0-3) y el estado (bits 4-7) del tercera base (ficha 0xE2B1, defensor 5)
+C 0xB494 guarda la ficha del tercera base (defensor 5) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 C 0xB499 guarda la base de destino (nibble alto; 2 abajo: llegado) del tercera base (ficha 0xE2B1, defensor 5)
 C 0xB49F guarda la y de destino del tercera base (ficha 0xE2B1, defensor 5) y el byte siguiente (16 bits)
 C 0xB4AB velocidad_hacia: con los bancos 7-8-9, la velocidad de HL (x, y) a DE (p00:5E9F); vuelve a 13-14-15
 C 0xB4AE guarda la velocidad y, byte bajo del parador en corto (ficha 0xE2A1, defensor 6) y el byte siguiente (16 bits)
 C 0xB4B1 guarda la velocidad x, byte bajo del parador en corto (ficha 0xE2A1, defensor 6) y el byte siguiente (16 bits)
-C 0xB4B7 guarda el numero (bits 0-3) y el estado (bits 4-7) del parador en corto (ficha 0xE2A1, defensor 6)
+C 0xB4B7 guarda la ficha del parador en corto (defensor 6) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 C 0xB4BC guarda la base de destino (nibble alto; 2 abajo: llegado) del parador en corto (ficha 0xE2A1, defensor 6)
 C 0xB4C2 guarda la y de destino del parador en corto (ficha 0xE2A1, defensor 6) y el byte siguiente (16 bits)
 C 0xB4CE velocidad_hacia: con los bancos 7-8-9, la velocidad de HL (x, y) a DE (p00:5E9F); vuelve a 13-14-15
 C 0xB4D1 guarda la velocidad y, byte bajo del primera base (ficha 0xE2D1, defensor 3) y el byte siguiente (16 bits)
 C 0xB4D4 guarda la velocidad x, byte bajo del primera base (ficha 0xE2D1, defensor 3) y el byte siguiente (16 bits)
-C 0xB4DA guarda el numero (bits 0-3) y el estado (bits 4-7) del primera base (ficha 0xE2D1, defensor 3)
+C 0xB4DA guarda la ficha del primera base (defensor 3) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 C 0xB4DF guarda la base de destino (nibble alto; 2 abajo: llegado) del primera base (ficha 0xE2D1, defensor 3)
 C 0xB4E5 guarda la y de destino del primera base (ficha 0xE2D1, defensor 3) y el byte siguiente (16 bits)
 C 0xB4F1 velocidad_hacia: con los bancos 7-8-9, la velocidad de HL (x, y) a DE (p00:5E9F); vuelve a 13-14-15
 C 0xB4F4 guarda la velocidad y, byte bajo del segunda base (ficha 0xE2C1, defensor 4) y el byte siguiente (16 bits)
 C 0xB4F7 guarda la velocidad x, byte bajo del segunda base (ficha 0xE2C1, defensor 4) y el byte siguiente (16 bits)
-C 0xB4FD guarda el numero (bits 0-3) y el estado (bits 4-7) del segunda base (ficha 0xE2C1, defensor 4)
+C 0xB4FD guarda la ficha del segunda base (defensor 4) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 C 0xB502 guarda la base de destino (nibble alto; 2 abajo: llegado) del segunda base (ficha 0xE2C1, defensor 4)
 C 0xB508 guarda la y de destino del segunda base (ficha 0xE2C1, defensor 4) y el byte siguiente (16 bits)
 C 0xB514 velocidad_hacia: con los bancos 7-8-9, la velocidad de HL (x, y) a DE (p00:5E9F); vuelve a 13-14-15
@@ -1398,7 +1398,7 @@ C 0xB517 guarda la velocidad y, byte bajo del segunda base (ficha 0xE2C1, defens
 C 0xB51A guarda la velocidad x, byte bajo del segunda base (ficha 0xE2C1, defensor 4) y el byte siguiente (16 bits)
 C 0xB521 guarda la y (vertical) del segunda base (ficha 0xE2C1, defensor 4) y el byte siguiente (16 bits)
 C 0xB527 guarda la x (horizontal) del segunda base (ficha 0xE2C1, defensor 4) y el byte siguiente (16 bits)
-C 0xB52C guarda el numero (bits 0-3) y el estado (bits 4-7) del segunda base (ficha 0xE2C1, defensor 4)
+C 0xB52C guarda la ficha del segunda base (defensor 4) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 C 0xB531 guarda la base de destino (nibble alto; 2 abajo: llegado) del segunda base (ficha 0xE2C1, defensor 4)
 C 0xB537 guarda la y de destino del segunda base (ficha 0xE2C1, defensor 4) y el byte siguiente (16 bits)
 C 0xB544 lee la velocidad x de la pelota y el byte siguiente (16 bits)
@@ -1408,11 +1408,10 @@ C 0xB613 guarda las marcas del lanzador (ficha 0xE2F1, defensor 1)
 C 0xB619 guarda el defensor que tiene la pelota (1-9; 0 nadie)
 C 0xB631 guarda las marcas del lanzador (ficha 0xE2F1, defensor 1)
 C 0xB634 guarda el defensor que tiene la pelota (1-9; 0 nadie)
-C 0xB639 guarda el numero (bits 0-3) y el estado (bits 4-7) del lanzador (ficha 0xE2F1, defensor 1)
+C 0xB639 guarda la ficha del lanzador (defensor 1) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 C 0xB645 guarda las marcas del receptor (ficha 0xE2E1, defensor 2)
 C 0xB649 guarda el defensor que tiene la pelota (1-9; 0 nadie)
-C 0xB64E guarda el numero (bits 0-3) y el estado (bits 4-7) del receptor (ficha 0xE2E1, defensor 2)
-C 0xB659 apunta a la y, fraccion de la pelota
+C 0xB64E guarda la ficha del receptor (defensor 2) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 C 0xB674 guarda la ficha de 16 bytes de la pelota
 C 0xB6AE hl_mas_a: HL = HL + A
 C 0xB6DE suma_bcd: HL = la suma BCD de B bytes de DE

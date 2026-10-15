@@ -39,6 +39,8 @@ CAMBIOS_DE_BANCO = {
 }
 
 RUTINAS = {
+    # --- en la RAM del sistema (banco -1) ---
+    (-1, 0xF37D): ("bdos", "la entrada del BDOS de Disk BASIC: la funcion C con DE"),
     # --- ayudantes de todos los bancos (los que mas se llaman) ---
     (0, 0x40D2): ("velocidad_hacia", "con los bancos 7-8-9, la velocidad de HL (x, y) a DE (p00:5E9F); vuelve a 13-14-15"),
     (0, 0x40DB): ("dibujos_de_sprites_13", "los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15"),
@@ -315,6 +317,15 @@ RAM.update({
     0xE1F6: ("la formacion del campo (0-6)", "p00:5868"),
     0xE1FE: ("el lado por el que batea (0 si IX+6 de su ficha es 0x20, si no 1): elige las tablas del otro lado", "p02:8919"),
     0xFAF5: ("DPPAGE de la BIOS: la pagina que se ve", "p01:6056"),
+    0xFD9F: ("el gancho H.TIMI de la BIOS (0xC3 = jp a la interrupcion del juego, 0xC9 = ret)", "p00:417E"),
+    0xFD9A: ("el gancho H.KEYI de la BIOS", "p13:70F1"),
+    0xFDA2: ("un byte del gancho H.TIMI que el motor de sonido usa de cuenta de cuadros", "p06:B451"),
+    0xF323: ("DISKVE: la rutina de errores del disco", "p14:821E"),
+    0xD2A5: ("el FCB en uso (puntero)", "p14:82D2"),
+    0xD2B2: ("cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)", "p15:A540, p14:8273"),
+    0xD2E2: ("DISKVE guardado", "p14:8230"),
+    0xD2A7: ("la pila guardada mientras se usa el disco", "p14:801E"),
+    0xD2A9: ("el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco", "p14:8016"),
     0xFAF6: ("ACPAGE de la BIOS: la pagina en la que se pinta", "p00:5993"),
     0xE311: ("las carreras del visitante por entrada (10 casillas, 12-13 el total)", "p01:66FA"),
     0xE321: ("las carreras del local por entrada (10 casillas, 12-13 el total)", "p01:66F2"),
@@ -324,6 +335,10 @@ RAM.update({
     0xE215: ("la velocidad y de la pelota", "ficha 0xE211 + 4; p01:7D11"),
     0xE218: ("la x de la pelota", "ficha 0xE211 + 7; p01:7D04"),
     0xE21A: ("la velocidad x de la pelota", "ficha 0xE211 + 9; p01:7D08"),
+    0xE21C: ("la altura de la pelota, fraccion", "p02:9C9E"),
+    0xE21D: ("la altura de la pelota", "p02:9C9E"),
+    0xE21E: ("la altura de la pelota, byte alto", "p02:9CA7"),
+    0xE21F: ("la gravedad: lo que se resta a la subida de la pelota (0xE226); crece cada cuadro hasta 0xFF", "p02:9923"),
     0xE220: ("el defensor que tiene la pelota (1-9; 0 nadie)", "p01:6AF1, p01:6D35"),
     0xE22B: ("el defensor que va a por la pelota (desplazamiento de 16 en 16)", "p01:7D27, p01:7FB2"),
     0xE271: ("las 9 fichas de 16 bytes de los defensores", "p01:6ACF"),
@@ -471,5 +486,17 @@ def _fichas_fijas():
     return out
 
 
+FICHAS_FIJAS = set()
+_BASES = {0xE211: "la ficha de la pelota"}
+_BASES.update({0xE231 + 16 * _k: "la ficha del corredor 0x%04X" % (0xE231 + 16 * _k) for _k in range(4)})
+_BASES.update({0xE271 + 16 * _k: "la ficha del %s (defensor %d)" % (PUESTOS[9 - _k], 9 - _k) for _k in range(9)})
+_BASES.update({0xEE00 + 0x2D * _k: "la ficha del canal %d de sonido" % (_k + 1) for _k in range(8)})
 for _a, _v in _fichas_fijas().items():
-    RAM.setdefault(_a, _v)
+    if _a in RAM:
+        continue
+    if _a in _BASES:
+        # el primer byte es tambien el principio de la ficha: se apunta
+        RAM[_a] = ("%s (+0: %s)" % (_BASES[_a], _v[0].split(" del ")[0].split(" de la ")[0]), _v[1])
+    else:
+        RAM[_a] = _v
+        FICHAS_FIJAS.add(_a)

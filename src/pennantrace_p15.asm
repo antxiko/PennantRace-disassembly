@@ -665,7 +665,7 @@ L_A532:
 	ld a,024h		;a53d   ; un '$' al final de la lista
 	ld (de),a			;a53f
 	ld a,006h		;a540   ; 0xD2B2 = 6 y el directorio (p14:81FC)
-	ld (0d2b2h),a		;a542
+	ld (0d2b2h),a		;a542   ; guarda cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 	call 081fch		;a545
 	ld a,02eh		;a548   ; el sonido 0x2E
 	call 057ffh		;a54a   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -2571,7 +2571,7 @@ L_B25F:
 	ld (0edd3h),a		;b27e
 	ld (0e1b8h),a		;b281
 	ld hl,0e271h		;b284   ; ...las 9 fichas de defensor a cero...
-	ld de,0e272h		;b287   ; apunta a la y, fraccion del jardinero derecho (ficha 0xE271, defensor 9)
+	ld de,0e272h		;b287
 	ld bc,0008fh		;b28a   ; 0x90 bytes: las 9 fichas
 	ld (hl),000h		;b28d
 	ldir		;b28f
@@ -2680,7 +2680,7 @@ L_B338:
 	ld (0e2a5h),hl		;b34f   ; guarda la velocidad y, byte bajo del parador en corto (ficha 0xE2A1, defensor 6) y el byte siguiente (16 bits)
 	ld (0e2aah),de		;b352   ; guarda la velocidad x, byte bajo del parador en corto (ficha 0xE2A1, defensor 6) y el byte siguiente (16 bits)
 	ld a,016h		;b356   ; ...estado 0x16, +13 = 0x31 y destino 0x37FF
-	ld (0e2a1h),a		;b358   ; guarda el numero (bits 0-3) y el estado (bits 4-7) del parador en corto (ficha 0xE2A1, defensor 6)
+	ld (0e2a1h),a		;b358   ; guarda la ficha del parador en corto (defensor 6) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 	ld a,031h		;b35b
 	ld (0e2aeh),a		;b35d   ; guarda la base de destino (nibble alto; 2 abajo: llegado) del parador en corto (ficha 0xE2A1, defensor 6)
 	ld hl,037ffh		;b360
@@ -2698,7 +2698,7 @@ L_B367:
 	ld (0e2a5h),hl		;b37e   ; guarda la velocidad y, byte bajo del parador en corto (ficha 0xE2A1, defensor 6) y el byte siguiente (16 bits)
 	ld (0e2aah),de		;b381   ; guarda la velocidad x, byte bajo del parador en corto (ficha 0xE2A1, defensor 6) y el byte siguiente (16 bits)
 	ld a,016h		;b385
-	ld (0e2a1h),a		;b387   ; guarda el numero (bits 0-3) y el estado (bits 4-7) del parador en corto (ficha 0xE2A1, defensor 6)
+	ld (0e2a1h),a		;b387   ; guarda la ficha del parador en corto (defensor 6) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 	ld a,031h		;b38a
 	ld (0e2aeh),a		;b38c   ; guarda la base de destino (nibble alto; 2 abajo: llegado) del parador en corto (ficha 0xE2A1, defensor 6)
 	ld hl,037ffh		;b38f
@@ -2721,7 +2721,7 @@ L_B39C:
 	ld (0e2c5h),hl		;b3b3   ; guarda la velocidad y, byte bajo del segunda base (ficha 0xE2C1, defensor 4) y el byte siguiente (16 bits)
 	ld (0e2cah),de		;b3b6   ; guarda la velocidad x, byte bajo del segunda base (ficha 0xE2C1, defensor 4) y el byte siguiente (16 bits)
 	ld a,014h		;b3ba
-	ld (0e2c1h),a		;b3bc   ; guarda el numero (bits 0-3) y el estado (bits 4-7) del segunda base (ficha 0xE2C1, defensor 4)
+	ld (0e2c1h),a		;b3bc   ; guarda la ficha del segunda base (defensor 4) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 	ld a,031h		;b3bf
 	ld (0e2ceh),a		;b3c1   ; guarda la base de destino (nibble alto; 2 abajo: llegado) del segunda base (ficha 0xE2C1, defensor 4)
 	ld hl,037ffh		;b3c4
@@ -2734,7 +2734,7 @@ L_B3CB:
 	ld (0e2e8h),hl		;b3d4   ; guarda la x (horizontal) del receptor (ficha 0xE2E1, defensor 2) y el byte siguiente (16 bits)
 	ld de,078b8h		;b3d7
 	ld a,022h		;b3da
-	ld (0e2e1h),a		;b3dc   ; guarda el numero (bits 0-3) y el estado (bits 4-7) del receptor (ficha 0xE2E1, defensor 2)
+	ld (0e2e1h),a		;b3dc   ; guarda la ficha del receptor (defensor 2) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 	ld a,052h		;b3df   ; +13 = 0x52 y el sprite 0xF8
 	ld (0e2eeh),a		;b3e1   ; guarda la base de destino (nibble alto; 2 abajo: llegado) del receptor (ficha 0xE2E1, defensor 2)
 	ld a,0f8h		;b3e4
@@ -2748,7 +2748,7 @@ L_B3EA:
 	ld (0e2e5h),hl		;b3f5   ; guarda la velocidad y, byte bajo del receptor (ficha 0xE2E1, defensor 2) y el byte siguiente (16 bits)
 	ld (0e2eah),de		;b3f8   ; guarda la velocidad x, byte bajo del receptor (ficha 0xE2E1, defensor 2) y el byte siguiente (16 bits)
 	ld a,012h		;b3fc
-	ld (0e2e1h),a		;b3fe   ; guarda el numero (bits 0-3) y el estado (bits 4-7) del receptor (ficha 0xE2E1, defensor 2)
+	ld (0e2e1h),a		;b3fe   ; guarda la ficha del receptor (defensor 2) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 	ld a,051h		;b401   ; +13 = 0x51, +11 = 1 y destino 0x3788
 	ld (0e2eeh),a		;b403   ; guarda la base de destino (nibble alto; 2 abajo: llegado) del receptor (ficha 0xE2E1, defensor 2)
 	ld a,001h		;b406
@@ -2766,7 +2766,7 @@ L_B417:
 	ld (0e2f5h),hl		;b422   ; guarda la velocidad y, byte bajo del lanzador (ficha 0xE2F1, defensor 1) y el byte siguiente (16 bits)
 	ld (0e2fah),de		;b425   ; guarda la velocidad x, byte bajo del lanzador (ficha 0xE2F1, defensor 1) y el byte siguiente (16 bits)
 	ld a,011h		;b429
-	ld (0e2f1h),a		;b42b   ; guarda el numero (bits 0-3) y el estado (bits 4-7) del lanzador (ficha 0xE2F1, defensor 1)
+	ld (0e2f1h),a		;b42b   ; guarda la ficha del lanzador (defensor 1) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 	ld a,021h		;b42e
 	ld (0e2feh),a		;b430   ; guarda la base de destino (nibble alto; 2 abajo: llegado) del lanzador (ficha 0xE2F1, defensor 1)
 	ld hl,0b040h		;b433
@@ -2780,7 +2780,7 @@ L_B43A:
 	ld (0e2f5h),hl		;b445   ; guarda la velocidad y, byte bajo del lanzador (ficha 0xE2F1, defensor 1) y el byte siguiente (16 bits)
 	ld (0e2fah),de		;b448   ; guarda la velocidad x, byte bajo del lanzador (ficha 0xE2F1, defensor 1) y el byte siguiente (16 bits)
 	ld a,011h		;b44c
-	ld (0e2f1h),a		;b44e   ; guarda el numero (bits 0-3) y el estado (bits 4-7) del lanzador (ficha 0xE2F1, defensor 1)
+	ld (0e2f1h),a		;b44e   ; guarda la ficha del lanzador (defensor 1) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 	ld a,041h		;b451
 	ld (0e2feh),a		;b453   ; guarda la base de destino (nibble alto; 2 abajo: llegado) del lanzador (ficha 0xE2F1, defensor 1)
 	ld hl,0c440h		;b456
@@ -2794,7 +2794,7 @@ L_B45D:
 	ld (0e2f5h),hl		;b468   ; guarda la velocidad y, byte bajo del lanzador (ficha 0xE2F1, defensor 1) y el byte siguiente (16 bits)
 	ld (0e2fah),de		;b46b   ; guarda la velocidad x, byte bajo del lanzador (ficha 0xE2F1, defensor 1) y el byte siguiente (16 bits)
 	ld a,011h		;b46f
-	ld (0e2f1h),a		;b471   ; guarda el numero (bits 0-3) y el estado (bits 4-7) del lanzador (ficha 0xE2F1, defensor 1)
+	ld (0e2f1h),a		;b471   ; guarda la ficha del lanzador (defensor 1) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 	ld a,051h		;b474
 	ld (0e2feh),a		;b476   ; guarda la base de destino (nibble alto; 2 abajo: llegado) del lanzador (ficha 0xE2F1, defensor 1)
 	ld hl,03788h		;b479
@@ -2808,7 +2808,7 @@ L_B480:
 	ld (0e2b5h),hl		;b48b   ; guarda la velocidad y, byte bajo del tercera base (ficha 0xE2B1, defensor 5) y el byte siguiente (16 bits)
 	ld (0e2bah),de		;b48e   ; guarda la velocidad x, byte bajo del tercera base (ficha 0xE2B1, defensor 5) y el byte siguiente (16 bits)
 	ld a,015h		;b492
-	ld (0e2b1h),a		;b494   ; guarda el numero (bits 0-3) y el estado (bits 4-7) del tercera base (ficha 0xE2B1, defensor 5)
+	ld (0e2b1h),a		;b494   ; guarda la ficha del tercera base (defensor 5) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 	ld a,041h		;b497
 	ld (0e2beh),a		;b499   ; guarda la base de destino (nibble alto; 2 abajo: llegado) del tercera base (ficha 0xE2B1, defensor 5)
 	ld hl,0c440h		;b49c
@@ -2822,7 +2822,7 @@ L_B4A3:
 	ld (0e2a5h),hl		;b4ae   ; guarda la velocidad y, byte bajo del parador en corto (ficha 0xE2A1, defensor 6) y el byte siguiente (16 bits)
 	ld (0e2aah),de		;b4b1   ; guarda la velocidad x, byte bajo del parador en corto (ficha 0xE2A1, defensor 6) y el byte siguiente (16 bits)
 	ld a,016h		;b4b5
-	ld (0e2a1h),a		;b4b7   ; guarda el numero (bits 0-3) y el estado (bits 4-7) del parador en corto (ficha 0xE2A1, defensor 6)
+	ld (0e2a1h),a		;b4b7   ; guarda la ficha del parador en corto (defensor 6) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 	ld a,041h		;b4ba
 	ld (0e2aeh),a		;b4bc   ; guarda la base de destino (nibble alto; 2 abajo: llegado) del parador en corto (ficha 0xE2A1, defensor 6)
 	ld hl,0c440h		;b4bf
@@ -2836,7 +2836,7 @@ L_B4C6:
 	ld (0e2d5h),hl		;b4d1   ; guarda la velocidad y, byte bajo del primera base (ficha 0xE2D1, defensor 3) y el byte siguiente (16 bits)
 	ld (0e2dah),de		;b4d4   ; guarda la velocidad x, byte bajo del primera base (ficha 0xE2D1, defensor 3) y el byte siguiente (16 bits)
 	ld a,013h		;b4d8
-	ld (0e2d1h),a		;b4da   ; guarda el numero (bits 0-3) y el estado (bits 4-7) del primera base (ficha 0xE2D1, defensor 3)
+	ld (0e2d1h),a		;b4da   ; guarda la ficha del primera base (defensor 3) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 	ld a,021h		;b4dd
 	ld (0e2deh),a		;b4df   ; guarda la base de destino (nibble alto; 2 abajo: llegado) del primera base (ficha 0xE2D1, defensor 3)
 	ld hl,0b040h		;b4e2
@@ -2850,7 +2850,7 @@ L_B4E9:
 	ld (0e2c5h),hl		;b4f4   ; guarda la velocidad y, byte bajo del segunda base (ficha 0xE2C1, defensor 4) y el byte siguiente (16 bits)
 	ld (0e2cah),de		;b4f7   ; guarda la velocidad x, byte bajo del segunda base (ficha 0xE2C1, defensor 4) y el byte siguiente (16 bits)
 	ld a,014h		;b4fb
-	ld (0e2c1h),a		;b4fd   ; guarda el numero (bits 0-3) y el estado (bits 4-7) del segunda base (ficha 0xE2C1, defensor 4)
+	ld (0e2c1h),a		;b4fd   ; guarda la ficha del segunda base (defensor 4) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 	ld a,021h		;b500
 	ld (0e2ceh),a		;b502   ; guarda la base de destino (nibble alto; 2 abajo: llegado) del segunda base (ficha 0xE2C1, defensor 4)
 	ld hl,0b040h		;b505
@@ -2868,7 +2868,7 @@ L_B50C:
 	ld hl,00190h		;b524
 	ld (0e2c8h),hl		;b527   ; guarda la x (horizontal) del segunda base (ficha 0xE2C1, defensor 4) y el byte siguiente (16 bits)
 	ld a,014h		;b52a
-	ld (0e2c1h),a		;b52c   ; guarda el numero (bits 0-3) y el estado (bits 4-7) del segunda base (ficha 0xE2C1, defensor 4)
+	ld (0e2c1h),a		;b52c   ; guarda la ficha del segunda base (defensor 4) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 	ld a,021h		;b52f
 	ld (0e2ceh),a		;b531   ; guarda la base de destino (nibble alto; 2 abajo: llegado) del segunda base (ficha 0xE2C1, defensor 4)
 	ld hl,0b040h		;b534
@@ -3018,7 +3018,7 @@ pelota_tras_robo:		; tras un robo, la pelota al lanzador o al receptor
 	ld (0e2fch),a		;b631   ; guarda las marcas del lanzador (ficha 0xE2F1, defensor 1)
 	ld (0e220h),a		;b634   ; guarda el defensor que tiene la pelota (1-9; 0 nadie)
 	ld a,021h		;b637   ; estado 0x21, la pelota en (0x40, 0x38)
-	ld (0e2f1h),a		;b639   ; guarda el numero (bits 0-3) y el estado (bits 4-7) del lanzador (ficha 0xE2F1, defensor 1)
+	ld (0e2f1h),a		;b639   ; guarda la ficha del lanzador (defensor 1) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 	ld de,03840h		;b63c
 	ld a,001h		;b63f
 	jr L_B656		;b641
@@ -3028,12 +3028,12 @@ L_B643:
 	inc a			;b648   ; el receptor (2) la tiene: estado 0x22, en (0x98, 0x38)
 	ld (0e220h),a		;b649   ; guarda el defensor que tiene la pelota (1-9; 0 nadie)
 	ld a,022h		;b64c
-	ld (0e2e1h),a		;b64e   ; guarda el numero (bits 0-3) y el estado (bits 4-7) del receptor (ficha 0xE2E1, defensor 2)
+	ld (0e2e1h),a		;b64e   ; guarda la ficha del receptor (defensor 2) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 	ld de,03898h		;b651
 	ld a,002h		;b654
 L_B656:
 	ld (0e220h),a		;b656   ; la pelota en la mano: su y y su x (con el byte alto a 1)...
-	ld hl,0e212h		;b659   ; apunta a la y, fraccion de la pelota
+	ld hl,0e212h		;b659
 	ld (hl),000h		;b65c   ; la y = 0x1xx: E en el byte medio...
 	inc hl			;b65e
 	ld (hl),e			;b65f

@@ -1817,7 +1817,7 @@ L_AC91:
 	ld bc,0005eh		;ac98
 	ld (hl),a			;ac9b
 	ldir		;ac9c
-	ld hl,0e23eh		;ac9e   ; apunta a la base de destino (nibble alto; 2 abajo: llegado) del corredor de la ficha 0xE231
+	ld hl,0e23eh		;ac9e
 	ld de,00010h		;aca1
 	ld b,004h		;aca4
 L_ACA6:
@@ -1929,10 +1929,10 @@ L_AD60:
 	ld a,(0e211h)		;ad63   ; lee la ficha de 16 bytes de la pelota
 	cp 003h		;ad66
 	ret nc			;ad68
-	ld a,(0e21eh)		;ad69   ; lee la base de destino (nibble alto; 2 abajo: llegado) de la pelota
+	ld a,(0e21eh)		;ad69   ; lee la altura de la pelota, byte alto
 	or a			;ad6c
 	ret nz			;ad6d
-	ld a,(0e21dh)		;ad6e   ; lee el dibujo de su sprite de la pelota
+	ld a,(0e21dh)		;ad6e   ; lee la altura de la pelota
 	cp 008h		;ad71
 	ret nc			;ad73
 	ld ix,0e271h		;ad74   ; ...los 9 defensores libres (sin IX+11)...
@@ -2099,8 +2099,8 @@ L_AEA9:
 	xor a			;aea9   ; la pelota cogida: estado 3, sin altura ni sombra
 	ld (0e302h),a		;aeaa
 	ld (0ed39h),a		;aead
-	ld (0e21ch),a		;aeb0   ; guarda las marcas de la pelota
-	ld (0e21dh),a		;aeb3   ; guarda el dibujo de su sprite de la pelota
+	ld (0e21ch),a		;aeb0   ; guarda la altura de la pelota, fraccion
+	ld (0e21dh),a		;aeb3   ; guarda la altura de la pelota
 	ld a,003h		;aeb6
 	ld (0e211h),a		;aeb8   ; guarda la ficha de 16 bytes de la pelota
 	pop hl			;aebb
@@ -2275,7 +2275,7 @@ L_AFC7:
 	ret			;afc7
 L_AFC8:
 	push hl			;afc8   ; por cada corredor: forzado (bit 5 de IX+13) si la base de detras esta ocupada
-	ld hl,0e23ch		;afc9   ; apunta a las marcas del corredor de la ficha 0xE231
+	ld hl,0e23ch		;afc9
 	ld b,004h		;afcc
 L_AFCE:
 	ld a,(hl)			;afce
@@ -2394,7 +2394,7 @@ base_libre:		; carry si ningun corredor esta en la base C (con el bit 6)
 L_B072:
 	ld e,00fh		;b072   ; lo mismo sin mirar el bit 6
 L_B074:
-	ld hl,0e23ch		;b074   ; apunta a las marcas del corredor de la ficha 0xE231
+	ld hl,0e23ch		;b074
 L_B077:
 	ld b,004h		;b077
 L_B079:
@@ -2452,7 +2452,7 @@ L_B0B7:
 	and 00fh		;b0ce
 	or 040h		;b0d0
 	ld c,a			;b0d2
-	ld hl,0e23ch		;b0d3   ; apunta a las marcas del corredor de la ficha 0xE231
+	ld hl,0e23ch		;b0d3
 	ld de,00010h		;b0d6
 	ld b,004h		;b0d9
 L_B0DB:
@@ -2495,7 +2495,7 @@ L_B10C:
 	add hl,hl			;b117
 	add hl,hl			;b118
 	add hl,hl			;b119
-	ld de,0e273h		;b11a   ; apunta a la y (vertical) del jardinero derecho (ficha 0xE271, defensor 9)
+	ld de,0e273h		;b11a
 	add hl,de			;b11d
 	ret			;b11e
 L_B11F:
@@ -3027,7 +3027,7 @@ L_B4D2:
 	ld a,060h		;b4e6   ; ...96 cuadros, los corredores a cero...
 	ld (0ed22h),a		;b4e8
 	ld hl,0e231h		;b4eb   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
-	ld de,0e232h		;b4ee   ; apunta a la y, fraccion del corredor de la ficha 0xE231
+	ld de,0e232h		;b4ee
 	ld bc,0003fh		;b4f1
 	ld (hl),000h		;b4f4
 	ldir		;b4f6
@@ -3045,7 +3045,7 @@ L_B508:
 	ret			;b50f
 L_B510:
 	ld hl,0b24fh		;b510   ; la ficha de p15:B24F a 0xE241 (con 13-14-15, p00:5DA1)
-	ld de,0e241h		;b513   ; apunta a el numero (bits 0-3) y el estado (bits 4-7) del corredor de la ficha 0xE241
+	ld de,0e241h		;b513   ; apunta a la ficha del corredor 0xE241 (+0: el numero (bits 0-3) y el estado (bits 4-7))
 	jr L_B51E		;b516
 L_B518:
 	ld hl,0b23fh		;b518   ; la de p15:B23F a 0xE231
@@ -4085,7 +4085,7 @@ L_BCA0:
 	ldir		;bcbe
 	call L_BE0D		;bcc0   ; ...p00:5D62 y, con 0xD2B2 = 6, 0xEDE7 = 2
 	call 05d62h		;bcc3
-	ld a,(0d2b2h)		;bcc6
+	ld a,(0d2b2h)		;bcc6   ; lee cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 	cp 006h		;bcc9
 	jr nz,L_BCD9		;bccb
 	ld a,002h		;bccd

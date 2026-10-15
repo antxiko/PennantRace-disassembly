@@ -372,6 +372,7 @@ C 0x6007 lee los soportes que hay: bit 0 el disco, bit 1 el Game Master 2
 C 0x601C lee el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 C 0x6025 guarda las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0x602B apunta a los nombres de los equipos (11 letras cada uno)
+C 0x6038 guarda cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 C 0x6073 apunta a la espera de los avisos
 C 0x6078 borra_recuadro: borra el recuadro
 C 0x607E texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
@@ -405,6 +406,7 @@ C 0x6205 texto_c0: como texto, con C = 0
 C 0x620B texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6211 subpaso_siguiente: el subpaso siguiente (0xD74D + 1)
 C 0x6217 apunta a los nombres de los equipos (11 letras cada uno)
+C 0x6224 guarda cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 C 0x622C sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x6232 guarda los partidos de cada pareja en PENNANT (1-26) y el byte siguiente (16 bits)
 C 0x624F apunta a los 6 equipos elegidos (0xFF libre)
@@ -521,7 +523,9 @@ C 0x68DC apunta a los nombres de los equipos (11 letras cada uno)
 C 0x68F2 apunta a los 6 equipos elegidos (0xFF libre)
 C 0x690F letra_ascii: una letra ASCII a la fuente
 C 0x6916 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0x6925 lee cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 C 0x6930 guarda la fila del cursor de las listas
+C 0x6940 lee cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 C 0x694E apunta a la fila del cursor de las listas
 C 0x6951 lee los botones recien pulsados del mando 1 / cursores
 C 0x696E sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -537,6 +541,7 @@ C 0x69EA byte_a_vram: escribe A en la VRAM HL
 C 0x6A1D por_once: HL = A x 11
 C 0x6A25 lee el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
 C 0x6A65 apunta a los 6 equipos elegidos (0xFF libre)
+C 0x6A6A lee cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 C 0x6A81 lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x6A87 letra_ascii: una letra ASCII a la fuente
 C 0x6A97 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
@@ -672,22 +677,55 @@ C 0x70B9 guarda el slot del Game Master 2 (0xFF si no esta)
 C 0x70DD lee el slot del Game Master 2 (0xFF si no esta)
 C 0x70E7 lee el slot del Game Master 2 (0xFF si no esta)
 C 0x70EC lee el slot del Game Master 2 (0xFF si no esta)
+C 0x70F4 guarda el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
+C 0x70F9 guarda el gancho H.KEYI de la BIOS
+C 0x70FF lee cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 C 0x710A apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
+C 0x7116 lee el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
+C 0x7119 guarda el gancho H.KEYI de la BIOS
+C 0x7120 guarda el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
+C 0x7125 guarda el gancho H.KEYI de la BIOS
 C 0x712E apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 C 0x7131 ficha_d280: la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot
+C 0x7137 lee el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
+C 0x713A guarda el gancho H.KEYI de la BIOS
+C 0x7146 guarda el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
+C 0x714B guarda el gancho H.KEYI de la BIOS
 C 0x7154 apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 C 0x7157 ficha_d280: la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot
+C 0x715D lee el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
+C 0x7160 guarda el gancho H.KEYI de la BIOS
+C 0x716B guarda el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
+C 0x7170 guarda el gancho H.KEYI de la BIOS
 C 0x7179 apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 C 0x717C ficha_d280: la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot
+C 0x7182 lee el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
+C 0x7185 guarda el gancho H.KEYI de la BIOS
+C 0x7190 guarda el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
+C 0x7195 guarda el gancho H.KEYI de la BIOS
 C 0x719E apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 C 0x71A1 ficha_d280: la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot
 C 0x71A7 apunta a como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x71B1 lee el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
+C 0x71B4 guarda el gancho H.KEYI de la BIOS
+C 0x71B9 guarda el FCB en uso (puntero) y el byte siguiente (16 bits)
 C 0x71D5 apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x71D8 guarda el FCB en uso (puntero) y el byte siguiente (16 bits)
 C 0x7223 lee el slot del Game Master 2 (0xFF si no esta)
+C 0x7232 lee el FCB en uso (puntero) y el byte siguiente (16 bits)
 C 0x7248 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x7250 lee el slot del Game Master 2 (0xFF si no esta)
+C 0x725F lee el FCB en uso (puntero) y el byte siguiente (16 bits)
 C 0x7276 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x727B lee el gancho H.TIMI de la BIOS (0xC3 = jp a la interrupcion del juego, 0xC9 = ret)
+C 0x727E guarda el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
+C 0x7283 guarda el gancho H.TIMI de la BIOS (0xC3 = jp a la interrupcion del juego, 0xC9 = ret)
 C 0x729F apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x72A2 guarda el FCB en uso (puntero) y el byte siguiente (16 bits)
+C 0x72B5 lee el FCB en uso (puntero) y el byte siguiente (16 bits)
+C 0x72C6 lee el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
+C 0x72C9 guarda el gancho H.TIMI de la BIOS (0xC3 = jp a la interrupcion del juego, 0xC9 = ret)
+C 0x72CF guarda cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 C 0x72EC de_mas_a: DE = DE + A
 C 0x72F7 nombre_en_daae: HL = 0xDAAE + A x 11
 C 0x7319 nombre_en_daae: HL = 0xDAAE + A x 11

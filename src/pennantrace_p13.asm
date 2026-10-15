@@ -40,7 +40,7 @@ L_6000:
 	ld a,024h		;6033
 	ld (de),a			;6035
 	ld a,006h		;6036   ; ...0xD2B2 = 6, p14:81FC y a seguir (p13:64DF)
-	ld (0d2b2h),a		;6038
+	ld (0d2b2h),a		;6038   ; guarda cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 	call 081fch		;603b
 	jp L_64DF		;603e
 L_6041:
@@ -280,7 +280,7 @@ L_6214:
 	ld a,024h		;621f
 	ld (de),a			;6221
 	ld a,006h		;6222   ; ...0xD2B2 = 6, p14:81FC, el sonido 0x2E...
-	ld (0d2b2h),a		;6224
+	ld (0d2b2h),a		;6224   ; guarda cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 	call 081fch		;6227
 	ld a,02eh		;622a
 	call 057ffh		;622c   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -1308,7 +1308,7 @@ L_6916:
 	ret			;6921
 L_6922:
 	ld hl,0d74fh		;6922   ; la siguiente fila de jugador (0xD2B2 filas), da la vuelta
-	ld a,(0d2b2h)		;6925
+	ld a,(0d2b2h)		;6925   ; lee cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 	dec a			;6928
 	cp (hl)			;6929
 	jr nz,L_6935		;692a
@@ -1324,7 +1324,7 @@ L_6938:
 	ld (0e360h),a		;693b
 	jr L_6948		;693e
 L_6940:
-	ld a,(0d2b2h)		;6940
+	ld a,(0d2b2h)		;6940   ; lee cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 	sub 006h		;6943
 	ld (0e360h),a		;6945
 L_6948:
@@ -1512,7 +1512,7 @@ L_6A5E:
 	ld (0e342h),a		;6a62
 	ld hl,0d70ah		;6a65   ; apunta a los 6 equipos elegidos (0xFF libre)
 	ld b,006h		;6a68
-	ld a,(0d2b2h)		;6a6a
+	ld a,(0d2b2h)		;6a6a   ; lee cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 	cp 006h		;6a6d
 	jr z,L_6A72		;6a6f
 	sub b			;6a71
@@ -2549,11 +2549,11 @@ L_70EC:
 	ret			;70f0
 L_70F1:
 	ld a,(0fd9ah)		;70f1   ; grabar el equipo en el Game Master 2: H.KEYI fuera mientras tanto...
-	ld (0d2a9h),a		;70f4
+	ld (0d2a9h),a		;70f4   ; guarda el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
 	ld a,0c9h		;70f7
-	ld (0fd9ah),a		;70f9
+	ld (0fd9ah),a		;70f9   ; guarda el gancho H.KEYI de la BIOS
 	call L_727A		;70fc   ; ...su directorio (p13:727A); con 0x22 equipos o mas, no cabe...
-	ld a,(0d2b2h)		;70ff
+	ld a,(0d2b2h)		;70ff   ; lee cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 	cp 022h		;7102
 	jp nc,L_7274		;7104
 	ld bc,07164h		;7107   ; ...la ficha de grabacion con el nombre de 0xD380 (p13:71D4)...
@@ -2561,21 +2561,21 @@ L_70F1:
 	call L_71D4		;710d
 	call 0839eh		;7110   ; ...p14:839E y le llama con C = 0x0A (p13:721D)
 	call L_721D		;7113
-	ld a,(0d2a9h)		;7116
-	ld (0fd9ah),a		;7119
+	ld a,(0d2a9h)		;7116   ; lee el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
+	ld (0fd9ah),a		;7119   ; guarda el gancho H.KEYI de la BIOS
 	ret			;711c
 L_711D:
 	ld a,(0fd9ah)		;711d   ; grabar la partida (PENAN): la ficha de 0xD280 con 'PENAN' y la cola de 0x7219
-	ld (0d2a9h),a		;7120
+	ld (0d2a9h),a		;7120   ; guarda el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
 	ld a,0c9h		;7123
-	ld (0fd9ah),a		;7125
+	ld (0fd9ah),a		;7125   ; guarda el gancho H.KEYI de la BIOS
 	ld bc,07219h		;7128
 	ld hl,0713eh		;712b
 	ld de,0d280h		;712e   ; apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 	call ficha_d280		;7131   ; ficha_d280: la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot
 	call L_721D		;7134
-	ld a,(0d2a9h)		;7137
-	ld (0fd9ah),a		;713a
+	ld a,(0d2a9h)		;7137   ; lee el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
+	ld (0fd9ah),a		;713a   ; guarda el gancho H.KEYI de la BIOS
 	ret			;713d
 
 ; ----------------------------------------------------------------------
@@ -2592,16 +2592,16 @@ DATA_penan:
 
 L_7143:
 	ld a,(0fd9ah)		;7143   ; leer el equipo de 0xD680 (C = 0x0B)
-	ld (0d2a9h),a		;7146
+	ld (0d2a9h),a		;7146   ; guarda el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
 	ld a,0c9h		;7149
-	ld (0fd9ah),a		;714b
+	ld (0fd9ah),a		;714b   ; guarda el gancho H.KEYI de la BIOS
 	ld bc,07164h		;714e
 	ld hl,0d680h		;7151
 	ld de,0d280h		;7154   ; apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 	call ficha_d280		;7157   ; ficha_d280: la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot
 	call L_724C		;715a
-	ld a,(0d2a9h)		;715d
-	ld (0fd9ah),a		;7160
+	ld a,(0d2a9h)		;715d   ; lee el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
+	ld (0fd9ah),a		;7160   ; guarda el gancho H.KEYI de la BIOS
 	ret			;7163
 
 ; ----------------------------------------------------------------------
@@ -2618,16 +2618,16 @@ DATA_cola_7164:
 
 L_7168:
 	ld a,(0fd9ah)		;7168   ; leer el de 0xD740
-	ld (0d2a9h),a		;716b
+	ld (0d2a9h),a		;716b   ; guarda el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
 	ld a,0c9h		;716e
-	ld (0fd9ah),a		;7170
+	ld (0fd9ah),a		;7170   ; guarda el gancho H.KEYI de la BIOS
 	ld bc,07189h		;7173
 	ld hl,0d740h		;7176
 	ld de,0d280h		;7179   ; apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 	call ficha_d280		;717c   ; ficha_d280: la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot
 	call L_724C		;717f
-	ld a,(0d2a9h)		;7182
-	ld (0fd9ah),a		;7185
+	ld a,(0d2a9h)		;7182   ; lee el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
+	ld (0fd9ah),a		;7185   ; guarda el gancho H.KEYI de la BIOS
 	ret			;7188
 
 ; ----------------------------------------------------------------------
@@ -2644,9 +2644,9 @@ DATA_cola_7189:
 
 L_718D:
 	ld a,(0fd9ah)		;718d   ; leer la partida PENAN; si no fue mal, 0xD2B1 = 1
-	ld (0d2a9h),a		;7190
+	ld (0d2a9h),a		;7190   ; guarda el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
 	ld a,0c9h		;7193
-	ld (0fd9ah),a		;7195
+	ld (0fd9ah),a		;7195   ; guarda el gancho H.KEYI de la BIOS
 	ld bc,07219h		;7198
 	ld hl,0713eh		;719b
 	ld de,0d280h		;719e   ; apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
@@ -2658,12 +2658,12 @@ L_718D:
 	jr z,L_71B1		;71ad
 	ld (hl),001h		;71af
 L_71B1:
-	ld a,(0d2a9h)		;71b1
-	ld (0fd9ah),a		;71b4
+	ld a,(0d2a9h)		;71b1   ; lee el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
+	ld (0fd9ah),a		;71b4   ; guarda el gancho H.KEYI de la BIOS
 	ret			;71b7
 ficha_d280:		; la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot
 	push bc			;71b8   ; la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot propio (0xD2AA)
-	ld (0d2a5h),de		;71b9
+	ld (0d2a5h),de		;71b9   ; guarda el FCB en uso (puntero) y el byte siguiente (16 bits)
 	ld bc,00005h		;71bd
 	ldir		;71c0
 	xor a			;71c2
@@ -2681,7 +2681,7 @@ L_71C5:
 L_71D4:
 	push bc			;71d4   ; la ficha con el nombre del equipo sin los ceros de delante (5 letras)
 	ld de,0d280h		;71d5   ; apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
-	ld (0d2a5h),de		;71d8
+	ld (0d2a5h),de		;71d8   ; guarda el FCB en uso (puntero) y el byte siguiente (16 bits)
 	push de			;71dc
 	push hl			;71dd
 	ld h,d			;71de
@@ -2746,7 +2746,7 @@ L_721D:
 	ld a,004h		;722b   ; ...su banco 4 en 0x8000...
 	ld (08000h),a		;722d
 	ld c,00ah		;7230   ; ...y `call 0x8000` con C = 0x0A y DE = la ficha...
-	ld de,(0d2a5h)		;7232
+	ld de,(0d2a5h)		;7232   ; lee el FCB en uso (puntero) y el byte siguiente (16 bits)
 	call 08000h		;7236
 	push af			;7239   ; ...el cartucho propio otra vez en la pagina 2...
 	ld a,(0d2aah)		;723a
@@ -2766,7 +2766,7 @@ L_724C:
 	ld a,004h		;7258
 	ld (08000h),a		;725a
 	ld c,00bh		;725d
-	ld de,(0d2a5h)		;725f
+	ld de,(0d2a5h)		;725f   ; lee el FCB en uso (puntero) y el byte siguiente (16 bits)
 	call 08000h		;7263
 	push af			;7266
 	ld a,(0d2aah)		;7267
@@ -2782,10 +2782,10 @@ L_7274:
 	ret			;7279
 L_727A:
 	di			;727a   ; el directorio del Game Master 2: H.TIMI fuera, p14:843F...
-	ld a,(0fd9fh)		;727b
-	ld (0d2a9h),a		;727e
+	ld a,(0fd9fh)		;727b   ; lee el gancho H.TIMI de la BIOS (0xC3 = jp a la interrupcion del juego, 0xC9 = ret)
+	ld (0d2a9h),a		;727e   ; guarda el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
 	ld a,0c9h		;7281
-	ld (0fd9fh),a		;7283
+	ld (0fd9fh),a		;7283   ; guarda el gancho H.TIMI de la BIOS (0xC3 = jp a la interrupcion del juego, 0xC9 = ret)
 	call 0843fh		;7286
 	ld de,0d2b4h		;7289   ; ...0xD2B3-0xD37E a cero y la lista en 0xD2B3...
 	ld hl,0d2b3h		;728c
@@ -2798,25 +2798,25 @@ L_727A:
 	inc hl			;729d
 	ld (hl),b			;729e
 	ld de,0d280h		;729f   ; apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
-	ld (0d2a5h),de		;72a2
+	ld (0d2a5h),de		;72a2   ; guarda el FCB en uso (puntero) y el byte siguiente (16 bits)
 	ld a,(0dd0eh)		;72a6   ; ...le llama con C = 5...
 	ld h,080h		;72a9
 	call 00024h		;72ab   ; BIOS ENASLT - Switches to specified slot and page definitively
 	ld a,004h		;72ae
 	ld (08000h),a		;72b0
 	ld c,005h		;72b3
-	ld de,(0d2a5h)		;72b5
+	ld de,(0d2a5h)		;72b5   ; lee el FCB en uso (puntero) y el byte siguiente (16 bits)
 	call 08000h		;72b9
 	push af			;72bc
 	ld a,(0d2aah)		;72bd
 	ld h,080h		;72c0
 	call 00024h		;72c2   ; BIOS ENASLT - Switches to specified slot and page definitively
 	pop af			;72c5
-	ld a,(0d2a9h)		;72c6
-	ld (0fd9fh),a		;72c9
+	ld a,(0d2a9h)		;72c6   ; lee el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
+	ld (0fd9fh),a		;72c9   ; guarda el gancho H.TIMI de la BIOS (0xC3 = jp a la interrupcion del juego, 0xC9 = ret)
 	ei			;72cc
 	ld a,006h		;72cd   ; ...y cuenta los equipos de la lista (de 8 en 8 bytes)
-	ld (0d2b2h),a		;72cf
+	ld (0d2b2h),a		;72cf   ; guarda cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 	ld de,0d2b3h		;72d2
 L_72D5:
 	ld a,(de)			;72d5

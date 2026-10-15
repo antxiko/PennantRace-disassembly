@@ -588,15 +588,14 @@ C 0xAC2F lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la
 C 0xAC5F lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0xAC88 lee la jugada anulada (foul)
 C 0xAC92 apunta a la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
-C 0xAC9E apunta a la base de destino (nibble alto; 2 abajo: llegado) del corredor de la ficha 0xE231
 C 0xACB1 guarda el paso del lanzador del ordenador
 C 0xACCF guarda el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 C 0xACD2 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 C 0xACF0 dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
 C 0xAD1A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xAD63 lee la ficha de 16 bytes de la pelota
-C 0xAD69 lee la base de destino (nibble alto; 2 abajo: llegado) de la pelota
-C 0xAD6E lee el dibujo de su sprite de la pelota
+C 0xAD69 lee la altura de la pelota, byte alto
+C 0xAD6E lee la altura de la pelota
 C 0xAD7B lee las marcas
 C 0xAD84 lee la y (vertical)
 C 0xAD87 lee la y, byte alto
@@ -615,8 +614,8 @@ C 0xAE5A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vue
 C 0xAE6B guarda el defensor que tiene la pelota (1-9; 0 nadie)
 C 0xAE79 apunta a la velocidad x de la pelota
 C 0xAE9D dibujo_64: el dibujo de 64 bytes A (p11:8759 + 64 A)
-C 0xAEB0 guarda las marcas de la pelota
-C 0xAEB3 guarda el dibujo de su sprite de la pelota
+C 0xAEB0 guarda la altura de la pelota, fraccion
+C 0xAEB3 guarda la altura de la pelota
 C 0xAEB8 guarda la ficha de 16 bytes de la pelota
 C 0xAEDC lee el defensor que tiene la pelota (1-9; 0 nadie)
 C 0xAEF0 guarda variable de paso (cada rutina la usa a su manera)
@@ -630,15 +629,11 @@ C 0xAFA0 lee variable de paso (cada rutina la usa a su manera)
 C 0xAFA6 bateador_mas: un bateador mas: en 0xE1A1 = 3, solo la primera vez (0xEDD4)
 C 0xAFA9 lee variable de paso (cada rutina la usa a su manera)
 C 0xAFB9 base_libre: carry si ningun corredor esta en la base C (con el bit 6)
-C 0xAFC9 apunta a las marcas del corredor de la ficha 0xE231
 C 0xB02F lee variable de paso (cada rutina la usa a su manera)
 C 0xB054 guarda variable de paso (cada rutina la usa a su manera)
-C 0xB074 apunta a las marcas del corredor de la ficha 0xE231
 C 0xB0A8 guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
-C 0xB0D3 apunta a las marcas del corredor de la ficha 0xE231
 C 0xB104 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xB109 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0xB11A apunta a la y (vertical) del jardinero derecho (ficha 0xE271, defensor 9)
 C 0xB125 lee el paso de la jugada (y de TEAM EDIT)
 C 0xB12D texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xB133 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -677,9 +672,8 @@ C 0xB4AA enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
 C 0xB4C7 lee los corredores que entran con el home run
 C 0xB4D3 guarda los corredores que entran con el home run
 C 0xB4EB apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
-C 0xB4EE apunta a la y, fraccion del corredor de la ficha 0xE231
 C 0xB50B apunta a los corredores que entran con el home run
-C 0xB513 apunta a el numero (bits 0-3) y el estado (bits 4-7) del corredor de la ficha 0xE241
+C 0xB513 apunta a la ficha del corredor 0xE241 (+0: el numero (bits 0-3) y el estado (bits 4-7))
 C 0xB51B apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0xB5E4 menos_hl: HL = -HL
 C 0xB5F1 lee la velocidad y de la pelota y el byte siguiente (16 bits)
@@ -739,6 +733,7 @@ C 0xBC9B guarda el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 C 0xBCA5 devuelve_trozo: devuelve el trozo de pantalla
 C 0xBCA9 guarda la fila del cursor de las listas
 C 0xBCB8 apunta a los 6 equipos elegidos (0xFF libre)
+C 0xBCC6 lee cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 C 0xBCED rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0xBD01 texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
 C 0xBD11 lee la fila del cursor de las listas

@@ -940,6 +940,8 @@ C 0x40E7 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x40ED bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x40F1 slot_del_cartucho: A = el slot de la pagina 1 (el cartucho) en el formato de ENASLT; lo apunta en 0xD2AA
 C 0x4105 la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x410B guarda DISKVE: la rutina de errores del disco y el byte siguiente (16 bits)
+C 0x4131 guarda el gancho H.TIMI de la BIOS (0xC3 = jp a la interrupcion del juego, 0xC9 = ret)
 C 0x4137 slot_del_cartucho: A = el slot de la pagina 1 (el cartucho) en el formato de ENASLT; lo apunta en 0xD2AA
 C 0x414A apunta a el estado del juego (indice del despachador principal)
 C 0x414D apunta a el paso dentro del estado
@@ -948,6 +950,7 @@ C 0x415D el mapper: pone en 0x4000 el banco de A
 C 0x4163 el mapper: pone en 0x6000 el banco de A
 C 0x4169 el mapper: pone en 0x8000 el banco de A
 C 0x4170 el mapper: pone en 0xA000 el banco de A
+C 0x417E guarda el gancho H.TIMI de la BIOS (0xC3 = jp a la interrupcion del juego, 0xC9 = ret)
 C 0x4199 lee_estado: A = el registro de estado A del VDP (R#15)
 C 0x419F apunta a las marcas de la interrupcion (bit 0: cuadro en marcha, bit 1: sonido, bit 2: lectura del VDP)
 C 0x41A7 apunta a las marcas de la interrupcion (bit 0: cuadro en marcha, bit 1: sonido, bit 2: lectura del VDP)

@@ -48,6 +48,11 @@ try:
 except ImportError:
     RAM_PRESTADA = ()
 try:
+    # los campos de las fichas, descritos por su direccion fija
+    from anotaciones import FICHAS_FIJAS                       # noqa: E402
+except ImportError:
+    FICHAS_FIJAS = set()
+try:
     # el mapper de cada juego: registro -> ventana que cambia
     from anotaciones import REGISTROS_MAPPER                  # noqa: E402
 except ImportError:
@@ -159,6 +164,9 @@ def ventanas_de(filas, b):
 def destino_de(b, a, dest, k, ventanas, medido):
     if dest < 0x6000:
         return 0
+    # lo que hay en la RAM (el BDOS en 0xF37D): RUTINAS lo lleva con banco -1
+    if dest >= 0xC000:
+        return -1
     if b and ORG[b] <= dest < ORG[b] + 0x2000:
         return b
     if (b, a) in medido:
@@ -234,7 +242,13 @@ def comentario(b, filas, k, fichas, ventanas=None, medido=None):
             if re.match(r"ld [a-z]+,\(0%04xh\)$" % v, t):
                 return "lee %s" % que
             if re.match(r"ld (hl|de|bc|ix|iy),0%04xh$" % v, t):
+                # un campo suelto de una ficha no se apunta: ese numero
+                # suele ser otra cosa (el disco cambia 0xE280-0xF37F)
+                if v in FICHAS_FIJAS:
+                    return None
                 return "apunta a %s" % que
+            if v in FICHAS_FIJAS:
+                return None
             return que
     return None
 

@@ -135,7 +135,7 @@ arranque:		; la puesta en marcha (desde H.STKE): pila en 0xD280, RAM a cero, ban
 	im 1		;4103
 	ld sp,0d280h		;4105   ; la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 	ld hl,084d4h		;4108   ; 0xF323 (DISKVE, el gestor de errores de disco) = 0x84D4
-	ld (0f323h),hl		;410b
+	ld (0f323h),hl		;410b   ; guarda DISKVE: la rutina de errores del disco y el byte siguiente (16 bits)
 	ld hl,0e280h		;410e   ; guarda la zona del disco (0xE280-0xF37F) en 0xC000: el juego usa esa RAM y p14:8334 la devuelve para el BDOS...
 	ld bc,01100h		;4111
 	ld de,0c000h		;4114
@@ -149,7 +149,7 @@ arranque:		; la puesta en marcha (desde H.STKE): pila en 0xD280, RAM a cero, ban
 	ld bc,00005h		;412a
 	ldir		;412d
 	ld a,0c9h		;412f   ; ...y lo deja en `ret` mientras arranca
-	ld (0fd9fh),a		;4131
+	ld (0fd9fh),a		;4131   ; guarda el gancho H.TIMI de la BIOS (0xC3 = jp a la interrupcion del juego, 0xC9 = ret)
 	call cartucho_en_pagina_2		;4134   ; el cartucho tambien en 0x8000-0xBFFF (p00:43EC: ENASLT con H = 0x80)
 	call slot_del_cartucho		;4137   ; slot_del_cartucho: A = el slot de la pagina 1 (el cartucho) en el formato de ENASLT; lo apunta en 0xD2AA
 	xor a			;413a   ; A = 0 para los borrados de abajo
@@ -186,7 +186,7 @@ arranque:		; la puesta en marcha (desde H.STKE): pila en 0xD280, RAM a cero, ban
 	ld hl,0ed0fh		;4177   ; el contador de cuadros de 0xED0F a cero
 	ld (hl),000h		;417a
 	ld a,0c3h		;417c   ; H.TIMI = jp interrupcion: desde aqui el juego corre en la interrupcion
-	ld (0fd9fh),a		;417e
+	ld (0fd9fh),a		;417e   ; guarda el gancho H.TIMI de la BIOS (0xC3 = jp a la interrupcion del juego, 0xC9 = ret)
 	ld hl,interrupcion		;4181
 	ld (0fda0h),hl		;4184
 	xor a			;4187   ; 0xF3DB (CLIKSW) = 0: sin el clic de las teclas

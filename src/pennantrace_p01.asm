@@ -37,7 +37,7 @@ L_6003:
 	sla a		;6021
 	ld e,a			;6023
 	ld d,000h		;6024
-	ld hl,0e23ch		;6026   ; apunta a las marcas del corredor de la ficha 0xE231
+	ld hl,0e23ch		;6026
 	add hl,de			;6029
 	ld a,(hl)			;602a
 	and 00fh		;602b
@@ -284,7 +284,7 @@ L_61EC:
 	ld hl,06284h		;61f8   ; si no, la tabla de 0x6284 dice a que base va el bateador
 	call 04216h		;61fb   ; hl_mas_a: HL = HL + A
 	ld c,(hl)			;61fe
-	ld hl,0e23ch		;61ff   ; apunta a las marcas del corredor de la ficha 0xE231
+	ld hl,0e23ch		;61ff
 	ld de,00010h		;6202
 	ld b,003h		;6205
 L_6207:
@@ -2252,7 +2252,7 @@ L_6F34:
 	ret nz			;6f41
 L_6F42:
 	ld (hl),000h		;6f42   ; ...al acabar, IX+11 de los 9 de campo a 0
-	ld hl,0e27ch		;6f44   ; apunta a las marcas del jardinero derecho (ficha 0xE271, defensor 9)
+	ld hl,0e27ch		;6f44
 	ld de,00010h		;6f47
 	ld b,009h		;6f4a
 L_6F4C:
@@ -3043,7 +3043,7 @@ L_74F6:
 	ld ix,0e231h		;74fd   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	call L_7513		;7501
 	ld b,008h		;7504
-	ld ix,0e281h		;7506   ; apunta a el numero (bits 0-3) y el estado (bits 4-7) del jardinero central (ficha 0xE281, defensor 8)
+	ld ix,0e281h		;7506   ; apunta a la ficha del jardinero central (defensor 8) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 	call L_7513		;750a
 	ld b,001h		;750d
 	ld ix,0e271h		;750f   ; apunta a las 9 fichas de 16 bytes de los defensores
@@ -4004,7 +4004,7 @@ L_7B3C:
 	inc a			;7b41
 	ld c,a			;7b42
 	ld b,004h		;7b43
-	ld hl,0e23ch		;7b45   ; apunta a las marcas del corredor de la ficha 0xE231
+	ld hl,0e23ch		;7b45
 	ld de,00010h		;7b48
 L_7B4B:
 	ld a,(hl)			;7b4b   ; busca la ficha de esa base
@@ -4026,7 +4026,7 @@ L_7B5C:
 	and 00fh		;7b5f
 	ld c,a			;7b61
 	ld b,004h		;7b62
-	ld hl,0e23ch		;7b64   ; apunta a las marcas del corredor de la ficha 0xE231
+	ld hl,0e23ch		;7b64
 	ld de,00010h		;7b67
 L_7B6A:
 	ld a,(hl)			;7b6a
@@ -4571,7 +4571,7 @@ L_7F26:
 	and 0f0h		;7f31
 	ld e,a			;7f33
 	ld d,000h		;7f34
-	ld hl,0e27eh		;7f36   ; apunta a la base de destino (nibble alto; 2 abajo: llegado) del jardinero derecho (ficha 0xE271, defensor 9)
+	ld hl,0e27eh		;7f36
 	add hl,de			;7f39
 	ret			;7f3a
 L_7F3B:

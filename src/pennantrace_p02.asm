@@ -1637,7 +1637,7 @@ L_8AD4:
 	ld a,(0de03h)		;8ad4   ; ...cada dos cuadros, si hay alguno en 0xE23C
 	rra			;8ad7
 	ret c			;8ad8
-	ld hl,0e23ch		;8ad9   ; apunta a las marcas del corredor de la ficha 0xE231
+	ld hl,0e23ch		;8ad9
 	ld de,00010h		;8adc
 	ld b,004h		;8adf
 L_8AE1:
@@ -2678,7 +2678,7 @@ L_923A:
 	ld a,(0eddeh)		;924c   ; ...si la jugada no ha acabado y no hay corredores, se acaba
 	and 001h		;924f
 	jr nz,L_9293		;9251
-	ld hl,0e23ch		;9253   ; apunta a las marcas del corredor de la ficha 0xE231
+	ld hl,0e23ch		;9253
 	ld de,00010h		;9256
 	ld b,004h		;9259
 L_925B:
@@ -2846,7 +2846,7 @@ L_9394:
 	add hl,de			;9394
 	djnz L_938F		;9395
 	ld a,c			;9397
-	ld de,0e232h		;9398   ; apunta a la y, fraccion del corredor de la ficha 0xE231
+	ld de,0e232h		;9398
 	ld hl,0e231h		;939b   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld (hl),000h		;939e
 	ld bc,0003fh		;93a0
@@ -2864,7 +2864,7 @@ L_93B3:
 	call 05c77h		;93b3   ; el home run: sprites, p02:98FC; sin velocidad, 0xE302 = 0...
 	call 05b1fh		;93b6   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
 	call L_98FC		;93b9
-	ld hl,(0e21dh)		;93bc   ; lee el dibujo de su sprite de la pelota y el byte siguiente (16 bits)
+	ld hl,(0e21dh)		;93bc   ; lee la altura de la pelota y el byte siguiente (16 bits)
 	ld a,h			;93bf
 	or l			;93c0
 	call z,L_93EB		;93c1
@@ -3012,7 +3012,7 @@ L_94A8:
 	ld (0e1cbh),a		;94aa
 	xor a			;94ad
 	ld hl,0e231h		;94ae   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
-	ld de,0e232h		;94b1   ; apunta a la y, fraccion del corredor de la ficha 0xE231
+	ld de,0e232h		;94b1
 	ld bc,00040h		;94b4
 	ld (hl),a			;94b7
 	ldir		;94b8
@@ -3754,7 +3754,7 @@ L_9931:
 	bit 7,d		;9947
 	call nz,L_9A16		;9949
 	call L_9C9E		;994c   ; ...la altura nueva en 0xE21C...
-	ld (0e21ch),hl		;994f   ; guarda las marcas de la pelota y el byte siguiente (16 bits)
+	ld (0e21ch),hl		;994f   ; guarda la altura de la pelota, fraccion y el byte siguiente (16 bits)
 	call L_99FA		;9952   ; ...el sonido de la bola alta (p02:99FA)...
 	call L_99DF		;9955   ; ...hasta que la altura llega a 0
 	ret nz			;9958
@@ -3776,7 +3776,7 @@ L_9959:
 	ret			;9979
 L_997A:
 	ld a,001h		;997a   ; si no: la gravedad otra vez, 0xE22A = 16 si va baja, un bote mas (0xE1D0)...
-	ld (0e21fh),a		;997c   ; guarda la y de destino de la pelota
+	ld (0e21fh),a		;997c   ; guarda la gravedad: lo que se resta a la subida de la pelota (0xE226); crece cada cuadro hasta 0xFF
 	call L_99E9		;997f
 	call L_99BE		;9982
 	ld a,(hl)			;9985
@@ -3800,8 +3800,8 @@ L_997A:
 L_99A4:
 	ld hl,00000h		;99a4   ; parada: todo a cero y el estado siguiente
 	ld (0e226h),hl		;99a7
-	ld (0e21ch),hl		;99aa   ; guarda las marcas de la pelota y el byte siguiente (16 bits)
-	ld (0e21dh),hl		;99ad   ; guarda el dibujo de su sprite de la pelota y el byte siguiente (16 bits)
+	ld (0e21ch),hl		;99aa   ; guarda la altura de la pelota, fraccion y el byte siguiente (16 bits)
+	ld (0e21dh),hl		;99ad   ; guarda la altura de la pelota y el byte siguiente (16 bits)
 	ld hl,0e211h		;99b0   ; apunta a la ficha de 16 bytes de la pelota
 	inc (hl)			;99b3
 	ret			;99b4
@@ -3836,7 +3836,7 @@ L_99D6:
 	ret			;99de
 L_99DF:
 	xor a			;99df   ; Z si la altura (0xE21C-0xE21E) es 0
-	ld hl,0e21ch		;99e0   ; apunta a las marcas de la pelota
+	ld hl,0e21ch		;99e0   ; apunta a la altura de la pelota, fraccion
 	or (hl)			;99e3
 	inc hl			;99e4
 	or (hl)			;99e5
@@ -3857,7 +3857,7 @@ L_99FA:
 	ld a,(0edd2h)		;99fa   ; la bola alta: una vez (0xEDD2), si la altura pasa de 0x70, el sonido 0x22
 	or a			;99fd
 	ret nz			;99fe
-	ld hl,(0e21dh)		;99ff   ; lee el dibujo de su sprite de la pelota y el byte siguiente (16 bits)
+	ld hl,(0e21dh)		;99ff   ; lee la altura de la pelota y el byte siguiente (16 bits)
 	ld de,00070h		;9a02
 	or a			;9a05
 	sbc hl,de		;9a06
@@ -3958,7 +3958,7 @@ L_9A9A:
 	ld a,(0e302h)		;9aa7   ; ...y el de la sombra si la altura no pasa de 0xE221
 	ld c,a			;9aaa
 	ld hl,(0e221h)		;9aab
-	ld de,(0e21dh)		;9aae   ; lee el dibujo de su sprite de la pelota y el byte siguiente (16 bits)
+	ld de,(0e21dh)		;9aae   ; lee la altura de la pelota y el byte siguiente (16 bits)
 	or a			;9ab2
 	sbc hl,de		;9ab3
 	ld a,h			;9ab5
@@ -3992,7 +3992,7 @@ L_9ADE:
 L_9AE0:
 	ld a,0bch		;9ae0   ; los dibujos: la sombra 0xBC, la pelota 0xB0 alta o 0xB4 baja
 	ld (0e106h),a		;9ae2
-	ld hl,(0e21dh)		;9ae5   ; lee el dibujo de su sprite de la pelota y el byte siguiente (16 bits)
+	ld hl,(0e21dh)		;9ae5   ; lee la altura de la pelota y el byte siguiente (16 bits)
 	ld de,0ff80h		;9ae8
 	add hl,de			;9aeb
 	ld a,0b0h		;9aec
@@ -4084,7 +4084,7 @@ L_9B7D:
 	ccf			;9b8e
 	ret c			;9b8f
 L_9B90:
-	ld hl,(0e21dh)		;9b90   ; lee el dibujo de su sprite de la pelota y el byte siguiente (16 bits)
+	ld hl,(0e21dh)		;9b90   ; lee la altura de la pelota y el byte siguiente (16 bits)
 	ld de,0ffd0h		;9b93
 	add hl,de			;9b96
 	ccf			;9b97
@@ -4243,18 +4243,18 @@ L_9C9E:
 	jr c,L_9CAF		;9ca3
 	add hl,de			;9ca5
 	ret nc			;9ca6
-	ld a,(0e21eh)		;9ca7   ; lee la base de destino (nibble alto; 2 abajo: llegado) de la pelota
+	ld a,(0e21eh)		;9ca7   ; lee la altura de la pelota, byte alto
 	inc a			;9caa
-	ld (0e21eh),a		;9cab   ; guarda la base de destino (nibble alto; 2 abajo: llegado) de la pelota
+	ld (0e21eh),a		;9cab   ; guarda la altura de la pelota, byte alto
 	ret			;9cae
 L_9CAF:
 	add hl,de			;9caf
 	ret c			;9cb0
-	ld a,(0e21eh)		;9cb1   ; lee la base de destino (nibble alto; 2 abajo: llegado) de la pelota
+	ld a,(0e21eh)		;9cb1   ; lee la altura de la pelota, byte alto
 	or a			;9cb4
 	jr z,L_9CBC		;9cb5
 	dec a			;9cb7
-	ld (0e21eh),a		;9cb8   ; guarda la base de destino (nibble alto; 2 abajo: llegado) de la pelota
+	ld (0e21eh),a		;9cb8   ; guarda la altura de la pelota, byte alto
 	ret			;9cbb
 L_9CBC:
 	ld hl,00000h		;9cbc
@@ -4263,7 +4263,7 @@ L_9CC0:
 	ld hl,0e212h		;9cc0   ; guarda la y y la x de la pelota en 0xED51 y 0xED54
 	ld de,0ed51h		;9cc3
 	call L_9CCF		;9cc6
-	ld hl,0e217h		;9cc9   ; apunta a la x, fraccion de la pelota
+	ld hl,0e217h		;9cc9
 	ld de,0ed54h		;9ccc
 L_9CCF:
 	ld bc,00003h		;9ccf
@@ -4273,12 +4273,12 @@ L_9CD5:
 	ld de,0e212h		;9cd5   ; y las devuelve
 	ld hl,0ed51h		;9cd8
 	call L_9CCF		;9cdb
-	ld de,0e217h		;9cde   ; apunta a la x, fraccion de la pelota
+	ld de,0e217h		;9cde
 	ld hl,0ed54h		;9ce1
 	jr L_9CCF		;9ce4
 L_9CE6:
 	xor a			;9ce6   ; la pelota en la mano del lanzador: todo a cero...
-	ld (0e21fh),a		;9ce7   ; guarda la y de destino de la pelota
+	ld (0e21fh),a		;9ce7   ; guarda la gravedad: lo que se resta a la subida de la pelota (0xE226); crece cada cuadro hasta 0xFF
 	ld (0e22fh),a		;9cea
 	ld (0e230h),a		;9ced
 	ld (0e211h),a		;9cf0   ; guarda la ficha de 16 bytes de la pelota
@@ -4301,7 +4301,7 @@ L_9CE6:
 	ld hl,00138h		;9d21
 	ld (0e218h),hl		;9d24   ; guarda la x de la pelota y el byte siguiente (16 bits)
 	ld hl,00001h		;9d27
-	ld (0e21dh),hl		;9d2a   ; guarda el dibujo de su sprite de la pelota y el byte siguiente (16 bits)
+	ld (0e21dh),hl		;9d2a   ; guarda la altura de la pelota y el byte siguiente (16 bits)
 	ld a,00dh		;9d2d   ; ...0xE302 = 13, 0xED39 = 15...
 	ld (0e302h),a		;9d2f
 	ld a,00fh		;9d32

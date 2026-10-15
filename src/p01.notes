@@ -642,7 +642,6 @@ L 0x7AC0 que_vuelva el corredor IX vuelve: segun su base, el mando 1, 4 o 2 con 
 L 0x7AE3 que_avance el corredor IX avanza (si no corre ya): el mando 8, 1 o 4 con el bit 4
 L 0x7DC6 paso_anterior al paso anterior (0xECE6 - 1)
 L 0x7F10 x_mas_de HL = la x del IX mas DE
-C 0x6026 apunta a las marcas del corredor de la ficha 0xE231
 C 0x603A lee la jugada anulada (foul)
 C 0x6046 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x6053 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -671,7 +670,6 @@ C 0x61BA sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vue
 C 0x61BF sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x61CA lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x61FB hl_mas_a: HL = HL + A
-C 0x61FF apunta a las marcas del corredor de la ficha 0xE231
 C 0x621D hl_mas_a: HL = HL + A
 C 0x623F apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0x62D4 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
@@ -857,7 +855,6 @@ C 0x6EA8 guarda variable de paso (cada rutina la usa a su manera)
 C 0x6EB9 guarda variable de paso (cada rutina la usa a su manera)
 C 0x6ED1 lee la x (horizontal)
 C 0x6ED4 lee la x, byte alto
-C 0x6F44 apunta a las marcas del jardinero derecho (ficha 0xE271, defensor 9)
 C 0x6F61 lee el equipo del jugador en PENNANT (bit 0)
 C 0x6F80 lee la x, byte alto
 C 0x6F83 lee la y (vertical)
@@ -1005,7 +1002,7 @@ C 0x74E0 le suma la x, byte alto
 C 0x74E3 guarda la x, byte alto
 C 0x74ED palabra_a: HL = la palabra A de la tabla HL
 C 0x74FD apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
-C 0x7506 apunta a el numero (bits 0-3) y el estado (bits 4-7) del jardinero central (ficha 0xE281, defensor 8)
+C 0x7506 apunta a la ficha del jardinero central (defensor 8) (+0: el numero (bits 0-3) y el estado (bits 4-7))
 C 0x750F apunta a las 9 fichas de 16 bytes de los defensores
 C 0x7517 lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 C 0x7523 lee el numero (bits 0-3) y el estado (bits 4-7)
@@ -1083,8 +1080,6 @@ C 0x7AB3 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado
 C 0x7AD3 guarda el mando del bateador o los corredores
 C 0x7AF6 guarda el mando del bateador o los corredores
 C 0x7B33 apunta a las 9 fichas de 16 bytes de los defensores
-C 0x7B45 apunta a las marcas del corredor de la ficha 0xE231
-C 0x7B64 apunta a las marcas del corredor de la ficha 0xE231
 C 0x7B7C lee la jugada anulada (foul)
 C 0x7B82 lee el paso de la defensa del ordenador
 C 0x7B85 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
@@ -1132,7 +1127,6 @@ C 0x7EE7 paso_anterior: al paso anterior (0xECE6 - 1)
 C 0x7EED x_mas_de: HL = la x del IX mas DE
 C 0x7EF0 paso_anterior: al paso anterior (0xECE6 - 1)
 C 0x7F1A guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
-C 0x7F36 apunta a la base de destino (nibble alto; 2 abajo: llegado) del jardinero derecho (ficha 0xE271, defensor 9)
 C 0x7F56 apunta a el paso de la defensa del ordenador
 C 0x7F80 apunta a las 9 fichas de 16 bytes de los defensores
 C 0x7F86 lee la base de destino (nibble alto; 2 abajo: llegado)
