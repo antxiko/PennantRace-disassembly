@@ -4,10 +4,11 @@
 Una linea por rutina: direccion (3 cifras) e instruccion, con * si ya lleva
 comentario. Herramienta de mano: no escribe nada.
 
-Uso: volcado.py <banco> <desde> <hasta>   (hexadecimal)
+Uso: volcado.py <banco> <desde> <hasta> [--c]   (hexadecimal)
+     --c: con el principio de cada comentario
 """
 import sys,re
-b=int(sys.argv[1]); desde=int(sys.argv[2],16); hasta=int(sys.argv[3],16)
+VER='--c' in sys.argv; b=int(sys.argv[1]); desde=int(sys.argv[2],16); hasta=int(sys.argv[3],16)
 out=[]; 
 for ln in open(__import__('os').path.join(__import__('os').path.dirname(__import__('os').path.abspath(__file__)),'..','src','pennantrace_p%02d.asm'%b),encoding='utf-8'):
     m=re.match(r'^([A-Za-z_]\w*):',ln)
@@ -17,7 +18,7 @@ for ln in open(__import__('os').path.join(__import__('os').path.dirname(__import
         a=int(m.group(2),16)
         if desde<=a<hasta:
             c=m.group(3).strip()
-            out.append(('I',a,m.group(1).strip(),'*' if c.startswith(';') else ''))
+            out.append(('I',a,m.group(1).strip(),('{'+c[1:].strip()[:38]+'}' if VER else '*') if c.startswith(';') else ''))
     elif ln.startswith('\tdef'):
         m=re.search(r';\s*([0-9a-f]{4})',ln)
         if m and desde<=int(m.group(1),16)<hasta: out.append(('D',int(m.group(1),16)))

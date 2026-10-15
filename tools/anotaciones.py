@@ -39,6 +39,107 @@ CAMBIOS_DE_BANCO = {
 }
 
 RUTINAS = {
+    # --- ayudantes de todos los bancos (los que mas se llaman) ---
+    (0, 0x40D2): ("velocidad_hacia", "con los bancos 7-8-9, la velocidad de HL (x, y) a DE (p00:5E9F); vuelve a 13-14-15"),
+    (0, 0x40DB): ("dibujos_de_sprites_13", "los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15"),
+    (0, 0x40E1): ("carga_la_fuente_13", "carga la fuente (p00:5991) y vuelve a los bancos 13-14-15"),
+    (0, 0x4543): ("paso_siguiente", "al paso siguiente del estado (0xDE01 + 1)"),
+    (0, 0x4601): ("paso_cero", "el paso del estado a 0"),
+    (0, 0x4602): ("pon_paso", "el paso del estado (0xDE01) = A"),
+    (0, 0x451D): ("vuelve_al_menu", "el menu: estado, despachador de menus y paso a 0"),
+    (0, 0x5B1F): ("dibujos_de_sprites", "los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian"),
+    (0, 0x5BE4): ("diez_caracteres", "10 caracteres seguidos de HL en (D, E)"),
+    (0, 0x5BE6): ("b_caracteres", "B caracteres seguidos de HL en (D, E)"),
+    (0, 0x5C12): ("una_cifra", "una cifra; si no es 0, ya no hay ceros a la izquierda"),
+    (0, 0x5C34): ("cifras_bcd", "B cifras BCD con ceros, empezando por la baja si B es impar"),
+    (0, 0x5C73): ("pide_colores_sprite", "pide copiar los colores de sprite (0xED09 = 1)"),
+    (0, 0x5716): ("dibujo_64", "el dibujo de 64 bytes A (p11:8759 + 64 A)"),
+    (0, 0x5D7D): ("si_no_13", "con los bancos 1-2-3, cambia SI / NO (p03:BCDE); vuelve a 13-14-15"),
+    (0, 0x5E80): ("calla_y_espera", "calla la musica (0x81) y apunta la siguiente en 0xED9A"),
+    (0, 0x5F71): ("menos_hl", "HL = -HL"),
+    (0, 0x5F79): ("menos_de", "DE = -DE"),
+    (0, 0x52B5): ("caracteres_de_sprite", "17 caracteres de un bit (p09:B942) en la VRAM 0xF818, color 0x0D"),
+    (0, 0x55CD): ("bloque_de_fuente", "B caracteres por fila y C filas de la fuente de la fila 0x28"),
+    (0, 0x5991): ("carga_la_fuente", "carga la fuente: 161 caracteres de un bit (0xFAF6 = 1 mientras tanto)"),
+    (0, 0x4F79): ("bufer_a_vram", "B caracteres de 8x8 del bufer HL a la VRAM DE"),
+    (1, 0x7DC6): ("paso_anterior", "al paso anterior (0xECE6 - 1)"),
+    (1, 0x7AC0): ("que_vuelva", "el corredor IX vuelve: segun su base, el mando 1, 4 o 2 con el bit 5"),
+    (1, 0x7AE3): ("que_avance", "el corredor IX avanza (si no corre ya): el mando 8, 1 o 4 con el bit 4"),
+    (1, 0x62F7): ("bateador_mas", "un bateador mas: en 0xE1A1 = 3, solo la primera vez (0xEDD4)"),
+    (1, 0x7F10): ("x_mas_de", "HL = la x del IX mas DE"),
+    (1, 0x6939): ("paso_e339", "al paso siguiente (0xE339 + 1)"),
+    (2, 0x9127): ("menos_de_2", "DE = -DE"),
+    (3, 0xB06E): ("base_libre", "carry si ningun corredor esta en la base C (con el bit 6)"),
+    (3, 0xA425): ("letras_estrechas", "B letras; 0x0C (estrecha) avanza 4, las demas 8"),
+    (3, 0xA20F): ("y_de_la_fila", "E = la y de la fila A (0xA2DC) + 1"),
+    (3, 0xA592): ("paso_siguiente_3", "al paso siguiente"),
+    (3, 0xBDE6): ("recuadro_3", "el recuadro: borrado y un marco"),
+    (3, 0xBDF4): ("devuelve_trozo", "devuelve el trozo de pantalla"),
+    (13, 0x6B5B): ("cuantos_equipos", "B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo"),
+    (13, 0x6B93): ("quita_recuadro", "devuelve lo de detras del recuadro"),
+    (13, 0x60AF): ("subpaso_siguiente", "el subpaso siguiente (0xD74D + 1)"),
+    (13, 0x60A7): ("paso_siguiente_13", "el paso siguiente con el subpaso a 0"),
+    (13, 0x6AFD): ("por_once", "HL = A x 11"),
+    (13, 0x65FB): ("indice_de_equipo", "C = el indice del equipo A en 0xD72A"),
+    (13, 0x6A0D): ("lista_de_jugadores", "la lista de jugadores desde 0xDAAE"),
+    (13, 0x71B8): ("ficha_d280", "la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot"),
+    (14, 0x9FFA): ("paso_ecef", "al paso siguiente (0xECEF + 1)"),
+    (14, 0x9834): ("letra_ascii", "una letra ASCII a la fuente"),
+    (14, 0x8718): ("columna_de_4", "el caracter A en una columna de 4 (los lanzadores) desde la y 0xA4"),
+    (14, 0x871E): ("columna_de_12", "el caracter A en una columna de 12 (los de campo) desde la y 0x29"),
+    (14, 0x8263): ("cierra_fichero", "cierra el fichero (BDOS 0x10); error 2"),
+    (14, 0x82A7): ("fcb_a_cero", "el FCB: bloque y registro a cero, registro de 1 byte"),
+    (14, 0x82D2): ("fcb_nombre", "el FCB con unidad 0 y el nombre de 11 letras de HL"),
+    (14, 0x8334): ("antes_del_bdos", "antes del BDOS: 0xF100-0xF37F a 0xD780 y cambia 0xC000-0xD0FF por 0xE280"),
+    (14, 0x8368): ("despues_del_bdos", "despues del BDOS: vuelve a cambiar la RAM"),
+    (14, 0x8423): ("nombre_en_daae", "HL = 0xDAAE + A x 11"),
+    (14, 0x8506): ("error_de_disco", "error del disco: todo como estaba"),
+    (14, 0x9B4E): ("y_de_la_fila_14", "E = la y de la fila A + 1"),
+    (15, 0xA9C9): ("columnas_bcd", "B jugadores: tres bytes de cifras (- 1) a dos BCD en DE, saltando C bytes"),
+    (15, 0xA9E5): ("columna_bcd", "B jugadores: dos bytes de cifras (- 1) a un BCD en DE, saltando C bytes"),
+    (15, 0xA9FC): ("cuatro_lanzadores", "un valor - 1 de cada uno de los 4 lanzadores (19 bytes) a DE, y su suma"),
+    (15, 0xAA31): ("resta_de_25", "guarda la suma y A = 0x25 - la suma (BCD)"),
+    (15, 0xAE9E): ("columna_de_caracteres", "B caracteres A en columna, de 12 en 12"),
+    (15, 0xAF2C): ("tabla_de_pennant", "la tabla de PENNANT: cada equipo con partidos, victorias, derrotas, porcentaje y diferencia"),
+    (15, 0xACD2): ("partido_jugado", "uno mas en la tabla de partidos para H contra L y L contra H"),
+    (15, 0xAD98): ("bcd_mas_uno", "uno mas al BCD de 4 cifras de HL"),
+    (15, 0xADA4): ("a_bcd", "A a BCD: las centenas en 0xE379, el resto en 0xE37A"),
+    (15, 0xB061): ("tres_cifras_en_fila", "tres cifras en la fila 0xE372, x = D"),
+    (15, 0xB13C): ("cuadro_44", "un rectangulo de 16 x 16 de color 0x44 en DE"),
+    (15, 0xB140): ("cuadro_55", "un rectangulo de 16 x 16 de color 0x55 en DE"),
+    (15, 0xB14E): ("letrero", "el letrero A de la tabla 0xB20D (2 x 2 caracteres) en DE"),
+    (15, 0xB22D): ("caracter_lmmm", "un caracter de la fuente con LMMM (sin el color 0)"),
+    (15, 0xB5DD): ("menos_hl_15", "HL = -HL"),
+    (15, 0xB5E5): ("menos_de_15", "DE = -DE"),
+    (15, 0xB611): ("pelota_al_lanzador", "la pelota en manos del lanzador"),
+    (15, 0xB623): ("pelota_tras_robo", "tras un robo, la pelota al lanzador o al receptor"),
+    (15, 0xBA0A): ("cifra_en_casilla", "la cifra B en el sitio D de la casilla HL: A = el byte nuevo"),
+    (15, 0xBA44): ("bc_menos_hl", "HL = BC - HL (BCD); carry si pasa"),
+    (15, 0xBA52): ("guarda_recuadro", "guarda el trozo de pantalla del recuadro y lo pinta"),
+    (15, 0xBA74): ("quita_recuadro_15", "devuelve el trozo de pantalla"),
+    (15, 0xBA82): ("borra_recuadro", "borra el recuadro"),
+    (15, 0xBB64): ("cifra_del_reloj", "una cifra del reloj (0 en blanco)"),
+    (15, 0xBC72): ("mueve_pelota_grande", "la posicion de la pelota de la presentacion mas su velocidad"),
+    (15, 0xBCAD): ("sprites_pelota_grande", "los sprites de la pelota de la presentacion"),
+    (15, 0xA171): ("ymmm", "orden YMMM (0xE0) del VDP: mueve en vertical una franja"),
+    (15, 0xA1CC): ("tres_cifras", "un numero de 3 cifras BCD con los ceros de delante en blanco"),
+    (15, 0xA1E7): ("cifra_15", "una cifra (1-10, o 0 en blanco) y 8 a la derecha"),
+    (15, 0xA1F8): ("tres_cifras_con_ceros", "tres cifras BCD sin quitar ceros"),
+    (15, 0xA22D): ("texto_15", "un texto con [x y] y caracteres de la fuente hasta 0xFF"),
+    (15, 0xA241): ("diez_letras", "10 letras en ASCII (el '$' acaba)"),
+    (15, 0xA259): ("caracter_15", "un caracter de la fuente de la pagina 1 a la 1"),
+    (15, 0xA651): ("diez_letras_2", "10 letras ASCII en la fuente"),
+    (15, 0xAA13): ("suma_bcd", "HL = la suma BCD de B bytes de DE"),
+    (15, 0xAA23): ("resta_bcd", "guarda la suma y DE = BC - la suma (BCD)"),
+    (15, 0xAC7A): ("azar_16", "un numero al azar de 0 a 15"),
+    (15, 0xAD75): ("victorias_de", "HL = las victorias de la ficha del equipo A (+11)"),
+    (15, 0xAD7D): ("ficha_del_equipo", "HL = la ficha de 15 bytes del equipo A en 0xD680"),
+    (15, 0xAD8A): ("azar", "al azar: 0xD6E0 += R x 3"),
+    (15, 0xADD0): ("bcd_a_binario", "A = el BCD de 3 cifras de HL en binario"),
+    (15, 0xADEB): ("diez_ascii", "10 letras ASCII"),
+    (15, 0xAF26): ("nombre_del_equipo", "el nombre del equipo A (10 letras)"),
+    (15, 0xBA2D): ("suma_bcd_16", "la suma BCD de B palabras de DE, guardada en HL"),
+    (15, 0xBA66): ("recuadro_15", "el recuadro: borrado y un marco"),
     # --- banco 0: arranque e interrupcion ---
     (0, 0x40F0): ("init", "INIT de la cabecera: deja en H.STKE (0xFEDA) un rst 0x30 con el slot del cartucho y 0x4102"),
     (0, 0x4102): ("arranque", "la puesta en marcha (desde H.STKE): pila en 0xD280, RAM a cero, bancos 0-1-2-3, H.TIMI a 0x418E y a esperar en `jr $`"),
@@ -342,3 +443,33 @@ IX_CANAL_POR_DEFECTO = {6: ((0xB41E, 0xBB99),)}
 
 FICHAS = ((CARGAS_JUGADOR, IX_JUGADOR_POR_DEFECTO, CAMPOS_JUGADOR),
           (CARGAS_CANAL, IX_CANAL_POR_DEFECTO, CAMPOS_CANAL))
+
+# Los campos de las fichas leidos con su direccion fija. Los defensores van
+# en el orden de la tabla p15:B5ED, que les pone el numero 9 a 1 (p15:B2BF);
+# sus sitios de partida son los de los puestos de siempre: el 2 detras de la
+# casa (y 0x198), el 1 en el centro (y 0x140), el 3 a la derecha (x 0x1A0),
+# el 5 a la izquierda (x 0xC4), el 7, 8 y 9 al fondo (y 0x88-0xC8).
+PUESTOS = {1: "lanzador", 2: "receptor", 3: "primera base", 4: "segunda base",
+           5: "tercera base", 6: "parador en corto", 7: "jardinero izquierdo",
+           8: "jardinero central", 9: "jardinero derecho"}
+
+
+def _fichas_fijas():
+    out = {}
+    for k in range(9):
+        n = 9 - k
+        for off, que in CAMPOS_JUGADOR.items():
+            out[0xE271 + 16 * k + off] = ("%s del %s (ficha 0x%04X, defensor %d)" % (que, PUESTOS[n], 0xE271 + 16 * k, n), "p15:B2BF")
+    for k in range(4):
+        for off, que in CAMPOS_JUGADOR.items():
+            out[0xE231 + 16 * k + off] = ("%s del corredor de la ficha 0x%04X" % (que, 0xE231 + 16 * k), "p00:5B0D")
+    for off, que in CAMPOS_JUGADOR.items():
+        out[0xE211 + off] = ("%s de la pelota" % que, "p01:6CD2")
+    for k in range(8):
+        for off, que in CAMPOS_CANAL.items():
+            out[0xEE00 + 0x2D * k + off] = ("%s del canal %d de sonido" % (que, k + 1), "p06:B226")
+    return out
+
+
+for _a, _v in _fichas_fijas().items():
+    RAM.setdefault(_a, _v)

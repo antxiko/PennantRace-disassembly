@@ -412,60 +412,87 @@ C 0xB189 guarda el mezclador del PSG (registro 7)
 C 0xB194 lee si no es 0, el motor rechaza los sonidos 0x32-0x3C
 C 0xB21D apunta a la cabecera del sonido que empieza (18 bytes)
 C 0xB226 apunta a las fichas de los 8 canales de sonido (0x2D bytes cada una)
+C 0xB231 apunta a la prioridad del sonido del canal 1 de sonido
 C 0xB234 canal_ocupa: el canal IX toma el sonido si su prioridad (A) no es menor que la que tiene
+C 0xB244 apunta a el sonido que toca el canal (0 calla) del canal 2 de sonido
 C 0xB248 canal_nuevo: pone a 0 el vibrato y el desplazamiento del canal IX
+C 0xB24F apunta a la prioridad del sonido del canal 2 de sonido
 C 0xB252 canal_ocupa: el canal IX toma el sonido si su prioridad (A) no es menor que la que tiene
+C 0xB262 apunta a el sonido que toca el canal (0 calla) del canal 3 de sonido
 C 0xB266 canal_nuevo: pone a 0 el vibrato y el desplazamiento del canal IX
+C 0xB26D apunta a la prioridad del sonido del canal 3 de sonido
 C 0xB270 canal_ocupa: el canal IX toma el sonido si su prioridad (A) no es menor que la que tiene
+C 0xB280 apunta a el sonido que toca el canal (0 calla) del canal 4 de sonido
 C 0xB284 canal_nuevo: pone a 0 el vibrato y el desplazamiento del canal IX
+C 0xB28B apunta a la prioridad del sonido del canal 4 de sonido
 C 0xB28E canal_ocupa: el canal IX toma el sonido si su prioridad (A) no es menor que la que tiene
+C 0xB29E apunta a el sonido que toca el canal (0 calla) del canal 5 de sonido
 C 0xB2A2 canal_nuevo: pone a 0 el vibrato y el desplazamiento del canal IX
+C 0xB2A9 apunta a la prioridad del sonido del canal 5 de sonido
 C 0xB2AC canal_ocupa: el canal IX toma el sonido si su prioridad (A) no es menor que la que tiene
+C 0xB2BC apunta a el sonido que toca el canal (0 calla) del canal 6 de sonido
 C 0xB2C0 canal_nuevo: pone a 0 el vibrato y el desplazamiento del canal IX
+C 0xB2C7 apunta a la prioridad del sonido del canal 6 de sonido
 C 0xB2CA canal_ocupa: el canal IX toma el sonido si su prioridad (A) no es menor que la que tiene
+C 0xB2DA apunta a el sonido que toca el canal (0 calla) del canal 7 de sonido
 C 0xB2DE canal_nuevo: pone a 0 el vibrato y el desplazamiento del canal IX
+C 0xB2E5 apunta a la prioridad del sonido del canal 7 de sonido
 C 0xB2E8 canal_ocupa: el canal IX toma el sonido si su prioridad (A) no es menor que la que tiene
 C 0xB2F7 apunta a la ficha del canal 8 (su primer byte: el sonido que toca)
 C 0xB2FB canal_nuevo: pone a 0 el vibrato y el desplazamiento del canal IX
+C 0xB302 apunta a la prioridad del sonido del canal 8 de sonido
 C 0xB30B apunta a el sonido que empieza
 C 0xB381 el mapper: pone en 0x8000 el banco de A
 C 0xB384 lee el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 C 0xB38C el mapper: pone en 0x8000 el banco de A
 C 0xB391 apunta a los registros del SCC que cambiaron (16 bits)
+C 0xB3A6 apunta a las marcas de las ordenes 0xE0-0xE3 del canal 2 de sonido
 C 0xB3CA mezclador: el mezclador del PSG (registro 7) = A, guardado en 0xEFDA
 C 0xB3CF el mapper: pone en 0x8000 el banco de A
 C 0xB3D2 lee los canales del SCC que suenan
 C 0xB3EC el mapper: pone en 0x8000 el banco de A
+C 0xB3FB apunta a las marcas de las ordenes 0xE0-0xE3 del canal 2 de sonido
 C 0xB421 mezclador: el mezclador del PSG (registro 7) = A, guardado en 0xEFDA
 C 0xB427 apunta a el 0xFDA2 del ultimo cuadro
 C 0xB431 pone a uno el bit 7 de las marcas de la envolvente
+C 0xB435 apunta a el sonido que toca el canal (0 calla) del canal 5 de sonido
 C 0xB439 pone a uno el bit 7 de las marcas de la envolvente
+C 0xB43D apunta a el sonido que toca el canal (0 calla) del canal 6 de sonido
 C 0xB441 pone a uno el bit 7 de las marcas de la envolvente
+C 0xB445 apunta a el sonido que toca el canal (0 calla) del canal 7 de sonido
 C 0xB449 pone a uno el bit 7 de las marcas de la envolvente
 C 0xB470 guarda el bit del canal que se esta atendiendo
 C 0xB473 apunta a las fichas de los 8 canales de sonido (0x2D bytes cada una)
 C 0xB477 canal_cuadro: el cuadro del canal IX, si suena
 C 0xB47C guarda el bit del canal que se esta atendiendo
+C 0xB47F apunta a el sonido que toca el canal (0 calla) del canal 2 de sonido
 C 0xB483 canal_cuadro: el cuadro del canal IX, si suena
 C 0xB488 guarda el bit del canal que se esta atendiendo
+C 0xB48B apunta a el sonido que toca el canal (0 calla) del canal 3 de sonido
 C 0xB48F canal_cuadro: el cuadro del canal IX, si suena
 C 0xB494 guarda el bit del canal que se esta atendiendo
+C 0xB497 apunta a el sonido que toca el canal (0 calla) del canal 4 de sonido
 C 0xB49B lee el sonido que toca el canal (0 calla)
 C 0xB4A1 lee el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 C 0xB4AC las marcas de las ordenes 0xE0-0xE3 = 0x00
 C 0xB4B2 canal_cuadro: el cuadro del canal IX, si suena
 C 0xB4B7 guarda el bit del canal que se esta atendiendo
+C 0xB4BA apunta a el sonido que toca el canal (0 calla) del canal 5 de sonido
 C 0xB4BE canal_cuadro: el cuadro del canal IX, si suena
 C 0xB4C3 guarda el bit del canal que se esta atendiendo
+C 0xB4C6 apunta a el sonido que toca el canal (0 calla) del canal 6 de sonido
 C 0xB4CA canal_cuadro: el cuadro del canal IX, si suena
 C 0xB4CF guarda el bit del canal que se esta atendiendo
+C 0xB4D2 apunta a el sonido que toca el canal (0 calla) del canal 7 de sonido
 C 0xB4D6 canal_cuadro: el cuadro del canal IX, si suena
 C 0xB4DB guarda el bit del canal que se esta atendiendo
 C 0xB4DE apunta a la ficha del canal 8 (su primer byte: el sonido que toca)
 C 0xB4E2 canal_cuadro: el cuadro del canal IX, si suena
 C 0xB4F3 guarda el bit del canal que se esta atendiendo
+C 0xB4F6 apunta a el sonido que toca el canal (0 calla) del canal 3 de sonido
 C 0xB4FA canal_cuadro: el cuadro del canal IX, si suena
 C 0xB4FF guarda el bit del canal que se esta atendiendo
+C 0xB502 apunta a el sonido que toca el canal (0 calla) del canal 4 de sonido
 C 0xB506 canal_cuadro: el cuadro del canal IX, si suena
 C 0xB50B guarda el mezclador del PSG (registro 7)
 C 0xB50E al_psg_y_scc: lo de este cuadro, al PSG y al SCC
@@ -530,15 +557,20 @@ C 0xB84B guarda el puntero de la partitura (bajo)
 C 0xB84E guarda el puntero de la partitura (alto)
 C 0xB85A apunta a la cuenta de cuadros de la bajada
 C 0xB86E apunta a la cuenta de cuadros de la bajada
+C 0xB878 lee el sonido que toca el canal (0 calla) del canal 3 de sonido
+C 0xB87E apunta a el sonido que toca el canal (0 calla) del canal 3 de sonido
 C 0xB882 calla_canal: calla el canal IX
+C 0xB885 apunta a el sonido que toca el canal (0 calla) del canal 4 de sonido
 C 0xB889 calla_canal: calla el canal IX
 C 0xB88F apunta a las fichas de los 8 canales de sonido (0x2D bytes cada una)
 C 0xB893 calla_canal: calla el canal IX
 C 0xB898 calla_canal: calla el canal IX
+C 0xB89B apunta a el sonido que toca el canal (0 calla) del canal 5 de sonido
 C 0xB89F calla_canal: calla el canal IX
 C 0xB8A4 calla_canal: calla el canal IX
 C 0xB8A9 calla_canal: calla el canal IX
 C 0xB8AE calla_canal: calla el canal IX
+C 0xB8B6 lee el sonido que toca el canal (0 calla) del canal 3 de sonido
 C 0xB8C8 lee lo que se rebaja el volumen
 C 0xB8E8 apunta a la cuenta de cuadros de la bajada
 C 0xB8EF guarda el sonido que toca el canal (0 calla)
@@ -629,14 +661,23 @@ C 0xBB8C lee las marcas guardadas (orden 0xFE)
 C 0xBB8F guarda las marcas del canal
 C 0xBB92 lee las marcas de la envolvente guardadas
 C 0xBB95 guarda las marcas de la envolvente
+C 0xBBD7 apunta a las marcas de las ordenes 0xE0-0xE3 del canal 3 de sonido
+C 0xBBDF apunta a las marcas de las ordenes 0xE0-0xE3 del canal 1 de sonido
 C 0xBC26 lee el periodo de ruido del canal 3
 C 0xBC38 lee el periodo de ruido de los canales 1 y 2
 C 0xBC4A lee el periodo de la envolvente del PSG, bajo
 C 0xBC58 lee el periodo de la envolvente del PSG, alto
 C 0xBC66 lee la forma de la envolvente del PSG
+C 0xBC7B apunta a las marcas de las ordenes 0xE0-0xE3 del canal 2 de sonido
+C 0xBC86 apunta a las marcas de las ordenes 0xE0-0xE3 del canal 3 de sonido
 C 0xBC94 guarda el mezclador del PSG (registro 7)
 C 0xBCC1 apunta a la copia de los volumenes del SCC
 C 0xBCC4 apunta a la copia de los periodos del SCC (0x9880-0x9889)
+C 0xBDC4 apunta a las marcas de las ordenes 0xE0-0xE3 del canal 4 de sonido
+C 0xBDD0 apunta a las marcas de las ordenes 0xE0-0xE3 del canal 5 de sonido
+C 0xBDDC apunta a las marcas de las ordenes 0xE0-0xE3 del canal 6 de sonido
+C 0xBDE8 apunta a las marcas de las ordenes 0xE0-0xE3 del canal 7 de sonido
+C 0xBDF4 apunta a las marcas de las ordenes 0xE0-0xE3 del canal 8 de sonido
 C 0xBE18 apunta a la copia de los periodos del SCC (0x9880-0x9889)
 C 0xBE24 escribe_scc: el byte (HL) al registro DE del SCC
 C 0xBE2F escribe_scc: el byte (HL) al registro DE del SCC
@@ -656,9 +697,16 @@ C 0xBEBE escribe_scc: el byte (HL) al registro DE del SCC
 C 0xBEC8 escribe_scc: el byte (HL) al registro DE del SCC
 C 0xBED0 el mapper: pone en 0x8000 el banco de A
 C 0xBED7 el mapper: pone en 0x8000 el banco de A
+C 0xBEE4 apunta a la envolvente de la orden 0xF8 (bajo) del canal 4 de sonido
 C 0xBEEE forma_de_onda: 32 bytes de HL a la forma de onda DE del SCC
+C 0xBEF1 apunta a las marcas de la envolvente del canal 5 de sonido
+C 0xBEFA apunta a la envolvente de la orden 0xF8 (bajo) del canal 5 de sonido
 C 0xBF04 forma_de_onda: 32 bytes de HL a la forma de onda DE del SCC
+C 0xBF07 apunta a las marcas de la envolvente del canal 6 de sonido
+C 0xBF10 apunta a la envolvente de la orden 0xF8 (bajo) del canal 6 de sonido
 C 0xBF1A forma_de_onda: 32 bytes de HL a la forma de onda DE del SCC
+C 0xBF1D apunta a las marcas de la envolvente del canal 7 de sonido
+C 0xBF25 apunta a la envolvente de la orden 0xF8 (bajo) del canal 7 de sonido
 C 0xBF31 el mapper: pone en 0x8000 el banco de A
 C 0xBF43 apunta a los canales del SCC que suenan
 C 0xBF4A el mapper: pone en 0x8000 el banco de A

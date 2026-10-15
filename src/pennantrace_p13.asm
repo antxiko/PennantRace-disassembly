@@ -72,7 +72,7 @@ L_606B:
 	ld (hl),000h		;6071
 	ld hl,0d2e1h		;6073   ; apunta a la espera de los avisos
 	ld (hl),080h		;6076
-	call 0ba82h		;6078
+	call 0ba82h		;6078   ; borra_recuadro: borra el recuadro
 	ld hl,07d19h		;607b
 	jp 04ea6h		;607e   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 L_6081:
@@ -94,18 +94,18 @@ L_6096:
 	ld (hl),000h		;609b
 	ret			;609d
 L_609E:
-	call L_60A7		;609e   ; tres pasos mas...
+	call paso_siguiente_13		;609e   ; tres pasos mas...
 L_60A1:
-	call L_60A7		;60a1   ; ...dos...
+	call paso_siguiente_13		;60a1   ; ...dos...
 L_60A4:
-	call L_60A7		;60a4   ; ...uno...
-L_60A7:
+	call paso_siguiente_13		;60a4   ; ...uno...
+paso_siguiente_13:		; el paso siguiente con el subpaso a 0
 	ld hl,0d74ch		;60a7   ; ...el paso siguiente con el subpaso a 0
 	inc (hl)			;60aa
 	inc hl			;60ab
 	ld (hl),000h		;60ac
 	ret			;60ae
-L_60AF:
+subpaso_siguiente:		; el subpaso siguiente (0xD74D + 1)
 	ld hl,0d74dh		;60af   ; el subpaso siguiente
 	inc (hl)			;60b2
 	ret			;60b3
@@ -114,7 +114,7 @@ L_60B4:
 	jr L_60BE		;60b7
 L_60B9:
 	push bc			;60b9   ; p13:6B93 y lo mismo
-	call L_6B93		;60ba
+	call quita_recuadro		;60ba   ; quita_recuadro: devuelve lo de detras del recuadro
 	pop bc			;60bd
 L_60BE:
 	ld a,(0d759h)		;60be   ; lee la opcion del menu de PENNANT
@@ -147,7 +147,7 @@ L_60D8:
 	or a			;60f7
 	jr nz,L_6102		;60f8
 	ld c,001h		;60fa
-	call L_60A7		;60fc
+	call paso_siguiente_13		;60fc   ; paso_siguiente_13: el paso siguiente con el subpaso a 0
 	jp L_6157		;60ff
 L_6102:
 	ld hl,06115h		;6102   ; ...si no, el texto de 0x6115 y las marcas de 0xDD91-0xDD93 a cero
@@ -156,7 +156,7 @@ L_6102:
 	ld (0dd91h),a		;6109
 	ld (0dd92h),a		;610c
 	ld (0dd93h),a		;610f
-	jp L_60A7		;6112
+	jp paso_siguiente_13		;6112   ; paso_siguiente_13: el paso siguiente con el subpaso a 0
 
 ; ----------------------------------------------------------------------
 ; DATOS texto_6115: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
@@ -197,7 +197,7 @@ L_6157:
 	call L_6187		;6170
 	ld a,(0d750h)		;6173   ; ...con eleccion, al paso siguiente; si no, 0xD2B0 = 0 y cinco pasos mas
 	or a			;6176
-	jp nz,L_60A7		;6177
+	jp nz,paso_siguiente_13		;6177   ; paso_siguiente_13: el paso siguiente con el subpaso a 0
 	xor a			;617a
 	ld (0d2b0h),a		;617b   ; guarda el paso de MEDIA SELECT y de la grabacion
 	call L_60A1		;617e
@@ -271,7 +271,7 @@ L_61BD:
 	ld hl,06294h		;6208
 	call 04ea6h		;620b   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	call L_6C9D		;620e
-	jp L_60AF		;6211
+	jp subpaso_siguiente		;6211   ; subpaso_siguiente: el subpaso siguiente (0xD74D + 1)
 L_6214:
 	ld hl,062d7h		;6214   ; una temporada nueva: los 6 nombres de equipo a 0xDAAE...
 	ld de,0daaeh		;6217   ; apunta a los nombres de los equipos (11 letras cada uno)
@@ -301,7 +301,7 @@ L_6214:
 	ld de,0d70bh		;6254
 	ld bc,00005h		;6257
 	ldir		;625a
-	call L_6A0D		;625c   ; ...la tabla (p13:6A0D) y 0xDA6C-0xDAAD en blanco
+	call lista_de_jugadores		;625c   ; ...la tabla (p13:6A0D) y 0xDA6C-0xDAAD en blanco
 	ld hl,0da6ch		;625f
 	ld (hl),020h		;6262
 	ld de,0da6dh		;6264
@@ -309,7 +309,7 @@ L_6214:
 	ldir		;626a
 L_626C:
 	call L_6272		;626c
-	jp L_60A7		;626f
+	jp paso_siguiente_13		;626f   ; paso_siguiente_13: el paso siguiente con el subpaso a 0
 L_6272:
 	ld de,0f600h		;6272   ; el cursor: 3 bytes de atributo (0x6291) a la VRAM 0xF600...
 	ld hl,06291h		;6275
@@ -385,7 +385,7 @@ L_6323:
 	call L_6B50		;632f
 	ld hl,0d2e1h		;6332   ; apunta a la espera de los avisos
 	ld (hl),008h		;6335
-	jp L_60AF		;6337
+	jp subpaso_siguiente		;6337   ; subpaso_siguiente: el subpaso siguiente (0xD74D + 1)
 L_633A:
 	call L_6C85		;633a   ; elegir el numero de jugadores (0xD6E1, 1-6): con otra opcion, a ella...
 	call L_6C81		;633d
@@ -431,8 +431,8 @@ L_6383:
 	dec a			;6389
 	jp nz,L_60BE		;638a
 	call L_6938		;638d   ; ...la flecha y la tabla...
-	call L_6A0D		;6390
-	call L_6B5B		;6393
+	call lista_de_jugadores		;6390   ; lista_de_jugadores: la lista de jugadores desde 0xDAAE
+	call cuantos_equipos		;6393   ; cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 	ld a,(0da6bh)		;6396
 	cp b			;6399
 	jp z,L_6C81		;639a
@@ -441,14 +441,14 @@ L_6383:
 	ret z			;63a2
 	call L_6AB5		;63a3
 	call L_6B17		;63a6
-	call L_6B5B		;63a9
+	call cuantos_equipos		;63a9   ; cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 	ld a,(0da6bh)		;63ac
 	cp b			;63af
 	jr z,L_63B5		;63b0
 	jp L_6922		;63b2
 L_63B5:
 	call L_6C81		;63b5
-	jp L_6A0D		;63b8
+	jp lista_de_jugadores		;63b8   ; lista_de_jugadores: la lista de jugadores desde 0xDAAE
 L_63BB:
 	ld a,(0d74dh)		;63bb
 	call 04220h		;63be   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
@@ -471,7 +471,7 @@ L_63C5:
 	call 04ae3h		;63ca   ; byte_a_vram: escribe A en la VRAM HL
 	xor a			;63cd
 	ld (0d758h),a		;63ce
-	jp L_60AF		;63d1
+	jp subpaso_siguiente		;63d1   ; subpaso_siguiente: el subpaso siguiente (0xD74D + 1)
 L_63D4:
 	call L_6C85		;63d4   ; la opcion 4: el cursor de la lista (p13:6BDC, p13:6C49) y con el boton se elige
 	ld a,(0d759h)		;63d7   ; lee la opcion del menu de PENNANT
@@ -484,7 +484,7 @@ L_63D4:
 	ret z			;63ea
 	call L_6C6E		;63eb
 	call L_6B17		;63ee
-	jp L_6A0D		;63f1
+	jp lista_de_jugadores		;63f1   ; lista_de_jugadores: la lista de jugadores desde 0xDAAE
 L_63F4:
 	ld a,(0d74dh)		;63f4
 	call 04220h		;63f7   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
@@ -508,7 +508,7 @@ L_63FE:
 	call L_6462		;6407
 	ld hl,0d2e1h		;640a   ; apunta a la espera de los avisos
 	ld (hl),008h		;640d
-	jp L_60AF		;640f
+	jp subpaso_siguiente		;640f   ; subpaso_siguiente: el subpaso siguiente (0xD74D + 1)
 
 ; ----------------------------------------------------------------------
 ; DATOS texto_6412: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
@@ -612,13 +612,13 @@ L_6491:
 	ld a,(0de06h)		;649c   ; lee los botones recien pulsados del mando 1 / cursores
 	and 010h		;649f
 	ret z			;64a1
-	call L_6B5B		;64a2
+	call cuantos_equipos		;64a2   ; cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 	ld a,(0da6bh)		;64a5
 	cp b			;64a8
 	ret nz			;64a9
 	ld hl,062d1h		;64aa
 	call 04ea6h		;64ad   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-	jp L_60AF		;64b0
+	jp subpaso_siguiente		;64b0   ; subpaso_siguiente: el subpaso siguiente (0xD74D + 1)
 L_64B3:
 	ret			;64b3
 L_64B4:
@@ -676,7 +676,7 @@ L_64EF:
 	ld bc,00011h		;6527
 	ldir		;652a
 	call L_65BE		;652c   ; ...quien juega con quien (p13:65BE)...
-	call L_6B5B		;652f
+	call cuantos_equipos		;652f   ; cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 	ld c,002h		;6532   ; ...los numeros 2, 3... en columna...
 	ld de,04c6ch		;6534
 L_6537:
@@ -738,12 +738,12 @@ DATA_texto_6594:
 L_65BE:
 	ld hl,0e340h		;65be   ; los emparejamientos: para cada equipo (0xE340) a 0xD718...
 	ld de,0d718h		;65c1
-	call L_6B5B		;65c4
+	call cuantos_equipos		;65c4   ; cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 L_65C7:
 	ld a,(hl)			;65c7
 	ld c,a			;65c8
 	exx			;65c9
-	call L_65FB		;65ca   ; ...su fila de la tabla de 0xD6E3 (6 bytes)...
+	call indice_de_equipo		;65ca   ; ...su fila de la tabla de 0xD6E3 (6 bytes)...
 	ld l,c			;65cd
 	ld h,000h		;65ce
 	add hl,hl			;65d0
@@ -753,7 +753,7 @@ L_65C7:
 	add hl,de			;65d4
 	ld de,0d6e3h		;65d5
 	add hl,de			;65d8
-	call L_6B5B		;65d9
+	call cuantos_equipos		;65d9   ; cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 	ld e,000h		;65dc
 L_65DE:
 	ld a,(0d6deh)		;65de   ; ...si ya ha jugado con todos los demas (0xD6DE - 1 veces)...
@@ -780,7 +780,7 @@ L_65F5:
 	ld a,0ffh		;65f6
 	ld (de),a			;65f8
 	jr L_65F0		;65f9
-L_65FB:
+indice_de_equipo:		; C = el indice del equipo A en 0xD72A
 	ld c,000h		;65fb   ; C = el indice del equipo A en 0xD72A
 	ld hl,0d72ah		;65fd
 L_6600:
@@ -852,7 +852,7 @@ L_665A:
 	ld a,l			;6671
 	inc a			;6672
 	ret z			;6673
-	jp L_60AF		;6674
+	jp subpaso_siguiente		;6674   ; subpaso_siguiente: el subpaso siguiente (0xD74D + 1)
 L_6677:
 	call L_6761		;6677   ; el orden de la jornada (p13:6761), el texto de 0x65B8 y 0xE1D1 = 1
 	ld hl,065b8h		;667a
@@ -872,7 +872,7 @@ L_6686:
 	exx			;6693
 	ret			;6694
 L_6695:
-	call L_65FB		;6695   ; los rivales que le quedan: su fila de 0xD6E3...
+	call indice_de_equipo		;6695   ; los rivales que le quedan: su fila de 0xD6E3...
 	ld l,c			;6698
 	ld h,000h		;6699
 	add hl,hl			;669b
@@ -965,7 +965,7 @@ L_6711:
 	ld a,b			;6724
 	exx			;6725
 L_6726:
-	call L_6AFD		;6726   ; el nombre de 11 letras de 0xDAAE + 11 x n y el sonido 0x27
+	call por_once		;6726   ; el nombre de 11 letras de 0xDAAE + 11 x n y el sonido 0x27
 	ld bc,0daaeh		;6729   ; apunta a los nombres de los equipos (11 letras cada uno)
 	add hl,bc			;672c
 	ld bc,0000bh		;672d
@@ -980,7 +980,7 @@ L_6737:
 	jr nz,L_6746		;6741
 	ld hl,06aabh		;6743
 L_6746:
-	call 0a651h		;6746
+	call 0a651h		;6746   ; diez_letras_2: 10 letras ASCII en la fuente
 	ld hl,0da77h		;6749
 	ld de,08038h		;674c
 	ld a,(0d70bh)		;674f
@@ -988,11 +988,11 @@ L_6746:
 	jr nz,L_6758		;6753
 	ld hl,06aabh		;6755
 L_6758:
-	call 0a651h		;6758
+	call 0a651h		;6758   ; diez_letras_2: 10 letras ASCII en la fuente
 	call L_6874		;675b
 	jp L_6800		;675e
 L_6761:
-	call L_6B5B		;6761   ; el orden de la jornada: los dos que juegan primero...
+	call cuantos_equipos		;6761   ; el orden de la jornada: los dos que juegan primero...
 	dec b			;6764
 	dec b			;6765
 	jr z,L_6783		;6766
@@ -1015,7 +1015,7 @@ L_677D:
 L_6783:
 	ld de,0d70ah		;6783   ; ...y se recoloca 0xE340 y las fichas de 15 bytes de 0xD680 a la vez
 	ld hl,0e340h		;6786   ; apunta a variable de paso (cada rutina la usa a su manera)
-	call L_6B5B		;6789
+	call cuantos_equipos		;6789   ; cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 	exx			;678c
 	ld c,000h		;678d
 	exx			;678f
@@ -1170,7 +1170,7 @@ L_6846:
 	jr c,L_6868		;6853
 	rra			;6855
 	jr nc,L_6882		;6856
-	call L_6B5B		;6858
+	call cuantos_equipos		;6858   ; cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 	ld a,b			;685b
 	dec a			;685c
 	cp (hl)			;685d
@@ -1188,7 +1188,7 @@ L_6868:
 	call 057ffh		;686f   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	jr L_6882		;6872
 L_6874:
-	call L_6B5B		;6874   ; la fila siguiente (da la vuelta)
+	call cuantos_equipos		;6874   ; la fila siguiente (da la vuelta)
 	ld a,(0d74fh)		;6877   ; lee la fila del cursor de las listas
 	inc a			;687a
 	cp b			;687b
@@ -1246,7 +1246,7 @@ L_68B9:
 L_68C5:
 	ld (0e350h),hl		;68c5   ; cada equipo de 0xD72A: su nombre (0xDAAE + 11 n)...
 	ld de,05c6ch		;68c8
-	call L_6B5B		;68cb
+	call cuantos_equipos		;68cb   ; cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 	ld c,000h		;68ce
 L_68D0:
 	push de			;68d0
@@ -1255,7 +1255,7 @@ L_68D0:
 	ld b,000h		;68d5
 	add hl,bc			;68d7
 	ld a,(hl)			;68d8
-	call L_6AFD		;68d9
+	call por_once		;68d9   ; por_once: HL = A x 11
 	ld bc,0daaeh		;68dc   ; apunta a los nombres de los equipos (11 letras cada uno)
 	add hl,bc			;68df
 	pop bc			;68e0
@@ -1293,7 +1293,7 @@ L_6909:
 	ld b,00ah		;690c
 L_690E:
 	push bc			;690e   ; ...10 letras (p14:9834 da la letra, 0 en blanco)
-	call 09834h		;690f
+	call 09834h		;690f   ; letra_ascii: una letra ASCII a la fuente
 	or a			;6912
 	jr z,L_6916		;6913
 	add a,c			;6915
@@ -1453,7 +1453,7 @@ DATA_pares_69ED:
 ; ======================================================================
 
 
-L_6A0D:
+lista_de_jugadores:		; la lista de jugadores desde 0xDAAE
 	ld bc,0daaeh		;6a0d   ; la lista de jugadores: desde 0xDAAE (los nombres de equipo)...
 	push bc			;6a10
 	jr L_6A17		;6a11
@@ -1463,7 +1463,7 @@ L_6A13:
 L_6A17:
 	ld a,(0d751h)		;6a17   ; desde la fila de la ventana (0xD751), 11 bytes cada uno...
 	ld (0d752h),a		;6a1a
-	call L_6AFD		;6a1d
+	call por_once		;6a1d   ; por_once: HL = A x 11
 	pop bc			;6a20
 	add hl,bc			;6a21
 	ld de,02860h		;6a22   ; ...en (0x60, 0x28), o en 0x30 en TEAM EDIT...
@@ -1532,7 +1532,7 @@ L_6A81:
 	ld b,00ah		;6a84
 L_6A86:
 	push bc			;6a86   ; ...10 letras (p14:9834)...
-	call 09834h		;6a87
+	call 09834h		;6a87   ; letra_ascii: una letra ASCII a la fuente
 	or a			;6a8a
 	jr z,L_6A97		;6a8b
 	ld c,a			;6a8d
@@ -1568,7 +1568,7 @@ DATA_diez_espacios:
 
 
 L_6AB5:
-	call L_6B5B		;6ab5   ; elegir el equipo de la fila: si ya esta elegido nada...
+	call cuantos_equipos		;6ab5   ; elegir el equipo de la fila: si ya esta elegido nada...
 	ld hl,0d70ah		;6ab8   ; apunta a los 6 equipos elegidos (0xFF libre)
 	ld a,(0d74fh)		;6abb   ; lee la fila del cursor de las listas
 	push bc			;6abe
@@ -1592,7 +1592,7 @@ L_6ACC:
 L_6AD5:
 	ld (hl),c			;6ad5   ; ...lo ocupa, copia el nombre a 0xDA6C + 11 n y uno mas en 0xDA6B
 	ld a,e			;6ad6
-	call L_6AFD		;6ad7
+	call por_once		;6ad7   ; por_once: HL = A x 11
 	ld bc,0da6ch		;6ada
 	add hl,bc			;6add
 	ex de,hl			;6ade
@@ -1605,14 +1605,14 @@ L_6AEA:
 	pop bc			;6aea
 	ret			;6aeb
 L_6AEC:
-	call L_6AFD		;6aec   ; el nombre de 11 letras de 0xDAAE + 11 x A y el sonido 0x27
+	call por_once		;6aec   ; el nombre de 11 letras de 0xDAAE + 11 x A y el sonido 0x27
 	ld bc,0daaeh		;6aef   ; apunta a los nombres de los equipos (11 letras cada uno)
 	add hl,bc			;6af2
 	ld bc,0000bh		;6af3
 	ldir		;6af6
 	ld a,027h		;6af8
 	jp 057ffh		;6afa   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-L_6AFD:
+por_once:		; HL = A x 11
 	ld l,a			;6afd   ; HL = A x 11
 	ld h,000h		;6afe
 	ld b,h			;6b00
@@ -1654,7 +1654,7 @@ L_6B31:
 	ld b,00ah		;6b31
 L_6B33:
 	push bc			;6b33
-	call 09834h		;6b34
+	call 09834h		;6b34   ; letra_ascii: una letra ASCII a la fuente
 	call 04f1ch		;6b37   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	ld a,d			;6b3a
 	add a,008h		;6b3b
@@ -1677,7 +1677,7 @@ L_6B50:
 	ld b,001h		;6b53
 	ld de,07898h		;6b55
 	jp 05bf1h		;6b58   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
-L_6B5B:
+cuantos_equipos:		; B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 	ld a,(0d6e1h)		;6b5b   ; B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 	cp 001h		;6b5e
 	jr nz,L_6B64		;6b60
@@ -1704,7 +1704,7 @@ L_6B6E:
 	ld c,00dh		;6b8b
 	ld de,0ae2eh		;6b8d
 	jp 04cfeh		;6b90   ; marco: un marco de lineas: HL la esquina, DE el tamano
-L_6B93:
+quita_recuadro:		; devuelve lo de detras del recuadro
 	ld hl,02480h		;6b93   ; devuelve lo de detras del recuadro
 	ld de,02480h		;6b96
 	ld bc,0b030h		;6b99
@@ -1724,7 +1724,7 @@ L_6BA1:
 	ld (0d6deh),a		;6bbc
 	ld de,0d680h		;6bbf   ; ...y la ficha de 15 bytes de cada equipo con su nombre (11 letras)
 	ld hl,0da6ch		;6bc2
-	call L_6B5B		;6bc5
+	call cuantos_equipos		;6bc5   ; cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 L_6BC8:
 	push bc			;6bc8
 	ld bc,0000bh		;6bc9
@@ -1753,7 +1753,7 @@ L_6BDC:
 	ld a,(0de06h)		;6bdc   ; elegir la fila (0xD758) con arriba y abajo
 	and 010h		;6bdf
 	ret nz			;6be1
-	call L_6B5B		;6be2
+	call cuantos_equipos		;6be2   ; cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 	dec b			;6be5
 	ld hl,0d758h		;6be6
 	ld a,(0de06h)		;6be9   ; lee los botones recien pulsados del mando 1 / cursores
@@ -1772,7 +1772,7 @@ L_6BF7:
 	ret z			;6bf9
 	dec (hl)			;6bfa
 L_6BFB:
-	call L_6B5B		;6bfb   ; con menos de 6 jugadores, borra a los que sobran (p13:6C71) y repinta
+	call cuantos_equipos		;6bfb   ; con menos de 6 jugadores, borra a los que sobran (p13:6C71) y repinta
 	push bc			;6bfe
 	ld a,b			;6bff
 	cp 006h		;6c00
@@ -1984,21 +1984,21 @@ L_6D31:
 	ld (0d2b1h),a		;6d35   ; guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 	inc a			;6d38
 	ld (0dd0ch),a		;6d39
-	call 05d7dh		;6d3c
+	call 05d7dh		;6d3c   ; si_no_13: con los bancos 1-2-3, cambia SI / NO (p03:BCDE); vuelve a 13-14-15
 	jr L_6D61		;6d3f
 L_6D41:
 	ld a,(0de06h)		;6d41   ; paso 1: el boton 1 elige (0xDD8F = 0xDD0C + 1)
 	and 013h		;6d44
 	ret z			;6d46
 	bit 4,a		;6d47
-	jp z,05d7dh		;6d49
+	jp z,05d7dh		;6d49   ; si_no_13: con los bancos 1-2-3, cambia SI / NO (p03:BCDE); vuelve a 13-14-15
 	ld a,(0dd0ch)		;6d4c
 	inc a			;6d4f
 	ld (0dd8fh),a		;6d50   ; guarda el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 L_6D53:
 	ld a,001h		;6d53   ; calla, p15:BA66 y el texto de p13:7BDD
 	call 057ffh		;6d55   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-	call 0ba66h		;6d58
+	call 0ba66h		;6d58   ; recuadro_15: el recuadro: borrado y un marco
 	ld hl,07bddh		;6d5b
 	call 04ea6h		;6d5e   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 L_6D61:
@@ -2010,7 +2010,7 @@ L_6D66:
 	ld a,(0d2b1h)		;6d69   ; lee como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 	cp 002h		;6d6c
 	jr z,L_6D88		;6d6e
-	call 0ba66h		;6d70
+	call 0ba66h		;6d70   ; recuadro_15: el recuadro: borrado y un marco
 	ld hl,07c22h		;6d73
 	call 04ea6h		;6d76   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,080h		;6d79
@@ -2035,16 +2035,16 @@ L_6D9C:
 	ld (0d2b1h),a		;6da0   ; guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 	inc a			;6da3
 	ld (0dd0ch),a		;6da4
-	jp 05d7dh		;6da7
+	jp 05d7dh		;6da7   ; si_no_13: con los bancos 1-2-3, cambia SI / NO (p03:BCDE); vuelve a 13-14-15
 L_6DAA:
 	ld a,(0de06h)		;6daa   ; paso: con el boton 1, segun la eleccion...
 	and 013h		;6dad
 	ret z			;6daf
 	bit 4,a		;6db0
-	jp z,05d7dh		;6db2
+	jp z,05d7dh		;6db2   ; si_no_13: con los bancos 1-2-3, cambia SI / NO (p03:BCDE); vuelve a 13-14-15
 	ld a,(0dd8fh)		;6db5   ; lee el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 	dec a			;6db8
-	call z,L_6B93		;6db9
+	call z,quita_recuadro		;6db9   ; quita_recuadro: devuelve lo de detras del recuadro
 	ld a,(0dd0ch)		;6dbc
 	dec a			;6dbf
 	jr nz,L_6DC7		;6dc0
@@ -2060,8 +2060,8 @@ L_6DC7:
 L_6DD6:
 	ld a,(0dd8fh)		;6dd6   ; el texto de p13:7CFA y 64 cuadros
 	dec a			;6dd9
-	call z,L_6B93		;6dda
-	call 0ba66h		;6ddd
+	call z,quita_recuadro		;6dda   ; quita_recuadro: devuelve lo de detras del recuadro
+	call 0ba66h		;6ddd   ; recuadro_15: el recuadro: borrado y un marco
 	ld hl,07cfah		;6de0
 	call 04ea6h		;6de3   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,040h		;6de6
@@ -2160,12 +2160,12 @@ L_6E75:
 	and 013h		;6e78
 	ret z			;6e7a
 	bit 4,a		;6e7b
-	jp z,05d7dh		;6e7d
-	call L_6B93		;6e80
+	jp z,05d7dh		;6e7d   ; si_no_13: con los bancos 1-2-3, cambia SI / NO (p03:BCDE); vuelve a 13-14-15
+	call quita_recuadro		;6e80   ; quita_recuadro: devuelve lo de detras del recuadro
 	ld a,(0dd0ch)		;6e83
 	dec a			;6e86
 	jr nz,L_6E99		;6e87
-	call 0ba66h		;6e89
+	call 0ba66h		;6e89   ; recuadro_15: el recuadro: borrado y un marco
 	ld hl,07cfah		;6e8c
 	call 04ea6h		;6e8f   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,040h		;6e92
@@ -2365,7 +2365,7 @@ L_6FA6:
 	ld (0d2b1h),a		;6fa7   ; guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 	ld a,004h		;6faa
 	ld (0d2b0h),a		;6fac   ; guarda el paso de MEDIA SELECT y de la grabacion
-	call 0ba66h		;6faf
+	call 0ba66h		;6faf   ; recuadro_15: el recuadro: borrado y un marco
 	ld hl,07c22h		;6fb2
 	call 04ea6h		;6fb5   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,0a0h		;6fb8
@@ -2376,7 +2376,7 @@ L_6FBE:
 	and 013h		;6fc1
 	ret z			;6fc3
 	bit 4,a		;6fc4
-	jp z,05d7dh		;6fc6
+	jp z,05d7dh		;6fc6   ; si_no_13: con los bancos 1-2-3, cambia SI / NO (p03:BCDE); vuelve a 13-14-15
 	ld a,(0dd0ch)		;6fc9
 	dec a			;6fcc
 	jr nz,L_6FDC		;6fcd
@@ -2389,7 +2389,7 @@ L_6FBE:
 L_6FDC:
 	ld a,(0dd8fh)		;6fdc   ; lee el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 	dec a			;6fdf
-	call z,L_6B93		;6fe0
+	call z,quita_recuadro		;6fe0   ; quita_recuadro: devuelve lo de detras del recuadro
 	xor a			;6fe3
 	ld (0d2b0h),a		;6fe4   ; guarda el paso de MEDIA SELECT y de la grabacion
 	ret			;6fe7
@@ -2428,7 +2428,7 @@ L_700E:
 	ld (0d2b1h),a		;700f   ; guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 	ld a,001h		;7012
 	call 057ffh		;7014   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-	call 0ba66h		;7017
+	call 0ba66h		;7017   ; recuadro_15: el recuadro: borrado y un marco
 	ld hl,07d41h		;701a
 	call 04ea6h		;701d   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 L_7020:
@@ -2449,7 +2449,7 @@ L_7034:
 	ld (0d2b1h),a		;703a   ; guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 	ld a,003h		;703d
 	ld (0d2b0h),a		;703f   ; guarda el paso de MEDIA SELECT y de la grabacion
-	call 0ba66h		;7042
+	call 0ba66h		;7042   ; recuadro_15: el recuadro: borrado y un marco
 	ld hl,07d09h		;7045
 	jp 04ea6h		;7048   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 L_704B:
@@ -2457,7 +2457,7 @@ L_704B:
 	and 013h		;704e
 	ret z			;7050
 	bit 4,a		;7051
-	jp z,05d7dh		;7053
+	jp z,05d7dh		;7053   ; si_no_13: con los bancos 1-2-3, cambia SI / NO (p03:BCDE); vuelve a 13-14-15
 	ld a,(0dd0ch)		;7056
 	or a			;7059
 	jr z,L_7072		;705a
@@ -2473,7 +2473,7 @@ L_704B:
 L_7072:
 	ld a,(0dd8fh)		;7072   ; lee el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 	dec a			;7075
-	call z,L_6B93		;7076
+	call z,quita_recuadro		;7076   ; quita_recuadro: devuelve lo de detras del recuadro
 	xor a			;7079
 	ld (0d2b0h),a		;707a   ; guarda el paso de MEDIA SELECT y de la grabacion
 	ret			;707d
@@ -2572,7 +2572,7 @@ L_711D:
 	ld bc,07219h		;7128
 	ld hl,0713eh		;712b
 	ld de,0d280h		;712e   ; apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
-	call L_71B8		;7131
+	call ficha_d280		;7131   ; ficha_d280: la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot
 	call L_721D		;7134
 	ld a,(0d2a9h)		;7137
 	ld (0fd9ah),a		;713a
@@ -2598,7 +2598,7 @@ L_7143:
 	ld bc,07164h		;714e
 	ld hl,0d680h		;7151
 	ld de,0d280h		;7154   ; apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
-	call L_71B8		;7157
+	call ficha_d280		;7157   ; ficha_d280: la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot
 	call L_724C		;715a
 	ld a,(0d2a9h)		;715d
 	ld (0fd9ah),a		;7160
@@ -2624,7 +2624,7 @@ L_7168:
 	ld bc,07189h		;7173
 	ld hl,0d740h		;7176
 	ld de,0d280h		;7179   ; apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
-	call L_71B8		;717c
+	call ficha_d280		;717c   ; ficha_d280: la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot
 	call L_724C		;717f
 	ld a,(0d2a9h)		;7182
 	ld (0fd9ah),a		;7185
@@ -2650,7 +2650,7 @@ L_718D:
 	ld bc,07219h		;7198
 	ld hl,0713eh		;719b
 	ld de,0d280h		;719e   ; apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
-	call L_71B8		;71a1
+	call ficha_d280		;71a1   ; ficha_d280: la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot
 	call L_724C		;71a4
 	ld hl,0d2b1h		;71a7   ; apunta a como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 	ld a,(hl)			;71aa
@@ -2661,7 +2661,7 @@ L_71B1:
 	ld a,(0d2a9h)		;71b1
 	ld (0fd9ah),a		;71b4
 	ret			;71b7
-L_71B8:
+ficha_d280:		; la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot
 	push bc			;71b8   ; la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot propio (0xD2AA)
 	ld (0d2a5h),de		;71b9
 	ld bc,00005h		;71bd
@@ -2844,7 +2844,7 @@ L_72F1:
 	inc (hl)			;72f4
 	ld a,(hl)			;72f5
 	dec a			;72f6
-	call 08423h		;72f7
+	call 08423h		;72f7   ; nombre_en_daae: HL = 0xDAAE + A x 11
 	ex de,hl			;72fa
 	ld bc,00005h		;72fb
 	ldir		;72fe
@@ -2864,7 +2864,7 @@ L_7303:
 	jr L_72D5		;7314
 L_7316:
 	ld a,(0d2b2h)		;7316   ; 0x24 acaba la lista
-	call 08423h		;7319
+	call 08423h		;7319   ; nombre_en_daae: HL = 0xDAAE + A x 11
 	ld (hl),024h		;731c
 	ret			;731e
 

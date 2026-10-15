@@ -1121,7 +1121,7 @@ L_B200:
 	pop ix		;b22d
 	inc hl			;b22f   ; ...y se ocupa si la prioridad no es menor (p06:B305)
 	ld a,(hl)			;b230
-	ld hl,0ee01h		;b231
+	ld hl,0ee01h		;b231   ; apunta a la prioridad del sonido del canal 1 de sonido
 	call canal_ocupa		;b234   ; canal_ocupa: el canal IX toma el sonido si su prioridad (A) no es menor que la que tiene
 	inc ix		;b237
 	inc ix		;b239
@@ -1130,12 +1130,12 @@ L_B23B:
 	bit 6,(hl)		;b23e
 	jr z,L_B259		;b240
 	push ix		;b242
-	ld ix,0ee2dh		;b244
+	ld ix,0ee2dh		;b244   ; apunta a el sonido que toca el canal (0 calla) del canal 2 de sonido
 	call canal_nuevo		;b248   ; canal_nuevo: pone a 0 el vibrato y el desplazamiento del canal IX
 	pop ix		;b24b
 	inc hl			;b24d
 	ld a,(hl)			;b24e
-	ld hl,0ee2eh		;b24f
+	ld hl,0ee2eh		;b24f   ; apunta a la prioridad del sonido del canal 2 de sonido
 	call canal_ocupa		;b252   ; canal_ocupa: el canal IX toma el sonido si su prioridad (A) no es menor que la que tiene
 	inc ix		;b255
 	inc ix		;b257
@@ -1144,12 +1144,12 @@ L_B259:
 	bit 5,(hl)		;b25c
 	jr z,L_B277		;b25e
 	push ix		;b260
-	ld ix,0ee5ah		;b262
+	ld ix,0ee5ah		;b262   ; apunta a el sonido que toca el canal (0 calla) del canal 3 de sonido
 	call canal_nuevo		;b266   ; canal_nuevo: pone a 0 el vibrato y el desplazamiento del canal IX
 	pop ix		;b269
 	inc hl			;b26b
 	ld a,(hl)			;b26c
-	ld hl,0ee5bh		;b26d
+	ld hl,0ee5bh		;b26d   ; apunta a la prioridad del sonido del canal 3 de sonido
 	call canal_ocupa		;b270   ; canal_ocupa: el canal IX toma el sonido si su prioridad (A) no es menor que la que tiene
 	inc ix		;b273
 	inc ix		;b275
@@ -1158,12 +1158,12 @@ L_B277:
 	bit 4,(hl)		;b27a
 	jr z,L_B295		;b27c
 	push ix		;b27e
-	ld ix,0ee87h		;b280
+	ld ix,0ee87h		;b280   ; apunta a el sonido que toca el canal (0 calla) del canal 4 de sonido
 	call canal_nuevo		;b284   ; canal_nuevo: pone a 0 el vibrato y el desplazamiento del canal IX
 	pop ix		;b287
 	inc hl			;b289
 	ld a,(hl)			;b28a
-	ld hl,0ee88h		;b28b
+	ld hl,0ee88h		;b28b   ; apunta a la prioridad del sonido del canal 4 de sonido
 	call canal_ocupa		;b28e   ; canal_ocupa: el canal IX toma el sonido si su prioridad (A) no es menor que la que tiene
 	inc ix		;b291
 	inc ix		;b293
@@ -1172,12 +1172,12 @@ L_B295:
 	bit 3,(hl)		;b298
 	jr z,L_B2B3		;b29a
 	push ix		;b29c
-	ld ix,0eeb4h		;b29e
+	ld ix,0eeb4h		;b29e   ; apunta a el sonido que toca el canal (0 calla) del canal 5 de sonido
 	call canal_nuevo		;b2a2   ; canal_nuevo: pone a 0 el vibrato y el desplazamiento del canal IX
 	pop ix		;b2a5
 	inc hl			;b2a7
 	ld a,(hl)			;b2a8
-	ld hl,0eeb5h		;b2a9
+	ld hl,0eeb5h		;b2a9   ; apunta a la prioridad del sonido del canal 5 de sonido
 	call canal_ocupa		;b2ac   ; canal_ocupa: el canal IX toma el sonido si su prioridad (A) no es menor que la que tiene
 	inc ix		;b2af
 	inc ix		;b2b1
@@ -1186,12 +1186,12 @@ L_B2B3:
 	bit 2,(hl)		;b2b6
 	jr z,L_B2D1		;b2b8
 	push ix		;b2ba
-	ld ix,0eee1h		;b2bc
+	ld ix,0eee1h		;b2bc   ; apunta a el sonido que toca el canal (0 calla) del canal 6 de sonido
 	call canal_nuevo		;b2c0   ; canal_nuevo: pone a 0 el vibrato y el desplazamiento del canal IX
 	pop ix		;b2c3
 	inc hl			;b2c5
 	ld a,(hl)			;b2c6
-	ld hl,0eee2h		;b2c7
+	ld hl,0eee2h		;b2c7   ; apunta a la prioridad del sonido del canal 6 de sonido
 	call canal_ocupa		;b2ca   ; canal_ocupa: el canal IX toma el sonido si su prioridad (A) no es menor que la que tiene
 	inc ix		;b2cd
 	inc ix		;b2cf
@@ -1200,12 +1200,12 @@ L_B2D1:
 	bit 1,(hl)		;b2d4
 	jr z,L_B2EF		;b2d6
 	push ix		;b2d8
-	ld ix,0ef0eh		;b2da
+	ld ix,0ef0eh		;b2da   ; apunta a el sonido que toca el canal (0 calla) del canal 7 de sonido
 	call canal_nuevo		;b2de   ; canal_nuevo: pone a 0 el vibrato y el desplazamiento del canal IX
 	pop ix		;b2e1
 	inc hl			;b2e3
 	ld a,(hl)			;b2e4
-	ld hl,0ef0fh		;b2e5
+	ld hl,0ef0fh		;b2e5   ; apunta a la prioridad del sonido del canal 7 de sonido
 	call canal_ocupa		;b2e8   ; canal_ocupa: el canal IX toma el sonido si su prioridad (A) no es menor que la que tiene
 	inc ix		;b2eb
 	inc ix		;b2ed
@@ -1219,7 +1219,7 @@ L_B2EF:
 	pop ix		;b2fe
 	inc hl			;b300
 	ld a,(hl)			;b301
-	ld hl,0ef3ch		;b302
+	ld hl,0ef3ch		;b302   ; apunta a la prioridad del sonido del canal 8 de sonido
 canal_ocupa:		; el canal IX toma el sonido si su prioridad (A) no es menor que la que tiene
 	ld b,(hl)			;b305   ; la prioridad nueva (A) contra la del canal: si es menor, no
 	cp b			;b306
@@ -1327,7 +1327,7 @@ L_B37F:
 	rrca			;b3a3
 	rrca			;b3a4
 	ld (hl),a			;b3a5
-	ld hl,0ee3ah		;b3a6
+	ld hl,0ee3ah		;b3a6   ; apunta a las marcas de las ordenes 0xE0-0xE3 del canal 2 de sonido
 	ld a,(hl)			;b3a9
 	rrca			;b3aa
 	rrca			;b3ab
@@ -1374,7 +1374,7 @@ L_B3C5:
 	rlca			;b3f8
 	rlca			;b3f9
 	ld (hl),a			;b3fa
-	ld hl,0ee3ah		;b3fb
+	ld hl,0ee3ah		;b3fb   ; apunta a las marcas de las ordenes 0xE0-0xE3 del canal 2 de sonido
 	ld a,(hl)			;b3fe
 	rlca			;b3ff
 	rlca			;b400
@@ -1399,11 +1399,11 @@ motor_cuadro:		; el sonido de un cuadro: avanza cada canal y escribe el PSG y el
 	jr z,L_B451		;b42b
 	ld ix,0ee87h		;b42d   ; ...los canales 4-7 rehacen su envolvente (bit 7 de +0x0F)
 	set 7,(ix+00fh)		;b431   ; pone a uno el bit 7 de las marcas de la envolvente
-	ld ix,0eeb4h		;b435
+	ld ix,0eeb4h		;b435   ; apunta a el sonido que toca el canal (0 calla) del canal 5 de sonido
 	set 7,(ix+00fh)		;b439   ; pone a uno el bit 7 de las marcas de la envolvente
-	ld ix,0eee1h		;b43d
+	ld ix,0eee1h		;b43d   ; apunta a el sonido que toca el canal (0 calla) del canal 6 de sonido
 	set 7,(ix+00fh)		;b441   ; pone a uno el bit 7 de las marcas de la envolvente
-	ld ix,0ef0eh		;b445
+	ld ix,0ef0eh		;b445   ; apunta a el sonido que toca el canal (0 calla) del canal 7 de sonido
 	set 7,(ix+00fh)		;b449   ; pone a uno el bit 7 de las marcas de la envolvente
 	ld a,(0fda2h)		;b44d
 	ld (hl),a			;b450
@@ -1426,15 +1426,15 @@ L_B451:
 	call canal_cuadro		;b477   ; canal_cuadro: el cuadro del canal IX, si suena
 	ld a,002h		;b47a
 	ld (0efdbh),a		;b47c   ; guarda el bit del canal que se esta atendiendo
-	ld ix,0ee2dh		;b47f
+	ld ix,0ee2dh		;b47f   ; apunta a el sonido que toca el canal (0 calla) del canal 2 de sonido
 	call canal_cuadro		;b483   ; canal_cuadro: el cuadro del canal IX, si suena
 	ld a,004h		;b486
 	ld (0efdbh),a		;b488   ; guarda el bit del canal que se esta atendiendo
-	ld ix,0ee5ah		;b48b
+	ld ix,0ee5ah		;b48b   ; apunta a el sonido que toca el canal (0 calla) del canal 3 de sonido
 	call canal_cuadro		;b48f   ; canal_cuadro: el cuadro del canal IX, si suena
 	ld a,008h		;b492   ; canal 4: si calla y 0xEFF4 tiene algo, p06:BF4E; si no, sus marcas a 0
 	ld (0efdbh),a		;b494   ; guarda el bit del canal que se esta atendiendo
-	ld ix,0ee87h		;b497
+	ld ix,0ee87h		;b497   ; apunta a el sonido que toca el canal (0 calla) del canal 4 de sonido
 	ld a,(ix+000h)		;b49b   ; lee el sonido que toca el canal (0 calla)
 	or a			;b49e
 	jr nz,L_B4B2		;b49f
@@ -1451,15 +1451,15 @@ L_B4B2:
 L_B4B5:
 	ld a,010h		;b4b5   ; canales 5, 6, 7 y 8
 	ld (0efdbh),a		;b4b7   ; guarda el bit del canal que se esta atendiendo
-	ld ix,0eeb4h		;b4ba
+	ld ix,0eeb4h		;b4ba   ; apunta a el sonido que toca el canal (0 calla) del canal 5 de sonido
 	call canal_cuadro		;b4be   ; canal_cuadro: el cuadro del canal IX, si suena
 	ld a,020h		;b4c1
 	ld (0efdbh),a		;b4c3   ; guarda el bit del canal que se esta atendiendo
-	ld ix,0eee1h		;b4c6
+	ld ix,0eee1h		;b4c6   ; apunta a el sonido que toca el canal (0 calla) del canal 6 de sonido
 	call canal_cuadro		;b4ca   ; canal_cuadro: el cuadro del canal IX, si suena
 	ld a,040h		;b4cd
 	ld (0efdbh),a		;b4cf   ; guarda el bit del canal que se esta atendiendo
-	ld ix,0ef0eh		;b4d2
+	ld ix,0ef0eh		;b4d2   ; apunta a el sonido que toca el canal (0 calla) del canal 7 de sonido
 	call canal_cuadro		;b4d6   ; canal_cuadro: el cuadro del canal IX, si suena
 	ld a,080h		;b4d9
 	ld (0efdbh),a		;b4db   ; guarda el bit del canal que se esta atendiendo
@@ -1475,11 +1475,11 @@ canal_cuadro:		; el cuadro del canal IX, si suena
 L_B4F1:
 	ld a,004h		;b4f1   ; en pausa: los canales 3 y 4, y el mezclador a 0x9B
 	ld (0efdbh),a		;b4f3   ; guarda el bit del canal que se esta atendiendo
-	ld ix,0ee5ah		;b4f6
+	ld ix,0ee5ah		;b4f6   ; apunta a el sonido que toca el canal (0 calla) del canal 3 de sonido
 	call canal_cuadro		;b4fa   ; canal_cuadro: el cuadro del canal IX, si suena
 	ld a,008h		;b4fd
 	ld (0efdbh),a		;b4ff   ; guarda el bit del canal que se esta atendiendo
-	ld ix,0ee87h		;b502
+	ld ix,0ee87h		;b502   ; apunta a el sonido que toca el canal (0 calla) del canal 4 de sonido
 	call canal_cuadro		;b506   ; canal_cuadro: el cuadro del canal IX, si suena
 	ld a,09bh		;b509
 	ld (0efdah),a		;b50b   ; guarda el mezclador del PSG (registro 7)
@@ -1947,12 +1947,12 @@ L_B852:
 	ld (hl),a			;b873
 	ld a,(0ee2dh)		;b874   ; si los canales 2 y 3 tocan el mismo sonido, calla el 3 y el 4
 	ld e,a			;b877
-	ld a,(0ee5ah)		;b878
+	ld a,(0ee5ah)		;b878   ; lee el sonido que toca el canal (0 calla) del canal 3 de sonido
 	cp e			;b87b
 	jr nz,L_B88C		;b87c
-	ld ix,0ee5ah		;b87e
+	ld ix,0ee5ah		;b87e   ; apunta a el sonido que toca el canal (0 calla) del canal 3 de sonido
 	call calla_canal		;b882   ; calla_canal: calla el canal IX
-	ld ix,0ee87h		;b885
+	ld ix,0ee87h		;b885   ; apunta a el sonido que toca el canal (0 calla) del canal 4 de sonido
 	call calla_canal		;b889   ; calla_canal: calla el canal IX
 L_B88C:
 	ld de,0002dh		;b88c   ; y calla los canales 1, 2, 5, 6, 7 y 8
@@ -1960,7 +1960,7 @@ L_B88C:
 	call calla_canal		;b893   ; calla_canal: calla el canal IX
 	add ix,de		;b896
 	call calla_canal		;b898   ; calla_canal: calla el canal IX
-	ld ix,0eeb4h		;b89b
+	ld ix,0eeb4h		;b89b   ; apunta a el sonido que toca el canal (0 calla) del canal 5 de sonido
 	call calla_canal		;b89f   ; calla_canal: calla el canal IX
 	add ix,de		;b8a2
 	call calla_canal		;b8a4   ; calla_canal: calla el canal IX
@@ -1972,7 +1972,7 @@ L_B88C:
 L_B8B2:
 	ld a,(0ee2dh)		;b8b2   ; el volumen E rebajado en 0xEFD9 (nunca bajo 0)...
 	ld b,a			;b8b5
-	ld a,(0ee5ah)		;b8b6
+	ld a,(0ee5ah)		;b8b6   ; lee el sonido que toca el canal (0 calla) del canal 3 de sonido
 	cp b			;b8b9
 	jr z,L_B8C2		;b8ba
 	ld a,(0efdbh)		;b8bc   ; ...salvo en los canales 3 y 4 si el 2 y el 3 tocan sonidos distintos
@@ -2437,11 +2437,11 @@ L_BBCF:
 	ld a,(hl)			;bbd2
 	and 001h		;bbd3
 	jr z,L_BBE5		;bbd5
-	ld hl,0ee67h		;bbd7
+	ld hl,0ee67h		;bbd7   ; apunta a las marcas de las ordenes 0xE0-0xE3 del canal 3 de sonido
 	ld a,(hl)			;bbda
 	and 001h		;bbdb
 	jr z,L_BBE5		;bbdd
-	ld hl,0ee0dh		;bbdf
+	ld hl,0ee0dh		;bbdf   ; apunta a las marcas de las ordenes 0xE0-0xE3 del canal 1 de sonido
 	ld a,002h		;bbe2
 	ld (hl),a			;bbe4
 L_BBE5:
@@ -2531,12 +2531,12 @@ L_BC70:
 	ld hl,0bca4h		;bc74
 	call L_BC9D		;bc77
 	ld b,(hl)			;bc7a
-	ld hl,0ee3ah		;bc7b
+	ld hl,0ee3ah		;bc7b   ; apunta a las marcas de las ordenes 0xE0-0xE3 del canal 2 de sonido
 	ld a,(hl)			;bc7e
 	ld hl,0bca8h		;bc7f
 	call L_BC9D		;bc82
 	ld c,(hl)			;bc85
-	ld hl,0ee67h		;bc86
+	ld hl,0ee67h		;bc86   ; apunta a las marcas de las ordenes 0xE0-0xE3 del canal 3 de sonido
 	ld a,(hl)			;bc89
 	ld hl,0bcach		;bc8a
 	call L_BC9D		;bc8d
@@ -2733,7 +2733,7 @@ L_BDC0:
 	ret			;bdc1
 L_BDC2:
 	ld e,000h		;bdc2   ; los canales del SCC que suenan (volumen no 0): un bit cada uno...
-	ld hl,0ee94h		;bdc4
+	ld hl,0ee94h		;bdc4   ; apunta a las marcas de las ordenes 0xE0-0xE3 del canal 4 de sonido
 	ld c,001h		;bdc7
 	ld a,(hl)			;bdc9
 	or a			;bdca
@@ -2742,7 +2742,7 @@ L_BDC2:
 L_BDCE:
 	or e			;bdce
 	ld e,a			;bdcf
-	ld hl,0eec1h		;bdd0
+	ld hl,0eec1h		;bdd0   ; apunta a las marcas de las ordenes 0xE0-0xE3 del canal 5 de sonido
 	sla c		;bdd3
 	ld a,(hl)			;bdd5
 	or a			;bdd6
@@ -2751,7 +2751,7 @@ L_BDCE:
 L_BDDA:
 	or e			;bdda
 	ld e,a			;bddb
-	ld hl,0eeeeh		;bddc
+	ld hl,0eeeeh		;bddc   ; apunta a las marcas de las ordenes 0xE0-0xE3 del canal 6 de sonido
 	sla c		;bddf
 	ld a,(hl)			;bde1
 	or a			;bde2
@@ -2760,7 +2760,7 @@ L_BDDA:
 L_BDE6:
 	or e			;bde6
 	ld e,a			;bde7
-	ld hl,0ef1bh		;bde8
+	ld hl,0ef1bh		;bde8   ; apunta a las marcas de las ordenes 0xE0-0xE3 del canal 7 de sonido
 	sla c		;bdeb
 	ld a,(hl)			;bded
 	or a			;bdee
@@ -2769,7 +2769,7 @@ L_BDE6:
 L_BDF2:
 	or e			;bdf2
 	ld e,a			;bdf3
-	ld hl,0ef48h		;bdf4
+	ld hl,0ef48h		;bdf4   ; apunta a las marcas de las ordenes 0xE0-0xE3 del canal 8 de sonido
 	sla c		;bdf7
 	ld a,(hl)			;bdf9
 	or a			;bdfa
@@ -2903,7 +2903,7 @@ L_BEDB:
 	bit 7,(hl)		;bede
 	jr z,L_BEF1		;bee0
 	res 7,(hl)		;bee2
-	ld hl,0eeaeh		;bee4
+	ld hl,0eeaeh		;bee4   ; apunta a la envolvente de la orden 0xF8 (bajo) del canal 4 de sonido
 	ld e,(hl)			;bee7
 	inc hl			;bee8
 	ld d,(hl)			;bee9
@@ -2911,11 +2911,11 @@ L_BEDB:
 	ld de,09800h		;beeb
 	call forma_de_onda		;beee   ; forma_de_onda: 32 bytes de HL a la forma de onda DE del SCC
 L_BEF1:
-	ld hl,0eec3h		;bef1
+	ld hl,0eec3h		;bef1   ; apunta a las marcas de la envolvente del canal 5 de sonido
 	bit 7,(hl)		;bef4
 	jr z,L_BF07		;bef6
 	res 7,(hl)		;bef8
-	ld hl,0eedbh		;befa
+	ld hl,0eedbh		;befa   ; apunta a la envolvente de la orden 0xF8 (bajo) del canal 5 de sonido
 	ld e,(hl)			;befd
 	inc hl			;befe
 	ld d,(hl)			;beff
@@ -2923,11 +2923,11 @@ L_BEF1:
 	ld de,09820h		;bf01
 	call forma_de_onda		;bf04   ; forma_de_onda: 32 bytes de HL a la forma de onda DE del SCC
 L_BF07:
-	ld hl,0eef0h		;bf07
+	ld hl,0eef0h		;bf07   ; apunta a las marcas de la envolvente del canal 6 de sonido
 	bit 7,(hl)		;bf0a
 	jr z,L_BF1D		;bf0c
 	res 7,(hl)		;bf0e
-	ld hl,0ef08h		;bf10
+	ld hl,0ef08h		;bf10   ; apunta a la envolvente de la orden 0xF8 (bajo) del canal 6 de sonido
 	ld e,(hl)			;bf13
 	inc hl			;bf14
 	ld d,(hl)			;bf15
@@ -2935,11 +2935,11 @@ L_BF07:
 	ld de,09840h		;bf17
 	call forma_de_onda		;bf1a   ; forma_de_onda: 32 bytes de HL a la forma de onda DE del SCC
 L_BF1D:
-	ld hl,0ef1dh		;bf1d
+	ld hl,0ef1dh		;bf1d   ; apunta a las marcas de la envolvente del canal 7 de sonido
 	bit 7,(hl)		;bf20
 	ret z			;bf22
 	res 7,(hl)		;bf23
-	ld hl,0ef35h		;bf25
+	ld hl,0ef35h		;bf25   ; apunta a la envolvente de la orden 0xF8 (bajo) del canal 7 de sonido
 	ld e,(hl)			;bf28
 	inc hl			;bf29
 	ld d,(hl)			;bf2a

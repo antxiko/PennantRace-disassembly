@@ -284,30 +284,77 @@ F 0x9F1A 16
 # --- fin de los bloques de bloques.py ---
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+L 0x8263 cierra_fichero cierra el fichero (BDOS 0x10); error 2
+L 0x82A7 fcb_a_cero el FCB: bloque y registro a cero, registro de 1 byte
+L 0x82D2 fcb_nombre el FCB con unidad 0 y el nombre de 11 letras de HL
+L 0x8334 antes_del_bdos antes del BDOS: 0xF100-0xF37F a 0xD780 y cambia 0xC000-0xD0FF por 0xE280
+L 0x8368 despues_del_bdos despues del BDOS: vuelve a cambiar la RAM
+L 0x8423 nombre_en_daae HL = 0xDAAE + A x 11
+L 0x8506 error_de_disco error del disco: todo como estaba
+L 0x8718 columna_de_4 el caracter A en una columna de 4 (los lanzadores) desde la y 0xA4
+L 0x871E columna_de_12 el caracter A en una columna de 12 (los de campo) desde la y 0x29
+L 0x9834 letra_ascii una letra ASCII a la fuente
+L 0x9B4E y_de_la_fila_14 E = la y de la fila A + 1
+L 0x9FFA paso_ecef al paso siguiente (0xECEF + 1)
 C 0x8028 apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x802B fcb_nombre: el FCB con unidad 0 y el nombre de 11 letras de HL
+C 0x8031 fcb_a_cero: el FCB: bloque y registro a cero, registro de 1 byte
+C 0x8037 cierra_fichero: cierra el fichero (BDOS 0x10); error 2
 C 0x805E lee el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
+C 0x8076 antes_del_bdos: antes del BDOS: 0xF100-0xF37F a 0xD780 y cambia 0xC000-0xD0FF por 0xE280
 C 0x807C apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x807F fcb_nombre: el FCB con unidad 0 y el nombre de 11 letras de HL
+C 0x8085 fcb_a_cero: el FCB: bloque y registro a cero, registro de 1 byte
+C 0x808B cierra_fichero: cierra el fichero (BDOS 0x10); error 2
+C 0x808F despues_del_bdos: despues del BDOS: vuelve a cambiar la RAM
 C 0x809A apunta a la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
+C 0x80C2 antes_del_bdos: antes del BDOS: 0xF100-0xF37F a 0xD780 y cambia 0xC000-0xD0FF por 0xE280
 C 0x80C8 apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x80CB fcb_nombre: el FCB con unidad 0 y el nombre de 11 letras de HL
+C 0x80D1 fcb_a_cero: el FCB: bloque y registro a cero, registro de 1 byte
+C 0x80D7 cierra_fichero: cierra el fichero (BDOS 0x10); error 2
+C 0x80DB despues_del_bdos: despues del BDOS: vuelve a cambiar la RAM
+C 0x810E antes_del_bdos: antes del BDOS: 0xF100-0xF37F a 0xD780 y cambia 0xC000-0xD0FF por 0xE280
 C 0x8114 apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x8117 fcb_nombre: el FCB con unidad 0 y el nombre de 11 letras de HL
+C 0x811D fcb_a_cero: el FCB: bloque y registro a cero, registro de 1 byte
+C 0x8123 cierra_fichero: cierra el fichero (BDOS 0x10); error 2
+C 0x8127 despues_del_bdos: despues del BDOS: vuelve a cambiar la RAM
 C 0x8163 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x8177 antes_del_bdos: antes del BDOS: 0xF100-0xF37F a 0xD780 y cambia 0xC000-0xD0FF por 0xE280
 C 0x817A apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 C 0x817D apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x818C fcb_a_cero: el FCB: bloque y registro a cero, registro de 1 byte
+C 0x8192 cierra_fichero: cierra el fichero (BDOS 0x10); error 2
+C 0x8196 despues_del_bdos: despues del BDOS: vuelve a cambiar la RAM
 C 0x81A1 apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 C 0x81B7 lee la fila del cursor de las listas
 C 0x81C9 apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 C 0x81D3 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x8218 antes_del_bdos: antes del BDOS: 0xF100-0xF37F a 0xD780 y cambia 0xC000-0xD0FF por 0xE280
+C 0x8236 despues_del_bdos: despues del BDOS: vuelve a cambiar la RAM
+C 0x824D error_de_disco: error del disco: todo como estaba
+C 0x825F error_de_disco: error del disco: todo como estaba
+C 0x826F error_de_disco: error del disco: todo como estaba
+C 0x8320 error_de_disco: error del disco: todo como estaba
+C 0x8330 error_de_disco: error del disco: todo como estaba
+C 0x8372 apunta a la x de destino del jardinero derecho (ficha 0xE271, defensor 9)
 C 0x83DF apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 C 0x83FB apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x840A nombre_en_daae: HL = 0xDAAE + A x 11
+C 0x8419 nombre_en_daae: HL = 0xDAAE + A x 11
 C 0x842F apunta a los nombres de los equipos (11 letras cada uno)
+C 0x8460 guarda_recuadro: guarda el trozo de pantalla del recuadro y lo pinta
 C 0x8466 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x846C lee los soportes que hay: bit 0 el disco, bit 1 el Game Master 2
 C 0x847C texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
 C 0x848C texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
 C 0x8495 texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
+C 0x84AC si_no_13: con los bancos 1-2-3, cambia SI / NO (p03:BCDE); vuelve a 13-14-15
 C 0x84BE lee el slot del Game Master 2 (0xFF si no esta)
 C 0x84C7 guarda los soportes que hay: bit 0 el disco, bit 1 el Game Master 2
 C 0x84D0 guarda el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
+C 0x8507 despues_del_bdos: despues del BDOS: vuelve a cambiar la RAM
 C 0x851D texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x8523 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x8531 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
@@ -321,6 +368,23 @@ C 0x862E lee variable de paso (cada rutina la usa a su manera) y el byte siguien
 C 0x8633 guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x8638 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x8649 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0x8658 columna_de_12: el caracter A en una columna de 12 (los de campo) desde la y 0x29
+C 0x866B columna_de_12: el caracter A en una columna de 12 (los de campo) desde la y 0x29
+C 0x8672 columna_de_12: el caracter A en una columna de 12 (los de campo) desde la y 0x29
+C 0x8679 columna_de_12: el caracter A en una columna de 12 (los de campo) desde la y 0x29
+C 0x867E columna_de_12: el caracter A en una columna de 12 (los de campo) desde la y 0x29
+C 0x8683 columna_de_12: el caracter A en una columna de 12 (los de campo) desde la y 0x29
+C 0x8688 columna_de_4: el caracter A en una columna de 4 (los lanzadores) desde la y 0xA4
+C 0x868D columna_de_4: el caracter A en una columna de 4 (los lanzadores) desde la y 0xA4
+C 0x8692 columna_de_4: el caracter A en una columna de 4 (los lanzadores) desde la y 0xA4
+C 0x8697 columna_de_4: el caracter A en una columna de 4 (los lanzadores) desde la y 0xA4
+C 0x869C columna_de_4: el caracter A en una columna de 4 (los lanzadores) desde la y 0xA4
+C 0x86A1 columna_de_4: el caracter A en una columna de 4 (los lanzadores) desde la y 0xA4
+C 0x86A6 columna_de_4: el caracter A en una columna de 4 (los lanzadores) desde la y 0xA4
+C 0x86AB columna_de_4: el caracter A en una columna de 4 (los lanzadores) desde la y 0xA4
+C 0x86B2 columna_de_12: el caracter A en una columna de 12 (los de campo) desde la y 0x29
+C 0x86B9 columna_de_4: el caracter A en una columna de 4 (los lanzadores) desde la y 0xA4
+C 0x86C0 columna_de_4: el caracter A en una columna de 4 (los lanzadores) desde la y 0xA4
 C 0x86CC copia_a_vram: copia BC bytes de HL a la VRAM DE
 C 0x8723 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x874E copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
@@ -337,6 +401,8 @@ C 0x941E apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado
 C 0x9457 lee la jugada anulada (foul)
 C 0x945E guarda lo que acaba la jugada: 1 home run, 2 jugada anulada
 C 0x946F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x9536 lee el dibujo de su sprite de la pelota y el byte siguiente (16 bits)
+C 0x9613 lee el dibujo de su sprite de la pelota y el byte siguiente (16 bits)
 C 0x96A0 lee el numero de jugadores de PENNANT (1-6)
 C 0x96A6 apunta a el equipo del jugador en PENNANT (bit 0)
 C 0x96D7 hl_mas_a: HL = HL + A
@@ -346,6 +412,8 @@ C 0x9727 lee el equipo del jugador en PENNANT (bit 0)
 C 0x973A texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x9744 apunta a los 6 equipos elegidos (0xFF libre)
 C 0x974E apunta a los 6 equipos elegidos (0xFF libre)
+C 0x9756 indice_de_equipo: C = el indice del equipo A en 0xD72A
+C 0x9768 indice_de_equipo: C = el indice del equipo A en 0xD72A
 C 0x9776 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x977C texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x9782 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
@@ -357,6 +425,7 @@ C 0x97B7 lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (
 C 0x97BE lee el equipo del jugador en PENNANT (bit 0)
 C 0x97D6 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x97DC texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x97E4 letra_ascii: una letra ASCII a la fuente
 C 0x97E9 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x9865 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x987B sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -364,8 +433,10 @@ C 0x98A7 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vue
 C 0x98BC lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x98D0 apunta a el orden de bateo del visitante (9 numeros de jugador)
 C 0x98D3 hl_mas_a: HL = HL + A
+C 0x98ED y_de_la_fila_14: E = la y de la fila A + 1
 C 0x98F5 apunta a los jugadores del visitante (14 bytes cada uno)
 C 0x98F8 apunta a el orden de bateo del visitante (9 numeros de jugador)
+C 0x9901 y_de_la_fila_14: E = la y de la fila A + 1
 C 0x990C apunta a el orden de bateo del visitante (9 numeros de jugador)
 C 0x9911 hl_mas_a: HL = HL + A
 C 0x9918 de_mas_a: DE = DE + A
@@ -381,12 +452,15 @@ C 0x99E8 apunta a el orden de bateo del local (9 numeros de jugador)
 C 0x99F2 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x9A02 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x9A09 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x9A23 dibujos_de_sprites_13: los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
 C 0x9A3B despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x9A5F lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x9A72 apunta a el orden de bateo del local (9 numeros de jugador)
 C 0x9A75 hl_mas_a: HL = HL + A
+C 0x9A8F y_de_la_fila_14: E = la y de la fila A + 1
 C 0x9A97 apunta a los jugadores del local (14 bytes cada uno)
 C 0x9A9A apunta a el orden de bateo del local (9 numeros de jugador)
+C 0x9AA3 y_de_la_fila_14: E = la y de la fila A + 1
 C 0x9AAE apunta a el orden de bateo del local (9 numeros de jugador)
 C 0x9AB3 hl_mas_a: HL = HL + A
 C 0x9ABA de_mas_a: DE = DE + A
@@ -399,11 +473,13 @@ C 0x9B34 hl_mas_a: HL = HL + A
 C 0x9B49 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9B51 hl_mas_a: HL = HL + A
 C 0x9B61 hl_mas_a: HL = HL + A
+C 0x9B7D dibujos_de_sprites_13: los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
 C 0x9B92 de_mas_a: DE = DE + A
 C 0x9BCF lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x9BE2 apunta a el orden de bateo del visitante (9 numeros de jugador)
 C 0x9BEE apunta a el orden de bateo del visitante (9 numeros de jugador)
 C 0x9BF9 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x9C08 diez_caracteres: 10 caracteres seguidos de HL en (D, E)
 C 0x9C18 apunta a el orden de bateo del visitante (9 numeros de jugador)
 C 0x9C3A hl_mas_a: HL = HL + A
 C 0x9C42 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
@@ -414,6 +490,7 @@ C 0x9C77 apunta a el orden de bateo del local (9 numeros de jugador)
 C 0x9C83 apunta a el orden de bateo del local (9 numeros de jugador)
 C 0x9C8E lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x9C97 apunta a la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
+C 0x9C9D diez_caracteres: 10 caracteres seguidos de HL en (D, E)
 C 0x9CAD apunta a el orden de bateo del local (9 numeros de jugador)
 C 0x9CC9 lee el orden de bateo del local (0-8)
 C 0x9CCF hl_mas_a: HL = HL + A
@@ -424,6 +501,7 @@ C 0x9CF9 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la p
 C 0x9D04 pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
 C 0x9D0A esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 C 0x9D10 apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
+C 0x9D18 dibujos_de_sprites_13: los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
 C 0x9D1E texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x9D22 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x9D5F de_mas_a: DE = DE + A
@@ -446,12 +524,28 @@ C 0x9E2C esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la p
 C 0x9E35 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x9E63 copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 C 0x9E69 apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
+C 0x9E71 dibujos_de_sprites_13: los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
 C 0x9E76 guarda la cuenta atras del estado
+C 0x9E79 paso_ecef: al paso siguiente (0xECEF + 1)
+C 0x9E8D paso_ecef: al paso siguiente (0xECEF + 1)
 C 0x9E96 apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 C 0x9E9F apunta a la cuenta atras del estado
 C 0x9EA4 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
+C 0x9EAA paso_ecef: al paso siguiente (0xECEF + 1)
+C 0x9EB7 paso_ecef: al paso siguiente (0xECEF + 1)
+C 0x9EC7 ficha_del_equipo: HL = la ficha de 15 bytes del equipo A en 0xD680
+C 0x9ECD diez_letras: 10 letras en ASCII (el '$' acaba)
+C 0x9ED4 victorias_de: HL = las victorias de la ficha del equipo A (+11)
+C 0x9EDB tres_cifras: un numero de 3 cifras BCD con los ceros de delante en blanco
+C 0x9EE4 tres_cifras: un numero de 3 cifras BCD con los ceros de delante en blanco
+C 0x9EEA texto_15: un texto con [x y] y caracteres de la fuente hasta 0xFF
+C 0x9EF5 ymmm: orden YMMM (0xE0) del VDP: mueve en vertical una franja
+C 0x9F07 victorias_de: HL = las victorias de la ficha del equipo A (+11)
+C 0x9F0B bcd_a_binario: A = el BCD de 3 cifras de HL en binario
+C 0x9F12 bcd_a_binario: A = el BCD de 3 cifras de HL en binario
 C 0x9F25 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 C 0x9F2B apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
+C 0x9F36 dibujos_de_sprites_13: los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
 C 0x9F47 guarda la cuenta atras del estado
 C 0x9F59 apunta a los 6 equipos elegidos (0xFF libre)
 C 0x9F64 hl_mas_a: HL = HL + A

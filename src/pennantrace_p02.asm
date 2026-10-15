@@ -126,7 +126,7 @@ L_80B1:
 	sbc hl,bc		;80b2
 	ld a,h			;80b4
 	rla			;80b5
-	jp c,05f71h		;80b6
+	jp c,05f71h		;80b6   ; menos_hl: HL = -HL
 	ret			;80b9
 L_80BA:
 	ld a,(0ed40h)		;80ba   ; el defensor que va a por la pelota: 0xED40 (si no es 0xFF)...
@@ -157,7 +157,7 @@ L_80F2:
 	ld de,(0e215h)		;80f2   ; hacia donde va la pelota: segun las velocidades (0xE215, 0xE21A)...
 	ld hl,(0e21ah)		;80f6   ; lee la velocidad x de la pelota y el byte siguiente (16 bits)
 	bit 7,d		;80f9
-	call nz,05f79h		;80fb
+	call nz,05f79h		;80fb   ; menos_de: DE = -DE
 	bit 7,h		;80fe   ; ...0xED42 = 0x10 o 0x20 (el exterior que va)
 	jr nz,L_810A		;8100
 	add hl,hl			;8102
@@ -165,7 +165,7 @@ L_80F2:
 	jr c,L_8130		;8106
 	jr L_812B		;8108
 L_810A:
-	call 05f71h		;810a
+	call 05f71h		;810a   ; menos_hl: HL = -HL
 	add hl,hl			;810d
 	call 00020h		;810e   ; BIOS DCOMPR - Compares HL with DE
 	jr c,L_8130		;8111
@@ -240,7 +240,7 @@ L_8173:
 L_8186:
 	ld a,070h		;8186   ; 7 en adelante: 0xED40 = 0x70, 0xED41 = 0x60 o 0x40 segun el signo de 0xE21B
 	ld (0ed40h),a		;8188
-	ld a,(0e21bh)		;818b
+	ld a,(0e21bh)		;818b   ; lee la velocidad x, byte alto de la pelota
 	rla			;818e
 	ld a,060h		;818f
 	jr nc,L_8195		;8191
@@ -308,7 +308,7 @@ L_81DB:
 L_81E1:
 	ld a,070h		;81e1   ; 0xED40 = 0x70, o 0x80 con 0xE2EE
 	ld (0ed40h),a		;81e3
-	ld a,(0e2eeh)		;81e6
+	ld a,(0e2eeh)		;81e6   ; lee la base de destino (nibble alto; 2 abajo: llegado) del receptor (ficha 0xE2E1, defensor 2)
 	or a			;81e9
 	ret z			;81ea
 	ld a,080h		;81eb
@@ -492,7 +492,7 @@ L_830F:
 L_8312:
 	or 040h		;8312
 	ld c,a			;8314
-	jp 0b06eh		;8315
+	jp 0b06eh		;8315   ; base_libre: carry si ningun corredor esta en la base C (con el bit 6)
 L_8318:
 	call L_82A7		;8318   ; la base de 0xEDC8 (p02:822C), o 0
 	ld a,(0edc8h)		;831b
@@ -955,10 +955,10 @@ L_860C:
 	or a			;860f
 	ret z			;8610
 	ld c,043h		;8611   ; ...si el corredor no llega (p15:B06E con 0x43 y 0x42)...
-	call 0b06eh		;8613
+	call 0b06eh		;8613   ; base_libre: carry si ningun corredor esta en la base C (con el bit 6)
 	ret nc			;8616
 	ld c,042h		;8617
-	call 0b06eh		;8619
+	call 0b06eh		;8619   ; base_libre: carry si ningun corredor esta en la base C (con el bit 6)
 	ret c			;861c
 	ld e,(ix+009h)		;861d   ; ...y la pelota no va muy deprisa...
 	ld d,(ix+00ah)		;8620
@@ -1167,7 +1167,7 @@ L_8788:
 	ret nz			;8793
 	ld de,(0e21ah)		;8794   ; lee la velocidad x de la pelota y el byte siguiente (16 bits)
 	bit 7,d		;8798
-	call nz,05f79h		;879a
+	call nz,05f79h		;879a   ; menos_de: DE = -DE
 	xor a			;879d
 	sbc hl,de		;879e
 	rl h		;87a0
@@ -1188,7 +1188,7 @@ L_87B9:
 	ld b,a			;87b9
 	ld a,r		;87ba
 	cp b			;87bc
-	jp nc,05f79h		;87bd
+	jp nc,05f79h		;87bd   ; menos_de: DE = -DE
 	sra d		;87c0
 	rr e		;87c2
 	sra h		;87c4
@@ -1637,7 +1637,7 @@ L_8AD4:
 	ld a,(0de03h)		;8ad4   ; ...cada dos cuadros, si hay alguno en 0xE23C
 	rra			;8ad7
 	ret c			;8ad8
-	ld hl,0e23ch		;8ad9
+	ld hl,0e23ch		;8ad9   ; apunta a las marcas del corredor de la ficha 0xE231
 	ld de,00010h		;8adc
 	ld b,004h		;8adf
 L_8AE1:
@@ -1789,7 +1789,7 @@ L_8BD5:
 	and 00fh		;8bd5
 	or 040h		;8bd7
 	ld c,a			;8bd9
-	call 0b06eh		;8bda
+	call 0b06eh		;8bda   ; base_libre: carry si ningun corredor esta en la base C (con el bit 6)
 	ret nc			;8bdd
 	res 7,(ix+00dh)		;8bde   ; pone a cero el bit 7 de la base de destino (nibble alto; 2 abajo: llegado)
 	ret			;8be2
@@ -1956,7 +1956,7 @@ L_8CF8:
 	ld (0edc6h),a		;8d1c
 	ld a,(0e1d0h)		;8d1f
 	or a			;8d22
-	call nz,062f7h		;8d23
+	call nz,062f7h		;8d23   ; bateador_mas: un bateador mas: en 0xE1A1 = 3, solo la primera vez (0xEDD4)
 L_8D26:
 	ld a,001h		;8d26   ; avanzando: base + 1
 	ld c,000h		;8d28
@@ -2181,12 +2181,12 @@ L_8EA5:
 	call 05c94h		;8ea5
 	inc hl			;8ea8
 	inc c			;8ea9   ; ...la y (0xFF: la de la tabla, p02:9127)...
-	call z,L_9127		;8eaa
+	call z,menos_de_2		;8eaa   ; menos_de_2: DE = -DE
 	ld (ix+004h),e		;8ead   ; guarda la velocidad y, byte bajo
 	ld (ix+005h),d		;8eb0   ; guarda la velocidad y, byte alto
 	call 05ca3h		;8eb3   ; ...y la x
 	inc b			;8eb6
-	call z,L_9127		;8eb7
+	call z,menos_de_2		;8eb7   ; menos_de_2: DE = -DE
 	ld (ix+009h),e		;8eba   ; guarda la velocidad x, byte bajo
 	ld (ix+00ah),d		;8ebd   ; guarda la velocidad x, byte alto
 	ld hl,0909eh		;8ec0   ; el destino: de 0x909E avanzando, de 0x9098 volviendo
@@ -2238,7 +2238,7 @@ L_8F05:
 	ld a,b			;8f0d
 	and 00fh		;8f0e
 	ld c,a			;8f10
-	call 0b06eh		;8f11
+	call 0b06eh		;8f11   ; base_libre: carry si ningun corredor esta en la base C (con el bit 6)
 	ret nc			;8f14
 L_8F15:
 	ld a,(ix+00bh)		;8f15   ; ...la direccion de la base siguiente con el boton de avanzar...
@@ -2379,12 +2379,12 @@ L_9001:
 	call 05c94h		;9003   ; ...la velocidad y de p00:5C94 (0xFF: p02:9127)...
 	inc hl			;9006
 	inc c			;9007
-	call z,L_9127		;9008
+	call z,menos_de_2		;9008   ; menos_de_2: DE = -DE
 	ld (ix+004h),e		;900b
 	ld (ix+005h),d		;900e
 	call 05ca3h		;9011   ; ...la x de p00:5CA3...
 	inc b			;9014
-	call z,L_9127		;9015
+	call z,menos_de_2		;9015   ; menos_de_2: DE = -DE
 	ld (ix+009h),e		;9018
 	ld (ix+00ah),d		;901b
 	pop af			;901e   ; ...el destino de 0x9098...
@@ -2511,7 +2511,7 @@ L_90FC:
 	add a,a			;90fd
 	call 05c94h		;90fe
 	inc hl			;9101
-	call L_9127		;9102
+	call menos_de_2		;9102   ; menos_de_2: DE = -DE
 	ld (ix+004h),e		;9105
 	ld (ix+005h),d		;9108
 	call 05ca3h		;910b
@@ -2524,7 +2524,7 @@ L_90FC:
 	ld (0ed6ch),a		;9120
 	ld (0ed32h),a		;9123
 	ret			;9126
-L_9127:
+menos_de_2:		; DE = -DE
 	ld a,e			;9127   ; DE = -DE
 	cpl			;9128
 	ld e,a			;9129
@@ -2594,7 +2594,7 @@ L_9181:
 	or a			;918c
 	jr nz,L_91C3		;918d
 	call 05b1fh		;918f   ; ...sprites, el cambio de lanzador (p02:83E6), p15:A519, p02:91D5 y los corredores
-	call 05c73h		;9192
+	call 05c73h		;9192   ; pide_colores_sprite: pide copiar los colores de sprite (0xED09 = 1)
 	call L_83E6		;9195
 	call 0a519h		;9198
 	call L_91D5		;919b
@@ -2678,7 +2678,7 @@ L_923A:
 	ld a,(0eddeh)		;924c   ; ...si la jugada no ha acabado y no hay corredores, se acaba
 	and 001h		;924f
 	jr nz,L_9293		;9251
-	ld hl,0e23ch		;9253
+	ld hl,0e23ch		;9253   ; apunta a las marcas del corredor de la ficha 0xE231
 	ld de,00010h		;9256
 	ld b,004h		;9259
 L_925B:
@@ -2768,7 +2768,7 @@ L_92EC:
 	call L_9744		;92f9
 	call 05d08h		;92fc
 	call 074f6h		;92ff
-	call 05b1fh		;9302
+	call 05b1fh		;9302   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
 	call 05c77h		;9305
 	jp 0b29ch		;9308
 L_930B:
@@ -2783,7 +2783,7 @@ L_9311:
 	ret			;931b
 L_931C:
 	push af			;931c   ; 0xE33B: un bateador mas (p01:62F7); 2 es la jugada anulada
-	call 062f7h		;931d
+	call 062f7h		;931d   ; bateador_mas: un bateador mas: en 0xE1A1 = 3, solo la primera vez (0xEDD4)
 	pop af			;9320
 	cp 002h		;9321
 	jr z,L_9366		;9323
@@ -2846,7 +2846,7 @@ L_9394:
 	add hl,de			;9394
 	djnz L_938F		;9395
 	ld a,c			;9397
-	ld de,0e232h		;9398
+	ld de,0e232h		;9398   ; apunta a la y, fraccion del corredor de la ficha 0xE231
 	ld hl,0e231h		;939b   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld (hl),000h		;939e
 	ld bc,0003fh		;93a0
@@ -2862,9 +2862,9 @@ L_93A6:
 	ret			;93b2
 L_93B3:
 	call 05c77h		;93b3   ; el home run: sprites, p02:98FC; sin velocidad, 0xE302 = 0...
-	call 05b1fh		;93b6
+	call 05b1fh		;93b6   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
 	call L_98FC		;93b9
-	ld hl,(0e21dh)		;93bc
+	ld hl,(0e21dh)		;93bc   ; lee el dibujo de su sprite de la pelota y el byte siguiente (16 bits)
 	ld a,h			;93bf
 	or l			;93c0
 	call z,L_93EB		;93c1
@@ -2982,7 +2982,7 @@ L_946E:
 	ret nc			;9475
 	ld c,001h		;9476   ; ...si el bateador no llego (p15:B072), cuenta como bateador
 	call 0b072h		;9478
-	call nc,062f7h		;947b
+	call nc,062f7h		;947b   ; bateador_mas: un bateador mas: en 0xE1A1 = 3, solo la primera vez (0xEDD4)
 	ld hl,0e19bh		;947e   ; la media entrada siguiente (vuelve a 0 en la 100.a)
 	inc (hl)			;9481
 	ld a,(hl)			;9482
@@ -3012,7 +3012,7 @@ L_94A8:
 	ld (0e1cbh),a		;94aa
 	xor a			;94ad
 	ld hl,0e231h		;94ae   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
-	ld de,0e232h		;94b1
+	ld de,0e232h		;94b1   ; apunta a la y, fraccion del corredor de la ficha 0xE231
 	ld bc,00040h		;94b4
 	ld (hl),a			;94b7
 	ldir		;94b8
@@ -3140,13 +3140,13 @@ L_9585:
 	ret			;9593
 L_9594:
 	ld c,042h		;9594   ; los marcadores de bases: segun quien esta en 1.a, 2.a y 3.a (p15:B06E)...
-	call 0b06eh		;9596
+	call 0b06eh		;9596   ; base_libre: carry si ningun corredor esta en la base C (con el bit 6)
 	call nc,L_988A		;9599
 	ld c,043h		;959c
-	call 0b06eh		;959e
+	call 0b06eh		;959e   ; base_libre: carry si ningun corredor esta en la base C (con el bit 6)
 	call nc,L_98A4		;95a1
 	ld c,044h		;95a4
-	call 0b06eh		;95a6
+	call 0b06eh		;95a6   ; base_libre: carry si ningun corredor esta en la base C (con el bit 6)
 	ret c			;95a9
 	jp L_9897		;95aa
 L_95AD:
@@ -3182,13 +3182,13 @@ L_95C8:
 	ret			;95d0
 L_95D1:
 	ld c,042h		;95d1   ; ...y los sprites de las bases ocupadas que se mueven: 2.a...
-	call 0b06eh		;95d3
+	call 0b06eh		;95d3   ; base_libre: carry si ningun corredor esta en la base C (con el bit 6)
 	call nc,L_9600		;95d6
 	ld c,043h		;95d9
-	call 0b06eh		;95db
+	call 0b06eh		;95db   ; base_libre: carry si ningun corredor esta en la base C (con el bit 6)
 	call nc,L_960D		;95de
 	ld c,044h		;95e1
-	call 0b06eh		;95e3
+	call 0b06eh		;95e3   ; base_libre: carry si ningun corredor esta en la base C (con el bit 6)
 	ret c			;95e6
 	ld a,(0de03h)		;95e7   ; ...con el paso de las piernas...
 	and 008h		;95ea
@@ -3754,7 +3754,7 @@ L_9931:
 	bit 7,d		;9947
 	call nz,L_9A16		;9949
 	call L_9C9E		;994c   ; ...la altura nueva en 0xE21C...
-	ld (0e21ch),hl		;994f
+	ld (0e21ch),hl		;994f   ; guarda las marcas de la pelota y el byte siguiente (16 bits)
 	call L_99FA		;9952   ; ...el sonido de la bola alta (p02:99FA)...
 	call L_99DF		;9955   ; ...hasta que la altura llega a 0
 	ret nz			;9958
@@ -3776,7 +3776,7 @@ L_9959:
 	ret			;9979
 L_997A:
 	ld a,001h		;997a   ; si no: la gravedad otra vez, 0xE22A = 16 si va baja, un bote mas (0xE1D0)...
-	ld (0e21fh),a		;997c
+	ld (0e21fh),a		;997c   ; guarda la y de destino de la pelota
 	call L_99E9		;997f
 	call L_99BE		;9982
 	ld a,(hl)			;9985
@@ -3800,8 +3800,8 @@ L_997A:
 L_99A4:
 	ld hl,00000h		;99a4   ; parada: todo a cero y el estado siguiente
 	ld (0e226h),hl		;99a7
-	ld (0e21ch),hl		;99aa
-	ld (0e21dh),hl		;99ad
+	ld (0e21ch),hl		;99aa   ; guarda las marcas de la pelota y el byte siguiente (16 bits)
+	ld (0e21dh),hl		;99ad   ; guarda el dibujo de su sprite de la pelota y el byte siguiente (16 bits)
 	ld hl,0e211h		;99b0   ; apunta a la ficha de 16 bytes de la pelota
 	inc (hl)			;99b3
 	ret			;99b4
@@ -3836,7 +3836,7 @@ L_99D6:
 	ret			;99de
 L_99DF:
 	xor a			;99df   ; Z si la altura (0xE21C-0xE21E) es 0
-	ld hl,0e21ch		;99e0
+	ld hl,0e21ch		;99e0   ; apunta a las marcas de la pelota
 	or (hl)			;99e3
 	inc hl			;99e4
 	or (hl)			;99e5
@@ -3847,7 +3847,7 @@ L_99E9:
 	ld a,(0e33bh)		;99e9   ; sin 0xE33B y con la y alta < 2, 0xE22A = 16
 	or a			;99ec
 	ret nz			;99ed
-	ld a,(0e214h)		;99ee
+	ld a,(0e214h)		;99ee   ; lee la y, byte alto de la pelota
 	cp 002h		;99f1
 	ret nc			;99f3
 	ld a,010h		;99f4
@@ -3857,7 +3857,7 @@ L_99FA:
 	ld a,(0edd2h)		;99fa   ; la bola alta: una vez (0xEDD2), si la altura pasa de 0x70, el sonido 0x22
 	or a			;99fd
 	ret nz			;99fe
-	ld hl,(0e21dh)		;99ff
+	ld hl,(0e21dh)		;99ff   ; lee el dibujo de su sprite de la pelota y el byte siguiente (16 bits)
 	ld de,00070h		;9a02
 	or a			;9a05
 	sbc hl,de		;9a06
@@ -3958,7 +3958,7 @@ L_9A9A:
 	ld a,(0e302h)		;9aa7   ; ...y el de la sombra si la altura no pasa de 0xE221
 	ld c,a			;9aaa
 	ld hl,(0e221h)		;9aab
-	ld de,(0e21dh)		;9aae
+	ld de,(0e21dh)		;9aae   ; lee el dibujo de su sprite de la pelota y el byte siguiente (16 bits)
 	or a			;9ab2
 	sbc hl,de		;9ab3
 	ld a,h			;9ab5
@@ -3992,7 +3992,7 @@ L_9ADE:
 L_9AE0:
 	ld a,0bch		;9ae0   ; los dibujos: la sombra 0xBC, la pelota 0xB0 alta o 0xB4 baja
 	ld (0e106h),a		;9ae2
-	ld hl,(0e21dh)		;9ae5
+	ld hl,(0e21dh)		;9ae5   ; lee el dibujo de su sprite de la pelota y el byte siguiente (16 bits)
 	ld de,0ff80h		;9ae8
 	add hl,de			;9aeb
 	ld a,0b0h		;9aec
@@ -4084,7 +4084,7 @@ L_9B7D:
 	ccf			;9b8e
 	ret c			;9b8f
 L_9B90:
-	ld hl,(0e21dh)		;9b90
+	ld hl,(0e21dh)		;9b90   ; lee el dibujo de su sprite de la pelota y el byte siguiente (16 bits)
 	ld de,0ffd0h		;9b93
 	add hl,de			;9b96
 	ccf			;9b97
@@ -4132,7 +4132,7 @@ L_9BD7:
 	rr l		;9bdd
 	sra h		;9bdf
 	rr l		;9be1
-	jp 05f71h		;9be3
+	jp 05f71h		;9be3   ; menos_hl: HL = -HL
 L_9BE6:
 	ld hl,(0e21ah)		;9be6   ; frena: la velocidad x y la y por 15/16...
 	call L_9C19		;9be9
@@ -4143,10 +4143,10 @@ L_9BE6:
 L_9BF8:
 	ld hl,(0e215h)		;9bf8   ; ...con |vx| + |vy| < 0x20, se para
 	bit 7,h		;9bfb
-	call nz,05f71h		;9bfd
+	call nz,05f71h		;9bfd   ; menos_hl: HL = -HL
 	ld de,(0e21ah)		;9c00   ; lee la velocidad x de la pelota y el byte siguiente (16 bits)
 	bit 7,d		;9c04
-	call nz,05f79h		;9c06
+	call nz,05f79h		;9c06   ; menos_de: DE = -DE
 	add hl,de			;9c09
 	ld de,0ffe0h		;9c0a
 	add hl,de			;9c0d
@@ -4177,9 +4177,9 @@ L_9C20:
 	or l			;9c35
 	ret z			;9c36
 	call L_9C6D		;9c37   ; la x nueva (24 bits)...
-	ld (0e217h),hl		;9c3a
+	ld (0e217h),hl		;9c3a   ; guarda la x, fraccion de la pelota y el byte siguiente (16 bits)
 	call L_9C44		;9c3d   ; ...y la y nueva
-	ld (0e212h),hl		;9c40
+	ld (0e212h),hl		;9c40   ; guarda la y, fraccion de la pelota y el byte siguiente (16 bits)
 	ret			;9c43
 L_9C44:
 	ld hl,(0e212h)		;9c44   ; la y: 0xE212-0xE213 mas la velocidad y, con el byte alto en 0xE214 (de 0 a 3)
@@ -4188,20 +4188,20 @@ L_9C44:
 	jr nz,L_9C5C		;9c4d
 	add hl,de			;9c4f
 	ret nc			;9c50
-	ld a,(0e214h)		;9c51
+	ld a,(0e214h)		;9c51   ; lee la y, byte alto de la pelota
 	cp 003h		;9c54
 	ret nc			;9c56
 	inc a			;9c57
-	ld (0e214h),a		;9c58
+	ld (0e214h),a		;9c58   ; guarda la y, byte alto de la pelota
 	ret			;9c5b
 L_9C5C:
 	add hl,de			;9c5c
 	ret c			;9c5d
-	ld a,(0e214h)		;9c5e
+	ld a,(0e214h)		;9c5e   ; lee la y, byte alto de la pelota
 	or a			;9c61
 	jr z,L_9C69		;9c62
 	dec a			;9c64
-	ld (0e214h),a		;9c65
+	ld (0e214h),a		;9c65   ; guarda la y, byte alto de la pelota
 	ret			;9c68
 L_9C69:
 	ld hl,00000h		;9c69   ; por debajo de 0, 0
@@ -4212,10 +4212,10 @@ L_9C6D:
 	bit 7,d		;9c74
 	jr nz,L_9C8D		;9c76
 	add hl,de			;9c78
-	ld a,(0e219h)		;9c79
+	ld a,(0e219h)		;9c79   ; lee la x, byte alto de la pelota
 	jr nc,L_9C82		;9c7c
 	inc a			;9c7e
-	ld (0e219h),a		;9c7f
+	ld (0e219h),a		;9c7f   ; guarda la x, byte alto de la pelota
 L_9C82:
 	cp 002h		;9c82
 	ret nz			;9c84
@@ -4227,11 +4227,11 @@ L_9C82:
 L_9C8D:
 	add hl,de			;9c8d
 	ret c			;9c8e
-	ld a,(0e219h)		;9c8f
+	ld a,(0e219h)		;9c8f   ; lee la x, byte alto de la pelota
 	or a			;9c92
 	jr z,L_9C9A		;9c93
 	dec a			;9c95
-	ld (0e219h),a		;9c96
+	ld (0e219h),a		;9c96   ; guarda la x, byte alto de la pelota
 	ret			;9c99
 L_9C9A:
 	ld hl,00000h		;9c9a
@@ -4243,18 +4243,18 @@ L_9C9E:
 	jr c,L_9CAF		;9ca3
 	add hl,de			;9ca5
 	ret nc			;9ca6
-	ld a,(0e21eh)		;9ca7
+	ld a,(0e21eh)		;9ca7   ; lee la base de destino (nibble alto; 2 abajo: llegado) de la pelota
 	inc a			;9caa
-	ld (0e21eh),a		;9cab
+	ld (0e21eh),a		;9cab   ; guarda la base de destino (nibble alto; 2 abajo: llegado) de la pelota
 	ret			;9cae
 L_9CAF:
 	add hl,de			;9caf
 	ret c			;9cb0
-	ld a,(0e21eh)		;9cb1
+	ld a,(0e21eh)		;9cb1   ; lee la base de destino (nibble alto; 2 abajo: llegado) de la pelota
 	or a			;9cb4
 	jr z,L_9CBC		;9cb5
 	dec a			;9cb7
-	ld (0e21eh),a		;9cb8
+	ld (0e21eh),a		;9cb8   ; guarda la base de destino (nibble alto; 2 abajo: llegado) de la pelota
 	ret			;9cbb
 L_9CBC:
 	ld hl,00000h		;9cbc
@@ -4263,7 +4263,7 @@ L_9CC0:
 	ld hl,0e212h		;9cc0   ; guarda la y y la x de la pelota en 0xED51 y 0xED54
 	ld de,0ed51h		;9cc3
 	call L_9CCF		;9cc6
-	ld hl,0e217h		;9cc9
+	ld hl,0e217h		;9cc9   ; apunta a la x, fraccion de la pelota
 	ld de,0ed54h		;9ccc
 L_9CCF:
 	ld bc,00003h		;9ccf
@@ -4273,12 +4273,12 @@ L_9CD5:
 	ld de,0e212h		;9cd5   ; y las devuelve
 	ld hl,0ed51h		;9cd8
 	call L_9CCF		;9cdb
-	ld de,0e217h		;9cde
+	ld de,0e217h		;9cde   ; apunta a la x, fraccion de la pelota
 	ld hl,0ed54h		;9ce1
 	jr L_9CCF		;9ce4
 L_9CE6:
 	xor a			;9ce6   ; la pelota en la mano del lanzador: todo a cero...
-	ld (0e21fh),a		;9ce7
+	ld (0e21fh),a		;9ce7   ; guarda la y de destino de la pelota
 	ld (0e22fh),a		;9cea
 	ld (0e230h),a		;9ced
 	ld (0e211h),a		;9cf0   ; guarda la ficha de 16 bytes de la pelota
@@ -4301,7 +4301,7 @@ L_9CE6:
 	ld hl,00138h		;9d21
 	ld (0e218h),hl		;9d24   ; guarda la x de la pelota y el byte siguiente (16 bits)
 	ld hl,00001h		;9d27
-	ld (0e21dh),hl		;9d2a
+	ld (0e21dh),hl		;9d2a   ; guarda el dibujo de su sprite de la pelota y el byte siguiente (16 bits)
 	ld a,00dh		;9d2d   ; ...0xE302 = 13, 0xED39 = 15...
 	ld (0e302h),a		;9d2f
 	ld a,00fh		;9d32
@@ -4417,7 +4417,7 @@ L_9DFF:
 	ld (hl),000h		;9dff
 	add hl,de			;9e01
 	djnz L_9DFF		;9e02
-	jp 05b1fh		;9e04
+	jp 05b1fh		;9e04   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
 L_9E07:
 	ld a,(0e30ah)		;9e07   ; el local: lo mismo con 0xE19E, 0xE30E y el bit 1
 	rra			;9e0a
@@ -4527,7 +4527,7 @@ DATA_resto_9EA5:
 L_9EA9:
 	call 04ba2h		;9ea9   ; la pantalla de los lanzadores: borrada, caracteres...
 	call 04bd2h		;9eac   ; esconde_sprites: escribe 0xD8 (Y = 216: no se pinta ninguno) en la VRAM 0xF600, el primer atributo de sprite
-	call 052b5h		;9eaf
+	call 052b5h		;9eaf   ; caracteres_de_sprite: 17 caracteres de un bit (p09:B942) en la VRAM 0xF818, color 0x0D
 	call 05202h		;9eb2
 	call 040e7h		;9eb5
 	call 05c7dh		;9eb8   ; ...24 bytes de atributos de 0x9F58...
@@ -4535,7 +4535,7 @@ L_9EA9:
 	ld de,0e100h		;9ebe   ; apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 	ld bc,00018h		;9ec1
 	ldir		;9ec4
-	call 05b1fh		;9ec6
+	call 05b1fh		;9ec6   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
 	ld hl,07f55h		;9ec9   ; ...el texto de p13:7F55, dos marcos...
 	call 04ea6h		;9ecc   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld hl,0146ch		;9ecf
@@ -4548,10 +4548,10 @@ L_9EA9:
 	call 04cfeh		;9ee2   ; marco: un marco de lineas: HL la esquina, DE el tamano
 	ld hl,0d380h		;9ee5   ; ...los nombres de los equipos (10 letras)...
 	ld de,01868h		;9ee8
-	call 05be4h		;9eeb
+	call 05be4h		;9eeb   ; diez_caracteres: 10 caracteres seguidos de HL en (D, E)
 	ld hl,0d47fh		;9eee   ; apunta a la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 	ld de,09068h		;9ef1
-	call 05be4h		;9ef4
+	call 05be4h		;9ef4   ; diez_caracteres: 10 caracteres seguidos de HL en (D, E)
 	ld hl,0d433h		;9ef7   ; ...los 4 lanzadores de cada uno (p02:9F20)...
 	ld de,01880h		;9efa
 	call L_9F20		;9efd
@@ -4574,7 +4574,7 @@ L_9F22:
 	ld b,006h		;9f22
 	push de			;9f24
 	push de			;9f25
-	call 0a425h		;9f26
+	call 0a425h		;9f26   ; letras_estrechas: B letras; 0x0C (estrecha) avanza 4, las demas 8
 	inc hl			;9f29
 	inc hl			;9f2a
 	inc hl			;9f2b
@@ -4590,12 +4590,12 @@ L_9F22:
 	sub 008h		;9f39
 	ld d,a			;9f3b
 	ld b,001h		;9f3c   ; ...y dos numeros de su ficha (1 y 2 cifras)
-	call 05be6h		;9f3e
+	call 05be6h		;9f3e   ; b_caracteres: B caracteres seguidos de HL en (D, E)
 	ld a,d			;9f41
 	add a,004h		;9f42
 	ld d,a			;9f44
 	ld b,002h		;9f45
-	call 05be6h		;9f47
+	call 05be6h		;9f47   ; b_caracteres: B caracteres seguidos de HL en (D, E)
 	inc hl			;9f4a
 	inc hl			;9f4b
 	inc hl			;9f4c
@@ -4646,7 +4646,7 @@ DATA_resto_9F79:
 L_9F8A:
 	call 0a463h		;9f8a   ; el orden de bateo: p15:A463, el mando del ordenador y los sprites...
 	call L_85AB		;9f8d
-	call 05c73h		;9f90
+	call 05c73h		;9f90   ; pide_colores_sprite: pide copiar los colores de sprite (0xED09 = 1)
 	ld a,(0e302h)		;9f93   ; ...acabado: la espera, p15:AA74, p15:AB77 y 0xE1D1 = 1
 	dec a			;9f96
 	jr nz,L_9FAA		;9f97
