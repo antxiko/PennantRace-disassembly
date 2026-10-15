@@ -59,7 +59,18 @@ CFG = dict(rom="pennantrace.rom", org=0x4000, mapper="konami_scc",
            sp=0xD280, ram0=[], init=[(0x6000, {})], frame=0x6009, pide=0x6003,
            banco_frame=4, banco_pide=4, ram=(0xEE00, 0xF000), hz=60,
            psg0={7: 0xBF}, romtype="KonamiSCC", max_s=90, piezas=PIEZAS,
-           pagina=None, cotejado=[],
+           pagina=None,
+           # (numero, cuadros iguales a openMSX, nota): work/coteja_todas.sh y
+           # work/coteja_ceros.sh (con 0xEFF4, el tono libre del canal 4, a 0)
+           cotejado=[(0x28, 218, None), (0x23, 176, None), (0x2D, 3790, None), (0x2E, 3073, None),
+                     (0x2F, 2305, "sin el tono libre"), (0x33, 2017, "sin el tono libre"),
+                     (0x34, 1153, None), (0x35, 961, None), (0x36, 1921, "sin el tono libre"),
+                     (0x37, 1825, "sin el tono libre"), (0x38, 1537, None), (0x39, 1921, "sin el tono libre"),
+                     (0x3A, 1601, "sin el tono libre"), (0x3B, 2267, None), (0x3C, 2075, "sin el tono libre"),
+                     (0x3D, 611, None), (0x3E, 379, None), (0x2C, 843, "sola"), (0x3F, 843, "sola"),
+                     (0x42, 229, None), (0x45, 259, None), (0x43, 215, None), (0x44, 247, None),
+                     (0x40, 205, None), (0x41, 266, None), (0x30, 668, None),
+                     (0x31, 3968, "de 4609: luego el juego la corta")],
            # 0xEFF9 copia cada cuadro la cuenta de 0xFDA2 (p06:B427): no es
            # estado de la musica y no dejaria ver la vuelta
            excluye=[0xEFF9],
