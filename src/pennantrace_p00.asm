@@ -709,7 +709,7 @@ vuelve_al_menu:		; el menu: estado, despachador de menus y paso a 0
 	jp paso_cero		;452c   ; ...y el paso a 0
 L_452F:
 	call borra_pantalla		;452f   ; paso 1: borra la pantalla, 17 caracteres a la VRAM 0xF818 (p00:52B5) y p15:AB1D
-	call caracteres_de_sprite		;4532   ; caracteres_de_sprite: 17 caracteres de un bit (p09:B942) en la VRAM 0xF818, color 0x0D
+	call kanji_de_los_datos		;4532   ; kanji_de_los_datos: los 17 kanji de p09:B942 en la casilla (0xF8, 0x18) de la hoja: los codigos 0x7F-0x8F
 	call bancos_13_14_15		;4535   ; bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 	call 0ab1dh		;4538   ; la demostracion se prepara (p15:AB1D)
 	call bancos_1_2_3		;453b   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
@@ -793,8 +793,8 @@ L_45D2:
 	call L_5FF1		;45d4
 	call carga_la_fuente		;45d7   ; carga_la_fuente: carga la fuente: 161 caracteres de un bit (0xFAF6 = 1 mientras tanto)
 	call L_59AD		;45da   ; p00:59AD
-	call caracteres_de_sprite		;45dd   ; caracteres_de_sprite: 17 caracteres de un bit (p09:B942) en la VRAM 0xF818, color 0x0D
-	call L_52D9		;45e0   ; p00:52D9
+	call kanji_de_los_datos		;45dd   ; kanji_de_los_datos: los 17 kanji de p09:B942 en la casilla (0xF8, 0x18) de la hoja: los codigos 0x7F-0x8F
+	call kanji_del_menu		;45e0   ; p00:52D9
 	ld a,007h		;45e3   ; ...el color 7 a 0x77 0x07...
 	ld de,07777h		;45e5
 	call pon_color		;45e8   ; pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
@@ -1069,7 +1069,7 @@ L_47D1:
 	xor a			;47dd
 	ld de,00703h		;47de   ; el color 0 = 0x0703
 	call pon_color		;47e1   ; pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
-	call caracteres_de_sprite		;47e4   ; ...los caracteres, el texto de 0x7CD1...
+	call kanji_de_los_datos		;47e4   ; ...los caracteres, el texto de 0x7CD1...
 	ld hl,07cd1h		;47e7
 	call texto		;47ea   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld hl,0d380h		;47ed   ; ...y dos numeros de 10 cifras: 0xD380 y 0xD47F
@@ -1097,7 +1097,7 @@ L_4818:
 	ld a,(0de07h)		;4821   ; espera al disparo (bit 4 de 0xDE07)
 	and 010h		;4824
 	ret z			;4826   ; sin disparo, nada
-	call L_52C7		;4827   ; caracteres (p00:52C7), p15:AC1A y p15:A792
+	call kanji_de_la_tabla		;4827   ; caracteres (p00:52C7), p15:AC1A y p15:A792
 	call bancos_13_14_15		;482a   ; bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 	call 0ac1ah		;482d   ; la jornada siguiente (p15:AC1A)...
 	call 0a792h		;4830   ; ...y el campeon (p15:A792)
@@ -1759,7 +1759,7 @@ lee_estado:		; A = el registro de estado A del VDP (R#15)
 	pop bc			;4c8e
 	ei			;4c8f
 	ret			;4c90
-linea:		; orden LINE (0x70) del VDP desde HL
+linea:		; orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
 	call espera_vdp		;4c91   ; espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
 	push bc			;4c94   ; guarda el largo (BC)
 	ld a,(00007h)		;4c95   ; C = el puerto del VDP de 0x0007 + 1: el de control
@@ -1778,23 +1778,23 @@ linea:		; orden LINE (0x70) del VDP desde HL
 	out (c),l		;4caa   ; ...DY = L
 	out (c),a		;4cac   ; R#39 = 0 (pagina 0)
 	pop hl			;4cae
-	out (c),h		;4caf   ; el largo (NX = H de BC)...
+	out (c),h		;4caf   ; el largo: R#40 = B (de BC)...
 	xor a			;4cb1
 	cp h			;4cb2   ; ...0 vale 256
 	jr nz,L_4CB6		;4cb3
 	inc a			;4cb5   ; 0 se cambia por 1
 L_4CB6:
-	out (c),a		;4cb6   ; R#40...
+	out (c),a		;4cb6   ; ...R#41 = 1 si B es 0 (256)
 	xor a			;4cb8
-	out (c),a		;4cb9   ; R#41, R#42...
+	out (c),a		;4cb9   ; R#42 y R#43 (NY) a 0
 	out (c),a		;4cbb
-	out (c),l		;4cbd   ; ...y el corto (NY = L)
-	out (c),a		;4cbf   ; R#43 = 0
+	out (c),l		;4cbd   ; R#44: el color (C de BC)
+	out (c),a		;4cbf   ; R#45 = 0: el lado largo en horizontal
 	ld a,070h		;4cc1   ; LINE, en horizontal (ARG = 0)
 	out (c),a		;4cc3
 	ei			;4cc5   ; interrupciones otra vez
 	ret			;4cc6
-linea_vertical:		; orden LINE (0x70) del VDP, el lado largo en vertical
+linea_vertical:		; orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 	call espera_vdp		;4cc7   ; espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
 	push bc			;4cca   ; guarda el largo
 	ld a,(00007h)		;4ccb   ; C = el puerto de control
@@ -1813,17 +1813,17 @@ linea_vertical:		; orden LINE (0x70) del VDP, el lado largo en vertical
 	out (c),l		;4ce0   ; DY
 	out (c),a		;4ce2
 	pop hl			;4ce4
-	out (c),h		;4ce5   ; NX (0 vale 256)
+	out (c),h		;4ce5   ; el largo: R#40 = B (0 vale 256)
 	xor a			;4ce7
 	cp h			;4ce8
 	jr nz,L_4CEC		;4ce9
 	inc a			;4ceb
 L_4CEC:
-	out (c),a		;4cec   ; R#40
+	out (c),a		;4cec   ; R#41
 	xor a			;4cee
 	out (c),a		;4cef
 	out (c),a		;4cf1
-	out (c),l		;4cf3   ; R#42 = L
+	out (c),l		;4cf3   ; R#44: el color (C de BC)
 	inc a			;4cf5   ; ARG = 1: el lado largo en vertical
 	out (c),a		;4cf6
 	ld a,070h		;4cf8   ; LINE
@@ -1851,7 +1851,7 @@ L_4D16:
 	push hl			;4d16   ; conserva HL, DE y BC
 	push de			;4d17
 	push bc			;4d18
-	call linea_vertical		;4d19   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+	call linea_vertical		;4d19   ; linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 	pop bc			;4d1c
 	pop de			;4d1d
 	pop hl			;4d1e
@@ -1860,7 +1860,7 @@ L_4D20:
 	push hl			;4d20   ; conserva HL, DE y BC
 	push de			;4d21
 	push bc			;4d22
-	call linea		;4d23   ; linea: orden LINE (0x70) del VDP desde HL
+	call linea		;4d23   ; linea: orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
 	pop bc			;4d26
 	pop de			;4d27
 	pop hl			;4d28
@@ -2821,14 +2821,14 @@ L_526E:
 	ld bc,0100ah		;52ac
 	call bloque_de_fuente		;52af   ; bloque_de_fuente: B caracteres por fila y C filas de la fuente de la fila 0x28
 	jp bancos_1_2_3		;52b2   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
-caracteres_de_sprite:		; 17 caracteres de un bit (p09:B942) en la VRAM 0xF818, color 0x0D
+kanji_de_los_datos:		; los 17 kanji de p09:B942 en la casilla (0xF8, 0x18) de la hoja: los codigos 0x7F-0x8F
 	call bancos_7_8_9		;52b5   ; 17 caracteres de un bit (p09:B942) en la VRAM 0xF818, color 0x0D
 	ld de,0f818h		;52b8
 	ld hl,0b942h		;52bb
 	ld bc,0110dh		;52be
 	call caracteres_de_un_bit		;52c1   ; caracteres_de_un_bit: pinta B caracteres de un bit por punto de HL, con el color C, desde DE
 	jp bancos_1_2_3		;52c4   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
-L_52C7:
+kanji_de_la_tabla:		; los 11 kanji de p09:B9DA en (0, 0x28) de la hoja: los codigos 0xA0-0xAA
 	call bancos_7_8_9		;52c7   ; 11 caracteres de un bit (p09:B9DA) en (0x28, 0x00)...
 	ld de,00028h		;52ca
 L_52CD:
@@ -2836,7 +2836,7 @@ L_52CD:
 	ld bc,00b0dh		;52d0
 	call caracteres_de_un_bit		;52d3   ; caracteres_de_un_bit: pinta B caracteres de un bit por punto de HL, con el color C, desde DE
 	jp bancos_1_2_3		;52d6   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
-L_52D9:
+kanji_del_menu:		; los 11 kanji de p09:B9DA en (0x10, 0x20) de la hoja: los codigos 0x82-0x8C
 	call bancos_7_8_9		;52d9   ; ...o en (0x20, 0x10)
 	ld de,01020h		;52dc
 	jr L_52CD		;52df

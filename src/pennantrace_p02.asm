@@ -4527,7 +4527,7 @@ DATA_resto_9EA5:
 L_9EA9:
 	call 04ba2h		;9ea9   ; la pantalla de los lanzadores: borrada, caracteres...
 	call 04bd2h		;9eac   ; esconde_sprites: escribe 0xD8 (Y = 216: no se pinta ninguno) en la VRAM 0xF600, el primer atributo de sprite
-	call 052b5h		;9eaf   ; caracteres_de_sprite: 17 caracteres de un bit (p09:B942) en la VRAM 0xF818, color 0x0D
+	call 052b5h		;9eaf   ; kanji_de_los_datos: los 17 kanji de p09:B942 en la casilla (0xF8, 0x18) de la hoja: los codigos 0x7F-0x8F
 	call 05202h		;9eb2   ; p00:5202 y p00:40E7
 	call 040e7h		;9eb5
 	call 05c7dh		;9eb8   ; ...24 bytes de atributos de 0x9F58...

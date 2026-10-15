@@ -244,7 +244,7 @@ L_61BD:
 	ld hl,00050h		;61c2   ; una linea en la y 0x50, color 0x0D
 	ld c,00dh		;61c5
 	ld b,000h		;61c7
-	call 04c91h		;61c9   ; linea: orden LINE (0x70) del VDP desde HL
+	call 04c91h		;61c9   ; linea: orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
 	ld hl,008c6h		;61cc   ; un marco desde (0xC6, 0x08) de 0xF2 x 0x0C
 	ld c,00dh		;61cf
 	ld de,0f20ch		;61d1
@@ -252,19 +252,19 @@ L_61BD:
 	ld hl,03ec6h		;61d7   ; cuatro lineas verticales de 12 en la y 0xC6: x 0x3E, 0x76, 0xA6 y 0xCC
 	ld c,00dh		;61da
 	ld b,00ch		;61dc
-	call 04cc7h		;61de   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+	call 04cc7h		;61de   ; linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 	ld hl,076c6h		;61e1
 	ld c,00dh		;61e4
 	ld b,00ch		;61e6
-	call 04cc7h		;61e8   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+	call 04cc7h		;61e8   ; linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 	ld hl,0a6c6h		;61eb
 	ld c,00dh		;61ee
 	ld b,00ch		;61f0
-	call 04cc7h		;61f2   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+	call 04cc7h		;61f2   ; linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 	ld hl,0ccc6h		;61f5
 	ld c,00dh		;61f8
 	ld b,00ch		;61fa
-	call 04cc7h		;61fc   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+	call 04cc7h		;61fc   ; linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 	call 059b6h		;61ff   ; la fuente, los textos de 0x613D y 0x6294 y el cuadro de 0x6C9D
 	ld hl,0613dh		;6202   ; el texto de 0x613D borrado y el de 0x6294
 	call 04eabh		;6205   ; texto_c0: como texto, con C = 0
@@ -693,7 +693,7 @@ L_6537:
 	ld hl,00050h		;654b   ; una linea en la y 0x50
 	ld c,00dh		;654e
 	ld b,000h		;6550
-	call 04c91h		;6552   ; linea: orden LINE (0x70) del VDP desde HL
+	call 04c91h		;6552   ; linea: orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
 	ld hl,008c6h		;6555   ; un marco
 	ld c,00dh		;6558
 	ld de,0f20ch		;655a
@@ -701,19 +701,19 @@ L_6537:
 	ld hl,04ec6h		;6560   ; cuatro lineas verticales en la y 0xC6: x 0x4E, 0x7E, 0xAE y 0xDE
 	ld c,00dh		;6563
 	ld b,00ch		;6565
-	call 04cc7h		;6567   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+	call 04cc7h		;6567   ; linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 	ld hl,07ec6h		;656a
 	ld c,00dh		;656d
 	ld b,00ch		;656f
-	call 04cc7h		;6571   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+	call 04cc7h		;6571   ; linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 	ld hl,0aec6h		;6574
 	ld c,00dh		;6577
 	ld b,00ch		;6579
-	call 04cc7h		;657b   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+	call 04cc7h		;657b   ; linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 	ld hl,0dec6h		;657e
 	ld c,00dh		;6581
 	ld b,00ch		;6583
-	call 04cc7h		;6585   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+	call 04cc7h		;6585   ; linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 	ld hl,06594h		;6588   ; ...el texto de 0x6594, p13:6811 y el cursor
 	call 04ea6h		;658b   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	call L_6811		;658e   ; la opcion (p13:6811)

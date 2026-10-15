@@ -901,12 +901,12 @@ C 0x616A texto_c0: como texto, con C = 0
 C 0x6177 paso_siguiente_13: el paso siguiente con el subpaso a 0
 C 0x617B guarda el paso de MEDIA SELECT y de la grabacion
 C 0x6190 copia_a_vram: copia BC bytes de HL a la VRAM DE
-C 0x61C9 linea: orden LINE (0x70) del VDP desde HL
+C 0x61C9 linea: orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
 C 0x61D4 marco: un marco de lineas: HL la esquina, DE el tamano
-C 0x61DE linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
-C 0x61E8 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
-C 0x61F2 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
-C 0x61FC linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+C 0x61DE linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
+C 0x61E8 linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
+C 0x61F2 linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
+C 0x61FC linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 C 0x6205 texto_c0: como texto, con C = 0
 C 0x620B texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6211 subpaso_siguiente: el subpaso siguiente (0xD74D + 1)
@@ -963,12 +963,12 @@ C 0x6515 apunta a los 6 equipos elegidos (0xFF libre)
 C 0x652F cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 C 0x6538 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x6548 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0x6552 linea: orden LINE (0x70) del VDP desde HL
+C 0x6552 linea: orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
 C 0x655D marco: un marco de lineas: HL la esquina, DE el tamano
-C 0x6567 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
-C 0x6571 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
-C 0x657B linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
-C 0x6585 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+C 0x6567 linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
+C 0x6571 linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
+C 0x657B linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
+C 0x6585 linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 C 0x658B texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x65C4 cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 C 0x65D9 cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo

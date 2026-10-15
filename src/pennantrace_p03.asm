@@ -449,7 +449,7 @@ DATA_resto_A2BC:
 L_A2ED:
 	call 04ba2h		;a2ed   ; la pantalla del orden de bateo: borrada, caracteres y 32 atributos de 0xA2BC...
 	call 04bd2h		;a2f0   ; esconde_sprites: escribe 0xD8 (Y = 216: no se pinta ninguno) en la VRAM 0xF600, el primer atributo de sprite
-	call 052b5h		;a2f3   ; caracteres_de_sprite: 17 caracteres de un bit (p09:B942) en la VRAM 0xF818, color 0x0D
+	call 052b5h		;a2f3   ; kanji_de_los_datos: los 17 kanji de p09:B942 en la casilla (0xF8, 0x18) de la hoja: los codigos 0x7F-0x8F
 	call 05202h		;a2f6   ; p00:5202
 	call 05c7dh		;a2f9   ; esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 	ld hl,0a2bch		;a2fc   ; los 32 bytes de atributos de 0xA2BC: las flechas
@@ -3776,7 +3776,7 @@ L_B9DA:
 	ld (0e1a2h),a		;b9e7   ; guarda el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 	call 05c7dh		;b9ea   ; esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 	call 05202h		;b9ed   ; p00:5202
-	call 052b5h		;b9f0   ; caracteres_de_sprite: 17 caracteres de un bit (p09:B942) en la VRAM 0xF818, color 0x0D
+	call 052b5h		;b9f0   ; kanji_de_los_datos: los 17 kanji de p09:B942 en la casilla (0xF8, 0x18) de la hoja: los codigos 0x7F-0x8F
 	xor a			;b9f3   ; el color 0 = 0x0222
 	ld de,02202h		;b9f4
 	call 04bf0h		;b9f7   ; pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
@@ -3860,13 +3860,13 @@ L_BA8B:
 	call 04ea6h		;ba8e   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld hl,07815h		;ba91   ; una linea de 0x50 en (0x15, 0x78)
 	ld bc,0500dh		;ba94
-	call 04c91h		;ba97   ; linea: orden LINE (0x70) del VDP desde HL
+	call 04c91h		;ba97   ; linea: orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
 	ld hl,0288ah		;ba9a   ; una de 0xD0 en (0x8A, 0x28)
 	ld bc,0d00dh		;ba9d
-	call 04c91h		;baa0   ; linea: orden LINE (0x70) del VDP desde HL
+	call 04c91h		;baa0   ; linea: orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
 	ld hl,028c5h		;baa3   ; y otra en (0xC5, 0x28)
 	ld bc,0d00dh		;baa6
-	call 04c91h		;baa9   ; linea: orden LINE (0x70) del VDP desde HL
+	call 04c91h		;baa9   ; linea: orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
 	jp 05d98h		;baac   ; y p00:5D98
 
 ; ----------------------------------------------------------------------

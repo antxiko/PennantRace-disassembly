@@ -1430,12 +1430,12 @@ C 0x6371 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC
 C 0x637C rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0x6386 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0x6391 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
-C 0x639A linea: orden LINE (0x70) del VDP desde HL
-C 0x63A3 linea: orden LINE (0x70) del VDP desde HL
-C 0x63AC linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
-C 0x63B5 linea: orden LINE (0x70) del VDP desde HL
-C 0x63BE linea: orden LINE (0x70) del VDP desde HL
-C 0x63C7 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+C 0x639A linea: orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
+C 0x63A3 linea: orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
+C 0x63AC linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
+C 0x63B5 linea: orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
+C 0x63BE linea: orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
+C 0x63C7 linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 C 0x63D3 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0x63DE rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0x63E8 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
@@ -1512,7 +1512,7 @@ C 0x68C5 paso_e339: al paso siguiente (0xE339 + 1)
 C 0x68CE hl_mas_a: HL = HL + A
 C 0x68FF paso_e339: al paso siguiente (0xE339 + 1)
 C 0x690D copia_logica: orden LMMM (0x90 + operacion) del VDP: copia el rectangulo HL a DE, BC de tamano; las paginas en los bits 4-7 de A' y la operacion logica en los 0-3
-C 0x6920 caracteres_de_sprite: 17 caracteres de un bit (p09:B942) en la VRAM 0xF818, color 0x0D
+C 0x6920 kanji_de_los_datos: los 17 kanji de p09:B942 en la casilla (0xF8, 0x18) de la hoja: los codigos 0x7F-0x8F
 C 0x6924 guarda lo que acaba la jugada: 1 home run, 2 jugada anulada
 C 0x692B pide_colores_sprite: pide copiar los colores de sprite (0xED09 = 1)
 C 0x6931 apunta a la cuenta atras del estado

@@ -523,13 +523,13 @@ C 0x4CA5 DX = H...
 C 0x4CA8 R#37 = 0
 C 0x4CAA ...DY = L
 C 0x4CAC R#39 = 0 (pagina 0)
-C 0x4CAF el largo (NX = H de BC)...
+C 0x4CAF el largo: R#40 = B (de BC)...
 C 0x4CB2 ...0 vale 256
 C 0x4CB5 0 se cambia por 1
-C 0x4CB6 R#40...
-C 0x4CB9 R#41, R#42...
-C 0x4CBD ...y el corto (NY = L)
-C 0x4CBF R#43 = 0
+C 0x4CB6 ...R#41 = 1 si B es 0 (256)
+C 0x4CB9 R#42 y R#43 (NY) a 0
+C 0x4CBD R#44: el color (C de BC)
+C 0x4CBF R#45 = 0: el lado largo en horizontal
 C 0x4CC1 LINE, en horizontal (ARG = 0)
 C 0x4CC5 interrupciones otra vez
 C 0x4CCA guarda el largo
@@ -540,9 +540,9 @@ C 0x4CD5 R#17
 C 0x4CD9 C = 0x9B
 C 0x4CDB DX, DY
 C 0x4CE0 DY
-C 0x4CE5 NX (0 vale 256)
-C 0x4CEC R#40
-C 0x4CF3 R#42 = L
+C 0x4CE5 el largo: R#40 = B (0 vale 256)
+C 0x4CEC R#41
+C 0x4CF3 R#44: el color (C de BC)
 C 0x4CF5 ARG = 1: el lado largo en vertical
 C 0x4CF8 LINE
 C 0x4CFC interrupciones otra vez
@@ -1121,8 +1121,8 @@ L 0x4BF0 pon_color el color A de la paleta a D (rojo-azul) y E (verde), por R#16
 L 0x4C59 pon_paleta fichas de 3 bytes [color][rojo-azul][verde] hasta 0xFF, con p00:4BF0
 L 0x4C67 espera_vdp espera a que el VDP acabe la orden (S#2 bit 0, CE)
 L 0x4C71 lee_estado A = el registro de estado A del VDP (R#15)
-L 0x4C91 linea orden LINE (0x70) del VDP desde HL
-L 0x4CC7 linea_vertical orden LINE (0x70) del VDP, el lado largo en vertical
+L 0x4C91 linea orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
+L 0x4CC7 linea_vertical orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 L 0x4CFE marco un marco de lineas: HL la esquina, DE el tamano
 L 0x4D2A rellena orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 L 0x4D66 copia_rectangulo orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
@@ -1138,7 +1138,9 @@ L 0x4F6F siguiente_columna D += 8; si da la vuelta, E += 8
 L 0x4F79 bufer_a_vram B caracteres de 8x8 del bufer HL a la VRAM DE
 L 0x4FA3 dibujos pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
 L 0x4FDD dibujo pinta un dibujo de B caracteres (tipo C & 0x0F: 1, 2 o 3 bits por punto) en el bufer 0xE400 y de ahi a la VRAM
-L 0x52B5 caracteres_de_sprite 17 caracteres de un bit (p09:B942) en la VRAM 0xF818, color 0x0D
+L 0x52B5 kanji_de_los_datos los 17 kanji de p09:B942 en la casilla (0xF8, 0x18) de la hoja: los codigos 0x7F-0x8F
+L 0x52C7 kanji_de_la_tabla los 11 kanji de p09:B9DA en (0, 0x28) de la hoja: los codigos 0xA0-0xAA
+L 0x52D9 kanji_del_menu los 11 kanji de p09:B9DA en (0x10, 0x20) de la hoja: los codigos 0x82-0x8C
 L 0x556D palabra_a HL = la palabra A de la tabla HL
 L 0x55CD bloque_de_fuente B caracteres por fila y C filas de la fuente de la fila 0x28
 L 0x5659 rachas_a_ram descomprime las rachas de DE en la RAM HL
@@ -1289,7 +1291,7 @@ C 0x451A calla_y_espera: calla la musica (0x81) y apunta la siguiente en 0xED9A
 C 0x4521 guarda el despachador de los menus (y 0xD74D)
 C 0x4524 guarda el estado del juego (indice del despachador principal)
 C 0x4529 guarda la cuenta atras del estado
-C 0x4532 caracteres_de_sprite: 17 caracteres de un bit (p09:B942) en la VRAM 0xF818, color 0x0D
+C 0x4532 kanji_de_los_datos: los 17 kanji de p09:B942 en la casilla (0xF8, 0x18) de la hoja: los codigos 0x7F-0x8F
 C 0x4535 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x453B bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x4540 guarda la cuenta atras del estado
@@ -1305,7 +1307,7 @@ C 0x45C0 guarda la espera antes de la siguiente musica
 C 0x45C5 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x45CA sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x45D7 carga_la_fuente: carga la fuente: 161 caracteres de un bit (0xFAF6 = 1 mientras tanto)
-C 0x45DD caracteres_de_sprite: 17 caracteres de un bit (p09:B942) en la VRAM 0xF818, color 0x0D
+C 0x45DD kanji_de_los_datos: los 17 kanji de p09:B942 en la casilla (0xF8, 0x18) de la hoja: los codigos 0x7F-0x8F
 C 0x45E8 pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
 C 0x45FA guarda la cuenta atras del estado
 C 0x4602 guarda el paso dentro del estado
@@ -1434,8 +1436,8 @@ C 0x4C69 lee_estado: A = el registro de estado A del VDP (R#15)
 C 0x4C6D espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
 C 0x4C91 espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
 C 0x4CC7 espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
-C 0x4D19 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
-C 0x4D23 linea: orden LINE (0x70) del VDP desde HL
+C 0x4D19 linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
+C 0x4D23 linea: orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
 C 0x4D2B espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
 C 0x4D67 espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
 C 0x4DAB espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)

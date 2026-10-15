@@ -10,6 +10,7 @@
 # (para saber que el cartucho esta mapeado). $PSG_FUERZA: lista de numeros que
 # sustituyen a la A de las primeras peticiones (para oir piezas sin jugar).
 # $PSG_SIEMPRE: sustituye la A de TODAS las peticiones (una pieza entera, sin que otra la pise).
+# Con $PSG_SOLO (ver mas abajo) solo cuenta la primera peticion.
 # Pulsa ESPACIO cada 3 s entre los 6 y los FIN-10 s; sale a los FIN s emulados.
 set OUT $::env(PSG_OUT)
 set FIN [expr {[info exists ::env(PSG_FIN)] ? $::env(PSG_FIN) : 120}]
@@ -32,6 +33,9 @@ set ::poke [expr {[info exists ::env(PSG_POKE)] ? $::env(PSG_POKE) : ""}]
 set ::pokef [expr {[info exists ::env(PSG_POKE_F)] ? $::env(PSG_POKE_F) : 1800}]
 set ::pokenum [expr {[info exists ::env(PSG_POKE_NUM)] ? $::env(PSG_POKE_NUM) : 0}]
 set ::nf 0
+# $PSG_CEROS "0xEFF4 ...": bytes de RAM que se ponen a 0 en cada cuadro (lo que el
+# juego activa por su cuenta sin pedir un sonido, como el tono libre del canal 4)
+set ::ceros [expr {[info exists ::env(PSG_CEROS)] ? $::env(PSG_CEROS) : ""}]
 # $PSG_RAM "direccion longitud" (decimales): vuelca esa RAM al empezar cada cuadro, hasta 400 cuadros tras cada peticion
 set ::vol [expr {[info exists ::env(PSG_RAM)] ? $::env(PSG_RAM) : ""}]
 set ::desde 0
@@ -62,10 +66,21 @@ debug set_bp $FRAME "\[debug read memory $FRAME\] == $FB" {
     }
     incr ::desde
     if {$::poke ne "" && $::nf == $::pokef} { haz_poke }
+    foreach d $::ceros { debug write memory $d 0 }
     lappend ::log "F"
 }
 if {$PIDE ne $FRAME} {
+# $PSG_SOLO: la direccion de un `ret` del motor; desde la segunda peticion, el
+# sondeo las desvia alli (apunta "X nn"): la primera pieza suena entera.
+set ::solo [expr {[info exists ::env(PSG_SOLO)] ? $::env(PSG_SOLO) : ""}]
+set ::pedidas 0
 debug set_bp $PIDE "\[debug read memory $PIDE\] == $PB" {
+    incr ::pedidas
+    if {$::solo ne "" && $::pedidas > 1} {
+        lappend ::log "X [reg a]"
+        reg pc $::solo
+        return
+    }
     if {[info exists ::env(PSG_SIEMPRE)] && $::env(PSG_SIEMPRE) ne ""} {
         reg a $::env(PSG_SIEMPRE)
     } elseif {[llength $::fuerza] > 0} {
@@ -77,6 +92,18 @@ debug set_bp $PIDE "\[debug read memory $PIDE\] == $PB" {
     lappend ::log "S [reg a]"
     set ::desde 0
 }
+}
+# $PSG_INIT "direccion byte": el arranque del motor (que lo calla todo); con
+# $PSG_SOLO tambien se desvia (apunta "I").
+if {[info exists ::env(PSG_INIT)] && $::env(PSG_INIT) ne "" && $::solo ne ""} {
+    set di [lindex $::env(PSG_INIT) 0]
+    set bi [lindex $::env(PSG_INIT) 1]
+    debug set_bp $di "\[debug read memory $di\] == $bi" {
+        if {$::pedidas > 0} {
+            lappend ::log "I"
+            reg pc $::solo
+        }
+    }
 }
 # $PSG_PIDE2 "direccion condicion": otra entrada a la peticion que solo cuenta si
 # se cumple la condicion (expresion de debug), por ejemplo "0xB8D3 ([debug read memory 0xE002] & 0x40) != 0"

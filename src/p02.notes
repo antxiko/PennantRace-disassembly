@@ -1774,7 +1774,7 @@ C 0x9E4A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vue
 C 0x9E65 ficha_de_lanzador: HL += A x 11 + 0xA8: la ficha del lanzador A
 C 0x9E82 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9EAC esconde_sprites: escribe 0xD8 (Y = 216: no se pinta ninguno) en la VRAM 0xF600, el primer atributo de sprite
-C 0x9EAF caracteres_de_sprite: 17 caracteres de un bit (p09:B942) en la VRAM 0xF818, color 0x0D
+C 0x9EAF kanji_de_los_datos: los 17 kanji de p09:B942 en la casilla (0xF8, 0x18) de la hoja: los codigos 0x7F-0x8F
 C 0x9EBE apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 C 0x9EC6 dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
 C 0x9ECC texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto

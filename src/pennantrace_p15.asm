@@ -585,7 +585,7 @@ L_A470:
 	ld hl,00050h		;a498   ; una linea horizontal en la y 0x50, color 0x0D
 	ld c,00dh		;a49b   ; color 0x0D
 	ld b,000h		;a49d
-	call 04c91h		;a49f   ; linea: orden LINE (0x70) del VDP desde HL
+	call 04c91h		;a49f   ; linea: orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
 	ld hl,008c6h		;a4a2   ; un marco desde (0xC6, 0x08), color 0x0D
 	ld c,00dh		;a4a5
 	ld de,0f20ch		;a4a7   ; de 0xF2 x 0x0C
@@ -593,19 +593,19 @@ L_A470:
 	ld hl,03ec6h		;a4ad   ; cuatro lineas verticales de 12 en la y 0xC6: x 0x3E, 0x6E, 0x9E y 0xCE
 	ld c,00dh		;a4b0   ; color 0x0D, 12 de largo
 	ld b,00ch		;a4b2
-	call 04cc7h		;a4b4   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+	call 04cc7h		;a4b4   ; linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 	ld hl,06ec6h		;a4b7
 	ld c,00dh		;a4ba
 	ld b,00ch		;a4bc
-	call 04cc7h		;a4be   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+	call 04cc7h		;a4be   ; linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 	ld hl,09ec6h		;a4c1
 	ld c,00dh		;a4c4
 	ld b,00ch		;a4c6
-	call 04cc7h		;a4c8   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+	call 04cc7h		;a4c8   ; linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 	ld hl,0cec6h		;a4cb
 	ld c,00dh		;a4ce
 	ld b,00ch		;a4d0
-	call 04cc7h		;a4d2   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+	call 04cc7h		;a4d2   ; linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 	ld a,(0de02h)		;a4d5   ; ...el titulo: el ordenador solo (0xA770), dos jugadores (0xA72B) o uno (0xA74F)...
 	bit 3,a		;a4d8   ; bit 3 de 0xDE02 (el ordenador solo): el titulo de 0xA770
 	ld hl,0a770h		;a4da

@@ -18,6 +18,7 @@ CFG (diccionario):
   hz       cuadros por segundo (60)
   piezas   [(numero, fichero, nombre)]
   mapper   None | "konami" | "konami_scc" | "ascii8"
+  juntos   {numero: [otros]}: sonidos que el juego pide a la vez (opcional)
 """
 import hashlib
 import os
@@ -177,6 +178,10 @@ def arranca(cfg, rom, numero):
                      **cfg.get("regs_pide_de", {}).get(numero, {})}.items():
             setattr(z, k, v)
         z.corre(cfg["pide"])
+        # piezas que el juego pide de dos en dos (cfg["juntos"][n] = [otras])
+        for otra in cfg.get("juntos", {}).get(numero, ()):
+            z.a = otra & 0xFF
+            z.corre(cfg["pide"])
     z.escrituras.clear()
     return z
 

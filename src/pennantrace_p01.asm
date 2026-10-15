@@ -511,22 +511,22 @@ L_6352:
 	call 04d2ah		;6391   ; rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 	ld hl,007a7h		;6394   ; ...lineas...
 	ld bc,0320dh		;6397
-	call 04c91h		;639a   ; linea: orden LINE (0x70) del VDP desde HL
+	call 04c91h		;639a   ; linea: orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
 	ld hl,007c1h		;639d   ; lineas en (0xC1, 0x07) y (0xA7, 0xC7)...
 	ld bc,0320dh		;63a0
-	call 04c91h		;63a3   ; linea: orden LINE (0x70) del VDP desde HL
+	call 04c91h		;63a3   ; linea: orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
 	ld hl,007a7h		;63a6   ; ...y una vertical en (0xA7, 0x07)
 	ld bc,01a0dh		;63a9
-	call 04cc7h		;63ac   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+	call 04cc7h		;63ac   ; linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 	ld hl,0c7a7h		;63af
 	ld bc,0320dh		;63b2
-	call 04c91h		;63b5   ; linea: orden LINE (0x70) del VDP desde HL
+	call 04c91h		;63b5   ; linea: orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
 	ld hl,0c7c1h		;63b8
 	ld bc,0320dh		;63bb
-	call 04c91h		;63be   ; linea: orden LINE (0x70) del VDP desde HL
+	call 04c91h		;63be   ; linea: orden LINE (0x70): una linea horizontal desde (H, L) de B puntos (0 = 256) del color C
 	ld hl,0c7a7h		;63c1   ; y otra vertical en (0xA7, 0xC7)
 	ld bc,01a0dh		;63c4
-	call 04cc7h		;63c7   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+	call 04cc7h		;63c7   ; linea_vertical: orden LINE (0x70): una linea vertical desde (H, L) de B puntos del color C
 	ld hl,008a8h		;63ca   ; ...y los recuadros de abajo
 	ld bc,03019h		;63cd
 	xor a			;63d0
@@ -1343,7 +1343,7 @@ L_6916:
 	pop bc			;691a
 	djnz L_6916		;691b   ; ...0xEDC2 veces
 	call 05991h		;691d   ; la fuente, los caracteres y 0xE33B = 0
-	call 052b5h		;6920   ; caracteres_de_sprite: 17 caracteres de un bit (p09:B942) en la VRAM 0xF818, color 0x0D
+	call 052b5h		;6920   ; kanji_de_los_datos: los 17 kanji de p09:B942 en la casilla (0xF8, 0x18) de la hoja: los codigos 0x7F-0x8F
 	xor a			;6923   ; 0xE33B a 0
 	ld (0e33bh),a		;6924   ; guarda lo que acaba la jugada: 1 home run, 2 jugada anulada
 	ret			;6927
