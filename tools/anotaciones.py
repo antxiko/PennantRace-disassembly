@@ -249,7 +249,7 @@ RAM = {
     0xEC00: ("los colores de la paleta del dibujo en curso", "p00:4FC0"),
     0xED46: ("el reparto guardado por p00:439C (3 bytes)", "p00:43D9"),
     0xEE00: ("las fichas de los 8 canales de sonido (0x2D bytes cada una)", "p06:B226"),
-    0xEFC2: ("las marcas del motor: bit 0 bajada (0x81/0x82), 1 pausa, 3 bajada parada, 4 subida (0x83)", "p06:B331"),
+    0xEFC2: ("las marcas del motor: bit 0 bajada (0x81/0x82), 1 pausa (0x83), 3 bajada parada, 4 subida (0x85)", "p06:B331"),
     0xEFC3: ("el sonido que empieza", "p06:B200"),
     0xEFD6: ("los cuadros de cada paso de la bajada", "p06:B348"),
     0xEFD7: ("los pasos de la bajada", "p06:B348"),
@@ -435,16 +435,33 @@ CAMPOS_CANAL = {
     0x07: "la vuelta de la orden 0xF9 (bajo)",
     0x08: "la vuelta de la orden 0xF9 (alto)",
     0x09: "el modo de las notas (orden 0xFE)",
+    0x0A: "el periodo que suena (bajo)",
+    0x0B: "el periodo que suena (alto)",
+    0x0C: "el volumen que suena",
     0x0D: "las marcas de las ordenes 0xE0-0xE3",
     0x0E: "las marcas del canal",
     0x0F: "las marcas de la envolvente",
+    0x10: "el periodo de la nota (bajo)",
+    0x11: "el periodo de la nota (alto)",
+    0x12: "el volumen de la nota",
     0x13: "el valor de la orden 0xE0",
     0x14: "el valor de la orden 0xE9",
     0x15: "el valor de la orden 0xEA",
     0x16: "la octava (ordenes 0xD0-0xD5)",
+    0x17: "donde sigue la frase (bajo)",
+    0x18: "donde sigue la frase (alto)",
+    0x19: "lo que le queda al paso de la frase",
     0x1A: "el valor de la orden 0xF2",
     0x1B: "el valor alto de la orden 0xF1",
     0x1C: "el valor bajo de la orden 0xF1",
+    0x1D: "el sentido del vibrato",
+    0x1E: "la cuenta del vibrato",
+    0x1F: "la cuenta de cuadros del tramo de la envolvente",
+    0x20: "las bajadas del tramo 3 de la envolvente",
+    0x21: "lo que dura el tramo 2 de la envolvente",
+    0x22: "cada cuantos cuadros baja el tramo 3",
+    0x23: "cuantas veces baja el tramo 3",
+    0x24: "el umbral del tramo 4 de la envolvente",
     0x25: "el valor de la orden 0xED",
     0x26: "el valor de la orden 0xEE",
     0x27: "la envolvente de la orden 0xF8 (bajo)",
@@ -452,6 +469,7 @@ CAMPOS_CANAL = {
     0x29: "el valor de la orden 0xF7",
     0x2A: "las marcas guardadas (orden 0xFE)",
     0x2B: "las marcas de la envolvente guardadas",
+    0x2C: "la octava para la tabla de frases",
 }
 CARGAS_CANAL = tuple(0xEE00 + 0x2D * k for k in range(8))
 IX_CANAL_POR_DEFECTO = {6: ((0xB41E, 0xBB99),)}
@@ -500,3 +518,11 @@ for _a, _v in _fichas_fijas().items():
     else:
         RAM[_a] = _v
         FICHAS_FIJAS.add(_a)
+
+
+# Los registros del SCC (con el banco 0x3F en 0x9000) que escribe el motor
+# de sonido del banco 6.
+SCC = {0x988A + k: "el volumen del canal %d del SCC" % (k + 1) for k in range(5)}
+SCC.update({0x9880 + 2 * k: "el periodo del canal %d del SCC (bajo)" % (k + 1) for k in range(5)})
+SCC.update({0x9881 + 2 * k: "el periodo del canal %d del SCC (alto)" % (k + 1) for k in range(5)})
+SCC[0x988F] = "los canales del SCC que suenan (un bit cada uno)"

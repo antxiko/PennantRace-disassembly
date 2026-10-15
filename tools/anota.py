@@ -48,6 +48,10 @@ try:
 except ImportError:
     RAM_PRESTADA = ()
 try:
+    from anotaciones import SCC                                # noqa: E402
+except ImportError:
+    SCC = {}
+try:
     # los campos de las fichas, descritos por su direccion fija
     from anotaciones import FICHAS_FIJAS                       # noqa: E402
 except ImportError:
@@ -221,6 +225,10 @@ def comentario(b, filas, k, fichas, ventanas=None, medido=None):
     m = re.match(r"ld \(0([0-9a-f]{4})h\),a$", t)
     if m and int(m.group(1), 16) in REGISTROS_MAPPER:
         return "el mapper: pone en %s el banco de A" % REGISTROS_MAPPER[int(m.group(1), 16)]
+    # los registros del SCC
+    m = re.match(r"ld \(0(98[89][0-9a-f])h\),a$", t)
+    if m and b == 6 and int(m.group(1), 16) in SCC:
+        return "al SCC: " + SCC[int(m.group(1), 16)]
     # RAM (salvo en los tramos donde el juego la usa para otra cosa)
     if any(bb == b and i <= a < f for bb, i, f in RAM_PRESTADA):
         return None
