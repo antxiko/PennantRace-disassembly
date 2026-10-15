@@ -15,8 +15,9 @@ byte for byte, and 43.7% of the instructions are commented.
 
 - [The game](THE-GAME.html): the six teams with their cards, the rules taken
   from the code and the modes.
-- [The screens](THE-SCREENS.html): the intro, the field in three zones, the
-  pitching screen, the sprites and the font, drawn from the ROM.
+- [The screens](THE-SCREENS.html): the logo, the animated intro, the menu,
+  the field in three zones, the pitching screen with its signs, the batter,
+  the pitcher and the fielders animated, and the font, drawn from the ROM.
 - [The music](THE-MUSIC.html): the 26 pieces, taken from its own engine.
 - [The texts](THE-TEXTS.html): everything it writes on screen.
 - [The cartridge](THE-CARTRIDGE.html): the banks, the formats of the pictures

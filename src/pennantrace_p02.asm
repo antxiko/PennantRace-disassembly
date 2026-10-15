@@ -2626,13 +2626,13 @@ L_91C3:
 	call L_8860		;91cf
 	jp 069e9h		;91d2
 L_91D5:
-	ld a,(0e1e2h)		;91d5   ; si 0xE1D3 cambia, el punto de color de p00:56B1
+	ld a,(0e1e2h)		;91d5   ; si 0xE1D3 (el paso del lanzador) cambia, su postura nueva (p00:56B1)
 	ld b,a			;91d8
 	ld a,(0e1d3h)		;91d9   ; lee el paso del movimiento del lanzador
 	ld (0e1e2h),a		;91dc   ; si es el mismo, nada
 	cp b			;91df
 	ret z			;91e0
-	jp 056b1h		;91e1   ; y el punto de color (p00:56B1)
+	jp 056b1h		;91e1   ; la postura del lanzador (p00:56B1)
 L_91E4:
 	call 04bc5h		;91e4   ; el principio de la media entrada: pantalla apagada, dibujos y colores...
 	call 0539dh		;91e7   ; p00:539D, p00:53CC y el campo desde 0xE0 (p03:B47B)
@@ -2768,7 +2768,7 @@ L_92EC:
 	call L_9744		;92f9
 	call 05d08h		;92fc   ; p00:5D08, p01:74F6, dibujos, p00:5C77 y las tiras (p03:B29C)
 	call 074f6h		;92ff
-	call 05b1fh		;9302   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+	call 05b1fh		;9302   ; colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 	call 05c77h		;9305
 	jp 0b29ch		;9308
 L_930B:
@@ -2862,7 +2862,7 @@ L_93A6:
 	ret			;93b2
 L_93B3:
 	call 05c77h		;93b3   ; el home run: sprites, p02:98FC; sin velocidad, 0xE302 = 0...
-	call 05b1fh		;93b6   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+	call 05b1fh		;93b6   ; colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 	call L_98FC		;93b9
 	ld hl,(0e21dh)		;93bc   ; lee la altura de la pelota y el byte siguiente (16 bits)
 	ld a,h			;93bf
@@ -4417,7 +4417,7 @@ L_9DFF:
 	ld (hl),000h		;9dff   ; el color a 0
 	add hl,de			;9e01
 	djnz L_9DFF		;9e02   ; 4 bytes por sprite
-	jp 05b1fh		;9e04   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+	jp 05b1fh		;9e04   ; colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 L_9E07:
 	ld a,(0e30ah)		;9e07   ; el local: lo mismo con 0xE19E, 0xE30E y el bit 1
 	rra			;9e0a
@@ -4535,7 +4535,7 @@ L_9EA9:
 	ld de,0e100h		;9ebe   ; apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 	ld bc,00018h		;9ec1
 	ldir		;9ec4
-	call 05b1fh		;9ec6   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+	call 05b1fh		;9ec6   ; colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 	ld hl,07f55h		;9ec9   ; ...el texto de p13:7F55, dos marcos...
 	call 04ea6h		;9ecc   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld hl,0146ch		;9ecf

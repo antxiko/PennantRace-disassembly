@@ -2323,7 +2323,7 @@ L_9A1E:
 	ld (hl),000h		;9a1e
 	add hl,de			;9a20
 	djnz L_9A1E		;9a21
-	jp 040dbh		;9a23   ; dibujos_de_sprites_13: los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
+	jp 040dbh		;9a23   ; colores_de_sprites_13: los colores de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
 L_9A26:
 	call 05c73h		;9a26   ; el cambio de jugadores del local: lo mismo con 0xE30E, 0xE19E y 0xEC62
 	call L_9DD4		;9a29   ; p14:9DD4, p00:4039, la flecha y el boton 1
@@ -2528,7 +2528,7 @@ L_9B6F:
 	ld (0e103h),a		;9b74
 	ld (0e107h),a		;9b77
 	ld (0e10bh),a		;9b7a
-	jp 040dbh		;9b7d   ; dibujos_de_sprites_13: los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
+	jp 040dbh		;9b7d   ; colores_de_sprites_13: los colores de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
 L_9B80:
 	ld a,(0edd8h)		;9b80   ; el suplente siguiente que quede (de 4 en 4 desde 0xEDD8)...
 	add a,004h		;9b83
@@ -2738,7 +2738,7 @@ L_9CF6:
 	ld de,0e100h		;9d10   ; apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 	ld bc,00010h		;9d13
 	ldir		;9d16
-	call 040dbh		;9d18   ; dibujos_de_sprites_13: los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
+	call 040dbh		;9d18   ; colores_de_sprites_13: los colores de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
 	ld hl,07b63h		;9d1b   ; el texto de 0x7B63
 	call 04ea6h		;9d1e   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	xor a			;9d21   ; a cero: 0xE1D1, 0xDE0D, 0xDE0E, 0xE304, 0xE302, 0xED03 y 0xED81
@@ -2931,7 +2931,7 @@ L_9E66:
 	ld de,0e100h		;9e69   ; apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 	ld bc,00008h		;9e6c
 	ldir		;9e6f
-	call 040dbh		;9e71   ; dibujos_de_sprites_13: los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
+	call 040dbh		;9e71   ; colores_de_sprites_13: los colores de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
 	ld a,030h		;9e74   ; 48 cuadros
 	ld (0de04h),a		;9e76   ; guarda la cuenta atras del estado
 	jp paso_ecef		;9e79   ; paso_ecef: al paso siguiente (0xECEF + 1)
@@ -3035,7 +3035,7 @@ L_9F22:
 	ld hl,0a38bh		;9f2e   ; 0x50 bytes de p15:A38B: 20 sprites
 	ld bc,00050h		;9f31
 	ldir		;9f34
-	call 040dbh		;9f36   ; dibujos_de_sprites_13: los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
+	call 040dbh		;9f36   ; colores_de_sprites_13: los colores de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
 	ld hl,0fe00h		;9f39   ; la velocidad de caida (0xECF2) = -0x200
 	ld (0ecf2h),hl		;9f3c
 	ld hl,05000h		;9f3f   ; la y (0xECF0) = 0x5000

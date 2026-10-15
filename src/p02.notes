@@ -754,9 +754,9 @@ C 0x91B7 el sonido 0x1D
 C 0x91BC el estado 6 con el paso 0
 C 0x91C3 la espera de 0xE310; al acabar, el rectangulo, una bola nueva y el bateador
 C 0x91C9 p01:632F, la bola nueva y p01:69E9
-C 0x91D5 si 0xE1D3 cambia, el punto de color de p00:56B1
+C 0x91D5 si 0xE1D3 (el paso del lanzador) cambia, su postura nueva (p00:56B1)
 C 0x91DC si es el mismo, nada
-C 0x91E1 y el punto de color (p00:56B1)
+C 0x91E1 la postura del lanzador (p00:56B1)
 C 0x91E4 el principio de la media entrada: pantalla apagada, dibujos y colores...
 C 0x91E7 p00:539D, p00:53CC y el campo desde 0xE0 (p03:B47B)
 C 0x91F0 p02:9CE6
@@ -1642,7 +1642,7 @@ C 0x92BF lee la jugada anulada (foul)
 C 0x92D0 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 C 0x92DB apunta a las carreras del visitante por entrada (10 casillas, 12-13 el total)
 C 0x92F3 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
-C 0x9302 dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+C 0x9302 colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 C 0x9316 apunta a el paso de la jugada (y de TEAM EDIT)
 C 0x931D bateador_mas: un bateador mas: en 0xE1A1 = 3, solo la primera vez (0xEDD4)
 C 0x9328 apunta a los hits del visitante (BCD)
@@ -1658,7 +1658,7 @@ C 0x937A apunta a las carreras del visitante por entrada (10 casillas, 12-13 el 
 C 0x939B apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0x93A9 lee lo que acaba la jugada: 1 home run, 2 jugada anulada
 C 0x93AF guarda el paso de la jugada (y de TEAM EDIT)
-C 0x93B6 dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+C 0x93B6 colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 C 0x93BC lee la altura de la pelota y el byte siguiente (16 bits)
 C 0x93D0 guarda lo que acaba la jugada: 1 home run, 2 jugada anulada
 C 0x93DC lee los corredores que entran con el home run
@@ -1769,14 +1769,14 @@ C 0x9D56 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p0
 C 0x9DBC sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9DD7 ficha_de_lanzador: HL += A x 11 + 0xA8: la ficha del lanzador A
 C 0x9DF4 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0x9E04 dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+C 0x9E04 colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 C 0x9E4A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9E65 ficha_de_lanzador: HL += A x 11 + 0xA8: la ficha del lanzador A
 C 0x9E82 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9EAC esconde_sprites: escribe 0xD8 (Y = 216: no se pinta ninguno) en la VRAM 0xF600, el primer atributo de sprite
 C 0x9EAF kanji_de_los_datos: los 17 kanji de p09:B942 en la casilla (0xF8, 0x18) de la hoja: los codigos 0x7F-0x8F
 C 0x9EBE apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
-C 0x9EC6 dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+C 0x9EC6 colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 C 0x9ECC texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x9ED7 marco: un marco de lineas: HL la esquina, DE el tamano
 C 0x9EE2 marco: un marco de lineas: HL la esquina, DE el tamano

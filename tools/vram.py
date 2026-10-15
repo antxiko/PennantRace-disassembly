@@ -126,7 +126,8 @@ class Vram:
     # ---------------------------------------------------------------- rachas
     def rachas(self, trio, origen, de, girar=False):
         """p00:4B35: [cuenta]: 0 acaba, 0x01-0x7F un byte repetido, 0x80 otro
-        destino (2 bytes), 0x81-0xFF tantos bytes tal cual."""
+        destino (2 bytes), 0x81-0xFF tantos bytes tal cual. La direccion sigue
+        por los 17 bits de la VRAM: pasada 0xFFFF, la pagina 2."""
         a = de
         while True:
             c = byte(trio, origen)
@@ -140,14 +141,14 @@ class Vram:
                 continue
             if c & 0x80:
                 for _ in range(c & 0x7F):
-                    self.v[a & 0xFFFF] = self._gira(byte(trio, origen), girar)
+                    self.v[a & 0x1FFFF] = self._gira(byte(trio, origen), girar)
                     origen += 1
                     a += 1
             else:
                 b = self._gira(byte(trio, origen), girar)
                 origen += 1
                 for _ in range(c):
-                    self.v[a & 0xFFFF] = b
+                    self.v[a & 0x1FFFF] = b
                     a += 1
 
     @staticmethod

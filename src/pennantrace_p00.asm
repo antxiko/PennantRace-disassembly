@@ -110,8 +110,8 @@ velocidad_hacia:		; con los bancos 7-8-9, la velocidad de HL (x, y) a DE (p00:5E
 	call bancos_7_8_9		;40d2   ; bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
 	call L_5E9F		;40d5
 	jp bancos_13_14_15		;40d8   ; bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
-dibujos_de_sprites_13:		; los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
-	call dibujos_de_sprites		;40db   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+colores_de_sprites_13:		; los colores de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
+	call colores_de_sprites		;40db   ; colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 	jp bancos_13_14_15		;40de   ; bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 carga_la_fuente_13:		; carga la fuente (p00:5991) y vuelve a los bancos 13-14-15
 	call carga_la_fuente		;40e1   ; carga_la_fuente: carga la fuente: 161 caracteres de un bit (0xFAF6 = 1 mientras tanto)
@@ -3295,7 +3295,7 @@ L_56A3:
 	ld a,004h		;56ac
 	jp copia_rectangulo		;56ae   ; copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 L_56B1:
-	ld a,(0e1d3h)		;56b1   ; un punto de (0xF9 + 0xE1D3, 0) a (0xFB, 0): el color del juego elegido
+	ld a,(0e1d3h)		;56b1   ; la postura del lanzador: la linea 0xF9 + 0xE1D3 de la pagina 0 (128 bytes) a la linea 0xFB de la pagina 1, los dibujos de sprite 0xB0-0xBF
 	add a,0f9h		;56b4
 	ld l,a			;56b6
 	ld h,000h		;56b7
@@ -3332,7 +3332,7 @@ L_56F5:
 	pop hl			;56f5
 	pop bc			;56f6
 	djnz L_56DA		;56f7
-	ld hl,000ffh		;56f9   ; copia un punto de (0xFF, 0x00) a (0xF9, 0x80)
+	ld hl,000ffh		;56f9   ; copia media linea (128 x 1) de (0, 0xFF) de la pagina 0 a (0x80, 0xF9) de la pagina 1
 	ld de,080f9h		;56fc
 	ld bc,08001h		;56ff
 	ld a,004h		;5702
@@ -3418,25 +3418,25 @@ L_5761:
 	ld c,b			;5781
 	inc hl			;5782
 L_5783:
-	push bc			;5783   ; cada uno...
+	push bc			;5783   ; cada media linea i...
 	ld a,c			;5784
 	sub b			;5785
 	ld b,a			;5786
-	ld a,(0e341h)		;5787   ; ...el color 0xF0 o 0xF5 segun los bits altos...
+	ld a,(0e341h)		;5787   ; ...el destino: la linea 0xF0 (o 0xF5 con los bits altos) de la pagina 1, los dibujos de sprite...
 	ld c,0f0h		;578a
 	and c			;578c
 	jr z,L_5791		;578d
 	ld c,0f5h		;578f
 L_5791:
-	call L_57AD		;5791   ; ...el punto de origen en la pagina 1...
-	ld b,(hl)			;5794   ; ...el byte de la ficha...
+	call L_57AD		;5791   ; ...(128 (i & 1), 0xF0 + i / 2)...
+	ld b,(hl)			;5794   ; ...el byte b de la ficha...
 	inc hl			;5795
 	push hl			;5796
 	ex de,hl			;5797
-	ld c,0d8h		;5798   ; ...da el punto de destino (x a pares, y desde 0xD8)...
+	ld c,0d8h		;5798   ; ...da el origen en la pagina 0: (128 (b & 1), 0xD8 + b / 2), el almacen del bateador...
 	call L_57AD		;579a
 	ex de,hl			;579d
-	ld bc,08001h		;579e   ; ...y se copia un punto
+	ld bc,08001h		;579e   ; ...y se copian 128 x 1 puntos (64 bytes: 2 dibujos de sprite)
 	ld a,004h		;57a1
 	call copia_rectangulo		;57a3   ; copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 	pop hl			;57a6
@@ -3570,8 +3570,8 @@ L_5891:
 	ld c,a			;589d
 	ld a,(hl)			;589e
 	call L_5961		;589f
-	jr z,L_58BD		;58a2   ; el color: si la ficha lo trae (no 0 ni 7), ese...
-	ld a,(0edd0h)		;58a4   ; ...si no, el de la camiseta: 0x18 o 0x1B segun la media entrada...
+	jr z,L_58BD		;58a2   ; el indice de color: 0 o 7 se queda (el contorno)...
+	ld a,(0edd0h)		;58a4   ; ...cualquier otro, el de la camiseta: 0x18 el local, 0x1B el visitante...
 	or a			;58a7
 	ld a,(0e19bh)		;58a8   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	jr z,L_58B6		;58ab   ; ...y al reves con 0xEDD0
@@ -3653,7 +3653,7 @@ L_5939:
 	ld c,a			;5939
 	ld a,(0e1e1h)		;593a   ; ...mas 0xE1E1
 	call L_5961		;593d
-	jr z,L_595B		;5940   ; el color: el de la ficha o el de la camiseta
+	jr z,L_595B		;5940   ; el indice de color: 0 o 7 se queda; cualquier otro, el de la camiseta
 	ld a,(0edd0h)		;5942
 	or a			;5945
 	ld a,(0e19bh)		;5946   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
@@ -3675,7 +3675,7 @@ L_595B:
 	djnz L_5929		;595e
 	ret			;5960
 L_5961:
-	inc hl			;5961   ; la x mas C, el dibujo, y Z si el color de la ficha es 0 (o NZ = 7)
+	inc hl			;5961   ; la x mas C, el dibujo, y Z si el indice de color de la ficha es 0 o 7
 	add a,c			;5962   ; la x mas C
 	ld (de),a			;5963
 	inc de			;5964
@@ -3956,8 +3956,8 @@ L_5B0D:
 	or (ix+02bh)		;5b18
 	or (ix+03bh)		;5b1b
 	ret			;5b1e
-dibujos_de_sprites:		; los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
-	ld de,0ec96h		;5b1f   ; los dibujos de los 32 sprites: compara el dibujo de cada atributo (0xE17F hacia atras)...
+colores_de_sprites:		; los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
+	ld de,0ec96h		;5b1f   ; los colores de los 32 sprites: compara el indice de color de cada atributo (0xE17F hacia atras)...
 	ld hl,0e17fh		;5b22
 	ld b,020h		;5b25
 L_5B27:

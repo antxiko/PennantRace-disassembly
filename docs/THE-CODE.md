@@ -26,6 +26,9 @@ comment minimum. Every bank with code is over 40%.
 - `tools/vram.py` is a V9938 VRAM in Python with what the game uses: pictures,
   runs, one-bit characters, copy commands and palettes. `tools/pantallas.py`
   repeats step by step the routines that paint each screen.
+  `tools/sprites.py` draws sprites the way the V9938 does (with the CC bit)
+  and builds the batter and the pitcher the way the game does;
+  `tools/animaciones.py` writes the GIFs with the code's timing.
   `tools/omsx_vram.tcl` dumps the openMSX VRAM and `tools/coteja_vram.py`
   compares.
 - `tools/musica.py` runs the sound engine on a Python Z80 and writes the MP3s;

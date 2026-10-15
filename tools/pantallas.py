@@ -160,12 +160,81 @@ def titulo():
     return v
 
 
+def copia(v, sx, sy, sp, dx, dy, dp, ancho, alto):
+    """HMMM (p00:4D66): el rectangulo (sx, sy) de la pagina sp a (dx, dy) de
+    la pagina dp, de dos en dos puntos."""
+    for f in range(alto):
+        o = sp * 0x8000 + ((sy + f) & 0xFF) * 128 + sx // 2
+        d = dp * 0x8000 + ((dy + f) & 0xFF) * 128 + dx // 2
+        v.v[d:d + ancho // 2] = v.v[o:o + ancho // 2]
+
+
+def logo_konami(filas=0x30):
+    """La pantalla del logo de Konami (p03:B670): el rectangulo de 0xA8 x
+    0x30 en (0x28, 0x70) de la pagina 1 a 0, el logo de p00:57C6 (logotipo)
+    y, cada dos cuadros, una fila mas de ese rectangulo a (0x28, 0x40) de la
+    pagina 0 (p14:872E: 0x30 filas)."""
+    v = logotipo()
+    copia(v, 0x28, 0x70, 1, 0x28, 0x40, 0, 0xA8, filas)
+    return v
+
+
+def menu(modo=0):
+    """El menu de modos (p01:651C): la presentacion (titulo), con la fuente
+    que se carga al encender (p00:5991); el rotulo de (0x28, 0x70) de la
+    pagina 1 a (0x1C, 0x08) de la pagina 0 (p01:6535); los 5 textos seguidos
+    de p13:7D8F (p01:6543) y el marcador, el caracter 0x9A, en la fila del
+    modo: (0x18, 16 x modo + 0x70) (p01:65AF)."""
+    import textos
+    v = titulo()
+    fuente(v)
+    copia(v, 0x28, 0x70, 1, 0x1C, 0x08, 0, 0xD0, 0x48)
+    d = 0x7D8F
+    for _ in range(5):
+        v.texto(13, d)
+        d = textos.descodifica(d)[1]
+    v.caracter(0x9A, 0x18, 16 * modo + 0x70)
+    return v
+
+
+# Los letreros de la pantalla del lanzamiento: listas de dibujos que se pintan
+# en la pagina 0 con las paletas de p00:51B2 (azul o rojo); cada una con su
+# pareja para el bateador del otro lado
+LETREROS = [
+    ("PLAY BALL!", 13, 0x7925, "p00:5163, al empezar la media entrada"),
+    ("LUCKY 7", 10, 0x96EE, "p00:5180, la de la 7.a"),
+    ("PLAY!", 13, 0xBA9B, "p00:5168 (p13:BA8E por el otro lado)"),
+    ("BALL!", 10, 0x9401, "p00:5193 (p11:93F4)"),
+    ("STRIKE!", 10, 0x94BB, "p00:5185 (p11:94AE)"),
+    ("OUT!", 10, 0x95A8, "p00:51A1 (p11:95BB)"),
+]
+
+
+def letreros(salida, escala=3):
+    """Los letreros sobre la pantalla del lanzamiento, cada uno recortado."""
+    from PIL import Image
+    piezas = []
+    for _, trio, lista, _ in LETREROS:
+        v = marcador()
+        v.dibujos(trio, lista, 0x51B2)
+        ruta = os.path.join(salida, "_letrero.png")
+        v.png(ruta, pagina=0, y0=118, alto=34, x0=60, ancho=136, escala=escala)
+        piezas.append(Image.open(ruta).copy())
+        os.remove(ruta)
+    w, h = piezas[0].size
+    hoja = Image.new("RGB", (2 * w, 3 * h))
+    for k, im in enumerate(piezas):
+        hoja.paste(im, ((k % 2) * w, (k // 2) * h))
+    hoja.save(os.path.join(salida, "letreros.png"))
+
+
 def sprites_del_partido():
     """Los dibujos de sprite del partido (VRAM 0xF800-0xFFFF): p00:537C
     (rachas de p10:76BE y p12:BBC3), p00:539D (p12:BC3C, p10:79AD, p10:7B90,
     p11:9380) y p00:53CC (p11:814B, con su destino delante). Durante la
-    jugada p00:572E pone en 0xFAC0 la postura del lanzador (128 bytes de
-    p11:8499) y p00:5716 en 0xFFC0 la del receptor (64 de p11:8759)."""
+    jugada p00:572E pone en 0xFAC0 los de quien lleva la pelota (128 bytes
+    de p11:8499) y p00:5716 en 0xFFC0 los del receptor (64 de p11:8759); la
+    postura del lanzador la pone p00:56B1 en 0xFD80 (tools/sprites.py)."""
     v = Vram()
     v.rachas(10, 0x76BE, 0xFE00)
     v.rachas(10, 0xBBC3, 0xFD00)
@@ -219,6 +288,9 @@ def main(argv):
         for z in range(3):
             v, lineas = campo(z)
             png_lineas(v, lineas, os.path.join(salida, "campo_%d.png" % z), 2)
+        menu(0).png(os.path.join(salida, "menu.png"), pagina=0, alto=212, escala=2)
+        logo_konami().png(os.path.join(salida, "logo_konami.png"), pagina=0, alto=212, escala=2)
+        letreros(salida)
         print("web")
     if que in ("campo", "todas"):
         for z in range(3):

@@ -27,7 +27,7 @@ L_A004:
 	ld (hl),000h		;a004   ; el color a 0...
 	add hl,de			;a006   ; ...4 bytes mas alla
 	djnz L_A004		;a007
-	jp 05b1fh		;a009   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+	jp 05b1fh		;a009   ; colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 L_A00C:
 	ld a,b			;a00c   ; el orden del visitante, primer paso: con el boton 2 elige el puesto...
 	and 020h		;a00d
@@ -134,7 +134,7 @@ color_flecha_visitante:		; el color de la flecha del visitante (B) y de sus 3 sp
 	ld (0e103h),a		;a0cb   ; los sprites 0, 1 y 2
 	ld (0e107h),a		;a0ce
 	ld (0e10bh),a		;a0d1
-	jp 05b1fh		;a0d4   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+	jp 05b1fh		;a0d4   ; colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 L_A0D7:
 	ld a,(0e30ah)		;a0d7   ; el local, si no ha acabado: lo mismo con 0xE19E, 0xE305, 0xE30E y 0xE30C
 	and 002h		;a0da   ; si el local ya acabo (bit 1 de 0xE30A), nada
@@ -286,7 +286,7 @@ color_flecha_local:		; el color de la flecha del local (B) y de sus 3 sprites (C
 	ld (0e113h),a		;a1ea   ; los sprites 4, 5 y 6
 	ld (0e117h),a		;a1ed
 	ld (0e11bh),a		;a1f0
-	jp 05b1fh		;a1f3   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+	jp 05b1fh		;a1f3   ; colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 orden_valido:		; el orden DE vale? sin huecos y un solo lanzador; carry si no
 	ld b,009h		;a1f6   ; el orden DE vale? los 9 puestos...
 	xor a			;a1f8
@@ -456,7 +456,7 @@ L_A2ED:
 	ld de,0e100h		;a2ff   ; apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 	ld bc,00020h		;a302
 	ldir		;a305
-	call 05b1fh		;a307   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+	call 05b1fh		;a307   ; colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 	ld hl,00e18h		;a30a   ; un marco de 0x73 x 0x85 en (0x18, 0x0E)...
 	ld de,07385h		;a30d
 	ld c,00dh		;a310
@@ -1848,7 +1848,7 @@ L_ACA6:
 	call L_A9F4		;ace7   ; el lanzador (p03:A9F4)
 	call 056c4h		;acea   ; los sprites del lanzador y del bateador
 	call 056b1h		;aced
-	call 05b1fh		;acf0   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+	call 05b1fh		;acf0   ; colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 	call 04235h		;acf3   ; p00:4235 y p00:5153
 	call 05153h		;acf6
 	call 06352h		;acf9   ; ...el marcador grande, el lanzador y el bateador
@@ -2990,7 +2990,7 @@ L_B491:
 	call L_B166		;b495
 L_B498:
 	call 05c7dh		;b498   ; ...los sprites y los dibujos de p07 (p00:51BE)
-	call 05b1fh		;b49b   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+	call 05b1fh		;b49b   ; colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 	call 05c73h		;b49e   ; pide_colores_sprite: pide copiar los colores de sprite (0xED09 = 1)
 	jp 051beh		;b4a1
 L_B4A4:

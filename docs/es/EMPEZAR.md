@@ -15,9 +15,10 @@ vuelven a montar byte a byte, y el 43,7 % de las instrucciones va comentado.
 
 - [El juego](EL-JUEGO.html): los seis equipos con sus fichas, las reglas
   sacadas del código y los modos.
-- [Las pantallas](LAS-PANTALLAS.html): la presentación, el campo en tres
-  zonas, la pantalla del lanzamiento, los sprites y la fuente, dibujados desde
-  la ROM.
+- [Las pantallas](LAS-PANTALLAS.html): el logo, la presentación animada, el
+  menú, el campo en tres zonas, la pantalla del lanzamiento con sus letreros,
+  el bateador, el lanzador y los jugadores animados, y la fuente, dibujados
+  desde la ROM.
 - [La música](LA-MUSICA.html): las 26 piezas, sacadas de su propio motor.
 - [Los textos](LOS-TEXTOS.html): todo lo que escribe en pantalla.
 - [El cartucho](EL-CARTUCHO.html): los bancos, los formatos de los dibujos y

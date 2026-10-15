@@ -967,7 +967,7 @@ L_668F:
 	ld hl,0e331h		;669c   ; ...160 cuadros, sprites fuera, p01:66E7 y p03:B47B...
 	ld (hl),0a0h		;669f
 	call 05c7dh		;66a1   ; esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
-	call 05b1fh		;66a4   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+	call 05b1fh		;66a4   ; colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 	call 05c73h		;66a7   ; pide_colores_sprite: pide copiar los colores de sprite (0xED09 = 1)
 	call L_66E7		;66aa
 	call 0b47bh		;66ad
@@ -1245,7 +1245,7 @@ L_6847:
 	ld hl,0688ah		;687c
 	ld bc,00008h		;687f
 	ldir		;6882
-	call 05b1fh		;6884   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+	call 05b1fh		;6884   ; colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 	jp paso_e339		;6887   ; paso_e339: al paso siguiente (0xE339 + 1)
 
 ; ----------------------------------------------------------------------
@@ -1283,7 +1283,7 @@ L_6892:
 	ld hl,0e120h		;68b4
 	ld b,018h		;68b7   ; 24 sprites desde el 8 fuera (p00:5C82)
 	call 05c82h		;68b9
-	call 05b1fh		;68bc   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+	call 05b1fh		;68bc   ; colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 	call 05c73h		;68bf   ; pide_colores_sprite: pide copiar los colores de sprite (0xED09 = 1)
 	call L_6902		;68c2   ; p01:6902
 	jp paso_e339		;68c5   ; paso_e339: al paso siguiente (0xE339 + 1)

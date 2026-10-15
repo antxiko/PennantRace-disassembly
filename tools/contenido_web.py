@@ -65,8 +65,9 @@ PORTADA = {
         titulo="The Pro Yakyuu Gekitotsu Pennant Race - desensamblado comentado",
         claim="El b&eacute;isbol de Konami para MSX2 por dentro: seis equipos "
               "con sus fichas, las reglas que se leen en el c&oacute;digo, el "
-              "campo en tres zonas, la pantalla del lanzamiento y 26 "
-              "m&uacute;sicas de PSG y SCC sacadas de su propio motor.",
+              "bateador, el lanzador y los jugadores animados como los mueve el "
+              "juego, el campo en tres zonas y 26 m&uacute;sicas de PSG y SCC "
+              "sacadas de su propio motor.",
         ficha=["Konami - <b>(c) Konami 1988</b>",
                "Cartucho <b>RC-757</b>, 128 KB con el SCC (mapper Konami SCC)",
                "<b>MSX2</b>", "Volcado <b>e22a6317...</b>"],
@@ -80,9 +81,10 @@ PORTADA = {
     "en": dict(
         titulo="The Pro Yakyuu Gekitotsu Pennant Race - a commented disassembly",
         claim="Konami's MSX2 baseball from the inside: six teams with their "
-              "player cards, the rules as the code has them, the field in three "
-              "zones, the pitching screen and 26 PSG and SCC tunes taken from "
-              "its own engine.",
+              "player cards, the rules as the code has them, the batter, the "
+              "pitcher and the fielders animated the way the game moves them, "
+              "the field in three zones and 26 PSG and SCC tunes taken from its "
+              "own engine.",
         ficha=["Konami - <b>(c) Konami 1988</b>",
                "An <b>RC-757</b> cartridge, 128 KB with the SCC (Konami SCC mapper)",
                "<b>MSX2</b>", "Dump <b>e22a6317...</b>"],
@@ -169,6 +171,33 @@ HALLAZGOS = {
 
 LOGOTIPO = "rotulo.png"
 GALERIA = [
+    ("bateador_derecha.gif",
+     "El swing, con los tiempos de <code>p02:8663</code>: cada formaci&oacute;n "
+     "copia sus dibujos de sprite de un almac&eacute;n de la VRAM "
+     "(<code>p00:5761</code>).",
+     "The swing, timed as in <code>p02:8663</code>: each stance copies its "
+     "sprite patterns from a store in the VRAM (<code>p00:5761</code>)."),
+    ("lanzador_0.gif",
+     "El lanzador, pasos 5 a 0 (<code>p03:A597</code>, esperas de "
+     "<code>p03:A83F</code>).",
+     "The pitcher, steps 5 to 0 (<code>p03:A597</code>, waits from "
+     "<code>p03:A83F</code>)."),
+    ("presentacion.gif",
+     "La presentaci&oacute;n: la pelota se acerca y cruza destapando el "
+     "r&oacute;tulo (<code>p15:BB97</code>).",
+     "The intro: the ball comes closer and crosses the screen uncovering the "
+     "title (<code>p15:BB97</code>)."),
+    ("menu.png",
+     "El men&uacute; de modos (<code>p01:651C</code>).",
+     "The mode menu (<code>p01:651C</code>)."),
+    ("campo_jugadores.gif",
+     "Defensores y corredores en el campo, cambiando de pierna cada 8 cuadros "
+     "(<code>p01:7280</code>, <code>p02:8FC8</code>).",
+     "Fielders and runners on the field, switching legs every 8 frames "
+     "(<code>p01:7280</code>, <code>p02:8FC8</code>)."),
+    ("letreros.png",
+     "Los letreros del lanzamiento (<code>p00:5163</code>-<code>p00:51A1</code>).",
+     "The pitching signs (<code>p00:5163</code>-<code>p00:51A1</code>)."),
     ("estadio.png",
      "El estadio de la presentaci&oacute;n (<code>p15:BB97</code>).",
      "The stadium of the intro (<code>p15:BB97</code>)."),

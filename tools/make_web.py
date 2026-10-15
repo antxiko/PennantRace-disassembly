@@ -87,8 +87,9 @@ if hasattr(_cw, "ROTULO_RUTINAS"):   # que se cuenta como rutina, si no son las 
 
 
 def img64(ruta):
+    tipo = "gif" if ruta.lower().endswith(".gif") else "png"
     with open(ruta, "rb") as f:
-        return "data:image/png;base64," + base64.b64encode(f.read()).decode()
+        return "data:image/%s;base64," % tipo + base64.b64encode(f.read()).decode()
 
 
 def main(argv):

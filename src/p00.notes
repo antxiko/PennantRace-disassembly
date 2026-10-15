@@ -849,14 +849,14 @@ C 0x5689 ...y 640 bytes de p10:7C4B...
 C 0x568E ...o, con 0xE1FE, las de p10:6808 y los 640 bytes de p10:7ECB
 C 0x5697 a la VRAM 0x7880
 C 0x56A3 copia en la pagina 1: 5 x 1 puntos de (0xF1, 0x00) a (0xF0, 0x00)
-C 0x56B1 un punto de (0xF9 + 0xE1D3, 0) a (0xFB, 0): el color del juego elegido
+C 0x56B1 la postura del lanzador: la linea 0xF9 + 0xE1D3 de la pagina 0 (128 bytes) a la linea 0xFB de la pagina 1, los dibujos de sprite 0xB0-0xBF
 C 0x56C4 los 7 dibujos de 128 bytes del juego 0xE1EB & 3 (p10:6FBE)...
 C 0x56C7 ...a la VRAM 0x7C80 en adelante
 C 0x56DB cada uno...
 C 0x56E0 ...128 bytes mas abajo
 C 0x56EB con el bit 2 de 0xE1EB, girado en espejo (p00:4B66)
 C 0x56F2 si no, tal cual
-C 0x56F9 copia un punto de (0xFF, 0x00) a (0xF9, 0x80)
+C 0x56F9 copia media linea (128 x 1) de (0, 0xFF) de la pagina 0 a (0x80, 0xF9) de la pagina 1
 C 0x5716 el dibujo de 64 bytes A (p11:8759 + 64 A)...
 C 0x5722 ...a los dibujos de sprite 0xF8 (VRAM 0xFFC0)
 C 0x572E el dibujo de 128 bytes A (p11:8499 + 128 A)...
@@ -870,12 +870,12 @@ C 0x576A 11 x 0xE1F6: 2n...
 C 0x5772 ...8n + 2n + n
 C 0x5776 + 0x6000
 C 0x577A [bits altos: color; bajos: cuantos]
-C 0x5783 cada uno...
-C 0x5787 ...el color 0xF0 o 0xF5 segun los bits altos...
-C 0x5791 ...el punto de origen en la pagina 1...
-C 0x5794 ...el byte de la ficha...
-C 0x5798 ...da el punto de destino (x a pares, y desde 0xD8)...
-C 0x579E ...y se copia un punto
+C 0x5783 cada media linea i...
+C 0x5787 ...el destino: la linea 0xF0 (o 0xF5 con los bits altos) de la pagina 1, los dibujos de sprite...
+C 0x5791 ...(128 (i & 1), 0xF0 + i / 2)...
+C 0x5794 ...el byte b de la ficha...
+C 0x5798 ...da el origen en la pagina 0: (128 (b & 1), 0xD8 + b / 2), el almacen del bateador...
+C 0x579E ...y se copian 128 x 1 puntos (64 bytes: 2 dibujos de sprite)
 C 0x57AD D = (B & 1) x 0x80, E = B / 2 + C
 C 0x57B9 un rectangulo de color 0x11 en (0x54, 0x7C), 0x58 x 0x18
 C 0x57C6 con 7-8-9: la paleta de p09:BE86...
@@ -898,8 +898,8 @@ C 0x5886 la lista de la formacion 0xE1F6: [n] y fichas de 4 bytes
 C 0x588E a los atributos desde el sprite 0
 C 0x5891 la y, mas el desplazamiento de 0xE1F9
 C 0x589A la x, mas el de 0xE1F5 (p00:5961 copia x y dibujo)
-C 0x58A2 el color: si la ficha lo trae (no 0 ni 7), ese...
-C 0x58A4 ...si no, el de la camiseta: 0x18 o 0x1B segun la media entrada...
+C 0x58A2 el indice de color: 0 o 7 se queda (el contorno)...
+C 0x58A4 ...cualquier otro, el de la camiseta: 0x18 el local, 0x1B el visitante...
 C 0x58AB ...y al reves con 0xEDD0
 C 0x58BD color a la ficha
 C 0x58C5 la pagina 1 (p00:56A3) y 20 fichas de sprite de p11:9D12 (o 0x9D62 con 0xE1FE) desde el sprite 0
@@ -909,8 +909,8 @@ C 0x5908 4 fichas del juego 0xE1EB & 3 (p11:9DB2), grupo 0xE1D3, a los sprites 2
 C 0x5929 la y + 0x48
 C 0x592F la x, al reves con el bit 2 de 0xE1EB...
 C 0x593A ...mas 0xE1E1
-C 0x5940 el color: el de la ficha o el de la camiseta
-C 0x5961 la x mas C, el dibujo, y Z si el color de la ficha es 0 (o NZ = 7)
+C 0x5940 el indice de color: 0 o 7 se queda; cualquier otro, el de la camiseta
+C 0x5961 la x mas C, el dibujo, y Z si el indice de color de la ficha es 0 o 7
 C 0x5962 la x mas C
 C 0x5965 el dibujo
 C 0x5969 el color de la ficha
@@ -961,7 +961,7 @@ C 0x5AF1 hay alguien en las fichas de 0xE231?
 C 0x5AF6 los bits 0-1 de IX+0: 0 y 3 cambian D
 C 0x5B01 D - 16 (desde 0)
 C 0x5B0D A = el OR de IX+11 de las 4 fichas de 0xE231 (0 si ninguna)
-C 0x5B1F los dibujos de los 32 sprites: compara el dibujo de cada atributo (0xE17F hacia atras)...
+C 0x5B1F los colores de los 32 sprites: compara el indice de color de cada atributo (0xE17F hacia atras)...
 C 0x5B27 ...con el que ya estaba (0xEC96 hacia atras)
 C 0x5B2F si es el mismo, no se toca
 C 0x5B31 apunta el nuevo
@@ -1081,7 +1081,7 @@ F 0x5FB5 16
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
 L 0x40D2 velocidad_hacia con los bancos 7-8-9, la velocidad de HL (x, y) a DE (p00:5E9F); vuelve a 13-14-15
-L 0x40DB dibujos_de_sprites_13 los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
+L 0x40DB colores_de_sprites_13 los colores de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
 L 0x40E1 carga_la_fuente_13 carga la fuente (p00:5991) y vuelve a los bancos 13-14-15
 L 0x40F0 init INIT de la cabecera: deja en H.STKE (0xFEDA) un rst 0x30 con el slot del cartucho y 0x4102
 L 0x4102 arranque la puesta en marcha (desde H.STKE): pila en 0xD280, RAM a cero, bancos 0-1-2-3, H.TIMI a 0x418E y a esperar en `jr $`
@@ -1147,7 +1147,7 @@ L 0x5659 rachas_a_ram descomprime las rachas de DE en la RAM HL
 L 0x5716 dibujo_64 el dibujo de 64 bytes A (p11:8759 + 64 A)
 L 0x57FF sonido pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L 0x5991 carga_la_fuente carga la fuente: 161 caracteres de un bit (0xFAF6 = 1 mientras tanto)
-L 0x5B1F dibujos_de_sprites los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+L 0x5B1F colores_de_sprites los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 L 0x5BE4 diez_caracteres 10 caracteres seguidos de HL en (D, E)
 L 0x5BE6 b_caracteres B caracteres seguidos de HL en (D, E)
 L 0x5BF1 numero pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
@@ -1208,7 +1208,7 @@ C 0x40C9 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3);
 C 0x40CF bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x40D2 bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
 C 0x40D8 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
-C 0x40DB dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+C 0x40DB colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 C 0x40DE bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x40E1 carga_la_fuente: carga la fuente: 161 caracteres de un bit (0xFAF6 = 1 mientras tanto)
 C 0x40E4 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias

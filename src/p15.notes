@@ -1455,18 +1455,18 @@ C 0xBBA6 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC
 C 0xBBB0 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0xBBB3 guarda el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 C 0xBBB8 guarda la cuenta atras del estado
-C 0xBBD0 dibujos_de_sprites_13: los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
+C 0xBBD0 colores_de_sprites_13: los colores de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
 C 0xBBD5 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xBBDA sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xBBDF guarda la cuenta atras del estado
-C 0xBBEA dibujos_de_sprites_13: los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
+C 0xBBEA colores_de_sprites_13: los colores de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
 C 0xBBED mueve_pelota_grande: la posicion de la pelota de la presentacion mas su velocidad
 C 0xBBF3 apunta a la cuenta atras del estado
 C 0xBBFA guarda la cuenta atras del estado
 C 0xBC09 guarda la peticion de copiar sprites a la VRAM (1 colores, 2 todo)
 C 0xBC0F espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
 C 0xBC25 sprites_pelota_grande: los sprites de la pelota de la presentacion
-C 0xBC28 dibujos_de_sprites_13: los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
+C 0xBC28 colores_de_sprites_13: los colores de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
 C 0xBC2B mueve_pelota_grande: la posicion de la pelota de la presentacion mas su velocidad
 C 0xBC57 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 C 0xBC5A pide_colores_sprite: pide copiar los colores de sprite (0xED09 = 1)

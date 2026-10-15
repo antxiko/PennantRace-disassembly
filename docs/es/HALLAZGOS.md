@@ -56,3 +56,19 @@ Los jugadores de cada equipo se llaman como aviones (FLYERS), motos (RIDERS),
 estaciones de Kobe (KOBE LINES), cafés y tés (BRENDS) o términos de
 programación (PROGRAMS: にーもにっく, れじすた, あせんぶる); los DARKS llevan
 apellidos. Los temas son lectura nuestra de los nombres (`p13:731F`).
+
+## El bateador se monta a trozos
+
+Los dibujos del bateador no están fijos en la VRAM. Al empezar cada bola, su
+almacén se descomprime en una parte de la página 0 que no se ve, y cada
+postura del swing copia de ahí, con órdenes del VDP, medias líneas de 64
+bytes a la tabla de dibujos de sprite (`p00:5761`). El lanzador igual: cada
+paso de su movimiento copia una línea con su postura (`p00:56B1`). Cotejado
+con openMSX.
+
+## Un color por equipo
+
+Las camisetas son los colores 8 (local) y 11 (visitante) de la paleta, y el
+juego los pone al empezar cada media entrada desde una tabla con uno por
+equipo (`p09:BFDE`). Los sprites no llevan el color: llevan un índice que se
+descomprime en los colores de sus 16 líneas (`p09:BC05`).

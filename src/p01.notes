@@ -1474,7 +1474,7 @@ C 0x65E5 apaga_sprites: R#8 con el bit 1 (SPD) a 1: no se pintan sprites
 C 0x65F3 apunta a los botones pulsados del mando 1 / cursores
 C 0x6690 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x66A1 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
-C 0x66A4 dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+C 0x66A4 colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 C 0x66A7 pide_colores_sprite: pide copiar los colores de sprite (0xED09 = 1)
 C 0x66BA lee el contador de cuadros del juego (sube uno por cuadro)
 C 0x66CA guarda el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
@@ -1502,11 +1502,11 @@ C 0x6831 hl_mas_a: HL = HL + A
 C 0x6843 pide_colores_sprite: pide copiar los colores de sprite (0xED09 = 1)
 C 0x6849 pide_colores_sprite: pide copiar los colores de sprite (0xED09 = 1)
 C 0x6868 guarda la cuenta atras del estado
-C 0x6884 dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+C 0x6884 colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 C 0x6887 paso_e339: al paso siguiente (0xE339 + 1)
 C 0x6894 pide_colores_sprite: pide copiar los colores de sprite (0xED09 = 1)
 C 0x6897 apunta a la cuenta atras del estado
-C 0x68BC dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
+C 0x68BC colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 C 0x68BF pide_colores_sprite: pide copiar los colores de sprite (0xED09 = 1)
 C 0x68C5 paso_e339: al paso siguiente (0xE339 + 1)
 C 0x68CE hl_mas_a: HL = HL + A

@@ -56,3 +56,18 @@ Each team's players are named after aircraft (FLYERS), motorbikes (RIDERS),
 Kobe stations (KOBE LINES), coffees and teas (BRENDS) or programming terms
 (PROGRAMS: にーもにっく mnemonic, れじすた register, あせんぶる assemble); the
 DARKS carry surnames. The themes are our reading of the names (`p13:731F`).
+
+## The batter is built in pieces
+
+The batter's patterns are not fixed in the VRAM. At every new ball his store
+is unpacked into an off-screen part of page 0, and each pose of the swing
+copies 64-byte half lines from there to the sprite pattern table with VDP
+commands (`p00:5761`). The pitcher too: each step of his motion copies one
+line holding his pose (`p00:56B1`). Checked against openMSX.
+
+## One colour per team
+
+The shirts are palette colours 8 (home) and 11 (visitors), and the game sets
+them at every half inning from a table with one per team (`p09:BFDE`). The
+sprites do not carry the colour: they carry an index that is unpacked into the
+colours of their 16 lines (`p09:BC05`).

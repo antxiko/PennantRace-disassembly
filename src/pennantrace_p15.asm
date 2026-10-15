@@ -3883,7 +3883,7 @@ L_BBBD:
 	ld bc,00009h		;bbc8
 	ldir		;bbcb
 	call sprites_pelota_grande		;bbcd   ; sus sprites
-	call 040dbh		;bbd0   ; dibujos_de_sprites_13: los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
+	call 040dbh		;bbd0   ; colores_de_sprites_13: los colores de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
 	ld a,080h		;bbd3   ; calla (0x80) y el sonido 0x28
 	call 057ffh		;bbd5   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,028h		;bbd8
@@ -3894,7 +3894,7 @@ L_BBBD:
 L_BBE4:
 	call 05c73h		;bbe4   ; paso 2: la pelota se acerca (cambia de tamano cada 8 cuadros)...
 	call sprites_pelota_grande		;bbe7   ; los sprites, la posicion y el frenado
-	call 040dbh		;bbea   ; dibujos_de_sprites_13: los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
+	call 040dbh		;bbea   ; colores_de_sprites_13: los colores de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
 	call mueve_pelota_grande		;bbed   ; mueve_pelota_grande: la posicion de la pelota de la presentacion mas su velocidad
 	call L_BC89		;bbf0
 	ld hl,0de04h		;bbf3   ; apunta a la cuenta atras del estado
@@ -3922,7 +3922,7 @@ L_BC1D:
 L_BC22:
 	call 05c73h		;bc22   ; paso 3: la pelota cruza la pantalla dejando el rotulo detras (copias de la pagina 1)...
 	call sprites_pelota_grande		;bc25   ; sprites_pelota_grande: los sprites de la pelota de la presentacion
-	call 040dbh		;bc28   ; dibujos_de_sprites_13: los dibujos de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
+	call 040dbh		;bc28   ; colores_de_sprites_13: los colores de los 32 sprites (p00:5B1F) y vuelve a los bancos 13-14-15
 	call mueve_pelota_grande		;bc2b   ; mueve_pelota_grande: la posicion de la pelota de la presentacion mas su velocidad
 	call L_BC9E		;bc2e
 	ld a,(0ecf5h)		;bc31   ; hasta que la x pasa de 0x1C, nada

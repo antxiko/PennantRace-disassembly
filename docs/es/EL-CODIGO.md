@@ -27,8 +27,10 @@ por debajo del mínimo de comentarios. Todos los bancos con código pasan del
 - `tools/vram.py` es una VRAM de V9938 en Python con lo que usa el juego:
   dibujos, rachas, caracteres de un bit, órdenes de copia y paletas.
   `tools/pantallas.py` repite paso a paso las rutinas que pintan cada
-  pantalla. `tools/omsx_vram.tcl` vuelca la VRAM de openMSX y
-  `tools/coteja_vram.py` compara.
+  pantalla. `tools/sprites.py` pinta los sprites como el V9938 (con el bit CC)
+  y monta el bateador y el lanzador como el juego; `tools/animaciones.py`
+  saca los GIF con los tiempos del código. `tools/omsx_vram.tcl` vuelca la VRAM
+  de openMSX y `tools/coteja_vram.py` compara.
 - `tools/musica.py` ejecuta el motor de sonido en un Z80 de Python y saca los
   MP3; `tools/omsx_psg.tcl` y `tools/coteja_psg.py` lo cotejan con openMSX.
   La sonda deja pasar una sola petición del juego, puede poner a cero bytes
