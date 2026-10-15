@@ -136,7 +136,7 @@ L_60AC:
 	ld de,0586ch		;60cf
 	ld b,001h		;60d2
 	call 05bf1h		;60d4   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
-	ld hl,0ed16h		;60d7
+	ld hl,0ed16h		;60d7   ; apunta a los hits del local (BCD)
 	ld de,0b86ch		;60da
 	ld b,001h		;60dd
 	call 05bf1h		;60df   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
@@ -144,7 +144,7 @@ L_60AC:
 	ld de,05878h		;60e5
 	ld b,001h		;60e8
 	call 05bf1h		;60ea   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
-	ld hl,0ed18h		;60ed
+	ld hl,0ed18h		;60ed   ; apunta a los home runs del local (BCD)
 	ld de,0b878h		;60f0
 	ld b,001h		;60f3
 	call 05bf1h		;60f5   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
@@ -1345,7 +1345,7 @@ L_6916:
 	call 05991h		;691d   ; la fuente, los caracteres y 0xE33B = 0
 	call 052b5h		;6920
 	xor a			;6923
-	ld (0e33bh),a		;6924
+	ld (0e33bh),a		;6924   ; guarda lo que acaba la jugada: 1 home run, 2 jugada anulada
 	ret			;6927
 L_6928:
 	call 05b1fh		;6928   ; paso 7: los sprites, p02:98FC y la cuenta; al acabar p15:B44F

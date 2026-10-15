@@ -185,6 +185,7 @@ C 0xAEFB numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0xAF0F numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0xAF23 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0xB02F caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0xB0B4 lee lo que acaba la jugada: 1 home run, 2 jugada anulada
 C 0xB0E6 lee la x de la pelota
 C 0xB0F4 lee la y de la pelota (vertical) y el byte siguiente (16 bits)
 C 0xB0FD lee el desplazamiento de la pantalla (16 bits)
@@ -192,6 +193,7 @@ C 0xB10B lee la y de la pelota (vertical) y el byte siguiente (16 bits)
 C 0xB139 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0xB149 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0xB153 hl_mas_a: HL = HL + A
+C 0xB158 lee lo que acaba la jugada: 1 home run, 2 jugada anulada
 C 0xB173 lee el desplazamiento de la pantalla (16 bits)
 C 0xB1A2 lee la y de la pelota (vertical) y el byte siguiente (16 bits)
 C 0xB1B2 lee la y de la pelota (vertical) y el byte siguiente (16 bits)

@@ -641,8 +641,10 @@ C 0x6053 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vue
 C 0x60B9 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0x60C9 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0x60D4 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
+C 0x60D7 apunta a los hits del local (BCD)
 C 0x60DF numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0x60EA numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
+C 0x60ED apunta a los home runs del local (BCD)
 C 0x60F5 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0x6100 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0x610B numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
@@ -746,6 +748,7 @@ C 0x6868 guarda la cuenta atras del estado
 C 0x6897 apunta a la cuenta atras del estado
 C 0x68CE hl_mas_a: HL = HL + A
 C 0x690D copia_logica: orden LMMM (0x90 + operacion) del VDP: copia el rectangulo HL a DE, BC de tamano; las paginas en los bits 4-7 de A' y la operacion logica en los 0-3
+C 0x6924 guarda lo que acaba la jugada: 1 home run, 2 jugada anulada
 C 0x6931 apunta a la cuenta atras del estado
 C 0x6948 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0x6960 hl_mas_a: HL = HL + A

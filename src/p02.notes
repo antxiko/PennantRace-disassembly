@@ -277,6 +277,199 @@ C 0x91F6 ...p00:5D1A y pantalla encendida...
 C 0x91FC ...64 cuadros, 0xE1CF = 2, la rotacion de sprites a 11 / 10...
 C 0x920F ...y todo lo de la jugada a cero
 C 0x9228 en los cuadros impares: p15:B3DE, los corredores, p15:AFC8 y la defensa
+C 0x923A el cuadro par: las piernas, p00:5FF7...
+C 0x9241 ...con 3 outs, el cambio...
+C 0x9249 ...p14:B158...
+C 0x924C ...si la jugada no ha acabado y no hay corredores, se acaba
+C 0x9264 si algun corredor sigue corriendo (sin el bit 6), la jugada sigue
+C 0x9277 con 0xE33C, si algun defensor esta lanzando (estado 3), sigue
+C 0x9293 la espera de 0xE339 hasta acabar la jugada...
+C 0x9299 ...con 0xED02, los que llegan a casa son carrera (p02:8F96)
+C 0x92BC al paso 0 y, si la jugada se anula (bit 0 de 0xEDDE)...
+C 0x92C5 ...los corredores, el marcador y las casillas vuelven a como estaban
+C 0x92E7 sigue: 64 cuadros mas
+C 0x92EC sin 0xE33B: sprites, p02:98FC, p02:9744, p14:B0AC, p01:74F6, p15:B29C
+C 0x930B al paso 0
+C 0x9311 el cambio de campo: 128 cuadros y al paso 6
+C 0x931C 0xE33B: un bateador mas (p01:62F7); 2 es la jugada anulada
+C 0x9325 1, home run: un home run y un hit para el equipo que batea
+C 0x933D al paso 4, 24 cuadros...
+C 0x934E ...los que entran (p02:9386) en 0xED21 y 0xEDC2...
+C 0x9357 ...los sonidos 0x2C y 0x1E y la musica del home run (0x3F)
+C 0x9366 2: al paso 5 y el marcador y las casillas vuelven a como estaban
+C 0x9386 C = los corredores en el campo; luego las 4 fichas a cero
+C 0x93A6 el cambio de campo (p01:6786); acabado, al paso 0
+C 0x93B3 el home run: sprites, p02:98FC; sin velocidad, 0xE302 = 0...
+C 0x93C4 ...paso 1: la espera; al acabar, 0xE33B y 0xED7A a cero y al paso 0
+C 0x93D9 ...paso 0: p15:B4C1 hasta que entren todos (0xED21); 192 cuadros y al paso 1
+C 0x93F0 el byte 13 antes de HL a cero y 0xE340 + 1
+C 0x93FF el byte 11 antes de HL = 0xF1
+C 0x940A el fin de la media entrada: la espera de 0xDE04...
+C 0x9413 ...en la baja, con 10 carreras de diferencia, se acaba (p02:9445)
+C 0x9428 ...desde la 9.a (0xE19B >= 0x10)...
+C 0x9438 ...si el local va por delante al acabar la alta, la X en su casilla (p01:66E3)
+C 0x9445 se acaba el partido (0xED87)
+C 0x944B si no: 0xEDDB = 1 y la musica del cambio: 0x41 sin corredores, 0x40 con ellos
+C 0x946B y a preparar la otra media (p01:668F)
+C 0x946E el desplazamiento al campo nuevo (p01:66B3)...
+C 0x9476 ...si el bateador no llego (p15:B072), cuenta como bateador
+C 0x947E la media entrada siguiente (vuelve a 0 en la 100.a)
+C 0x9489 0xEDDA = 1 y el cambio de lanzador del ordenador (p02:838C)
+C 0x9491 si el equipo que defiende pidio cambio (0xED84 / 0xED85), al estado 8
+C 0x94A8 0xE1CB = 1, corredores, cuenta y outs a cero
+C 0x94C7 en la alta, borra las casillas de la entrada
+C 0x94CE la musica: 0x3B en la 7.a alta, 0x3C en la 7.a baja (con 0x21)...
+C 0x94D9 ...si no, 0x33 la alta o 0x37 la baja
+C 0x94F7 los mandos de la jugada: con 0xEDD0, uno solo...
+C 0x94FD ...el ordenador solo: la tecla F4 (SNSMAT fila 7, bit 0) vuelve al menu
+C 0x9518 el primer mando al que batea (0xE19C) o al que defiende (0xE19E) segun la media...
+C 0x952B ...y con dos jugadores, el segundo al otro
+C 0x9541 con 0xEDD0 el primer mando al que defiende
+C 0x9552 carry si no hay corredores corriendo (todos parados o ninguno)
+C 0x9566 el robo: con el boton 2 del que defiende y algun corredor...
+C 0x9585 ...0xED3F = 1 y al paso 2
+C 0x9594 los marcadores de bases: segun quien esta en 1.a, 2.a y 3.a (p15:B06E)...
+C 0x95AD 0xE1CC = 0, 0xE1CD = 16, 0xECEB = 0
+C 0x95BA el paso de 0xE1CC
+C 0x95C8 la espera de 0xE1CD...
+C 0x95D1 ...y los sprites de las bases ocupadas que se mueven: 2.a...
+C 0x95E7 ...con el paso de las piernas...
+C 0x95F2 ...los sprites de 0xE178: una casilla abajo y a la derecha
+C 0x9600 los de 0xE169 una arriba
+C 0x960D los de 0xE171 una arriba
+C 0x9625 si hay corredores y el que batea pulsa...
+C 0x963A ...el boton 2 con una direccion, durante el lanzamiento: el robo...
+C 0x964A ...el sonido 0x25, 0xECEB = 1 y al paso siguiente
+C 0x9654 por cada base pedida (bits 0-2), su marca en 0xE1CD y sus dibujos de sprite
+C 0x9671 3.a: los sprites de 0xE172 / 0xE176 con 0xD0 / 0xD4 (p00:53F4)
+C 0x9683 2.a: 0xE17A / 0xE17E con 0xE0 / 0xE4 (p00:5403)
+C 0x9693 1.a: 0xE16A / 0xE16E con 0xC0 / 0xC4 (p00:53E7)
+C 0x96A3 al paso siguiente
+C 0x96A8 los corredores que roban se mueven: cuando ya no queda ninguno, al paso siguiente
+C 0x96BC 3.a: abajo y a la derecha hasta 0x48
+C 0x96E3 2.a: arriba hasta 0x40
+C 0x9708 1.a: arriba hasta 0xB4
+C 0x972B al llegar, los dos sprites a cero y la jugada al paso 2
+C 0x9744 el mapa de las bases (sprites 22-31): no con el campo a la vista (0xE1A6 = 1)...
+C 0x975D ...su y = el desplazamiento + 16...
+C 0x9763 ...los 6 sprites de las bases (p02:97B8)...
+C 0x976B ...y por cada corredor: parado en su base (p02:978A) o corriendo (p02:97DD)
+C 0x978A parado: el punto de su base de la tabla 0x98DC...
+C 0x97A4 ...en el sprite siguiente desde 0xE158
+C 0x97B8 los 6 sprites del mapa: y + desplazamiento, x y dibujo de 0x98CA, color 13
+C 0x97DD corriendo: segun su base
+C 0x97F2 1.a-2.a: el punto del mapa segun su y (de 6 en 6 desde 0x40)
+C 0x9815 2.a-3.a: segun su y (de 5 en 5)
+C 0x9834 3.a-casa: segun su y (de 5 en 5)
+C 0x9855 casa-1.a: segun su y - 0x40 (de 6 en 6)
+C 0x9874 color 0x0A y dibujo 0xDC
+C 0x9878 un sprite: y = el desplazamiento + C (0xD8 no, que lo esconde: 0xD9), x = B
+C 0x988A el marcador de 1.a: 7 bytes de 0x98EC a los atributos de 0xE168
+C 0x9897 el de 3.a: de 0x98F4 a 0xE178
+C 0x98A4 el de 2.a: de 0x98E4 a 0xE170
+C 0x98AF con el color de la camiseta del que batea (0x1B o 0x18)
+C 0x98FC la pelota: su movimiento (p02:9912), p14:9348...
+C 0x9902 ...sin 0xE33B, p15:AD60...
+C 0x9909 ...y sus sprites y su sombra
+C 0x9912 segun el estado de la pelota (0xE211)
+C 0x9920 en el aire: avanza (p02:9C20)...
+C 0x9923 ...la gravedad: 0xE21F sube cada cuadro (hasta 0xFF)...
+C 0x992C ...y se resta a la velocidad vertical (0xE226) en 1/8...
+C 0x9944 ...con tope (p02:99C7)...
+C 0x994C ...la altura nueva en 0xE21C...
+C 0x9952 ...el sonido de la bola alta (p02:99FA)...
+C 0x9955 ...hasta que la altura llega a 0
+C 0x9959 bota: el sonido 0x0B (si la jugada sigue)...
+C 0x9969 ...con 0xEC73 = 2, la tiene el defensor: estado 2
+C 0x997A si no: la gravedad otra vez, 0xE22A = 16 si va baja, un bote mas (0xE1D0)...
+C 0x998A ...y la velocidad vertical a 3/8
+C 0x99A4 parada: todo a cero y el estado siguiente
+C 0x99B5 con poca velocidad (< 0x60) se para
+C 0x99BE los botes (0xE1D0, hasta 0xFF)
+C 0x99C7 la velocidad vertical entre -0x600 y 0x600
+C 0x99DF Z si la altura (0xE21C-0xE21E) es 0
+C 0x99E9 sin 0xE33B y con la y alta < 2, 0xE22A = 16
+C 0x99FA la bola alta: una vez (0xEDD2), si la altura pasa de 0x70, el sonido 0x22
+C 0x9A16 0xEFF4 = 2 si estaba puesta
+C 0x9A21 cogida? la espera de 0xED7B...
+C 0x9A34 ...con 0xEC73 = 1, p02:9CD5 y un bote mas
+C 0x9A40 la coge: 0xED32 = 1, la velocidad baja (p02:9BBF) y una vez el sonido 0x0C
+C 0x9A58 sin coger: 12 cuadros de espera y 0xEDCE = 0
+C 0x9A62 la sombra (sprite 2): la espera de 0xE22A...
+C 0x9A6F ...al acabar, sin color...
+C 0x9A73 ...y fuera de la pantalla
+C 0x9A81 con 16: en el suelo bajo la pelota, dibujo 0xC0 y color 15
+C 0x9A9A el color de la pelota (sprite 1) si esta a la vista...
+C 0x9AA7 ...y el de la sombra si la altura no pasa de 0xE221
+C 0x9AC5 C si HL esta entre el desplazamiento y + 0xD4 (a la vista), si no 0
+C 0x9AE0 los dibujos: la sombra 0xBC, la pelota 0xB0 alta o 0xB4 baja
+C 0x9AF6 los sprites de la pelota: colores y dibujos...
+C 0x9AFC ...la x en pantalla (x - la base de la zona)...
+C 0x9B0B ...la sombra en (y, x)...
+C 0x9B15 ...y la pelota en (y - altura, x)
+C 0x9B22 la zona del campo de la pelota (p02:9B4B)...
+C 0x9B2C ...si cambia y la jugada sigue, la zona nueva y p15:B4A4
+C 0x9B3A si no, la pelota se para
+C 0x9B4B la zona de la x de la pelota: 0, 1 o 2 (carry si no cambia)
+C 0x9B99 Y = 0xD8 esconderia el sprite: un punto mas arriba
+C 0x9B9E rodando: cada 8 cuadros frena (p02:9BE6) y avanza
+C 0x9BA9 la pelota en la base de (HL): su y y su x
+C 0x9BBF la velocidad a -1/16 (rebota contra el guante)...
+C 0x9BD3 HL / 16, cambiado de signo
+C 0x9BE6 frena: la velocidad x y la y por 15/16...
+C 0x9BF8 ...con |vx| + |vy| < 0x20, se para
+C 0x9C19 HL = HL - HL / 8 (cambiado de signo)
+C 0x9C20 avanza (p02:9CC0): con la x fuera del campo (> 0x27F) no...
+C 0x9C2E ...ni con la y mas alla de 0x300
+C 0x9C37 la x nueva (24 bits)...
+C 0x9C3D ...y la y nueva
+C 0x9C44 la y: 0xE212-0xE213 mas la velocidad y, con el byte alto en 0xE214 (de 0 a 3)
+C 0x9C69 por debajo de 0, 0
+C 0x9C6D la x: 0xE217-0xE218 mas la velocidad x, byte alto en 0xE219 (hasta 2, tope 0x7F00)
+C 0x9C9E la altura: 0xE21C-0xE21D mas DE, byte alto en 0xE21E (no baja de 0)
+C 0x9CC0 guarda la y y la x de la pelota en 0xED51 y 0xED54
+C 0x9CD5 y las devuelve
+C 0x9CE6 la pelota en la mano del lanzador: todo a cero...
+C 0x9D11 ...en (0x184, 0x138), altura 1...
+C 0x9D2D ...0xE302 = 13, 0xED39 = 15...
+C 0x9D37 ...y si el ultimo golpe fue bueno (0xED2E = 2, tipo >= 2), 0xEFF4 = 0x81
+C 0x9D49 el lanzador abridor: acabado (0xE304 = 1), la espera de 0xE302 y 0xE1D1 = 1
+C 0x9D5A los sprites, p15:A463, el mando del ordenador y la eleccion de los dos...
+C 0x9D69 ...con los dos elegidos (0xE30A = 3), 48 cuadros
+C 0x9D7A el visitante (si no ha elegido): con el boton...
+C 0x9D87 ...arriba o abajo mueven la flecha (0xE30D, de 0 a 3)...
+C 0x9D98 ...cada 16 cuadros si se mantiene...
+C 0x9DB7 ...pinta (p02:9E90) y el sonido 0x26
+C 0x9DBF elegido: el lanzador 13 + 0xE30D al orden (0xEC58)...
+C 0x9DD4 ...su nombre (p15:A264) y la marca (p15:A43C)...
+C 0x9DEB ...0xE30A con el bit 0 y el sonido 0x27
+C 0x9DF7 los 3 sprites de la flecha fuera
+C 0x9E07 el local: lo mismo con 0xE19E, 0xE30E y el bit 1
+C 0x9E44 pinta (p02:9E8B) y el sonido 0x26
+C 0x9E4D elegido: el lanzador 13 + 0xE30E al orden del local (0xEC6A)...
+C 0x9E62 ...su nombre y la marca...
+C 0x9E79 ...0xE30A con el bit 1 y el sonido 0x27
+C 0x9E8B la flecha del local (sprites desde 0xE10C)
+C 0x9E90 la del visitante (desde 0xE100)
+C 0x9E93 la y de la fila elegida (0x9EA5) a los 3 sprites
+C 0x9EA9 la pantalla de los lanzadores: borrada, caracteres...
+C 0x9EB8 ...24 bytes de atributos de 0x9F58...
+C 0x9EC9 ...el texto de p13:7F55, dos marcos...
+C 0x9EE5 ...los nombres de los equipos (10 letras)...
+C 0x9EF7 ...los 4 lanzadores de cada uno (p02:9F20)...
+C 0x9F09 ...y los ordenes de bateo de 0x9F79
+C 0x9F13 0xE308 = 4, la cuenta y 0xE1D1 a cero
+C 0x9F20 4 lanzadores: el nombre (6 letras, p15:A425)...
+C 0x9F33 ...un caracter 0x90...
+C 0x9F3C ...y dos numeros de su ficha (1 y 2 cifras)
+C 0x9F50 la fila siguiente, 16 mas abajo
+C 0x9F70 17 bytes de 0x9F79 al orden de bateo (DE)
+C 0x9F8A el orden de bateo: p15:A463, el mando del ordenador y los sprites...
+C 0x9F93 ...acabado: la espera, p15:AA74, p15:AB77 y 0xE1D1 = 1
+C 0x9FAA los dos equipos (p02:9FC5, p15:A0D7); con los dos (0xE30A = 3)...
+C 0x9FB6 ...96 cuadros y el sonido 0x24
+C 0x9FC5 el visitante: con el boton...
+C 0x9FDF ...p15:A1F6 y, si vale, el sonido 0x27 y la marca
 # --- fin de lo escrito a mano ---
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x8000 0x8002 partida_8000  los 2 ultimos bytes de la instruccion de p01:7FFF (CA BE 7B), que empieza en el banco 1; lo leen p01:7FFF (2 bytes)
@@ -498,6 +691,7 @@ C 0x8EC3 lee variable de paso (cada rutina la usa a su manera)
 C 0x8ECD hl_mas_a: HL = HL + A
 C 0x8ED2 guarda la y de destino
 C 0x8ED7 guarda la x de destino
+C 0x8EE8 lee lo que acaba la jugada: 1 home run, 2 jugada anulada
 C 0x8F37 el numero (bits 0-3) y el estado (bits 4-7) = 0xF0
 C 0x8F71 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0x8F9A las marcas = 0x00
@@ -511,6 +705,7 @@ C 0x8FE5 las marcas = 0x00
 C 0x8FF3 hl_mas_a: HL = HL + A
 C 0x8FF9 lee la base de destino (nibble alto; 2 abajo: llegado)
 C 0x9022 hl_mas_a: HL = HL + A
+C 0x9060 apunta a los hits del visitante (BCD)
 C 0x9063 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x9082 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9087 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -527,129 +722,100 @@ C 0x9208 guarda la rotacion de sprites de este cuadro
 C 0x920C guarda cuantos sprites rotan (9 o 10)
 C 0x921F guarda el mando del bateador o los corredores
 C 0x9222 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
-C 0x923A apunta a el contador de cuadros de la jugada (las piernas de los sprites)
-C 0x9241 lee los outs de la media entrada
 C 0x927D apunta a las 9 fichas de 16 bytes de los defensores
 C 0x92A1 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0x92A5 lee el numero (bits 0-3) y el estado (bits 4-7)
 C 0x92AB lee las marcas
-C 0x92C5 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0x92D0 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 C 0x92DB apunta a las carreras del visitante por entrada (10 casillas, 12-13 el total)
 C 0x92F3 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
-C 0x930B apunta a el paso de la jugada (p02:9149)
-C 0x9311 apunta a la cuenta atras del estado
 C 0x9316 apunta a el paso de la jugada (p02:9149)
+C 0x9328 apunta a los hits del visitante (BCD)
 C 0x932B lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x9346 guarda el paso de la jugada (p02:9149)
 C 0x934B guarda la cuenta atras del estado
+C 0x9351 guarda los corredores que entran con el home run
 C 0x9359 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x935E sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9363 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x936C guarda el paso de la jugada (p02:9149)
 C 0x936F apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 C 0x937A apunta a las carreras del visitante por entrada (10 casillas, 12-13 el total)
-C 0x9386 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0x939B apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
+C 0x93A9 lee lo que acaba la jugada: 1 home run, 2 jugada anulada
 C 0x93AF guarda el paso de la jugada (p02:9149)
 C 0x93CA apunta a la cuenta atras del estado
+C 0x93D0 guarda lo que acaba la jugada: 1 home run, 2 jugada anulada
+C 0x93DC lee los corredores que entran con el home run
 C 0x93E3 guarda la cuenta atras del estado
 C 0x93FA apunta a variable de paso (cada rutina la usa a su manera)
-C 0x940A apunta a la cuenta atras del estado
-C 0x9413 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x9419 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
-C 0x9428 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x9432 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 C 0x9447 guarda si no es 0, el partido se acaba
 C 0x9461 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9468 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9471 lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
-C 0x947E apunta a la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
-C 0x9491 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x94A1 guarda el estado del juego (indice del despachador principal)
 C 0x94A5 guarda el paso de la jugada (p02:9149)
 C 0x94AE apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0x94BA apunta a los strikes de la cuenta (3 = eliminado)
 C 0x94C3 apunta a el paso de la jugada (p02:9149)
-C 0x94C7 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
-C 0x94CE lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x94E0 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x94E5 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x94EA sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x94EF sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x94F4 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0x94FD lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0x950F guarda si no es 0, el partido vuelve al menu
 C 0x9512 lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
-C 0x9518 lee los botones recien pulsados del mando 1 / cursores y el byte siguiente (16 bits)
 C 0x951B lee los botones recien pulsados (segundo mando) y el byte siguiente (16 bits)
 C 0x951F lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x9528 apunta a las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0x9536 apunta a las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
-C 0x9541 lee los botones recien pulsados del mando 1 / cursores y el byte siguiente (16 bits)
 C 0x9544 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x956B lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0x9575 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0x9590 guarda el paso de la jugada (p02:9149)
 C 0x95BD despacha: salta a la palabra A de la tabla que va pegada detras del `call`
-C 0x95E7 lee el contador de cuadros del juego (sube uno por cuadro)
-C 0x9600 lee el contador de cuadros del juego (sube uno por cuadro)
-C 0x960D lee el contador de cuadros del juego (sube uno por cuadro)
-C 0x9625 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
-C 0x963A lee el mando del bateador o los corredores
 C 0x9645 lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x964C sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0x96BC lee el contador de cuadros del juego (sube uno por cuadro)
-C 0x96E3 lee el contador de cuadros del juego (sube uno por cuadro)
-C 0x9708 lee el contador de cuadros del juego (sube uno por cuadro)
 C 0x9740 guarda el paso de la jugada (p02:9149)
-C 0x9744 apunta a el desplazamiento de la pantalla (16 bits)
-C 0x976B apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0x9771 lee las marcas
 C 0x9793 de_mas_a: DE = DE + A
 C 0x97E2 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x98B3 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
-C 0x9912 lee la ficha de 16 bytes de la pelota
 C 0x9915 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x995D lee lo que acaba la jugada: 1 home run, 2 jugada anulada
 C 0x9966 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9976 guarda la ficha de 16 bytes de la pelota
 C 0x99B0 apunta a la ficha de 16 bytes de la pelota
 C 0x9A0D sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9A55 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0x9A73 lee el desplazamiento de la pantalla (16 bits)
 C 0x9A85 lee la y de la pelota (vertical)
 C 0x9A9E lee la y de la pelota (vertical) y el byte siguiente (16 bits)
-C 0x9AC5 lee el desplazamiento de la pantalla (16 bits)
 C 0x9AD4 de_mas_a: DE = DE + A
 C 0x9B00 lee la x de la pelota y el byte siguiente (16 bits)
-C 0x9B0B lee la y de la pelota (vertical)
 C 0x9B1F guarda los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color]) y el byte siguiente (16 bits)
 C 0x9B3D guarda la velocidad y de la pelota y el byte siguiente (16 bits)
 C 0x9B40 guarda la velocidad x de la pelota y el byte siguiente (16 bits)
-C 0x9B4B lee la x de la pelota y el byte siguiente (16 bits)
 C 0x9B64 lee la x de la pelota y el byte siguiente (16 bits)
 C 0x9B6F lee la x de la pelota y el byte siguiente (16 bits)
 C 0x9B87 lee la x de la pelota y el byte siguiente (16 bits)
-C 0x9B9E lee el contador de cuadros de la jugada (las piernas de los sprites)
 C 0x9BAF guarda la y de la pelota (vertical) y el byte siguiente (16 bits)
 C 0x9BBA guarda la x de la pelota y el byte siguiente (16 bits)
-C 0x9BBF lee la velocidad y de la pelota y el byte siguiente (16 bits)
 C 0x9BC5 guarda la velocidad y de la pelota y el byte siguiente (16 bits)
 C 0x9BC8 lee la velocidad x de la pelota y el byte siguiente (16 bits)
 C 0x9BCE guarda la velocidad x de la pelota y el byte siguiente (16 bits)
-C 0x9BE6 lee la velocidad x de la pelota y el byte siguiente (16 bits)
 C 0x9BEC guarda la velocidad x de la pelota y el byte siguiente (16 bits)
 C 0x9BEF lee la velocidad y de la pelota y el byte siguiente (16 bits)
 C 0x9BF5 guarda la velocidad y de la pelota y el byte siguiente (16 bits)
-C 0x9BF8 lee la velocidad y de la pelota y el byte siguiente (16 bits)
 C 0x9C00 lee la velocidad x de la pelota y el byte siguiente (16 bits)
 C 0x9C12 guarda la velocidad y de la pelota y el byte siguiente (16 bits)
 C 0x9C15 guarda la velocidad x de la pelota y el byte siguiente (16 bits)
 C 0x9C23 lee la x de la pelota y el byte siguiente (16 bits)
-C 0x9C2E lee la y de la pelota (vertical) y el byte siguiente (16 bits)
 C 0x9C47 lee la velocidad y de la pelota y el byte siguiente (16 bits)
 C 0x9C70 lee la velocidad x de la pelota y el byte siguiente (16 bits)
 C 0x9CF0 guarda la ficha de 16 bytes de la pelota
+C 0x9CF9 guarda lo que acaba la jugada: 1 home run, 2 jugada anulada
 C 0x9CFF guarda el mando del bateador o los corredores
 C 0x9D02 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0x9D14 guarda la y de la pelota (vertical) y el byte siguiente (16 bits)
@@ -657,30 +823,23 @@ C 0x9D24 guarda la x de la pelota y el byte siguiente (16 bits)
 C 0x9D56 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x9DBC sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9DCC hl_mas_a: HL = HL + A
-C 0x9DD4 apunta a los jugadores del visitante (14 bytes cada uno)
 C 0x9DE0 de_mas_a: DE = DE + A
 C 0x9DF4 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9E4A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9E5A hl_mas_a: HL = HL + A
-C 0x9E62 apunta a los jugadores del local (14 bytes cada uno)
 C 0x9E6E de_mas_a: DE = DE + A
 C 0x9E82 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0x9E90 apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 C 0x9E96 hl_mas_a: HL = HL + A
 C 0x9EAC esconde_sprites: escribe 0xD8 (Y = 216: no se pinta ninguno) en la VRAM 0xF600, el primer atributo de sprite
-C 0x9EB8 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 C 0x9EBE apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 C 0x9ECC texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x9ED7 marco: un marco de lineas: HL la esquina, DE el tamano
 C 0x9EE2 marco: un marco de lineas: HL la esquina, DE el tamano
-C 0x9EE5 apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 C 0x9EEE apunta a la ficha del local (255 bytes de p13:731F)
-C 0x9F09 apunta a el orden de bateo del visitante (9 numeros de jugador)
 C 0x9F19 guarda la cuenta atras del estado
 C 0x9F1C guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x9F35 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x9FA6 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x9FC2 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0x9FDF apunta a el orden de bateo del visitante (9 numeros de jugador)
 C 0x9FEA sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 # --- fin de las anotaciones de anota.py ---

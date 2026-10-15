@@ -3010,14 +3010,14 @@ L_B4C1:
 	ld a,(0ed23h)		;b4c1
 	ld b,a			;b4c4
 	djnz L_B4D2		;b4c5
-	ld a,(0ed21h)		;b4c7
+	ld a,(0ed21h)		;b4c7   ; lee los corredores que entran con el home run
 	or a			;b4ca
 	jp nz,06974h		;b4cb
 	ld (0ed23h),a		;b4ce
 	ret			;b4d1
 L_B4D2:
 	xor a			;b4d2
-	ld (0ed21h),a		;b4d3
+	ld (0ed21h),a		;b4d3   ; guarda los corredores que entran con el home run
 	ld c,043h		;b4d6
 	call L_B067		;b4d8
 	call nc,L_B508		;b4db
@@ -3040,7 +3040,7 @@ L_B4D2:
 	ret			;b507
 L_B508:
 	call 066ebh		;b508
-	ld hl,0ed21h		;b50b
+	ld hl,0ed21h		;b50b   ; apunta a los corredores que entran con el home run
 	inc (hl)			;b50e
 	ret			;b50f
 L_B510:

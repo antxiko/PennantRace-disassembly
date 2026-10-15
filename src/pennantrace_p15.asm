@@ -2311,7 +2311,7 @@ L_B0AC:
 	ld (0ed0dh),a		;b0b0
 	ret			;b0b3
 L_B0B4:
-	ld a,(0e33bh)		;b0b4
+	ld a,(0e33bh)		;b0b4   ; lee lo que acaba la jugada: 1 home run, 2 jugada anulada
 	or a			;b0b7
 	ret nz			;b0b8
 	ld a,(0ed0dh)		;b0b9
@@ -2402,7 +2402,7 @@ L_B14E:
 	call 04216h		;b153   ; hl_mas_a: HL = HL + A
 	jr L_B1C1		;b156
 L_B158:
-	ld a,(0e33bh)		;b158
+	ld a,(0e33bh)		;b158   ; lee lo que acaba la jugada: 1 home run, 2 jugada anulada
 	or a			;b15b
 	ret nz			;b15c
 	ld a,(0ed08h)		;b15d

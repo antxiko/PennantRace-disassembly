@@ -112,14 +112,17 @@ C 0x8723 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMM
 C 0x874E copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 C 0x9350 lee la x de la pelota y el byte siguiente (16 bits)
 C 0x9357 lee la y de la pelota (vertical) y el byte siguiente (16 bits)
+C 0x93C4 guarda lo que acaba la jugada: 1 home run, 2 jugada anulada
 C 0x93CB lee el desplazamiento de la pantalla (16 bits)
 C 0x93D9 texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
 C 0x93F8 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x93FE texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x9401 apunta a los strikes de la cuenta (3 = eliminado)
 C 0x941E apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
+C 0x945E guarda lo que acaba la jugada: 1 home run, 2 jugada anulada
 C 0x946F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9472 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x947C lee lo que acaba la jugada: 1 home run, 2 jugada anulada
 C 0x968A lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0x96A6 apunta a el equipo del jugador en PENNANT (bit 0)
 C 0x96D7 hl_mas_a: HL = HL + A

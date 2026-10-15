@@ -214,6 +214,12 @@ RAM.update({
     0xE1A1: ("el paso de la jugada (p02:9149)", "p02:917C"),
     0xED0E: ("el contador de cuadros de la jugada (las piernas de los sprites)", "p02:923A, p01:7023"),
     0xD74C: ("el despachador de los menus (y 0xD74D)", "p00:4521, p00:489D"),
+    0xED15: ("los hits del visitante (BCD)", "p02:9325, p02:9054"),
+    0xED16: ("los hits del local (BCD)", "p02:9325"),
+    0xED17: ("los home runs del visitante (BCD)", "p02:9325"),
+    0xED18: ("los home runs del local (BCD)", "p02:9325"),
+    0xE33B: ("lo que acaba la jugada: 1 home run, 2 jugada anulada", "p02:931C"),
+    0xED21: ("los corredores que entran con el home run", "p02:934E, p01:6974"),
 })
 
 RAM16 = {}

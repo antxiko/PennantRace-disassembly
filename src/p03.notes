@@ -223,7 +223,10 @@ C 0xB484 apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
 C 0xB498 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 C 0xB4A4 apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
 C 0xB4AA enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
+C 0xB4C7 lee los corredores que entran con el home run
+C 0xB4D3 guarda los corredores que entran con el home run
 C 0xB4EB apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
+C 0xB50B apunta a los corredores que entran con el home run
 C 0xB51B apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0xB5E8 lee la velocidad x de la pelota y el byte siguiente (16 bits)
 C 0xB5F1 lee la velocidad y de la pelota y el byte siguiente (16 bits)

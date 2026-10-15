@@ -1349,7 +1349,7 @@ L_93B1:
 	ld (0eff4h),a		;93bd
 	ld (0ed39h),a		;93c0
 	inc a			;93c3
-	ld (0e33bh),a		;93c4
+	ld (0e33bh),a		;93c4   ; guarda lo que acaba la jugada: 1 home run, 2 jugada anulada
 	ld (0eddfh),a		;93c7
 	ret			;93ca
 L_93CB:
@@ -1433,7 +1433,7 @@ L_9453:
 	rra			;945a
 	ret c			;945b
 	ld a,002h		;945c
-	ld (0e33bh),a		;945e
+	ld (0e33bh),a		;945e   ; guarda lo que acaba la jugada: 1 home run, 2 jugada anulada
 	xor a			;9461
 	ld (0ed39h),a		;9462
 	ld d,060h		;9465
@@ -1446,7 +1446,7 @@ L_9453:
 	jp nc,0003dh		;9476
 	jp 0003eh		;9479   ; BIOS INIFNK - Initialises the contents of the function keys
 L_947C:
-	ld a,(0e33bh)		;947c
+	ld a,(0e33bh)		;947c   ; lee lo que acaba la jugada: 1 home run, 2 jugada anulada
 	or a			;947f
 	ret z			;9480
 	ld a,(0ec73h)		;9481
