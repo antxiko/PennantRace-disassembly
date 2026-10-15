@@ -5,9 +5,6 @@
 - **Dos trozos de la página 1.** El partido pinta sobre la marcha 185 bytes de
   la hoja, en (40-79, 200-207) y en (216-223, 152-159), que aún no se han
   identificado.
-- **Los dos lados del campo.** Las zonas izquierda y derecha están dibujadas
-  con el mismo código que la del centro, pero no se han cotejado: la
-  demostración no sale de la zona del centro.
 - **Dos pantallas sin dibujar.** La hoja del partido acabado (打数, 安打...,
   `p00:47DA`) sale en los volcados con un trozo revuelto arriba que no hemos
   explicado (los partidos se acabaron a mano, escribiendo en la RAM), y el

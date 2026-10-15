@@ -121,13 +121,15 @@ juego estaba pintando en ese momento.
 
 ![El jardín izquierdo](../imagenes/campo_0.png)
 
-La zona del jardín izquierdo (mosaicos de `p08:9B28`).
+La zona del jardín izquierdo (mosaicos de `p08:9B28`). **Cotejada: las 256
+líneas iguales** en un volcado de un partido en WATCH.
 
 ![El jardín derecho](../imagenes/campo_2.png)
 
-La zona del jardín derecho (mosaicos de `p09:A088`). Estas dos están dibujadas
-con el mismo código que la central, pero **no están cotejadas**: la
-demostración no sale de la zona del centro.
+La zona del jardín derecho (mosaicos de `p09:A088`). **Cotejada: 248 de 256
+líneas iguales**; en las otras 8, el juego había escrito encima « OUT » en
+(112, 240) (`p13:7E69`), y pintando ese texto sale lo mismo que en el
+volcado.
 
 ## El lanzamiento
 
@@ -145,9 +147,9 @@ Los letreros se pintan sobre ella como listas de dibujos, en azul o en rojo
 (las paletas de `p00:51B2`), cada uno con su pareja para el bateador del otro
 lado: PLAY BALL! al empezar la media entrada (`p13:7925`), LUCKY 7 en la
 séptima (`p11:96EE`), PLAY! (`p13:BA9B`), BALL! (`p11:9401`), STRIKE!
-(`p11:94BB`) y OUT! (`p11:95A8`). **Cotejados: PLAY BALL!, PLAY!, BALL!,
-STRIKE! y OUT!** iguales byte a byte en los volcados donde salen; LUCKY 7 no
-sale en ninguno.
+(`p11:94BB`) y OUT! (`p11:95A8`). **Cotejados los seis**, iguales byte a
+byte en los volcados donde salen; LUCKY 7, poniendo la séptima entrada en la
+RAM (0xE19B = 0x0C) antes de empezar el partido.
 
 ## Los jugadores
 

@@ -5,9 +5,6 @@
 - **Two pieces of page 1.** During a game, 185 bytes of the sheet are drawn on
   the fly, at (40-79, 200-207) and (216-223, 152-159), and they are not
   identified yet.
-- **The two sides of the field.** The left and right zones are drawn with the
-  same code as the centre one, but they are not checked: the demo never
-  leaves the centre zone.
 - **Two screens not drawn.** In the dumps, the finished-game sheet (打数,
   安打..., `p00:47DA`) shows a scrambled piece at the top that we have not
   explained (the games were ended by hand, writing to the RAM), and the

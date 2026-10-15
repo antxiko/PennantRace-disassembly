@@ -119,13 +119,14 @@ moment.
 
 ![Left field](imagenes/campo_0.png)
 
-The left field zone (tiles at `p08:9B28`).
+The left field zone (tiles at `p08:9B28`). **Checked: all 256 lines
+identical** in a dump of a WATCH game.
 
 ![Right field](imagenes/campo_2.png)
 
-The right field zone (tiles at `p09:A088`). These two are drawn with the same
-code as the centre one, but **they are not checked**: the demo never leaves
-the centre zone.
+The right field zone (tiles at `p09:A088`). **Checked: 248 of 256 lines
+identical**; on the other 8 the game had written " OUT " on top at (112, 240)
+(`p13:7E69`), and drawing that text gives exactly what is in the dump.
 
 ## The pitch
 
@@ -143,9 +144,9 @@ The signs are drawn on it as picture lists, in blue or red (the palettes at
 `p00:51B2`), each with a twin for a batter on the other side: PLAY BALL! when
 a half inning starts (`p13:7925`), LUCKY 7 in the seventh (`p11:96EE`), PLAY!
 (`p13:BA9B`), BALL! (`p11:9401`), STRIKE! (`p11:94BB`) and OUT!
-(`p11:95A8`). **Checked: PLAY BALL!, PLAY!, BALL!, STRIKE! and OUT!**
-identical byte for byte in the dumps where they appear; LUCKY 7 appears in
-none.
+(`p11:95A8`). **All six checked**, identical byte for byte in the dumps
+where they appear; LUCKY 7 by setting the seventh inning in RAM (0xE19B =
+0x0C) before the game starts.
 
 ## The players
 
