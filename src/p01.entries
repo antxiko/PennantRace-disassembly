@@ -1,0 +1,83 @@
+# Puntos de entrada del banco 1 (se ejecuta en 0x6000).
+#
+# Cada uno lleva la instruccion que lo justifica. Los que ponen "pNN:XXXX"
+# vienen de OTRO banco: el trazador de una sola pagina no puede seguirlos,
+# porque en esa direccion -segun lo que haya en el registro del mapper- puede
+# estar cualquiera de seis bancos. Los que ponen "tabla" salen de una tabla
+# del despachador (cartucho.DESPACHADOR), que va pegada detras de su `call` y esta declarada
+# como datos en el .nocode: el trazador tampoco puede seguirla.
+#
+# Los saltos y llamadas DENTRO del propio banco no se ponen aqui: los
+# encuentra tools/z80trace.py solo, siguiendo el flujo.
+#
+# Este fichero lo regenera `make semillas` (tools/bancos.py escribe).
+0x6000   # p00:5FFD sigue de largo (el codigo cruza la frontera de banco)
+0x6003   # p00:5FFB jr cc
+0x6098   # p00:4754 call
+0x60AC   # p00:47FF call
+0x6124   # p03:A6AF call
+0x619F   # p00:40CC call
+0x61C7   # p03:A7F7 call
+0x6267   # p03:A6CD call cc
+0x62F7   # p02:947B call cc
+0x632F   # p02:91CC call
+0x6352   # p03:ACF9 call
+0x6491   # p02:91B4 call
+0x64A5   # p00:47AC call
+0x64B3   # p03:A6B2 call
+0x64FA   # p03:A7E3 jp
+0x6508   # p03:A770 jp cc
+0x650E   # p00:451D call
+0x6543   # p00:5DBE call
+0x6561   # p00:44FE jp cc
+0x65BE   # p00:4173 call
+0x65F0   # p00:41FD call
+0x668F   # p00:4A37 call
+0x66B3   # p00:49C0 call
+0x66E3   # p02:943D call
+0x66EB   # p03:B508 call
+0x6754   # p02:94CB call cc
+0x6770   # p00:4887 call
+0x6786   # p02:93A6 call
+0x6974   # p03:B4CB jp cc
+0x6991   # p00:47DA call
+0x69E9   # p03:ACFF call
+0x6A64   # p03:ACFC call
+0x6AC1   # p02:9237 jp
+0x6B43   # p01:6B28 entrada 2 de la tabla de 0x6B2B (call 0x4220 en 0x6B28)
+0x6C96   # p01:6B28 entrada 5 de la tabla de 0x6B2B (call 0x4220 en 0x6B28)
+0x6F77   # p01:6B28 entrada 3 de la tabla de 0x6B2B (call 0x4220 en 0x6B28)
+0x6F90   # p03:B0B1 call
+0x724A   # p01:6B28 entrada 0 de la tabla de 0x6B2B (call 0x4220 en 0x6B28)
+0x7376   # p01:6B28 entrada 1 de la tabla de 0x6B2B (call 0x4220 en 0x6B28)
+0x74A1   # p02:8C03 call
+0x74E7   # p02:9AFC call
+0x74F6   # p02:92FF call
+0x75D5   # p03:A891 jp
+0x75E8   # p01:75DB entrada 0 de la tabla de 0x75DE (call 0x4220 en 0x75DB)
+0x75FD   # p01:75DB entrada 1 de la tabla de 0x75DE (call 0x4220 en 0x75DB)
+0x762C   # p01:75DB entrada 2 de la tabla de 0x75DE (call 0x4220 en 0x75DB)
+0x7641   # p01:75DB entrada 3 de la tabla de 0x75DE (call 0x4220 en 0x75DB)
+0x7651   # p01:75DB entrada 4 de la tabla de 0x75DE (call 0x4220 en 0x75DB)
+0x777A   # p03:A88E jp cc
+0x7796   # p01:778B entrada 0 de la tabla de 0x778E (call 0x4220 en 0x778B)
+0x77C6   # p01:778B entrada 1 de la tabla de 0x778E (call 0x4220 en 0x778B)
+0x7844   # p01:778B entrada 2 de la tabla de 0x778E (call 0x4220 en 0x778B)
+0x7851   # p01:778B entrada 3 de la tabla de 0x778E (call 0x4220 en 0x778B)
+0x78F2   # p02:8AF1 jp cc
+0x793E   # p01:7913 entrada 0 de la tabla de 0x7916 (call 0x4220 en 0x7913)
+0x7969   # p01:7913 entrada 1 de la tabla de 0x7916 (call 0x4220 en 0x7913)
+0x798C   # p01:7913 entrada 2 de la tabla de 0x7916 (call 0x4220 en 0x7913)
+0x79C1   # p01:7913 entrada 3 de la tabla de 0x7916 (call 0x4220 en 0x7913)
+0x7A71   # p01:7913 entrada 4 de la tabla de 0x7916 (call 0x4220 en 0x7913)
+0x7A7F   # p01:7913 entrada 5 de la tabla de 0x7916 (call 0x4220 en 0x7913)
+0x7BA1   # p01:7B85 entrada 0 de la tabla de 0x7B88 (call 0x4220 en 0x7B85)
+0x7BC3   # p01:7B85 entrada 1 de la tabla de 0x7B88 (call 0x4220 en 0x7B85)
+0x7BE7   # p01:7B85 entrada 2 de la tabla de 0x7B88 (call 0x4220 en 0x7B85)
+0x7D57   # p01:7B85 entrada 3 de la tabla de 0x7B88 (call 0x4220 en 0x7B85)
+0x7D80   # p01:7B85 entrada 4 de la tabla de 0x7B88 (call 0x4220 en 0x7B85)
+0x7F4D   # p01:7B85 entrada 5 de la tabla de 0x7B88 (call 0x4220 en 0x7B85)
+0x7F56   # p02:801E jp
+0x7F70   # p01:7B85 entrada 6 de la tabla de 0x7B88 (call 0x4220 en 0x7B85)
+0x7FB8   # p01:7B85 entrada 7 de la tabla de 0x7B88 (call 0x4220 en 0x7B85)
+0x7FEB   # p01:7B85 entrada 8 de la tabla de 0x7B88 (call 0x4220 en 0x7B85)

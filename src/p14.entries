@@ -1,0 +1,50 @@
+# Puntos de entrada del banco 14 (se ejecuta en 0x8000).
+#
+# Cada uno lleva la instruccion que lo justifica. Los que ponen "pNN:XXXX"
+# vienen de OTRO banco: el trazador de una sola pagina no puede seguirlos,
+# porque en esa direccion -segun lo que haya en el registro del mapper- puede
+# estar cualquiera de seis bancos. Los que ponen "tabla" salen de una tabla
+# del despachador (cartucho.DESPACHADOR), que va pegada detras de su `call` y esta declarada
+# como datos en el .nocode: el trazador tampoco puede seguirla.
+#
+# Los saltos y llamadas DENTRO del propio banco no se ponen aqui: los
+# encuentra tools/z80trace.py solo, siguiendo el flujo.
+#
+# Este fichero lo regenera `make semillas` (tools/bancos.py escribe).
+0x8000   # p13:7236 call
+0x8054   # p13:6E32 call
+0x80A8   # p13:7025 call
+0x80F4   # p13:6F97 call
+0x814B   # p13:6D66 call
+0x81FC   # p15:A545 call
+0x839E   # p13:7110 call
+0x845B   # p13:6D31 call
+0x84AF   # p00:5D26 call
+0x85E0   # p00:5D6E call
+0x8654   # p00:5D9B call
+0x872E   # p00:44AD call
+0x9348   # p00:5CF0 call
+0x968A   # p00:40EA call
+0x9697   # p00:4715 call
+0x9834   # p15:ADED call
+0x9853   # p00:472F call
+0x986E   # p14:9865 entrada 0 de la tabla de 0x9868 (call 0x4220 en 0x9865)
+0x98AA   # p14:9865 entrada 1 de la tabla de 0x9868 (call 0x4220 en 0x9865)
+0x99A4   # p14:9865 entrada 2 de la tabla de 0x9868 (call 0x4220 en 0x9865)
+0x9A26   # p00:473C call
+0x9A44   # p14:9A3B entrada 0 de la tabla de 0x9A3E (call 0x4220 en 0x9A3B)
+0x9A4D   # p14:9A3B entrada 1 de la tabla de 0x9A3E (call 0x4220 en 0x9A3B)
+0x9BCC   # p00:4793 call
+0x9C61   # p00:47A1 call
+0x9E0E   # p00:4933 call
+0x9E2F   # p00:4944 call
+0x9E44   # p14:9E35 entrada 0 de la tabla de 0x9E38 (call 0x4220 en 0x9E35)
+0x9E7C   # p14:9E35 entrada 1 de la tabla de 0x9E38 (call 0x4220 en 0x9E35)
+0x9E90   # p14:9E35 entrada 2 de la tabla de 0x9E38 (call 0x4220 en 0x9E35)
+0x9EAD   # p14:9E35 entrada 3 de la tabla de 0x9E38 (call 0x4220 en 0x9E35)
+0x9F22   # p00:49B4 call
+0x9F76   # p00:497B call
+0x9FA7   # p14:9F7C entrada 0 de la tabla de 0x9F7F (call 0x4220 en 0x9F7C)
+0x9FC7   # p14:9F7C entrada 1 de la tabla de 0x9F7F (call 0x4220 en 0x9F7C)
+0x9FFA   # p15:A0E2 jp
+0x9FFF   # p14:9F7C entrada 13 de la tabla de 0x9F7F (call 0x4220 en 0x9F7C)

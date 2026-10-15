@@ -1,0 +1,82 @@
+# Puntos de entrada del banco 13 (se ejecuta en 0x6000).
+#
+# Cada uno lleva la instruccion que lo justifica. Los que ponen "pNN:XXXX"
+# vienen de OTRO banco: el trazador de una sola pagina no puede seguirlos,
+# porque en esa direccion -segun lo que haya en el registro del mapper- puede
+# estar cualquiera de seis bancos. Los que ponen "tabla" salen de una tabla
+# del despachador (cartucho.DESPACHADOR), que va pegada detras de su `call` y esta declarada
+# como datos en el .nocode: el trazador tampoco puede seguirla.
+#
+# Los saltos y llamadas DENTRO del propio banco no se ponen aqui: los
+# encuentra tools/z80trace.py solo, siguiendo el flujo.
+#
+# Este fichero lo regenera `make semillas` (tools/bancos.py escribe).
+0x6000   # p00:598B call
+0x6081   # p13:604A entrada 14 de la tabla de 0x604D (call 0x4220 en 0x604A)
+0x60D8   # p13:604A entrada 0 de la tabla de 0x604D (call 0x4220 en 0x604A)
+0x6148   # p13:604A entrada 1 de la tabla de 0x604D (call 0x4220 en 0x604A)
+0x6187   # p15:AAE7 call
+0x61B3   # p13:604A entrada 2 de la tabla de 0x604D (call 0x4220 en 0x604A)
+0x61BD   # p13:61B6 entrada 0 de la tabla de 0x61B9 (call 0x4220 en 0x61B6)
+0x6214   # p13:61B6 entrada 1 de la tabla de 0x61B9 (call 0x4220 en 0x61B6)
+0x6272   # p15:AAEA call
+0x6319   # p13:604A entrada 3 de la tabla de 0x604D (call 0x4220 en 0x604A)
+0x6323   # p13:631C entrada 0 de la tabla de 0x631F (call 0x4220 en 0x631C)
+0x633A   # p13:631C entrada 1 de la tabla de 0x631F (call 0x4220 en 0x631C)
+0x6383   # p13:604A entrada 4 de la tabla de 0x604D (call 0x4220 en 0x604A)
+0x63BB   # p13:604A entrada 7 de la tabla de 0x604D (call 0x4220 en 0x604A)
+0x63C5   # p13:63BE entrada 0 de la tabla de 0x63C1 (call 0x4220 en 0x63BE)
+0x63D4   # p13:63BE entrada 1 de la tabla de 0x63C1 (call 0x4220 en 0x63BE)
+0x63F4   # p13:604A entrada 5 de la tabla de 0x604D (call 0x4220 en 0x604A)
+0x63FE   # p13:63F7 entrada 0 de la tabla de 0x63FA (call 0x4220 en 0x63F7)
+0x641A   # p13:63F7 entrada 1 de la tabla de 0x63FA (call 0x4220 en 0x63F7)
+0x646D   # p15:B054 call
+0x6487   # p13:604A entrada 6 de la tabla de 0x604D (call 0x4220 en 0x604A)
+0x6491   # p13:648A entrada 0 de la tabla de 0x648D (call 0x4220 en 0x648A)
+0x64B4   # p13:648A entrada 1 de la tabla de 0x648D (call 0x4220 en 0x648A)
+0x65FB   # p15:AF86 call
+0x6606   # p13:604A entrada 10 de la tabla de 0x604D (call 0x4220 en 0x604A)
+0x662A   # p13:604A entrada 11 de la tabla de 0x604D (call 0x4220 en 0x604A)
+0x6650   # p13:604A entrada 12 de la tabla de 0x604D (call 0x4220 en 0x604A)
+0x665A   # p13:6653 entrada 0 de la tabla de 0x6656 (call 0x4220 en 0x6653)
+0x6677   # p13:6653 entrada 1 de la tabla de 0x6656 (call 0x4220 en 0x6653)
+0x6922   # p15:A5A0 jp
+0x6938   # p15:A589 call
+0x6940   # p00:5D41 call
+0x69E0   # p15:AB1A jp
+0x6A0D   # p15:A58C call
+0x6A13   # p00:5D4A call
+0x6B5B   # p15:A7A3 call
+0x6B6E   # p14:8519 call
+0x6D0E   # p00:5835 call
+0x6D1E   # p13:6D11 entrada 0 de la tabla de 0x6D14 (call 0x4220 en 0x6D11)
+0x6D41   # p13:6D11 entrada 1 de la tabla de 0x6D14 (call 0x4220 en 0x6D11)
+0x6D66   # p13:6D11 entrada 2 de la tabla de 0x6D14 (call 0x4220 en 0x6D11)
+0x6DAA   # p13:6D11 entrada 3 de la tabla de 0x6D14 (call 0x4220 en 0x6D11)
+0x6DEC   # p13:6D11 entrada 4 de la tabla de 0x6D14 (call 0x4220 en 0x6D11)
+0x6DF7   # p00:4625 call
+0x6E07   # p13:6DFA entrada 0 de la tabla de 0x6DFD (call 0x4220 en 0x6DFA)
+0x6E20   # p13:6DFA entrada 1 de la tabla de 0x6DFD (call 0x4220 en 0x6DFA)
+0x6E32   # p13:6DFA entrada 2 de la tabla de 0x6DFD (call 0x4220 en 0x6DFA)
+0x6E75   # p13:6DFA entrada 3 de la tabla de 0x6DFD (call 0x4220 en 0x6DFA)
+0x6EA4   # p13:6DFA entrada 4 de la tabla de 0x6DFD (call 0x4220 en 0x6DFA)
+0x6EAF   # p14:8007 jp
+0x6EB7   # p14:805B jp
+0x6F79   # p00:4900 call
+0x6F89   # p13:6F7C entrada 0 de la tabla de 0x6F7F (call 0x4220 en 0x6F7C)
+0x6F97   # p13:6F7C entrada 1 de la tabla de 0x6F7F (call 0x4220 en 0x6F7C)
+0x6FBE   # p13:6F7C entrada 2 de la tabla de 0x6F7F (call 0x4220 en 0x6F7C)
+0x6FE8   # p13:6F7C entrada 3 de la tabla de 0x6F7F (call 0x4220 en 0x6F7C)
+0x6FF3   # p13:6F7C entrada 4 de la tabla de 0x6F7F (call 0x4220 en 0x6F7C)
+0x700E   # p13:7001 entrada 0 de la tabla de 0x7004 (call 0x4220 en 0x7001)
+0x7025   # p13:7001 entrada 1 de la tabla de 0x7004 (call 0x4220 en 0x7001)
+0x704B   # p13:7001 entrada 2 de la tabla de 0x7004 (call 0x4220 en 0x7001)
+0x707E   # p13:7001 entrada 3 de la tabla de 0x7004 (call 0x4220 en 0x7001)
+0x7089   # p13:7001 entrada 4 de la tabla de 0x7004 (call 0x4220 en 0x7001)
+0x709A   # p14:84BA call
+0x70F1   # p14:8154 jp cc
+0x711D   # p14:80FB jp cc
+0x7143   # p14:800F jp cc
+0x7168   # p14:8063 jp cc
+0x718D   # p14:80AF jp cc
+0x727A   # p14:8205 jp cc

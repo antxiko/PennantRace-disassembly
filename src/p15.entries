@@ -1,0 +1,58 @@
+# Puntos de entrada del banco 15 (se ejecuta en 0xa000).
+#
+# Cada uno lleva la instruccion que lo justifica. Los que ponen "pNN:XXXX"
+# vienen de OTRO banco: el trazador de una sola pagina no puede seguirlos,
+# porque en esa direccion -segun lo que haya en el registro del mapper- puede
+# estar cualquiera de seis bancos. Los que ponen "tabla" salen de una tabla
+# del despachador (cartucho.DESPACHADOR), que va pegada detras de su `call` y esta declarada
+# como datos en el .nocode: el trazador tampoco puede seguirla.
+#
+# Los saltos y llamadas DENTRO del propio banco no se ponen aqui: los
+# encuentra tools/z80trace.py solo, siguiendo el flujo.
+#
+# Este fichero lo regenera `make semillas` (tools/bancos.py escribe).
+0xA002   # p14:9FFF sigue de largo (el codigo cruza la frontera de banco)
+0xA00F   # p14:9F7C entrada 14 de la tabla de 0x9F7F (call 0x4220 en 0x9F7C)
+0xA063   # p14:9E35 entrada 4 de la tabla de 0x9E38 (call 0x4220 en 0x9E35)
+0xA0A0   # p14:9E35 entrada 5 de la tabla de 0x9E38 (call 0x4220 en 0x9E35)
+0xA0E5   # p14:9F7C entrada 17 de la tabla de 0x9F7F (call 0x4220 en 0x9F7C)
+0xA0F2   # p14:9F7C entrada 18 de la tabla de 0x9F7F (call 0x4220 en 0x9F7C)
+0xA13D   # p14:9F7C entrada 19 de la tabla de 0x9F7F (call 0x4220 en 0x9F7C)
+0xA1B3   # p14:9F28 call
+0xA1BE   # p14:9EA7 call
+0xA1CC   # p14:9EDB call
+0xA20E   # p14:9EC0 call
+0xA22D   # p14:9EEA call
+0xA241   # p14:9ECD call
+0xA26B   # p14:9FFF call
+0xA28B   # p14:9F00 jp
+0xA43B   # p00:5982 call
+0xA470   # p15:A43E entrada 0 de la tabla de 0xA441 (call 0x4220 en 0xA43E)
+0xA4F2   # p15:A43E entrada 1 de la tabla de 0xA441 (call 0x4220 en 0xA43E)
+0xA4F8   # p00:5D65 call
+0xA55B   # p15:A43E entrada 2 de la tabla de 0xA441 (call 0x4220 en 0xA43E)
+0xA57F   # p15:A43E entrada 3 de la tabla de 0xA441 (call 0x4220 en 0xA43E)
+0xA5A3   # p15:A43E entrada 4 de la tabla de 0xA441 (call 0x4220 en 0xA43E)
+0xA5AD   # p15:A5A6 entrada 0 de la tabla de 0xA5A9 (call 0x4220 en 0xA5A6)
+0xA5CB   # p15:A5A6 entrada 1 de la tabla de 0xA5A9 (call 0x4220 en 0xA5A6)
+0xA792   # p00:4830 call
+0xA8AC   # p00:5D77 call
+0xAA3B   # p00:45A2 call
+0xAAE1   # p00:48BB call
+0xAB1D   # p00:4538 call
+0xAB40   # p00:450D call
+0xAB4A   # p15:AB43 entrada 0 de la tabla de 0xAB46 (call 0x4220 en 0xAB43)
+0xAB66   # p15:AB43 entrada 1 de la tabla de 0xAB46 (call 0x4220 en 0xAB43)
+0xAC1A   # p00:482D call
+0xB0AC   # p00:5D0B call
+0xB158   # p00:5D14 call
+0xB25F   # p00:5D1D call
+0xB693   # p00:5D38 call
+0xBA66   # p13:6DDD call
+0xBB48   # p00:5DAC call
+0xBB87   # p00:44D2 call
+0xBB97   # p15:BB8A entrada 0 de la tabla de 0xBB8D (call 0x4220 en 0xBB8A)
+0xBBBD   # p15:BB8A entrada 1 de la tabla de 0xBB8D (call 0x4220 en 0xBB8A)
+0xBBE4   # p15:BB8A entrada 2 de la tabla de 0xBB8D (call 0x4220 en 0xBB8A)
+0xBC22   # p15:BB8A entrada 3 de la tabla de 0xBB8D (call 0x4220 en 0xBB8A)
+0xBC64   # p15:BB8A entrada 4 de la tabla de 0xBB8D (call 0x4220 en 0xBB8A)

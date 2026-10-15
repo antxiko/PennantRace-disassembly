@@ -1,0 +1,14 @@
+# Zonas que el trazador NO puede entrar a desensamblar como codigo.
+#
+# La tabla de destinos del despachador de Konami (cartucho.DESPACHADOR) va pegada JUSTO
+# DETRAS de su `call`: sin declararla, el trazador sigue de largo y se la come
+# como instrucciones, y ademas sigue desde ahi. Es la contaminacion mas facil
+# de este cartucho.
+#
+# Este fichero lo regenera `make semillas` (tools/bancos.py escribe).
+0x8669 0x8671   tabla de 4 palabras del despachador (call 0x4220 en 0x8666)
+0x8BBE 0x8BC4   tabla de 3 palabras del despachador (call 0x4220 en 0x8BBB)
+0x9155 0x9163   tabla de 7 palabras del despachador (call 0x4220 en 0x9152)
+0x95C0 0x95C8   tabla de 4 palabras del despachador (call 0x4220 en 0x95BD)
+0x97E5 0x97F1   tabla de 6 palabras del despachador (call 0x4220 en 0x97E2)
+0x9918 0x9920   tabla de 4 palabras del despachador (call 0x4220 en 0x9915)
