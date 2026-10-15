@@ -209,7 +209,66 @@ def por_caracteres():
                   "%s:%04X" % (B.nombre(b), pc), F=8)
 
 
+def sonido():
+    """Los bancos 4-5-6: la tabla de sonidos, sus cabeceras y lo que el motor
+    lee al tocar cada uno (tools/partituras.py lo ejecuta y lo apunta en
+    work/partituras.json)."""
+    import json
+    import os
+    ruta = os.path.join(B.RAIZ, "work", "partituras.json")
+    if not os.path.exists(ruta):
+        import partituras
+        partituras.main(["", "json", ruta])
+    leidos = json.load(open(ruta))
+    v = B.Ventana((4, 5, 6))
+    n_sonidos = (v.w(0x600C) - 0x600C) // 2
+    B.declara(v, 0x600C, 0x600C + 2 * n_sonidos, "sonidos",
+              "%d punteros, uno por sonido del 1 al 0x%02X, a su cabecera (p06:B204: "
+              "0x600A + 2 x numero)" % (n_sonidos, n_sonidos), "p06:B204", F="w8")
+    cabeceras = set()
+    inicios = {}
+    for n in range(1, n_sonidos + 1):
+        h = v.w(0x600A + 2 * n)
+        mascara = v(h)
+        canales = [k for k in range(8) if mascara & (0x80 >> k)]
+        fin = h + 2 + 2 * len(canales)
+        cabeceras.update(range(h, fin))
+        for j, k in enumerate(canales):
+            inicios.setdefault(v.w(h + 2 + 2 * j), set()).add(n)
+        B.declara(v, h, fin, "cabecera_%04X" % h,
+                  "cabecera de sonido (p06:B211): [canales %02X][prioridad %02X] y %d "
+                  "punteros, uno por canal encendido (bit 7 = el primero de 0xEE00)"
+                  % (mascara, v(h + 1), len(canales)), "p06:B217", F=2)
+    quien = {}
+    for n, ts in leidos.items():
+        for b, i, f in ts:
+            for x in range(i, f):
+                quien.setdefault((b, x), set()).add(int(n))
+    org = {4: 0x6000, 5: 0x8000, 6: 0xA000}
+    tramo = None
+    tramos = []
+    for (b, x) in sorted(quien):
+        if b not in org or x in cabeceras or 0x600C <= x < 0x600C + 2 * n_sonidos:
+            continue
+        a = x if b != 5 else x
+        if tramo and tramo[0] == b and tramo[2] == a and a not in inicios:
+            tramo[2] += 1
+            tramo[3] |= quien[(b, x)]
+        else:
+            tramo = [b, a, a + 1, set(quien[(b, x)])]
+            tramos.append(tramo)
+    for b, i, f, ss in tramos:
+        lista = ", ".join("0x%02X" % k for k in sorted(ss)[:12]) + (
+            " y %d mas" % (len(ss) - 12) if len(ss) > 12 else "")
+        que = "partitura de canal" if i in inicios else "datos de sonido"
+        B.declara(B.Ventana((4, 5, 6)), i, f, "%s_%04X" % ("partitura" if i in inicios else "sonido", i),
+                  "%s (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que "
+                  "lee el motor de p06 al tocar los sonidos %s (tools/partituras.py)"
+                  % (que, lista), "p06:B51E", F=16)
+
+
 def todo():
+    sonido()
     B.por_lector(0x4B62, "DE", rachas, "rachas",
                  "rachas a la VRAM (p00:4B62 -> p00:4B35)")
     B.por_lector(0x5659, "DE", rachas_ram, "rachas_ram",

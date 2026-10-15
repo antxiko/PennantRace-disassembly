@@ -1,3 +1,299 @@
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x600C 0x609C sonidos  72 punteros, uno por sonido del 1 al 0x48, a su cabecera (p06:B204: 0x600A + 2 x numero); lo leen p06:B204 (144 bytes)
+F 0x600C w8
+D 0x609C 0x60AE cabecera_609C  cabecera de sonido (p06:B211): [canales FF][prioridad FE] y 8 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (18 bytes)
+F 0x609C 2
+D 0x60AE 0x60B4 cabecera_60AE  cabecera de sonido (p06:B211): [canales 30][prioridad 10] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x60AE 2
+D 0x60B4 0x60BA cabecera_60B4  cabecera de sonido (p06:B211): [canales 30][prioridad 10] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x60B4 2
+D 0x60BA 0x60C0 cabecera_60BA  cabecera de sonido (p06:B211): [canales 30][prioridad 10] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x60BA 2
+D 0x60C0 0x60C6 cabecera_60C0  cabecera de sonido (p06:B211): [canales 30][prioridad 41] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x60C0 2
+D 0x60C6 0x60CC cabecera_60C6  cabecera de sonido (p06:B211): [canales 30][prioridad 42] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x60C6 2
+D 0x60CC 0x60D2 cabecera_60CC  cabecera de sonido (p06:B211): [canales 30][prioridad 51] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x60CC 2
+D 0x60D2 0x60D8 cabecera_60D2  cabecera de sonido (p06:B211): [canales 30][prioridad 40] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x60D2 2
+D 0x60D8 0x60DE cabecera_60D8  cabecera de sonido (p06:B211): [canales 30][prioridad 10] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x60D8 2
+D 0x60DE 0x60E4 cabecera_60DE  cabecera de sonido (p06:B211): [canales 30][prioridad 41] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x60DE 2
+D 0x60E4 0x60EA cabecera_60E4  cabecera de sonido (p06:B211): [canales 30][prioridad 40] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x60E4 2
+D 0x60EA 0x60F0 cabecera_60EA  cabecera de sonido (p06:B211): [canales 30][prioridad 40] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x60EA 2
+D 0x60F0 0x60F6 cabecera_60F0  cabecera de sonido (p06:B211): [canales 30][prioridad 51] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x60F0 2
+D 0x60F6 0x60FC cabecera_60F6  cabecera de sonido (p06:B211): [canales 30][prioridad 52] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x60F6 2
+D 0x60FC 0x6102 cabecera_60FC  cabecera de sonido (p06:B211): [canales 30][prioridad 51] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x60FC 2
+D 0x6102 0x6108 cabecera_6102  cabecera de sonido (p06:B211): [canales 30][prioridad 51] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x6102 2
+D 0x6108 0x610E cabecera_6108  cabecera de sonido (p06:B211): [canales 30][prioridad 51] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x6108 2
+D 0x610E 0x6114 cabecera_610E  cabecera de sonido (p06:B211): [canales 30][prioridad 51] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x610E 2
+D 0x6114 0x611A cabecera_6114  cabecera de sonido (p06:B211): [canales 30][prioridad 51] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x6114 2
+D 0x611A 0x6120 cabecera_611A  cabecera de sonido (p06:B211): [canales 30][prioridad 51] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x611A 2
+D 0x6120 0x6126 cabecera_6120  cabecera de sonido (p06:B211): [canales 30][prioridad 51] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x6120 2
+D 0x6126 0x612C cabecera_6126  cabecera de sonido (p06:B211): [canales 30][prioridad 51] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x6126 2
+D 0x612C 0x6132 cabecera_612C  cabecera de sonido (p06:B211): [canales 30][prioridad 51] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x612C 2
+D 0x6132 0x6138 cabecera_6132  cabecera de sonido (p06:B211): [canales 30][prioridad 51] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x6132 2
+D 0x6138 0x613E cabecera_6138  cabecera de sonido (p06:B211): [canales 30][prioridad 51] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x6138 2
+D 0x613E 0x6144 cabecera_613E  cabecera de sonido (p06:B211): [canales 30][prioridad 51] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x613E 2
+D 0x6144 0x614A cabecera_6144  cabecera de sonido (p06:B211): [canales 30][prioridad 51] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x6144 2
+D 0x614A 0x6150 cabecera_614A  cabecera de sonido (p06:B211): [canales 30][prioridad 52] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x614A 2
+D 0x6150 0x6156 cabecera_6150  cabecera de sonido (p06:B211): [canales 30][prioridad 60] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x6150 2
+D 0x6156 0x615C cabecera_6156  cabecera de sonido (p06:B211): [canales 30][prioridad 50] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x6156 2
+D 0x615C 0x6162 cabecera_615C  cabecera de sonido (p06:B211): [canales 30][prioridad 40] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x615C 2
+D 0x6162 0x6168 cabecera_6162  cabecera de sonido (p06:B211): [canales 30][prioridad 40] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x6162 2
+D 0x6168 0x616E cabecera_6168  cabecera de sonido (p06:B211): [canales 30][prioridad 40] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x6168 2
+D 0x616E 0x6172 cabecera_616E  cabecera de sonido (p06:B211): [canales 20][prioridad 40] y 1 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (4 bytes)
+F 0x616E 2
+D 0x6172 0x6184 cabecera_6172  cabecera de sonido (p06:B211): [canales FF][prioridad E0] y 8 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (18 bytes)
+F 0x6172 2
+D 0x6184 0x618A cabecera_6184  cabecera de sonido (p06:B211): [canales 30][prioridad 20] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x6184 2
+D 0x618A 0x6190 cabecera_618A  cabecera de sonido (p06:B211): [canales 30][prioridad 40] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x618A 2
+D 0x6190 0x6196 cabecera_6190  cabecera de sonido (p06:B211): [canales 30][prioridad 10] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x6190 2
+D 0x6196 0x619C cabecera_6196  cabecera de sonido (p06:B211): [canales 30][prioridad 12] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x6196 2
+D 0x619C 0x61AE cabecera_619C  cabecera de sonido (p06:B211): [canales FF][prioridad 10] y 8 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (18 bytes)
+F 0x619C 2
+D 0x61AE 0x61B4 cabecera_61AE  cabecera de sonido (p06:B211): [canales 30][prioridad 40] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x61AE 2
+D 0x61B4 0x61BA cabecera_61B4  cabecera de sonido (p06:B211): [canales 30][prioridad 40] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x61B4 2
+D 0x61BA 0x61C0 cabecera_61BA  cabecera de sonido (p06:B211): [canales 30][prioridad 40] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x61BA 2
+D 0x61C0 0x61C8 cabecera_61C0  cabecera de sonido (p06:B211): [canales C8][prioridad 50] y 3 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (8 bytes)
+F 0x61C0 2
+D 0x61C8 0x61DA cabecera_61C8  cabecera de sonido (p06:B211): [canales FF][prioridad E0] y 8 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (18 bytes)
+F 0x61C8 2
+D 0x61DA 0x61E8 cabecera_61DA  cabecera de sonido (p06:B211): [canales CF][prioridad 02] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x61DA 2
+D 0x61E8 0x61F6 cabecera_61E8  cabecera de sonido (p06:B211): [canales CF][prioridad 01] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x61E8 2
+D 0x61F6 0x6208 cabecera_61F6  cabecera de sonido (p06:B211): [canales FF][prioridad 90] y 8 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (18 bytes)
+F 0x61F6 2
+D 0x6208 0x621A cabecera_6208  cabecera de sonido (p06:B211): [canales FF][prioridad 90] y 8 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (18 bytes)
+F 0x6208 2
+D 0x621A 0x6228 cabecera_621A  cabecera de sonido (p06:B211): [canales CF][prioridad 02] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x621A 2
+D 0x6228 0x6236 cabecera_6228  cabecera de sonido (p06:B211): [canales CF][prioridad 02] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x6228 2
+D 0x6236 0x6244 cabecera_6236  cabecera de sonido (p06:B211): [canales CF][prioridad 02] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x6236 2
+D 0x6244 0x6252 cabecera_6244  cabecera de sonido (p06:B211): [canales CF][prioridad 02] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x6244 2
+D 0x6252 0x6260 cabecera_6252  cabecera de sonido (p06:B211): [canales CF][prioridad 02] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x6252 2
+D 0x6260 0x626E cabecera_6260  cabecera de sonido (p06:B211): [canales CF][prioridad 02] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x6260 2
+D 0x626E 0x627C cabecera_626E  cabecera de sonido (p06:B211): [canales CF][prioridad 02] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x626E 2
+D 0x627C 0x628A cabecera_627C  cabecera de sonido (p06:B211): [canales CF][prioridad 02] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x627C 2
+D 0x628A 0x6298 cabecera_628A  cabecera de sonido (p06:B211): [canales CF][prioridad 02] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x628A 2
+D 0x6298 0x62A6 cabecera_6298  cabecera de sonido (p06:B211): [canales CF][prioridad 02] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x6298 2
+D 0x62A6 0x62B4 cabecera_62A6  cabecera de sonido (p06:B211): [canales CF][prioridad 02] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x62A6 2
+D 0x62B4 0x62C2 cabecera_62B4  cabecera de sonido (p06:B211): [canales CF][prioridad 30] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x62B4 2
+D 0x62C2 0x62D0 cabecera_62C2  cabecera de sonido (p06:B211): [canales CF][prioridad 30] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x62C2 2
+D 0x62D0 0x62D8 cabecera_62D0  cabecera de sonido (p06:B211): [canales 07][prioridad 50] y 3 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (8 bytes)
+F 0x62D0 2
+D 0x62D8 0x62E6 cabecera_62D8  cabecera de sonido (p06:B211): [canales CF][prioridad 50] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x62D8 2
+D 0x62E6 0x62F4 cabecera_62E6  cabecera de sonido (p06:B211): [canales CF][prioridad 50] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x62E6 2
+D 0x62F4 0x6302 cabecera_62F4  cabecera de sonido (p06:B211): [canales CF][prioridad 40] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x62F4 2
+D 0x6302 0x6310 cabecera_6302  cabecera de sonido (p06:B211): [canales CF][prioridad 40] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x6302 2
+D 0x6310 0x631E cabecera_6310  cabecera de sonido (p06:B211): [canales CF][prioridad 20] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x6310 2
+D 0x631E 0x632C cabecera_631E  cabecera de sonido (p06:B211): [canales CF][prioridad 40] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x631E 2
+D 0x632C 0x633A cabecera_632C  cabecera de sonido (p06:B211): [canales CF][prioridad 02] y 6 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (14 bytes)
+F 0x632C 2
+D 0x633A 0x6340 cabecera_633A  cabecera de sonido (p06:B211): [canales 30][prioridad 40] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x633A 2
+D 0x6340 0x6346 cabecera_6340  cabecera de sonido (p06:B211): [canales 30][prioridad 11] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
+F 0x6340 2
+D 0x6346 0x6352 sonido_6346  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x02, 0x03, 0x06, 0x09, 0x0D, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16 y 24 mas (tools/partituras.py); lo leen p06:B51E (12 bytes)
+F 0x6346 16
+D 0x6354 0x6358 sonido_6354  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x0A, 0x0B, 0x2E, 0x2F, 0x31 (tools/partituras.py); lo leen p06:B51E (4 bytes)
+F 0x6354 16
+D 0x635A 0x6362 sonido_635A  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x05, 0x07, 0x0A, 0x0C, 0x23, 0x28, 0x29, 0x2A, 0x2B, 0x2D, 0x30, 0x35 y 2 mas (tools/partituras.py); lo leen p06:B51E (8 bytes)
+F 0x635A 16
+D 0x636C 0x6372 sonido_636C  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x02, 0x05, 0x07, 0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15 y 30 mas (tools/partituras.py); lo leen p06:B51E (6 bytes)
+F 0x636C 16
+D 0x6380 0x6382 sonido_6380  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x04, 0x07, 0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x12, 0x17, 0x18, 0x1C, 0x1E y 11 mas (tools/partituras.py); lo leen p06:B51E (2 bytes)
+F 0x6380 16
+D 0x6384 0x6386 sonido_6384  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x08 (tools/partituras.py); lo leen p06:B51E (2 bytes)
+F 0x6384 16
+D 0x638A 0x638E sonido_638A  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x07, 0x0C, 0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x13, 0x14, 0x15, 0x16, 0x17 y 8 mas (tools/partituras.py); lo leen p06:B51E (4 bytes)
+F 0x638A 16
+D 0x6390 0x6394 sonido_6390  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D, 0x3B, 0x3C, 0x42, 0x43, 0x45 (tools/partituras.py); lo leen p06:B51E (4 bytes)
+F 0x6390 16
+D 0x6396 0x639A sonido_6396  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x02, 0x07, 0x10, 0x11, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x2B, 0x2C y 22 mas (tools/partituras.py); lo leen p06:B51E (4 bytes)
+F 0x6396 16
+D 0x639C 0x639E sonido_639C  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (2 bytes)
+F 0x639C 16
+D 0x63A8 0x63AA sonido_63A8  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x28, 0x2B, 0x47 (tools/partituras.py); lo leen p06:B51E (2 bytes)
+F 0x63A8 16
+D 0x63D6 0x6616 sonido_63D6  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D y 56 mas (tools/partituras.py); lo leen p06:B51E (576 bytes)
+F 0x63D6 16
+D 0x6636 0x68FE sonido_6636  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x23, 0x28, 0x2B, 0x2C, 0x2D, 0x2E, 0x2F, 0x30, 0x31, 0x32, 0x33, 0x34 y 17 mas (tools/partituras.py); lo leen p06:B51E (712 bytes)
+F 0x6636 16
+D 0x6903 0x6913 sonido_6903  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D, 0x2E, 0x2F, 0x30, 0x31 (tools/partituras.py); lo leen p06:B51E (16 bytes)
+F 0x6903 16
+D 0x6917 0x693C sonido_6917  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2C, 0x2D, 0x36, 0x3A, 0x3D, 0x3E, 0x42, 0x43, 0x44, 0x45 (tools/partituras.py); lo leen p06:B51E (37 bytes)
+F 0x6917 16
+D 0x693D 0x69B3 sonido_693D  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D, 0x2E, 0x2F, 0x30, 0x31 (tools/partituras.py); lo leen p06:B51E (118 bytes)
+F 0x693D 16
+D 0x69B6 0x69C4 sonido_69B6  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D, 0x2E, 0x31 (tools/partituras.py); lo leen p06:B51E (14 bytes)
+F 0x69B6 16
+D 0x6A0C 0x6A9A sonido_6A0C  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2C, 0x2D, 0x36, 0x3A, 0x3D, 0x3E, 0x42, 0x43, 0x44, 0x45 (tools/partituras.py); lo leen p06:B51E (142 bytes)
+F 0x6A0C 16
+D 0x6A9C 0x6A9E sonido_6A9C  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (2 bytes)
+F 0x6A9C 16
+D 0x6AA0 0x6AB2 sonido_6AA0  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (18 bytes)
+F 0x6AA0 16
+D 0x6AB5 0x6ABF sonido_6AB5  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (10 bytes)
+F 0x6AB5 16
+D 0x6AC8 0x6AE5 sonido_6AC8  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (29 bytes)
+F 0x6AC8 16
+D 0x6AEE 0x6AFE sonido_6AEE  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (16 bytes)
+F 0x6AEE 16
+D 0x6B01 0x6B11 sonido_6B01  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (16 bytes)
+F 0x6B01 16
+D 0x6B14 0x6B24 sonido_6B14  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (16 bytes)
+F 0x6B14 16
+D 0x6B27 0x6B4A sonido_6B27  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (35 bytes)
+F 0x6B27 16
+D 0x6B4D 0x6B5D sonido_6B4D  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (16 bytes)
+F 0x6B4D 16
+D 0x6B68 0x6B6A sonido_6B68  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (2 bytes)
+F 0x6B68 16
+D 0x6B6C 0x6B70 sonido_6B6C  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (4 bytes)
+F 0x6B6C 16
+D 0x6B72 0x6B88 sonido_6B72  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (22 bytes)
+F 0x6B72 16
+D 0x6B8B 0x6B91 sonido_6B8B  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (6 bytes)
+F 0x6B8B 16
+D 0x6B9E 0x6BAE sonido_6B9E  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (16 bytes)
+F 0x6B9E 16
+D 0x6BB1 0x6BB7 sonido_6BB1  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (6 bytes)
+F 0x6BB1 16
+D 0x6BC4 0x6BCA sonido_6BC4  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (6 bytes)
+F 0x6BC4 16
+D 0x6BD7 0x6BEA sonido_6BD7  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (19 bytes)
+F 0x6BD7 16
+D 0x6C1C 0x6CE1 partitura_6C1C  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (197 bytes)
+F 0x6C1C 16
+D 0x6CE1 0x6E5C partitura_6CE1  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (379 bytes)
+F 0x6CE1 16
+D 0x6E5C 0x6EF2 partitura_6E5C  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (150 bytes)
+F 0x6E5C 16
+D 0x6EF2 0x7069 partitura_6EF2  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (375 bytes)
+F 0x6EF2 16
+D 0x7069 0x7153 partitura_7069  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (234 bytes)
+F 0x7069 16
+D 0x7153 0x72C4 partitura_7153  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (369 bytes)
+F 0x7153 16
+D 0x72C4 0x73E6 partitura_72C4  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (290 bytes)
+F 0x72C4 16
+D 0x73E6 0x7513 partitura_73E6  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (301 bytes)
+F 0x73E6 16
+D 0x7513 0x75C5 partitura_7513  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2E, 0x2F (tools/partituras.py); lo leen p06:B51E (178 bytes)
+F 0x7513 16
+D 0x75C5 0x75F8 partitura_75C5  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2E, 0x2F (tools/partituras.py); lo leen p06:B51E (51 bytes)
+F 0x75C5 16
+D 0x75F8 0x76F4 partitura_75F8  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2E, 0x2F (tools/partituras.py); lo leen p06:B51E (252 bytes)
+F 0x75F8 16
+D 0x76F4 0x7706 partitura_76F4  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2E, 0x2F (tools/partituras.py); lo leen p06:B51E (18 bytes)
+F 0x76F4 16
+D 0x7706 0x77E7 partitura_7706  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2E, 0x2F (tools/partituras.py); lo leen p06:B51E (225 bytes)
+F 0x7706 16
+D 0x77E7 0x77FB partitura_77E7  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2E, 0x2F (tools/partituras.py); lo leen p06:B51E (20 bytes)
+F 0x77E7 16
+D 0x77FB 0x78C2 partitura_77FB  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2E, 0x2F (tools/partituras.py); lo leen p06:B51E (199 bytes)
+F 0x77FB 16
+D 0x78C2 0x78D3 partitura_78C2  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2E, 0x2F (tools/partituras.py); lo leen p06:B51E (17 bytes)
+F 0x78C2 16
+D 0x78D3 0x79B1 partitura_78D3  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2E, 0x2F (tools/partituras.py); lo leen p06:B51E (222 bytes)
+F 0x78D3 16
+D 0x79B1 0x79C2 partitura_79B1  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2E, 0x2F (tools/partituras.py); lo leen p06:B51E (17 bytes)
+F 0x79B1 16
+D 0x79C2 0x7A7A partitura_79C2  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2E, 0x2F (tools/partituras.py); lo leen p06:B51E (184 bytes)
+F 0x79C2 16
+D 0x7A7A 0x7A8C partitura_7A7A  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2E, 0x2F (tools/partituras.py); lo leen p06:B51E (18 bytes)
+F 0x7A7A 16
+D 0x7A8C 0x7A9D partitura_7A8C  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x30 (tools/partituras.py); lo leen p06:B51E (17 bytes)
+F 0x7A8C 16
+D 0x7A9D 0x7AB5 partitura_7A9D  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x30 (tools/partituras.py); lo leen p06:B51E (24 bytes)
+F 0x7A9D 16
+D 0x7AB5 0x7AC1 partitura_7AB5  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x30 (tools/partituras.py); lo leen p06:B51E (12 bytes)
+F 0x7AB5 16
+D 0x7AC1 0x7ADB partitura_7AC1  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x30 (tools/partituras.py); lo leen p06:B51E (26 bytes)
+F 0x7AC1 16
+D 0x7ADB 0x7AEE partitura_7ADB  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x30 (tools/partituras.py); lo leen p06:B51E (19 bytes)
+F 0x7ADB 16
+D 0x7AEF 0x7B0C partitura_7AEF  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x30 (tools/partituras.py); lo leen p06:B51E (29 bytes)
+F 0x7AEF 16
+D 0x7B0C 0x7B63 partitura_7B0C  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x30 (tools/partituras.py); lo leen p06:B51E (87 bytes)
+F 0x7B0C 16
+D 0x7B63 0x7BB8 partitura_7B63  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x30 (tools/partituras.py); lo leen p06:B51E (85 bytes)
+F 0x7B63 16
+D 0x7BB8 0x7C1B partitura_7BB8  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x31 (tools/partituras.py); lo leen p06:B51E (99 bytes)
+F 0x7BB8 16
+D 0x7C1B 0x7C9B partitura_7C1B  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x31 (tools/partituras.py); lo leen p06:B51E (128 bytes)
+F 0x7C1B 16
+D 0x7C9B 0x7CC2 partitura_7C9B  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x31 (tools/partituras.py); lo leen p06:B51E (39 bytes)
+F 0x7C9B 16
+D 0x7CC2 0x7D71 partitura_7CC2  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x31 (tools/partituras.py); lo leen p06:B51E (175 bytes)
+F 0x7CC2 16
+D 0x7D71 0x7DF0 partitura_7D71  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x31 (tools/partituras.py); lo leen p06:B51E (127 bytes)
+F 0x7D71 16
+D 0x7DF0 0x7E68 partitura_7DF0  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x31 (tools/partituras.py); lo leen p06:B51E (120 bytes)
+F 0x7DF0 16
+D 0x7E68 0x7F05 partitura_7E68  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x31 (tools/partituras.py); lo leen p06:B51E (157 bytes)
+F 0x7E68 16
+D 0x7F05 0x7F9B partitura_7F05  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x31 (tools/partituras.py); lo leen p06:B51E (150 bytes)
+F 0x7F05 16
+D 0x7F9B 0x7FA0 partitura_7F9B  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3B (tools/partituras.py); lo leen p06:B51E (5 bytes)
+F 0x7F9B 16
+D 0x7FA0 0x7FC7 partitura_7FA0  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x32, 0x33, 0x3B (tools/partituras.py); lo leen p06:B51E (39 bytes)
+F 0x7FA0 16
+D 0x7FC7 0x7FCC partitura_7FC7  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3B (tools/partituras.py); lo leen p06:B51E (5 bytes)
+F 0x7FC7 16
+D 0x7FCC 0x8000 partitura_7FCC  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x32, 0x33, 0x3B (tools/partituras.py); lo leen p06:B51E (52 bytes)
+F 0x7FCC 16
 # --- fin de los bloques de bloques.py ---

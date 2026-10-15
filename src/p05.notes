@@ -1,3 +1,241 @@
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x8000 0x8005 partitura_8000  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3B (tools/partituras.py); lo leen p06:B51E (5 bytes)
+F 0x8000 16
+D 0x8005 0x8023 partitura_8005  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x32, 0x33, 0x3B (tools/partituras.py); lo leen p06:B51E (30 bytes)
+F 0x8005 16
+D 0x8023 0x8028 partitura_8023  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3B (tools/partituras.py); lo leen p06:B51E (5 bytes)
+F 0x8023 16
+D 0x8028 0x8077 partitura_8028  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x32, 0x33, 0x3B (tools/partituras.py); lo leen p06:B51E (79 bytes)
+F 0x8028 16
+D 0x8077 0x807C partitura_8077  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3B (tools/partituras.py); lo leen p06:B51E (5 bytes)
+F 0x8077 16
+D 0x807C 0x8160 partitura_807C  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x32, 0x33, 0x3B (tools/partituras.py); lo leen p06:B51E (228 bytes)
+F 0x807C 16
+D 0x8160 0x8165 partitura_8160  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3B (tools/partituras.py); lo leen p06:B51E (5 bytes)
+F 0x8160 16
+D 0x8165 0x8391 partitura_8165  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x32, 0x33, 0x3B, 0x3C (tools/partituras.py); lo leen p06:B51E (556 bytes)
+F 0x8165 16
+D 0x8391 0x83AA partitura_8391  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x34 (tools/partituras.py); lo leen p06:B51E (25 bytes)
+F 0x8391 16
+D 0x83AA 0x83CC partitura_83AA  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x34 (tools/partituras.py); lo leen p06:B51E (34 bytes)
+F 0x83AA 16
+D 0x83CC 0x83E3 partitura_83CC  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x34 (tools/partituras.py); lo leen p06:B51E (23 bytes)
+F 0x83CC 16
+D 0x83E3 0x841B partitura_83E3  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x34 (tools/partituras.py); lo leen p06:B51E (56 bytes)
+F 0x83E3 16
+D 0x841B 0x84A7 partitura_841B  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x34 (tools/partituras.py); lo leen p06:B51E (140 bytes)
+F 0x841B 16
+D 0x84A7 0x852E partitura_84A7  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x34 (tools/partituras.py); lo leen p06:B51E (135 bytes)
+F 0x84A7 16
+D 0x852E 0x8544 partitura_852E  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x35 (tools/partituras.py); lo leen p06:B51E (22 bytes)
+F 0x852E 16
+D 0x8544 0x8563 partitura_8544  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x35 (tools/partituras.py); lo leen p06:B51E (31 bytes)
+F 0x8544 16
+D 0x8563 0x8579 partitura_8563  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x35 (tools/partituras.py); lo leen p06:B51E (22 bytes)
+F 0x8563 16
+D 0x8579 0x85B3 partitura_8579  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x35 (tools/partituras.py); lo leen p06:B51E (58 bytes)
+F 0x8579 16
+D 0x85B3 0x861C partitura_85B3  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x35 (tools/partituras.py); lo leen p06:B51E (105 bytes)
+F 0x85B3 16
+D 0x861C 0x867C partitura_861C  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x35 (tools/partituras.py); lo leen p06:B51E (96 bytes)
+F 0x861C 16
+D 0x867C 0x869B partitura_867C  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x36 (tools/partituras.py); lo leen p06:B51E (31 bytes)
+F 0x867C 16
+D 0x869B 0x86C7 partitura_869B  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x36 (tools/partituras.py); lo leen p06:B51E (44 bytes)
+F 0x869B 16
+D 0x86C7 0x86E7 partitura_86C7  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x36 (tools/partituras.py); lo leen p06:B51E (32 bytes)
+F 0x86C7 16
+D 0x86E7 0x873B partitura_86E7  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x36 (tools/partituras.py); lo leen p06:B51E (84 bytes)
+F 0x86E7 16
+D 0x873B 0x8825 partitura_873B  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x36 (tools/partituras.py); lo leen p06:B51E (234 bytes)
+F 0x873B 16
+D 0x8825 0x8908 partitura_8825  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x36 (tools/partituras.py); lo leen p06:B51E (227 bytes)
+F 0x8825 16
+D 0x8908 0x890D partitura_8908  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3C (tools/partituras.py); lo leen p06:B51E (5 bytes)
+F 0x8908 16
+D 0x890D 0x892E partitura_890D  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x37, 0x3C (tools/partituras.py); lo leen p06:B51E (33 bytes)
+F 0x890D 16
+D 0x892E 0x8933 partitura_892E  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3C (tools/partituras.py); lo leen p06:B51E (5 bytes)
+F 0x892E 16
+D 0x8933 0x8964 partitura_8933  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x37, 0x3C (tools/partituras.py); lo leen p06:B51E (49 bytes)
+F 0x8933 16
+D 0x8964 0x8969 partitura_8964  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3C (tools/partituras.py); lo leen p06:B51E (5 bytes)
+F 0x8964 16
+D 0x8969 0x898F partitura_8969  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x37, 0x3C (tools/partituras.py); lo leen p06:B51E (38 bytes)
+F 0x8969 16
+D 0x898F 0x8994 partitura_898F  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3C (tools/partituras.py); lo leen p06:B51E (5 bytes)
+F 0x898F 16
+D 0x8994 0x89BB partitura_8994  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x37, 0x3C (tools/partituras.py); lo leen p06:B51E (39 bytes)
+F 0x8994 16
+D 0x89BB 0x89C0 partitura_89BB  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3C (tools/partituras.py); lo leen p06:B51E (5 bytes)
+F 0x89BB 16
+D 0x89C0 0x8A76 partitura_89C0  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x37, 0x3C (tools/partituras.py); lo leen p06:B51E (182 bytes)
+F 0x89C0 16
+D 0x8A76 0x8A7B partitura_8A76  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3C (tools/partituras.py); lo leen p06:B51E (5 bytes)
+F 0x8A76 16
+D 0x8A7B 0x8B18 partitura_8A7B  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x37, 0x3C (tools/partituras.py); lo leen p06:B51E (157 bytes)
+F 0x8A7B 16
+D 0x8B18 0x8B2B partitura_8B18  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x38 (tools/partituras.py); lo leen p06:B51E (19 bytes)
+F 0x8B18 16
+D 0x8B2B 0x8B48 partitura_8B2B  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x38 (tools/partituras.py); lo leen p06:B51E (29 bytes)
+F 0x8B2B 16
+D 0x8B48 0x8B5D partitura_8B48  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x38 (tools/partituras.py); lo leen p06:B51E (21 bytes)
+F 0x8B48 16
+D 0x8B5D 0x8B9F partitura_8B5D  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x38 (tools/partituras.py); lo leen p06:B51E (66 bytes)
+F 0x8B5D 16
+D 0x8B9F 0x8C3C partitura_8B9F  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x38 (tools/partituras.py); lo leen p06:B51E (157 bytes)
+F 0x8B9F 16
+D 0x8C3C 0x8CD3 partitura_8C3C  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x38 (tools/partituras.py); lo leen p06:B51E (151 bytes)
+F 0x8C3C 16
+D 0x8CD3 0x8CE6 partitura_8CD3  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x39 (tools/partituras.py); lo leen p06:B51E (19 bytes)
+F 0x8CD3 16
+D 0x8CE6 0x8D10 partitura_8CE6  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x39 (tools/partituras.py); lo leen p06:B51E (42 bytes)
+F 0x8CE6 16
+D 0x8D10 0x8D25 partitura_8D10  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x39 (tools/partituras.py); lo leen p06:B51E (21 bytes)
+F 0x8D10 16
+D 0x8D25 0x8D60 partitura_8D25  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x39 (tools/partituras.py); lo leen p06:B51E (59 bytes)
+F 0x8D25 16
+D 0x8D60 0x8E3F partitura_8D60  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x39 (tools/partituras.py); lo leen p06:B51E (223 bytes)
+F 0x8D60 16
+D 0x8E3F 0x8F18 partitura_8E3F  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x39 (tools/partituras.py); lo leen p06:B51E (217 bytes)
+F 0x8E3F 16
+D 0x8F18 0x8F3C partitura_8F18  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3A (tools/partituras.py); lo leen p06:B51E (36 bytes)
+F 0x8F18 16
+D 0x8F3C 0x8F6B partitura_8F3C  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3A (tools/partituras.py); lo leen p06:B51E (47 bytes)
+F 0x8F3C 16
+D 0x8F6B 0x8F90 partitura_8F6B  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3A (tools/partituras.py); lo leen p06:B51E (37 bytes)
+F 0x8F6B 16
+D 0x8F90 0x8FD7 partitura_8F90  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3A (tools/partituras.py); lo leen p06:B51E (71 bytes)
+F 0x8F90 16
+D 0x8FD7 0x90C8 partitura_8FD7  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3A (tools/partituras.py); lo leen p06:B51E (241 bytes)
+F 0x8FD7 16
+D 0x90C8 0x91FE partitura_90C8  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x36, 0x38, 0x39, 0x3A (tools/partituras.py); lo leen p06:B51E (310 bytes)
+F 0x90C8 16
+D 0x91FE 0x921C partitura_91FE  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3D (tools/partituras.py); lo leen p06:B51E (30 bytes)
+F 0x91FE 16
+D 0x921C 0x923B partitura_921C  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3D (tools/partituras.py); lo leen p06:B51E (31 bytes)
+F 0x921C 16
+D 0x923B 0x925B partitura_923B  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3D (tools/partituras.py); lo leen p06:B51E (32 bytes)
+F 0x923B 16
+D 0x925B 0x929C partitura_925B  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3D (tools/partituras.py); lo leen p06:B51E (65 bytes)
+F 0x925B 16
+D 0x929C 0x9313 partitura_929C  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3D (tools/partituras.py); lo leen p06:B51E (119 bytes)
+F 0x929C 16
+D 0x9313 0x937D partitura_9313  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3D (tools/partituras.py); lo leen p06:B51E (106 bytes)
+F 0x9313 16
+D 0x937D 0x9391 partitura_937D  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3E (tools/partituras.py); lo leen p06:B51E (20 bytes)
+F 0x937D 16
+D 0x9391 0x93B2 partitura_9391  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3E (tools/partituras.py); lo leen p06:B51E (33 bytes)
+F 0x9391 16
+D 0x93B2 0x93C8 partitura_93B2  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3E (tools/partituras.py); lo leen p06:B51E (22 bytes)
+F 0x93B2 16
+D 0x93C8 0x9408 partitura_93C8  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3E (tools/partituras.py); lo leen p06:B51E (64 bytes)
+F 0x93C8 16
+D 0x9408 0x94C7 partitura_9408  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3E (tools/partituras.py); lo leen p06:B51E (191 bytes)
+F 0x9408 16
+D 0x94C7 0x9582 partitura_94C7  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3E (tools/partituras.py); lo leen p06:B51E (187 bytes)
+F 0x94C7 16
+D 0x9582 0x9638 partitura_9582  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3F (tools/partituras.py); lo leen p06:B51E (182 bytes)
+F 0x9582 16
+D 0x9638 0x96EC partitura_9638  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3F (tools/partituras.py); lo leen p06:B51E (180 bytes)
+F 0x9638 16
+D 0x96EC 0x9793 partitura_96EC  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x3F (tools/partituras.py); lo leen p06:B51E (167 bytes)
+F 0x96EC 16
+D 0x9793 0x97C4 partitura_9793  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x40 (tools/partituras.py); lo leen p06:B51E (49 bytes)
+F 0x9793 16
+D 0x97C4 0x97D6 partitura_97C4  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x40 (tools/partituras.py); lo leen p06:B51E (18 bytes)
+F 0x97C4 16
+D 0x97D6 0x97EA partitura_97D6  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x40 (tools/partituras.py); lo leen p06:B51E (20 bytes)
+F 0x97D6 16
+D 0x97EA 0x9823 partitura_97EA  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x40 (tools/partituras.py); lo leen p06:B51E (57 bytes)
+F 0x97EA 16
+D 0x9823 0x9858 partitura_9823  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x40 (tools/partituras.py); lo leen p06:B51E (53 bytes)
+F 0x9823 16
+D 0x9858 0x9890 partitura_9858  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x40 (tools/partituras.py); lo leen p06:B51E (56 bytes)
+F 0x9858 16
+D 0x9890 0x98CB partitura_9890  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x41 (tools/partituras.py); lo leen p06:B51E (59 bytes)
+F 0x9890 16
+D 0x98CB 0x9906 partitura_98CB  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x41 (tools/partituras.py); lo leen p06:B51E (59 bytes)
+F 0x98CB 16
+D 0x9906 0x9988 partitura_9906  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x41 (tools/partituras.py); lo leen p06:B51E (130 bytes)
+F 0x9906 16
+D 0x9988 0x999A partitura_9988  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x41 (tools/partituras.py); lo leen p06:B51E (18 bytes)
+F 0x9988 16
+D 0x999A 0x9A2F partitura_999A  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x41 (tools/partituras.py); lo leen p06:B51E (149 bytes)
+F 0x999A 16
+D 0x9A2F 0x9ABD partitura_9A2F  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x41 (tools/partituras.py); lo leen p06:B51E (142 bytes)
+F 0x9A2F 16
+D 0x9ABD 0x9ADA partitura_9ABD  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x42 (tools/partituras.py); lo leen p06:B51E (29 bytes)
+F 0x9ABD 16
+D 0x9ADA 0x9AEE partitura_9ADA  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x42 (tools/partituras.py); lo leen p06:B51E (20 bytes)
+F 0x9ADA 16
+D 0x9AEE 0x9B00 partitura_9AEE  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x42 (tools/partituras.py); lo leen p06:B51E (18 bytes)
+F 0x9AEE 16
+D 0x9B00 0x9B12 partitura_9B00  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x42 (tools/partituras.py); lo leen p06:B51E (18 bytes)
+F 0x9B00 16
+D 0x9B12 0x9B2E partitura_9B12  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x42 (tools/partituras.py); lo leen p06:B51E (28 bytes)
+F 0x9B12 16
+D 0x9B2E 0x9B48 partitura_9B2E  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x42 (tools/partituras.py); lo leen p06:B51E (26 bytes)
+F 0x9B2E 16
+D 0x9B48 0x9B59 partitura_9B48  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x43 (tools/partituras.py); lo leen p06:B51E (17 bytes)
+F 0x9B48 16
+D 0x9B59 0x9B69 partitura_9B59  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x43 (tools/partituras.py); lo leen p06:B51E (16 bytes)
+F 0x9B59 16
+D 0x9B69 0x9B7B partitura_9B69  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x43 (tools/partituras.py); lo leen p06:B51E (18 bytes)
+F 0x9B69 16
+D 0x9B7B 0x9B8D partitura_9B7B  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x43 (tools/partituras.py); lo leen p06:B51E (18 bytes)
+F 0x9B7B 16
+D 0x9B8D 0x9BA9 partitura_9B8D  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x43 (tools/partituras.py); lo leen p06:B51E (28 bytes)
+F 0x9B8D 16
+D 0x9BA9 0x9BC4 partitura_9BA9  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x43 (tools/partituras.py); lo leen p06:B51E (27 bytes)
+F 0x9BA9 16
+D 0x9BC4 0x9BD8 partitura_9BC4  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x44 (tools/partituras.py); lo leen p06:B51E (20 bytes)
+F 0x9BC4 16
+D 0x9BD8 0x9BEC partitura_9BD8  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x44 (tools/partituras.py); lo leen p06:B51E (20 bytes)
+F 0x9BD8 16
+D 0x9BEC 0x9C01 partitura_9BEC  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x44 (tools/partituras.py); lo leen p06:B51E (21 bytes)
+F 0x9BEC 16
+D 0x9C01 0x9C16 partitura_9C01  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x44 (tools/partituras.py); lo leen p06:B51E (21 bytes)
+F 0x9C01 16
+D 0x9C16 0x9C35 partitura_9C16  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x44 (tools/partituras.py); lo leen p06:B51E (31 bytes)
+F 0x9C16 16
+D 0x9C35 0x9C52 partitura_9C35  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x44 (tools/partituras.py); lo leen p06:B51E (29 bytes)
+F 0x9C35 16
+D 0x9C52 0x9C66 partitura_9C52  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x45 (tools/partituras.py); lo leen p06:B51E (20 bytes)
+F 0x9C52 16
+D 0x9C66 0x9C7E partitura_9C66  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x45 (tools/partituras.py); lo leen p06:B51E (24 bytes)
+F 0x9C66 16
+D 0x9C7E 0x9C93 partitura_9C7E  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x45 (tools/partituras.py); lo leen p06:B51E (21 bytes)
+F 0x9C7E 16
+D 0x9C93 0x9CA8 partitura_9C93  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x45 (tools/partituras.py); lo leen p06:B51E (21 bytes)
+F 0x9C93 16
+D 0x9CA8 0x9CC7 partitura_9CA8  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x45 (tools/partituras.py); lo leen p06:B51E (31 bytes)
+F 0x9CA8 16
+D 0x9CC7 0x9CE3 partitura_9CC7  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x45 (tools/partituras.py); lo leen p06:B51E (28 bytes)
+F 0x9CC7 16
+D 0x9CE3 0x9CE4 partitura_9CE3  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x45, 0x46 (tools/partituras.py); lo leen p06:B51E (1 bytes)
+F 0x9CE3 16
+D 0x9CE4 0x9D25 partitura_9CE4  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x02 (tools/partituras.py); lo leen p06:B51E (65 bytes)
+F 0x9CE4 16
+D 0x9D25 0x9D26 partitura_9D25  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C y 60 mas (tools/partituras.py); lo leen p06:B51E (1 bytes)
+F 0x9D25 16
+D 0x9D26 0x9D52 partitura_9D26  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x02 (tools/partituras.py); lo leen p06:B51E (44 bytes)
+F 0x9D26 16
+D 0x9D52 0x9DA8 partitura_9D52  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x03 (tools/partituras.py); lo leen p06:B51E (86 bytes)
+F 0x9D52 16
+D 0x9DA8 0x9DE8 partitura_9DA8  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x03 (tools/partituras.py); lo leen p06:B51E (64 bytes)
+F 0x9DA8 16
+D 0x9DE8 0x9E48 partitura_9DE8  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x04 (tools/partituras.py); lo leen p06:B51E (96 bytes)
+F 0x9DE8 16
+D 0x9E48 0x9E85 partitura_9E48  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x04 (tools/partituras.py); lo leen p06:B51E (61 bytes)
+F 0x9E48 16
+D 0x9E85 0x9ECC partitura_9E85  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x05 (tools/partituras.py); lo leen p06:B51E (71 bytes)
+F 0x9E85 16
+D 0x9ECC 0x9EFA partitura_9ECC  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x05 (tools/partituras.py); lo leen p06:B51E (46 bytes)
+F 0x9ECC 16
+D 0x9EFA 0x9F00 partitura_9EFA  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x06 (tools/partituras.py); lo leen p06:B51E (6 bytes)
+F 0x9EFA 16
+D 0x9F00 0xA000 partitura_9F00  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x06, 0x0D, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18 (tools/partituras.py); lo leen p06:B51E (256 bytes)
+F 0x9F00 16
 # --- fin de los bloques de bloques.py ---

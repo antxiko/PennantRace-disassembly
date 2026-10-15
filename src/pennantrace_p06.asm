@@ -10,50 +10,216 @@
 
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa000..0xb15e  (4446 bytes)
-DATA_A000:
-	defb 040h,0c8h,080h,0e0h,007h,0fah,0feh,002h,0e2h,001h,064h,030h,0b2h,010h,0b2h,062h	; a000  @.........d0...b
-	defb 0b2h,0b1h,0b3h,00ah,0b3h,06eh,0b3h,0dfh,0b4h,05fh,0f9h,068h,0a0h,0f7h,007h,0f9h	; a010  .....n..._.h....
-	defb 068h,0a0h,0f7h,004h,0f9h,068h,0a0h,0f7h,007h,0f9h,068h,0a0h,000h,000h,0f7h,008h	; a020  h....h....h.....
-	defb 0f9h,068h,0a0h,0dfh,0e0h,005h,0f9h,083h,0b0h,0ffh,0feh,002h,0f8h,028h,0e2h,001h	; a030  .h...........(..
-	defb 0c3h,01dh,0c4h,062h,0f8h,022h,0c4h,0b1h,0c5h,00ah,0c5h,06eh,0c5h,0dfh,0c6h,05fh	; a040  ...b.".....n..._
-	defb 000h,000h,0f8h,00bh,0f9h,075h,0a0h,0f7h,004h,0f9h,075h,0a0h,0f7h,006h,0f9h,075h	; a050  .....u....u....u
-	defb 0a0h,0dfh,0e0h,00ah,0f9h,005h,0b1h,0ffh,000h,000h,000h,000h,0a0h,08eh,0a0h,083h	; a060  ................
-	defb 0a0h,0e3h,0a1h,01fh,0fah,062h,01dh,062h,062h,062h,0b1h,063h,00ah,063h,063h,063h	; a070  .....b.bbb.c.ccc
-	defb 0dfh,064h,05fh,000h,000h,0fah,0feh,002h,0e2h,001h,0e5h,009h,000h,0b0h,000h,0b0h	; a080  .d_.............
-	defb 000h,060h,000h,030h,000h,018h,000h,00ch,000h,006h,000h,003h,0e2h,001h,060h,0b0h	; a090  .`.0..........`.
-	defb 0e0h,007h,0e2h,001h,040h,0b1h,0e0h,008h,0e2h,001h,030h,0b1h,0f9h,08fh,0afh,0ffh	; a0a0  ....@.....0.....
+; DATOS sonido_A000: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
+;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x11,
+;   0x14, 0x16, 0x18 (tools/partituras.py); lo leen p06:B51E (6 bytes)
+;   0xa000..0xa006  (6 bytes)
+DATA_sonido_A000:
+	defb 040h,0c8h,080h,0e0h,007h,0fah	; a000
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A006: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x07 (tools/partituras.py); lo leen p06:B51E (52 bytes)
+;   0xa006..0xa03a  (52 bytes)
+DATA_partitura_A006:
+	defb 0feh,002h,0e2h,001h,064h,030h,0b2h,010h,0b2h,062h,0b2h,0b1h,0b3h,00ah,0b3h,06eh	; a006  ....d0...b.....n
+	defb 0b3h,0dfh,0b4h,05fh,0f9h,068h,0a0h,0f7h,007h,0f9h,068h,0a0h,0f7h,004h,0f9h,068h	; a016  ..._.h....h....h
+	defb 0a0h,0f7h,007h,0f9h,068h,0a0h,000h,000h,0f7h,008h,0f9h,068h,0a0h,0dfh,0e0h,005h	; a026  ....h......h....
+	defb 0f9h,083h,0b0h,0ffh	; a036
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A03A: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x07 (tools/partituras.py); lo leen p06:B51E (76 bytes)
+;   0xa03a..0xa086  (76 bytes)
+DATA_partitura_A03A:
+	defb 0feh,002h,0f8h,028h,0e2h,001h,0c3h,01dh,0c4h,062h,0f8h,022h,0c4h,0b1h,0c5h,00ah	; a03a  ...(.....b."....
+	defb 0c5h,06eh,0c5h,0dfh,0c6h,05fh,000h,000h,0f8h,00bh,0f9h,075h,0a0h,0f7h,004h,0f9h	; a04a  .n..._.....u....
+	defb 075h,0a0h,0f7h,006h,0f9h,075h,0a0h,0dfh,0e0h,00ah,0f9h,005h,0b1h,0ffh,000h,000h	; a05a  u....u..........
+	defb 000h,000h,0a0h,08eh,0a0h,083h,0a0h,0e3h,0a1h,01fh,0fah,062h,01dh,062h,062h,062h	; a06a  ...........b.bbb
+	defb 0b1h,063h,00ah,063h,063h,063h,0dfh,064h,05fh,000h,000h,0fah	; a07a  .c.ccc.d_...
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A086: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x08 (tools/partituras.py); lo leen p06:B51E (42 bytes)
+;   0xa086..0xa0b0  (42 bytes)
+DATA_partitura_A086:
+	defb 0feh,002h,0e2h,001h,0e5h,009h,000h,0b0h,000h,0b0h,000h,060h,000h,030h,000h,018h	; a086  ...........`.0..
+	defb 000h,00ch,000h,006h,000h,003h,0e2h,001h,060h,0b0h,0e0h,007h,0e2h,001h,040h,0b1h	; a096  ........`.....@.
+	defb 0e0h,008h,0e2h,001h,030h,0b1h,0f9h,08fh,0afh,0ffh	; a0a6  ....0.....
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A0B0: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x08 (tools/partituras.py); lo leen p06:B51E (27 bytes)
+;   0xa0b0..0xa0cb  (27 bytes)
+DATA_partitura_A0B0:
 	defb 0feh,002h,0f8h,01fh,0e2h,001h,0c0h,0b5h,0e0h,006h,0e2h,001h,020h,0b8h,0e0h,007h	; a0b0  ............ ...
-	defb 0e2h,001h,010h,0b4h,0e0h,008h,0e2h,001h,000h,0b3h,0ffh,0feh,002h,0e1h,001h,0f9h	; a0c0  ................
-	defb 0fdh,0a0h,000h,0e4h,00ch,004h,0e4h,00eh,004h,0e4h,010h,004h,0e4h,012h,004h,0e4h	; a0d0  ................
-	defb 014h,004h,0e0h,003h,0e1h,001h,0f7h,005h,0f9h,0fdh,0a0h,0e0h,003h,0ffh,0feh,002h	; a0e0  ................
-	defb 0f8h,005h,0e2h,001h,0f9h,01fh,0a1h,0f7h,00ch,0f9h,01fh,0a1h,0ffh,0e4h,004h,003h	; a0f0  ................
-	defb 0e4h,006h,006h,0e4h,000h,007h,0e4h,002h,007h,0e4h,00ah,008h,0e4h,008h,007h,0e4h	; a100  ................
-	defb 00ch,008h,0e4h,00eh,007h,0e4h,010h,006h,0e4h,012h,005h,0e4h,014h,005h,0fah,071h	; a110  ...............q
-	defb 0a0h,0a1h,0e0h,0b1h,050h,0b1h,080h,0c2h,000h,0b1h,0f0h,0c2h,050h,0b2h,0a0h,0a3h	; a120  ....P.......P...
-	defb 000h,093h,080h,094h,000h,000h,000h,082h,050h,082h,0a0h,083h,000h,083h,080h,084h	; a130  ........P.......
-	defb 000h,014h,000h,004h,000h,0fah,0feh,002h,0e2h,001h,045h,040h,054h,030h,0e1h,001h	; a140  ..........E@T0..
-	defb 0e4h,015h,004h,0e4h,018h,005h,0e4h,019h,006h,007h,0e4h,014h,00ah,0e1h,005h,0e4h	; a150  ................
-	defb 019h,009h,0e4h,01ah,00ah,0e4h,019h,00ah,006h,0e4h,018h,005h,0e4h,019h,004h,0e4h	; a160  ................
-	defb 018h,003h,0e4h,019h,002h,0e4h,018h,002h,0e4h,019h,002h,0e4h,01ah,002h,0e4h,01bh	; a170  ................
-	defb 002h,0e4h,01ch,002h,0ffh,0feh,002h,0f8h,00bh,0e2h,001h,047h,000h,0f5h,078h,089h	; a180  ...........G..x.
-	defb 099h,0c4h,0b9h,0cah,0c9h,089h,078h,069h,058h,049h,048h,049h,04ah,04bh,04ch,0f6h	; a190  ......xiXIHIJKL.
-	defb 0f8h,008h,047h,000h,0f5h,048h,049h,049h,044h,049h,04ah,049h,047h,048h,007h,008h	; a1a0  ..G..HIIDIJIGH..
-	defb 009h,009h,004h,009h,00ah,009h,007h,008h,0fbh,002h,0aeh,0a1h,0e0h,018h,0ffh,0feh	; a1b0  ................
-	defb 002h,0f9h,0e9h,0a1h,0e0h,002h,0f7h,004h,0f9h,0e9h,0a1h,0e0h,003h,0f7h,006h,0f9h	; a1c0  ................
-	defb 0e9h,0a1h,0ffh,0feh,002h,0f8h,007h,0f9h,0f9h,0a1h,0e0h,002h,0f7h,004h,0f9h,0f9h	; a1d0  ................
-	defb 0a1h,0e0h,003h,0f7h,006h,0f9h,0f9h,0a1h,0ffh,0e2h,001h,0a5h,0e1h,0e3h,001h,0e4h	; a1e0  ................
-	defb 002h,0a2h,010h,0e1h,001h,0e4h,00fh,00ah,0fah,0e2h,001h,0b5h,0e1h,0b2h,010h,0bfh	; a1f0  ................
-	defb 000h,0fah,0feh,002h,0e2h,001h,0a1h,011h,061h,00bh,051h,011h,041h,014h,031h,017h	; a200  ........a.Q.A.1.
-	defb 021h,01ah,011h,01dh,0f4h,020h,023h,011h,00bh,011h,0f6h,021h,014h,021h,017h,0ffh	; a210  !.... #....!.!..
+	defb 0e2h,001h,010h,0b4h,0e0h,008h,0e2h,001h,000h,0b3h,0ffh	; a0c0  ...........
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A0CB: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x09 (tools/partituras.py); lo leen p06:B51E (35 bytes)
+;   0xa0cb..0xa0ee  (35 bytes)
+DATA_partitura_A0CB:
+	defb 0feh,002h,0e1h,001h,0f9h,0fdh,0a0h,000h,0e4h,00ch,004h,0e4h,00eh,004h,0e4h,010h	; a0cb  ................
+	defb 004h,0e4h,012h,004h,0e4h,014h,004h,0e0h,003h,0e1h,001h,0f7h,005h,0f9h,0fdh,0a0h	; a0db  ................
+	defb 0e0h,003h,0ffh	; a0eb
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A0EE: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x09 (tools/partituras.py); lo leen p06:B51E (88 bytes)
+;   0xa0ee..0xa146  (88 bytes)
+DATA_partitura_A0EE:
+	defb 0feh,002h,0f8h,005h,0e2h,001h,0f9h,01fh,0a1h,0f7h,00ch,0f9h,01fh,0a1h,0ffh,0e4h	; a0ee  ................
+	defb 004h,003h,0e4h,006h,006h,0e4h,000h,007h,0e4h,002h,007h,0e4h,00ah,008h,0e4h,008h	; a0fe  ................
+	defb 007h,0e4h,00ch,008h,0e4h,00eh,007h,0e4h,010h,006h,0e4h,012h,005h,0e4h,014h,005h	; a10e  ................
+	defb 0fah,071h,0a0h,0a1h,0e0h,0b1h,050h,0b1h,080h,0c2h,000h,0b1h,0f0h,0c2h,050h,0b2h	; a11e  .q....P.......P.
+	defb 0a0h,0a3h,000h,093h,080h,094h,000h,000h,000h,082h,050h,082h,0a0h,083h,000h,083h	; a12e  ..........P.....
+	defb 080h,084h,000h,014h,000h,004h,000h,0fah	; a13e  ........
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A146: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x0A (tools/partituras.py); lo leen p06:B51E (63 bytes)
+;   0xa146..0xa185  (63 bytes)
+DATA_partitura_A146:
+	defb 0feh,002h,0e2h,001h,045h,040h,054h,030h,0e1h,001h,0e4h,015h,004h,0e4h,018h,005h	; a146  ....E@T0........
+	defb 0e4h,019h,006h,007h,0e4h,014h,00ah,0e1h,005h,0e4h,019h,009h,0e4h,01ah,00ah,0e4h	; a156  ................
+	defb 019h,00ah,006h,0e4h,018h,005h,0e4h,019h,004h,0e4h,018h,003h,0e4h,019h,002h,0e4h	; a166  ................
+	defb 018h,002h,0e4h,019h,002h,0e4h,01ah,002h,0e4h,01bh,002h,0e4h,01ch,002h,0ffh	; a176  ...............
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A185: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x0A (tools/partituras.py); lo leen p06:B51E (58 bytes)
+;   0xa185..0xa1bf  (58 bytes)
+DATA_partitura_A185:
+	defb 0feh,002h,0f8h,00bh,0e2h,001h,047h,000h,0f5h,078h,089h,099h,0c4h,0b9h,0cah,0c9h	; a185  ......G..x......
+	defb 089h,078h,069h,058h,049h,048h,049h,04ah,04bh,04ch,0f6h,0f8h,008h,047h,000h,0f5h	; a195  .xiXIHIJKL...G..
+	defb 048h,049h,049h,044h,049h,04ah,049h,047h,048h,007h,008h,009h,009h,004h,009h,00ah	; a1a5  HIIDIJIGH.......
+	defb 009h,007h,008h,0fbh,002h,0aeh,0a1h,0e0h,018h,0ffh	; a1b5  ..........
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A1BF: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x0B (tools/partituras.py); lo leen p06:B51E (20 bytes)
+;   0xa1bf..0xa1d3  (20 bytes)
+DATA_partitura_A1BF:
+	defb 0feh,002h,0f9h,0e9h,0a1h,0e0h,002h,0f7h,004h,0f9h,0e9h,0a1h,0e0h,003h,0f7h,006h	; a1bf  ................
+	defb 0f9h,0e9h,0a1h,0ffh	; a1cf
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A1D3: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x0B (tools/partituras.py); lo leen p06:B51E (47 bytes)
+;   0xa1d3..0xa202  (47 bytes)
+DATA_partitura_A1D3:
+	defb 0feh,002h,0f8h,007h,0f9h,0f9h,0a1h,0e0h,002h,0f7h,004h,0f9h,0f9h,0a1h,0e0h,003h	; a1d3  ................
+	defb 0f7h,006h,0f9h,0f9h,0a1h,0ffh,0e2h,001h,0a5h,0e1h,0e3h,001h,0e4h,002h,0a2h,010h	; a1e3  ................
+	defb 0e1h,001h,0e4h,00fh,00ah,0fah,0e2h,001h,0b5h,0e1h,0b2h,010h,0bfh,000h,0fah	; a1f3  ...............
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A202: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x0C (tools/partituras.py); lo leen p06:B51E (30 bytes)
+;   0xa202..0xa220  (30 bytes)
+DATA_partitura_A202:
+	defb 0feh,002h,0e2h,001h,0a1h,011h,061h,00bh,051h,011h,041h,014h,031h,017h,021h,01ah	; a202  ......a.Q.A.1.!.
+	defb 011h,01dh,0f4h,020h,023h,011h,00bh,011h,0f6h,021h,014h,021h,017h,0ffh	; a212  ... #....!.!..
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A220: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x0C (tools/partituras.py); lo leen p06:B51E (32 bytes)
+;   0xa220..0xa240  (32 bytes)
+DATA_partitura_A220:
 	defb 0feh,002h,0f8h,023h,0e2h,001h,0c1h,011h,0f8h,00dh,071h,00bh,061h,011h,051h,014h	; a220  ...#......q.a.Q.
 	defb 041h,017h,031h,01ah,021h,01dh,011h,020h,0f4h,023h,011h,00bh,011h,014h,017h,0ffh	; a230  A.1.!.. .#......
-	defb 0feh,002h,0f9h,006h,09fh,0f9h,0ach,0a2h,0f9h,051h,0adh,0ffh,0feh,002h,0f9h,026h	; a240  .........Q.....&
-	defb 09fh,0f9h,0e1h,0a2h,0f9h,0d3h,0adh,0ffh,0feh,002h,0f9h,0ach,0a2h,0f9h,070h,0aeh	; a250  ..............p.
-	defb 0ffh,0feh,002h,0f9h,0e1h,0a2h,0f9h,0f2h,0aeh,0ffh,0feh,002h,0f9h,0ach,0a2h,0f9h	; a260  ................
-	defb 051h,0adh,0ffh,0feh,002h,0f9h,0e1h,0a2h,0f9h,0d3h,0adh,0ffh,0feh,002h,0f9h,039h	; a270  Q..............9
-	defb 09fh,0f9h,0ach,0a2h,0f9h,051h,0adh,0ffh,0feh,002h,0f9h,06ch,09fh,0f9h,0e1h,0a2h	; a280  .....Q.....l....
-	defb 0f9h,0d3h,0adh,0ffh,0feh,002h,0f9h,097h,09fh,0f9h,0ach,0a2h,0f9h,051h,0adh,0ffh	; a290  .............Q..
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A240: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x0D (tools/partituras.py); lo leen p06:B51E (12 bytes)
+;   0xa240..0xa24c  (12 bytes)
+DATA_partitura_A240:
+	defb 0feh,002h,0f9h,006h,09fh,0f9h,0ach,0a2h,0f9h,051h,0adh,0ffh	; a240  .........Q..
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A24C: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x0D (tools/partituras.py); lo leen p06:B51E (12 bytes)
+;   0xa24c..0xa258  (12 bytes)
+DATA_partitura_A24C:
+	defb 0feh,002h,0f9h,026h,09fh,0f9h,0e1h,0a2h,0f9h,0d3h,0adh,0ffh	; a24c  ...&........
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A258: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x0E (tools/partituras.py); lo leen p06:B51E (9 bytes)
+;   0xa258..0xa261  (9 bytes)
+DATA_partitura_A258:
+	defb 0feh,002h,0f9h,0ach,0a2h,0f9h,070h,0aeh,0ffh	; a258  ......p..
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A261: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x0E (tools/partituras.py); lo leen p06:B51E (9 bytes)
+;   0xa261..0xa26a  (9 bytes)
+DATA_partitura_A261:
+	defb 0feh,002h,0f9h,0e1h,0a2h,0f9h,0f2h,0aeh,0ffh	; a261  .........
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A26A: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x0F (tools/partituras.py); lo leen p06:B51E (9 bytes)
+;   0xa26a..0xa273  (9 bytes)
+DATA_partitura_A26A:
+	defb 0feh,002h,0f9h,0ach,0a2h,0f9h,051h,0adh,0ffh	; a26a  ......Q..
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A273: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x0F (tools/partituras.py); lo leen p06:B51E (9 bytes)
+;   0xa273..0xa27c  (9 bytes)
+DATA_partitura_A273:
+	defb 0feh,002h,0f9h,0e1h,0a2h,0f9h,0d3h,0adh,0ffh	; a273  .........
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A27C: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x10 (tools/partituras.py); lo leen p06:B51E (12 bytes)
+;   0xa27c..0xa288  (12 bytes)
+DATA_partitura_A27C:
+	defb 0feh,002h,0f9h,039h,09fh,0f9h,0ach,0a2h,0f9h,051h,0adh,0ffh	; a27c  ...9.....Q..
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A288: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x10 (tools/partituras.py); lo leen p06:B51E (12 bytes)
+;   0xa288..0xa294  (12 bytes)
+DATA_partitura_A288:
+	defb 0feh,002h,0f9h,06ch,09fh,0f9h,0e1h,0a2h,0f9h,0d3h,0adh,0ffh	; a288  ...l........
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A294: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x11 (tools/partituras.py); lo leen p06:B51E (12 bytes)
+;   0xa294..0xa2a0  (12 bytes)
+DATA_partitura_A294:
+	defb 0feh,002h,0f9h,097h,09fh,0f9h,0ach,0a2h,0f9h,051h,0adh,0ffh	; a294  .........Q..
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A2A0: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x0D, 0x0E, 0x0F, 0x10, 0x11 (tools/partituras.py); lo leen p06:B51E (120
+;   bytes)
+;   0xa2a0..0xa318  (120 bytes)
+DATA_partitura_A2A0:
 	defb 0feh,002h,0f9h,0d1h,09fh,0f9h,0e1h,0a2h,0f9h,0d3h,0adh,0ffh,0feh,002h,0eeh,005h	; a2a0  ................
 	defb 0e2h,001h,082h,000h,081h,040h,081h,063h,061h,025h,061h,0a4h,061h,036h,061h,025h	; a2b0  .....@.ca%a.a6a%
 	defb 031h,025h,021h,025h,061h,030h,061h,071h,082h,030h,031h,063h,022h,030h,021h,031h	; a2c0  1%!%a0aq.01c"0!1
@@ -61,235 +227,773 @@ DATA_A000:
 	defb 0fah,0feh,002h,0f8h,014h,0e2h,001h,0c2h,000h,0c1h,040h,0f8h,023h,0c1h,063h,0a1h	; a2e0  ..........@.#.c.
 	defb 025h,0a1h,0a4h,0a1h,036h,0a1h,025h,031h,025h,021h,036h,0a1h,030h,0a1h,071h,0c2h	; a2f0  %...6.%1%!6.0.q.
 	defb 030h,021h,063h,012h,030h,011h,031h,071h,071h,0c2h,030h,011h,063h,012h,030h,014h	; a300  0!c.0.1qq.0.c.0.
-	defb 071h,001h,063h,001h,023h,004h,071h,0fah,0feh,002h,0f9h,006h,09fh,0e0h,002h,0e2h	; a310  q.c.#.q.........
-	defb 001h,0f7h,002h,0f9h,04bh,0a3h,0dfh,030h,030h,030h,024h,0f9h,066h,0a3h,0f9h,08fh	; a320  ....K..000$.f...
-	defb 0afh,0ffh,0feh,002h,0f9h,026h,09fh,0f8h,015h,0e2h,001h,0f9h,04bh,0a3h,030h,030h	; a330  .....&......K.00
-	defb 030h,024h,0f9h,066h,0a3h,0e0h,002h,0f9h,0f6h,0afh,0ffh,060h,052h,070h,048h,080h	; a340  0$.f.......`RpH.
-	defb 041h,090h,038h,090h,030h,080h,024h,070h,028h,060h,02ch,050h,030h,040h,035h,050h	; a350  A.8.0.$p(`,P0@5P
-	defb 039h,050h,03dh,050h,041h,0fah,020h,028h,020h,02ch,020h,030h,020h,035h,010h,039h	; a360  9P=PA. ( , 0 5.9
-	defb 010h,03dh,010h,041h,0fah,0feh,002h,0f9h,039h,09fh,0f9h,099h,0a3h,0ffh,0feh,002h	; a370  .=.A....9.......
-	defb 0f9h,06ch,09fh,0f9h,0c6h,0a3h,0ffh,0feh,002h,0f9h,097h,09fh,0f9h,099h,0a3h,0ffh	; a380  .l..............
+	defb 071h,001h,063h,001h,023h,004h,071h,0fah	; a310  q.c.#.q.
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A318: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x12 (tools/partituras.py); lo leen p06:B51E (26 bytes)
+;   0xa318..0xa332  (26 bytes)
+DATA_partitura_A318:
+	defb 0feh,002h,0f9h,006h,09fh,0e0h,002h,0e2h,001h,0f7h,002h,0f9h,04bh,0a3h,0dfh,030h	; a318  ............K..0
+	defb 030h,030h,024h,0f9h,066h,0a3h,0f9h,08fh,0afh,0ffh	; a328  00$.f.....
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A332: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x12 (tools/partituras.py); lo leen p06:B51E (67 bytes)
+;   0xa332..0xa375  (67 bytes)
+DATA_partitura_A332:
+	defb 0feh,002h,0f9h,026h,09fh,0f8h,015h,0e2h,001h,0f9h,04bh,0a3h,030h,030h,030h,024h	; a332  ...&......K.000$
+	defb 0f9h,066h,0a3h,0e0h,002h,0f9h,0f6h,0afh,0ffh,060h,052h,070h,048h,080h,041h,090h	; a342  .f.......`RpH.A.
+	defb 038h,090h,030h,080h,024h,070h,028h,060h,02ch,050h,030h,040h,035h,050h,039h,050h	; a352  8.0.$p(`,P0@5P9P
+	defb 03dh,050h,041h,0fah,020h,028h,020h,02ch,020h,030h,020h,035h,010h,039h,010h,03dh	; a362  =PA. ( , 0 5.9.=
+	defb 010h,041h,0fah	; a372
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A375: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x13 (tools/partituras.py); lo leen p06:B51E (9 bytes)
+;   0xa375..0xa37e  (9 bytes)
+DATA_partitura_A375:
+	defb 0feh,002h,0f9h,039h,09fh,0f9h,099h,0a3h,0ffh	; a375  ...9.....
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A37E: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x13 (tools/partituras.py); lo leen p06:B51E (9 bytes)
+;   0xa37e..0xa387  (9 bytes)
+DATA_partitura_A37E:
+	defb 0feh,002h,0f9h,06ch,09fh,0f9h,0c6h,0a3h,0ffh	; a37e  ...l.....
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A387: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x14 (tools/partituras.py); lo leen p06:B51E (9 bytes)
+;   0xa387..0xa390  (9 bytes)
+DATA_partitura_A387:
+	defb 0feh,002h,0f9h,097h,09fh,0f9h,099h,0a3h,0ffh	; a387  .........
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A390: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x13, 0x14 (tools/partituras.py); lo leen p06:B51E (99 bytes)
+;   0xa390..0xa3f3  (99 bytes)
+DATA_partitura_A390:
 	defb 0feh,002h,0f9h,0d1h,09fh,0f9h,0c6h,0a3h,0ffh,0eeh,005h,0e0h,001h,0e2h,001h,055h	; a390  ...............U
 	defb 023h,063h,020h,072h,030h,0e2h,002h,071h,06ah,000h,000h,081h,030h,041h,06ah,081h	; a3a0  #c r0..qj...0Aj.
 	defb 006h,081h,00ch,071h,028h,061h,006h,051h,00ch,041h,028h,091h,066h,041h,00ch,031h	; a3b0  ...q(a.Q.A(.fA.1
 	defb 028h,031h,06ah,021h,00ch,0fah,0f8h,023h,0e2h,001h,085h,023h,0a3h,020h,0b2h,030h	; a3c0  (1j!...#...#. .0
 	defb 0e2h,002h,091h,06ah,000h,000h,0c1h,030h,051h,06ah,0c1h,006h,0c1h,00ch,0a1h,028h	; a3d0  ...j...0Qj.....(
 	defb 081h,006h,071h,00ch,061h,028h,0b1h,066h,051h,00ch,031h,028h,031h,06ah,021h,00ch	; a3e0  ..q.a(.fQ.1(1j!.
-	defb 0e0h,001h,0fah,0feh,002h,0f9h,039h,09fh,0f9h,017h,0a4h,0ffh,0feh,002h,0f9h,06ch	; a3f0  ......9........l
-	defb 09fh,0f9h,03ch,0a4h,0ffh,0feh,002h,0f9h,097h,09fh,0f9h,017h,0a4h,0ffh,0feh,002h	; a400  ..<.............
-	defb 0f9h,0d1h,09fh,0f9h,03ch,0a4h,0ffh,0e0h,002h,0eeh,005h,0e2h,001h,063h,000h,074h	; a410  ....<........c.t
-	defb 020h,081h,0fah,0e2h,002h,091h,06ah,081h,07fh,051h,097h,081h,0b3h,041h,0d5h,031h	; a420   .....j..Q...A.1
-	defb 0d5h,021h,07fh,021h,0d5h,011h,0d5h,021h,0b3h,001h,0d8h,0fah,0f8h,023h,0e2h,001h	; a430  .!.!...!.....#..
-	defb 093h,000h,0a4h,020h,0b1h,0fah,0e2h,002h,0c1h,06ah,0b1h,07fh,071h,097h,0b1h,0b3h	; a440  ... .....j..q...
-	defb 061h,0d5h,041h,0d5h,031h,07fh,031h,0d5h,021h,0d5h,031h,0b3h,011h,0d8h,0e0h,002h	; a450  a.A.1.1.!.1.....
-	defb 0fah,0feh,002h,0f9h,039h,09fh,0f9h,091h,0a4h,0f9h,051h,0adh,0ffh,0feh,002h,0f9h	; a460  ....9.....Q.....
-	defb 06ch,09fh,0f9h,0c6h,0a4h,0f9h,0d3h,0adh,0ffh,0feh,002h,0f9h,097h,09fh,0f9h,091h	; a470  l...............
-	defb 0a4h,0f9h,051h,0adh,0ffh,0feh,002h,0f9h,0d1h,09fh,0f9h,0c6h,0a4h,0f9h,0d3h,0adh	; a480  ..Q.............
-	defb 0ffh,0e0h,002h,0eeh,005h,0e2h,001h,064h,000h,063h,010h,071h,0e8h,071h,085h,071h	; a490  .......d.c.q.q.q
-	defb 046h,061h,050h,071h,049h,071h,038h,063h,000h,074h,020h,071h,0fah,0e2h,002h,081h	; a4a0  FaPqIq8c.t q....
-	defb 06ah,071h,07fh,061h,097h,071h,0b3h,061h,0d5h,041h,0d5h,021h,07fh,021h,0d5h,011h	; a4b0  jq.a.q.a.A.!.!..
-	defb 0d5h,021h,0b3h,001h,0d8h,0fah,0f8h,023h,0e2h,001h,0a4h,000h,0a3h,010h,0a1h,0e8h	; a4c0  .!.....#........
-	defb 0a1h,085h,0a1h,046h,091h,050h,0a1h,049h,0a1h,038h,083h,000h,094h,020h,0a1h,0fah	; a4d0  ...F.P.I.8... ..
-	defb 0e2h,002h,0c1h,06ah,0b1h,07fh,061h,097h,0a1h,0b3h,0c1h,0d5h,0a1h,0d5h,021h,07fh	; a4e0  ...j..a.......!.
-	defb 021h,0d5h,011h,0d5h,021h,0b3h,001h,0d8h,0e0h,002h,0fah,0feh,002h,0e0h,002h,0eeh	; a4f0  !...!...........
-	defb 005h,0e2h,001h,0f7h,002h,0f9h,054h,0a5h,0dfh,0f9h,061h,0a5h,042h,0f0h,054h,010h	; a500  ......T...a.B.T.
-	defb 061h,0eah,0e2h,002h,061h,06ah,051h,07fh,041h,087h,051h,0b3h,061h,0d5h,051h,0d5h	; a510  a...ajQ.A.Q.a.Q.
-	defb 021h,07fh,021h,0d5h,011h,0d5h,021h,0b3h,0ffh,0feh,002h,0f8h,023h,0e2h,001h,0f9h	; a520  !.!...!.....#...
-	defb 054h,0a5h,0f9h,061h,0a5h,062h,0f0h,074h,010h,081h,0eah,0e2h,002h,0a1h,06ah,091h	; a530  T..a.b.t......j.
-	defb 07fh,051h,087h,081h,0b3h,0a1h,0d5h,081h,0d5h,021h,07fh,021h,0d5h,011h,0d5h,021h	; a540  .Q.......!.!...!
-	defb 0b3h,0e0h,002h,0ffh,084h,000h,083h,010h,000h,000h,081h,076h,081h,045h,081h,008h	; a550  ...........v.E..
-	defb 0fah,030h,0fdh,040h,0f8h,021h,008h,031h,076h,020h,0fdh,021h,008h,031h,020h,041h	; a560  .0.@.!.1v .!.1 A
-	defb 030h,041h,045h,031h,064h,031h,089h,031h,090h,0fah,0feh,002h,0e0h,002h,0eeh,005h	; a570  0AE1d1.1........
-	defb 0e2h,001h,074h,030h,063h,040h,061h,090h,061h,0c0h,000h,000h,061h,0b6h,061h,075h	; a580  ..t0c@a.a...a.au
-	defb 061h,050h,051h,043h,061h,038h,041h,032h,031h,038h,041h,0a6h,031h,032h,031h,038h	; a590  aPQCa8A218A.1218
-	defb 041h,050h,0f9h,0dbh,0a5h,0f9h,0e6h,0a5h,0ffh,0feh,002h,0f8h,023h,0e2h,001h,0c4h	; a5a0  AP..........#...
-	defb 030h,0c3h,040h,0a1h,090h,0a1h,0c0h,000h,000h,0a1h,0b6h,0a1h,075h,091h,050h,061h	; a5b0  0.@.........u.Pa
-	defb 043h,081h,038h,041h,032h,021h,038h,031h,0a6h,021h,032h,021h,038h,031h,050h,0f9h	; a5c0  C.8A2!81.!2!81P.
-	defb 0dbh,0a5h,0f7h,002h,0f9h,0e6h,0a5h,0dfh,0e0h,002h,0ffh,041h,060h,041h,075h,031h	; a5d0  ...........A`Au1
-	defb 094h,031h,0c9h,031h,0d0h,0fah,021h,038h,0f4h,050h,060h,075h,094h,0c9h,0d0h,0f6h	; a5e0  .1.1..!8.P`u....
-	defb 0fah,0feh,002h,0e0h,001h,0eeh,005h,0e2h,001h,083h,000h,082h,040h,081h,063h,0e2h	; a5f0  ............@.c.
-	defb 004h,081h,034h,081h,064h,081h,076h,061h,084h,0e2h,001h,081h,0a4h,043h,000h,042h	; a600  ..4.d.va.....C.B
-	defb 040h,0e2h,004h,031h,076h,031h,084h,0ffh,0feh,002h,0f8h,023h,0e2h,001h,0a3h,000h	; a610  @..1v1.....#....
-	defb 092h,040h,0a1h,063h,0e2h,004h,0a1h,034h,0a1h,064h,0a1h,076h,061h,084h,0e2h,001h	; a620  .@.c...4.d.va...
-	defb 0a1h,0a4h,043h,000h,042h,040h,0e2h,004h,001h,076h,001h,084h,0e0h,001h,0ffh,0feh	; a630  ..C.B@...v......
-	defb 002h,0e0h,002h,0e2h,004h,080h,047h,080h,054h,0fbh,002h,045h,0a6h,070h,047h,070h	; a640  ......G.T..E.pGp
-	defb 054h,060h,047h,060h,054h,050h,047h,050h,054h,040h,047h,040h,054h,030h,054h,030h	; a650  T`G`TPGPT@G@T0T0
-	defb 054h,0e0h,006h,0f9h,083h,0b0h,0ffh,0feh,002h,0f8h,023h,0e2h,004h,0c0h,047h,0c0h	; a660  T.........#...G.
-	defb 054h,0fbh,002h,06dh,0a6h,060h,047h,060h,054h,040h,047h,040h,054h,030h,047h,030h	; a670  T..m.`G`T@G@T0G0
-	defb 054h,010h,047h,010h,054h,000h,047h,000h,054h,000h,047h,000h,054h,0e0h,002h,0f9h	; a680  T.G.T.G.T.G.T...
-	defb 005h,0b1h,0ffh,0feh,002h,0e0h,001h,0eeh,001h,0e2h,007h,090h,0a3h,090h,0c1h,0fbh	; a690  ................
-	defb 003h,09bh,0a6h,030h,0a3h,030h,0c1h,0ffh,0feh,002h,0f8h,023h,0e2h,007h,0a0h,0a3h	; a6a0  ...0.0.....#....
-	defb 0a0h,0c1h,0fbh,003h,0aeh,0a6h,010h,0a3h,010h,0c1h,0e0h,001h,0ffh,0feh,001h,0f9h	; a6b0  ................
-	defb 083h,0b0h,0ffh,0feh,001h,0f9h,005h,0b1h,0ffh,0feh,001h,0f9h,051h,0adh,0ffh,0feh	; a6c0  ............Q...
-	defb 001h,0f9h,0d3h,0adh,0ffh,0feh,001h,0f9h,08fh,0afh,0ffh,0feh,001h,0f9h,0f6h,0afh	; a6d0  ................
-	defb 0ffh,0feh,001h,0f9h,070h,0aeh,0ffh,0feh,001h,0f9h,0f2h,0aeh,0ffh,0feh,001h,0f9h	; a6e0  ....p...........
-	defb 070h,0aeh,0ffh,0feh,001h,0e9h,006h,0c3h,0feh,004h,0d0h,0e9h,004h,071h,0feh,001h	; a6f0  p............q..
-	defb 0e9h,001h,0c0h,0fbh,006h,0f8h,0a6h,0feh,004h,0d0h,0e9h,006h,07fh,0ffh,0feh,001h	; a700  ................
-	defb 0e9h,006h,0c5h,0feh,004h,0d0h,0e9h,004h,087h,08fh,0ffh,0feh,002h,0f9h,0d2h,0a7h	; a710  ................
-	defb 0e4h,01dh,00ah,0e4h,01fh,00ah,0fbh,018h,020h,0a7h,0e4h,01dh,009h,0e4h,01fh,009h	; a720  ........ .......
-	defb 0fbh,010h,02ah,0a7h,0e4h,01dh,008h,0e4h,01fh,008h,0fbh,008h,034h,0a7h,0e4h,01dh	; a730  ..*.........4...
-	defb 007h,0e4h,01fh,007h,0fbh,006h,03eh,0a7h,0e4h,01dh,004h,0e4h,01fh,004h,0fbh,004h	; a740  ......>.........
-	defb 048h,0a7h,0e4h,01dh,003h,0e4h,01fh,003h,0fbh,002h,052h,0a7h,0ffh,0feh,002h,0f9h	; a750  H.........R.....
-	defb 00ch,0a8h,0f9h,0c5h,0a7h,0fbh,00bh,062h,0a7h,0f7h,004h,0f9h,0c5h,0a7h,0fbh,004h	; a760  .......b........
-	defb 06bh,0a7h,0f7h,007h,0f9h,0c5h,0a7h,0fbh,002h,074h,0a7h,0f7h,008h,0f9h,0c5h,0a7h	; a770  k........t......
-	defb 0ffh,0feh,001h,0e9h,006h,0c2h,0feh,004h,0d0h,0f8h,004h,0e9h,004h,0a1h,0fbh,00ah	; a780  ................
-	defb 08dh,0a7h,0afh,0ffh,0feh,001h,0e9h,006h,0c2h,0feh,004h,0d0h,0f8h,00dh,0e9h,004h	; a790  ................
-	defb 061h,0fbh,00ah,0a0h,0a7h,06fh,0ffh,0feh,001h,0e9h,006h,0c2h,0feh,004h,0d0h,0f8h	; a7a0  a....o..........
-	defb 004h,0e9h,004h,05fh,053h,05fh,0ffh,0feh,001h,0e9h,006h,0c2h,0feh,004h,0d0h,0e9h	; a7b0  ..._S_..........
-	defb 004h,05bh,052h,05fh,0ffh,089h,0cah,088h,012h,08ah,0e4h,086h,00ah,088h,014h,08ah	; a7c0  .[R_............
-	defb 0dch,0fah,0e1h,001h,0e4h,01bh,002h,0e4h,01fh,003h,0e4h,01eh,004h,0e4h,01dh,005h	; a7d0  ................
-	defb 0e4h,01fh,006h,0e4h,01dh,007h,0e4h,01fh,008h,0e4h,01dh,009h,0e4h,017h,009h,0e4h	; a7e0  ................
-	defb 01fh,009h,0e4h,01dh,009h,0e4h,01fh,009h,0e4h,01dh,009h,009h,0e4h,01eh,009h,0e4h	; a7f0  ................
-	defb 01fh,009h,0e4h,01dh,009h,0e4h,01eh,009h,0e4h,018h,009h,0fah,0f8h,01dh,0e2h,001h	; a800  ................
-	defb 018h,000h,02ah,0e4h,03ah,00ah,048h,002h,05ah,0e4h,066h,00ah,078h,004h,07ah,0e4h	; a810  ..*.:.H.Z.f.x.z.
-	defb 07ah,00ah,078h,006h,07ah,0e4h,07eh,00ah,078h,008h,07ah,0e4h,07eh,00ah,078h,00ah	; a820  z.x.z.~.x.z.~.x.
-	defb 07ah,0e4h,07bh,00ah,078h,00ch,07ah,0e4h,07dh,00ah,078h,00eh,07ah,0e4h,07fh,00ah	; a830  z.{.x.z.}.x.z...
-	defb 078h,010h,07ah,0e4h,0fah,0feh,002h,0f9h,015h,0a9h,0feh,002h,0f9h,0d2h,0a7h,0e4h	; a840  x.z.............
-	defb 01dh,00ah,0e4h,01fh,00ah,0fbh,020h,04fh,0a8h,0e4h,01dh,009h,0e4h,01fh,009h,0fbh	; a850  ...... O........
-	defb 010h,059h,0a8h,0e4h,01dh,008h,0e4h,01fh,008h,0fbh,008h,063h,0a8h,0e4h,01dh,007h	; a860  .Y.........c....
-	defb 0e4h,01fh,007h,0fbh,006h,06dh,0a8h,0e4h,01dh,005h,0e4h,01fh,005h,0fbh,004h,077h	; a870  .....m.........w
-	defb 0a8h,0e4h,01dh,003h,0e4h,01fh,003h,0fbh,002h,081h,0a8h,0e0h,00fh,0ffh,0feh,002h	; a880  ................
-	defb 0f9h,032h,0a9h,0feh,002h,0f9h,00ch,0a8h,0f9h,0c5h,0a7h,0fbh,00dh,098h,0a8h,0f7h	; a890  .2..............
-	defb 004h,0f9h,0c5h,0a7h,0fbh,004h,0a1h,0a8h,0f7h,006h,0f9h,0c5h,0a7h,0fbh,002h,0aah	; a8a0  ................
-	defb 0a8h,0f7h,008h,0f9h,0c5h,0a7h,0ffh,0feh,002h,0f9h,051h,0adh,0ffh,0feh,002h,0f9h	; a8b0  ..........Q.....
-	defb 0d3h,0adh,0ffh,0feh,002h,0eeh,002h,0e0h,001h,0e2h,001h,070h,0c0h,080h,060h,080h	; a8c0  ...........p..`.
-	defb 030h,060h,018h,030h,018h,020h,018h,0e0h,003h,0e2h,001h,030h,0c0h,030h,060h,030h	; a8d0  0`.0. .....0.0`0
-	defb 030h,020h,018h,0e0h,001h,0ffh,0feh,002h,0f8h,005h,0e2h,001h,0a0h,0c0h,0b0h,060h	; a8e0  0 .............`
-	defb 0b0h,030h,070h,018h,020h,018h,000h,018h,0e0h,003h,0e2h,001h,020h,0c0h,020h,060h	; a8f0  .0p. ....... . `
-	defb 020h,030h,020h,018h,000h,018h,000h,018h,0ffh,0feh,002h,0f9h,015h,0a9h,0ffh,0feh	; a900   0 .............
-	defb 002h,0f9h,032h,0a9h,0ffh,0e0h,001h,0e2h,003h,080h,0beh,080h,061h,090h,020h,0f4h	; a910  ..2.........a. .
-	defb 010h,015h,013h,0f6h,050h,020h,0f4h,010h,015h,013h,0f6h,030h,020h,0f4h,010h,015h	; a920  ....P .....0 ...
-	defb 013h,0fah,0f8h,005h,0e2h,003h,0c0h,0bah,0c0h,05dh,0f8h,01dh,050h,080h,050h,040h	; a930  .........]..P.P@
-	defb 090h,052h,090h,040h,020h,080h,0f4h,040h,052h,040h,0f6h,000h,080h,0f4h,040h,052h	; a940  .R.@ ..@R@....@R
-	defb 040h,0f6h,0e0h,001h,0fah,0ffh,0feh,002h,0e0h,005h,0eeh,001h,0e2h,005h,090h,0ach	; a950  @...............
-	defb 061h,00fh,090h,0ach,041h,00fh,060h,0ach,041h,00fh,050h,0ach,031h,00fh,040h,0ach	; a960  a...A.`.A.P.1.@.
-	defb 031h,00fh,030h,0ach,021h,00fh,0ffh,0ffh,0feh,002h,0f8h,025h,0e2h,005h,0c0h,0ach	; a970  1.0.!......%....
-	defb 081h,00fh,0c0h,0ach,031h,00fh,050h,0ach,021h,00fh,030h,0ach,001h,00fh,020h,0ach	; a980  ....1.P.!.0... .
-	defb 001h,00fh,010h,0ach,001h,00fh,000h,0ach,0ffh,0feh,002h,0e3h,001h,0e4h,017h,070h	; a990  ...............p
-	defb 01fh,030h,060h,000h,000h,0e2h,001h,0e5h,009h,009h,000h,000h,098h,0e3h,001h,0e4h	; a9a0  .0`.............
-	defb 002h,0b0h,00eh,060h,0a0h,030h,0a0h,000h,000h,0e3h,003h,0e4h,001h,080h,004h,0e2h	; a9b0  ...`.0..........
-	defb 001h,080h,098h,0e3h,004h,0e4h,002h,050h,00eh,0e3h,003h,0e4h,001h,040h,004h,0e2h	; a9c0  .......P.....@..
-	defb 001h,050h,098h,0e3h,004h,0e4h,002h,020h,00eh,0e3h,003h,0e4h,001h,010h,004h,0e2h	; a9d0  .P..... ........
-	defb 001h,030h,098h,0e3h,004h,0e4h,002h,000h,00eh,0e3h,003h,0e4h,001h,000h,004h,0feh	; a9e0  .0..............
-	defb 001h,0e9h,006h,0c7h,0feh,004h,0d0h,0e9h,004h,0eeh,001h,08fh,08fh,0ffh,0feh,002h	; a9f0  ................
-	defb 0e0h,003h,0e2h,001h,0c0h,097h,0e2h,007h,000h,097h,0e2h,001h,060h,097h,0e0h,007h	; aa00  ............`...
-	defb 0e2h,001h,040h,097h,0e0h,007h,0e2h,001h,020h,097h,0e0h,007h,0feh,001h,0e9h,006h	; aa10  ..@..... .......
-	defb 0c7h,0feh,004h,0d0h,0e9h,004h,08fh,08fh,0ffh,0feh,002h,0e0h,003h,0e2h,001h,0c0h	; aa20  ................
-	defb 099h,0e2h,007h,000h,099h,0e2h,001h,060h,099h,0e0h,007h,0e2h,001h,040h,099h,0e0h	; aa30  .......`.....@..
-	defb 007h,0e2h,001h,020h,099h,0e0h,007h,0f7h,001h,0f9h,0d2h,0a7h,0e4h,01dh,009h,0e4h	; aa40  ... ............
-	defb 01fh,009h,0fbh,030h,04ch,0aah,0e4h,01dh,008h,0e4h,01fh,008h,0fbh,00ch,056h,0aah	; aa50  ...0L.........V.
-	defb 0e4h,01dh,007h,0e4h,01fh,007h,0fbh,008h,060h,0aah,0e4h,01dh,006h,0e4h,01fh,006h	; aa60  ........`.......
-	defb 0fbh,006h,06ah,0aah,0e4h,01dh,004h,0e4h,01fh,004h,0fbh,004h,074h,0aah,0e4h,01dh	; aa70  ..j.........t...
-	defb 003h,0e4h,01fh,003h,0fbh,002h,07eh,0aah,0ffh,0feh,002h,0e0h,003h,0e2h,001h,0f8h	; aa80  ......~.........
-	defb 031h,0c0h,098h,0e0h,007h,0f8h,005h,0e2h,001h,040h,098h,0e0h,007h,0e2h,001h,000h	; aa90  1........@......
-	defb 098h,0e0h,00eh,0f8h,01dh,0e2h,001h,008h,000h,01ah,0e4h,02ah,00ah,038h,002h,04ah	; aaa0  ...........*.8.J
-	defb 0e4h,056h,00ah,068h,004h,06ah,0e4h,06ah,00ah,068h,006h,06ah,0e4h,06eh,00ah,068h	; aab0  .V.h.j.j.h.j.n.h
-	defb 008h,06ah,0e4h,06eh,00ah,068h,00ah,06ah,0e4h,06bh,00ah,068h,00ch,06ah,0e4h,06dh	; aac0  .j.n.h.j.k.h.j.m
-	defb 00ah,068h,00eh,06ah,0e4h,06fh,00ah,068h,010h,06ah,0e4h,0f7h,001h,0f9h,0c5h,0a7h	; aad0  .h.j.o.h.j......
-	defb 0fbh,00ch,0ddh,0aah,0f7h,005h,0f9h,0c5h,0a7h,0fbh,004h,0e6h,0aah,0f7h,007h,0f9h	; aae0  ................
-	defb 0c5h,0a7h,0fbh,002h,0efh,0aah,0f7h,008h,0f9h,0c5h,0a7h,0ffh,0feh,002h,0e0h,003h	; aaf0  ................
-	defb 0e2h,001h,0f8h,031h,0c0h,098h,0e0h,01fh,0e0h,003h,0feh,004h,0d0h,0f8h,004h,0e9h	; ab00  ...1............
-	defb 004h,0a1h,0fbh,00eh,011h,0abh,0afh,0ffh,0feh,002h,0e0h,003h,0e2h,001h,0f8h,00dh	; ab10  ................
-	defb 0c0h,098h,0e0h,01fh,0feh,001h,0e9h,006h,0c1h,0feh,004h,0d0h,0f8h,00dh,0e9h,004h	; ab20  ................
-	defb 061h,0fbh,00dh,030h,0abh,06fh,0ffh,0feh,002h,0e0h,003h,0f8h,00ch,0e2h,001h,0c0h	; ab30  a..0.o..........
-	defb 097h,0e0h,01fh,0feh,001h,0e9h,006h,0c0h,0feh,004h,0d0h,0f8h,005h,0e9h,004h,05fh	; ab40  ..............._
-	defb 053h,05fh,0ffh,0feh,002h,0e0h,003h,0e2h,001h,0c0h,098h,0e0h,01fh,0feh,001h,0e9h	; ab50  S_..............
-	defb 006h,0c2h,0feh,004h,0d0h,0e9h,004h,05bh,052h,05fh,0ffh,0feh,002h,0e3h,001h,0e4h	; ab60  .......[R_......
-	defb 006h,0c0h,08fh,0e4h,004h,040h,024h,0e4h,006h,070h,01fh,0e0h,004h,0e3h,001h,0e4h	; ab70  .....@$..p......
-	defb 003h,030h,01fh,0e0h,007h,0e3h,001h,020h,01fh,0e0h,008h,0e3h,001h,010h,01fh,0f9h	; ab80  .0..... ........
-	defb 08fh,0afh,0ffh,0feh,002h,0f8h,014h,0e2h,001h,0a1h,070h,001h,070h,0e0h,005h,0e2h	; ab90  ..........p.p...
-	defb 001h,0f8h,00ch,001h,070h,0e0h,011h,0ffh,0feh,002h,0e2h,001h,0e5h,009h,009h,000h	; aba0  ....p...........
-	defb 000h,0b0h,0e3h,001h,0e4h,008h,0b0h,008h,0e0h,005h,0e2h,001h,090h,0b0h,0e0h,007h	; abb0  ................
-	defb 0e2h,001h,050h,0b0h,0e0h,008h,0e2h,001h,040h,0b0h,0f9h,051h,0adh,0ffh,0feh,002h	; abc0  ..P.....@..Q....
-	defb 0f8h,004h,0e2h,001h,0c0h,0b1h,000h,0b2h,0e0h,005h,0e2h,001h,0f8h,00ch,040h,0b1h	; abd0  ..............@.
-	defb 0e0h,007h,0e2h,001h,020h,0b1h,0e0h,008h,0e2h,001h,000h,0b1h,0ffh,0feh,002h,0e3h	; abe0  .... ...........
-	defb 001h,0e4h,017h,0c0h,021h,0e4h,01dh,040h,062h,0e2h,001h,0e5h,009h,009h,000h,000h	; abf0  ....!..@b.......
-	defb 098h,0e3h,001h,0e4h,00eh,080h,03eh,040h,03eh,030h,03eh,020h,03eh,0e2h,001h,0a0h	; ac00  ......>@>0> >...
-	defb 098h,0e3h,001h,060h,03eh,040h,03eh,030h,03eh,0e0h,004h,0e2h,001h,060h,098h,0e3h	; ac10  ...`>@>0>....`..
-	defb 001h,040h,03eh,030h,03eh,020h,03eh,0e0h,004h,0e2h,001h,040h,098h,0e3h,001h,030h	; ac20  .@>0> >....@...0
-	defb 03eh,020h,03eh,0f9h,083h,0b0h,0ffh,0feh,002h,0f8h,028h,0e2h,001h,041h,021h,000h	; ac30  > >.......(..A!.
-	defb 000h,0f8h,031h,0c0h,096h,0f8h,00bh,020h,030h,000h,030h,000h,030h,000h,000h,0f8h	; ac40  ..1.... 0.0.0...
-	defb 031h,080h,096h,0f8h,00bh,000h,030h,0e0h,006h,0f8h,031h,0e2h,001h,030h,096h,0f8h	; ac50  1.....0...1..0..
-	defb 00bh,000h,030h,0e0h,006h,0e2h,001h,0f8h,005h,010h,096h,0ffh,0feh,002h,0e3h,001h	; ac60  ..0.............
-	defb 0e4h,017h,0c0h,01fh,040h,060h,0e2h,001h,0e5h,009h,009h,000h,000h,078h,0e3h,001h	; ac70  ....@`.......x..
-	defb 0e4h,013h,0c0h,01fh,060h,060h,0e2h,003h,080h,078h,0e3h,002h,080h,01fh,050h,060h	; ac80  ....``...x....P`
-	defb 0e2h,003h,060h,078h,0e3h,002h,070h,01fh,040h,060h,0e2h,003h,050h,078h,0e3h,002h	; ac90  ..`x..p.@`..Px..
-	defb 060h,01fh,030h,060h,0e2h,003h,040h,078h,0e3h,002h,050h,01fh,020h,060h,0e2h,003h	; aca0  `.0`..@x..P. `..
-	defb 030h,078h,0f9h,083h,0b0h,0ffh,0feh,002h,0f8h,028h,0e2h,001h,0c1h,0d6h,020h,010h	; acb0  0x.......(.... .
-	defb 0f8h,031h,0c0h,078h,0f8h,004h,0e0h,004h,0e2h,001h,090h,078h,0e0h,006h,0e2h,001h	; acc0  .1.x.......x....
-	defb 040h,078h,0f8h,00ch,0e0h,006h,0e2h,001h,040h,078h,0e0h,006h,0e2h,001h,020h,078h	; acd0  @x......@x.... x
-	defb 0e0h,007h,0f9h,005h,0b1h,0ffh,0feh,002h,0e0h,060h,0feh,004h,0e9h,004h,0d0h,0a3h	; ace0  .........`......
-	defb 0a3h,0a7h,0a3h,0a3h,0a7h,0a3h,0a3h,0a3h,0a3h,0a3h,0a3h,0a7h,0fbh,002h,0efh,0ach	; acf0  ................
-	defb 0a1h,0fbh,010h,000h,0adh,0abh,0a1h,0abh,0ffh,0feh,002h,0e0h,060h,0feh,004h,0e9h	; ad00  ............`...
-	defb 004h,0d1h,0b3h,0b3h,0b7h,0b3h,0b3h,0b7h,0b3h,0b3h,0b3h,0b3h,0b3h,0b3h,0b7h,0fbh	; ad10  ................
-	defb 002h,012h,0adh,0b1h,0fbh,010h,023h,0adh,0bbh,0b1h,0bbh,0ffh,0feh,002h,0e0h,060h	; ad20  ......#........`
-	defb 0feh,004h,0f8h,028h,0e9h,004h,0d0h,053h,053h,057h,053h,053h,057h,053h,053h,053h	; ad30  ...(...SSWSSWSSS
-	defb 053h,053h,053h,057h,0fbh,002h,037h,0adh,051h,0fbh,010h,048h,0adh,05bh,051h,06bh	; ad40  SSSW..7.Q..H.[Qk
-	defb 0ffh,0feh,002h,0e1h,001h,0e4h,01bh,001h,0e4h,01fh,002h,0e4h,01eh,003h,0e4h,01dh	; ad50  ................
-	defb 004h,0e4h,01fh,005h,0e4h,01dh,006h,0e4h,01fh,007h,0e4h,01dh,008h,0e4h,017h,008h	; ad60  ................
-	defb 0e4h,01fh,008h,0e4h,01dh,008h,0e4h,01fh,008h,0e4h,01dh,008h,008h,0e4h,01eh,008h	; ad70  ................
-	defb 0e4h,01fh,008h,0e4h,01dh,008h,0e4h,01eh,008h,0e4h,018h,008h,0e4h,01dh,009h,0e4h	; ad80  ................
-	defb 01fh,009h,0fbh,030h,08ch,0adh,0e4h,01dh,008h,0e4h,01fh,008h,0fbh,00ch,096h,0adh	; ad90  ...0............
-	defb 0e4h,01dh,007h,0e4h,01fh,007h,0fbh,008h,0a0h,0adh,0e4h,01dh,006h,0e4h,01fh,006h	; ada0  ................
-	defb 0fbh,006h,0aah,0adh,0e4h,01dh,005h,0e4h,01fh,005h,0fbh,005h,0b4h,0adh,0e4h,01dh	; adb0  ................
-	defb 004h,0e4h,01fh,004h,0fbh,004h,0beh,0adh,0e4h,01dh,003h,0e4h,01fh,003h,0fbh,002h	; adc0  ................
-	defb 0c8h,0adh,0fah,0feh,002h,0f8h,01dh,0e2h,001h,038h,000h,04ah,0e4h,05ah,00ah,068h	; add0  .........8.J.Z.h
-	defb 002h,07ah,0e4h,086h,00ah,098h,004h,09ah,0e4h,09ah,00ah,098h,006h,09ah,0e4h,09eh	; ade0  .z..............
-	defb 00ah,098h,008h,09ah,0e4h,09eh,00ah,098h,00ah,09ah,0e4h,09bh,00ah,098h,00ch,09ah	; adf0  ................
-	defb 0e4h,09dh,00ah,098h,00eh,09ah,0e4h,09fh,00ah,098h,010h,09ah,0e4h,0a9h,0cah,0a8h	; ae00  ................
-	defb 012h,0aah,0e4h,0a6h,00ah,0a8h,014h,0aah,0dch,0fbh,00ch,00dh,0aeh,079h,0cah,078h	; ae10  .............y.x
-	defb 012h,07ah,0e4h,076h,00ah,078h,014h,07ah,0dch,0fbh,004h,01dh,0aeh,079h,0cah,078h	; ae20  .z.v.x.z.....y.x
-	defb 012h,07ah,0e4h,076h,00ah,078h,014h,07ah,0dch,0fbh,002h,02dh,0aeh,059h,0cah,058h	; ae30  .z.v.x.z...-.Y.X
-	defb 012h,05ah,0e4h,056h,00ah,058h,014h,05ah,0dch,0fbh,002h,03dh,0aeh,039h,0cah,038h	; ae40  .Z.V.X.Z...=.9.8
-	defb 012h,03ah,0e4h,036h,00ah,038h,014h,03ah,0dch,0fbh,002h,04dh,0aeh,009h,0cah,008h	; ae50  .:.6.8.:...M....
-	defb 012h,00ah,0e4h,006h,00ah,008h,014h,00ah,0dch,0fbh,002h,05dh,0aeh,0e0h,013h,0fah	; ae60  ...........]....
-	defb 0feh,002h,0e1h,001h,0e4h,01bh,001h,0e4h,01fh,002h,0e4h,01eh,003h,0e4h,01dh,004h	; ae70  ................
-	defb 0e4h,01fh,005h,0e4h,01dh,006h,0e4h,01fh,007h,0e4h,01dh,008h,0e4h,017h,008h,0e4h	; ae80  ................
-	defb 01fh,008h,0e4h,01dh,008h,0e4h,01fh,008h,0e4h,01dh,008h,008h,0e4h,01eh,008h,0e4h	; ae90  ................
-	defb 01fh,008h,0e4h,01dh,008h,0e4h,01eh,008h,0e4h,018h,008h,0e4h,01dh,009h,0e4h,01fh	; aea0  ................
-	defb 009h,0fbh,070h,0abh,0aeh,0e4h,01dh,008h,0e4h,01fh,008h,0fbh,00ch,0b5h,0aeh,0e4h	; aeb0  ..p.............
-	defb 01dh,007h,0e4h,01fh,007h,0fbh,008h,0bfh,0aeh,0e4h,01dh,006h,0e4h,01fh,006h,0fbh	; aec0  ................
-	defb 006h,0c9h,0aeh,0e4h,01dh,005h,0e4h,01fh,005h,0fbh,005h,0d3h,0aeh,0e4h,01dh,004h	; aed0  ................
-	defb 0e4h,01fh,004h,0fbh,004h,0ddh,0aeh,0e4h,01dh,003h,0e4h,01fh,003h,0fbh,002h,0e7h	; aee0  ................
-	defb 0aeh,0fah,0feh,002h,0f8h,01dh,0e2h,001h,038h,000h,04ah,0e4h,05ah,00ah,068h,002h	; aef0  ........8.J.Z.h.
-	defb 07ah,0e4h,086h,00ah,098h,004h,09ah,0e4h,09ah,00ah,098h,006h,09ah,0e4h,09eh,00ah	; af00  z...............
-	defb 098h,008h,09ah,0e4h,09eh,00ah,098h,00ah,09ah,0e4h,09bh,00ah,098h,00ch,09ah,0e4h	; af10  ................
-	defb 09dh,00ah,098h,00eh,09ah,0e4h,09fh,00ah,098h,010h,09ah,0e4h,0a9h,0cah,0a8h,012h	; af20  ................
-	defb 0aah,0e4h,0a6h,00ah,0a8h,014h,0aah,0dch,0fbh,01ch,02ch,0afh,079h,0cah,078h,012h	; af30  ..........,.y.x.
-	defb 07ah,0e4h,076h,00ah,078h,014h,07ah,0dch,0fbh,005h,03ch,0afh,079h,0cah,078h,012h	; af40  z.v.x.z...<.y.x.
-	defb 07ah,0e4h,076h,00ah,078h,014h,07ah,0dch,0fbh,002h,04ch,0afh,059h,0cah,058h,012h	; af50  z.v.x.z...L.Y.X.
-	defb 05ah,0e4h,056h,00ah,058h,014h,05ah,0dch,0fbh,002h,05ch,0afh,039h,0cah,038h,012h	; af60  Z.V.X.Z...\.9.8.
-	defb 03ah,0e4h,036h,00ah,038h,014h,03ah,0dch,0fbh,002h,06ch,0afh,009h,0cah,008h,012h	; af70  :.6.8.:...l.....
-	defb 00ah,0e4h,006h,00ah,008h,014h,00ah,0dch,0fbh,002h,07ch,0afh,0e0h,045h,0fah,0feh	; af80  ..........|..E..
-	defb 002h,0e1h,001h,0e4h,01fh,002h,0e4h,01dh,003h,0e4h,01fh,004h,0e4h,01fh,005h,0e4h	; af90  ................
-	defb 01dh,007h,0e4h,01fh,007h,0e4h,01dh,007h,007h,0e4h,01eh,007h,0e4h,018h,007h,0e4h	; afa0  ................
-	defb 01dh,009h,0e4h,01fh,009h,0fbh,022h,0afh,0afh,0e4h,01dh,008h,0e4h,01fh,008h,0fbh	; afb0  ......".........
-	defb 00ah,0b9h,0afh,0e4h,01dh,007h,0e4h,01fh,007h,0fbh,008h,0c3h,0afh,0e4h,01dh,006h	; afc0  ................
-	defb 0e4h,01fh,006h,0fbh,006h,0cdh,0afh,0e4h,01dh,005h,0e4h,01fh,005h,0fbh,005h,0d7h	; afd0  ................
-	defb 0afh,0e4h,01dh,004h,0e4h,01fh,004h,0fbh,004h,0e1h,0afh,0e4h,01dh,003h,0e4h,01fh	; afe0  ................
-	defb 003h,0fbh,002h,0ebh,0afh,0fah,0feh,002h,0f8h,01dh,0e2h,001h,038h,000h,04ah,0e4h	; aff0  ............8.J.
-	defb 05ah,00ah,068h,002h,07ah,0e4h,086h,00ah,098h,004h,09ah,0e4h,09ah,00ah,098h,006h	; b000  Z.h.z...........
-	defb 09ah,0e4h,09eh,00ah,098h,008h,09ah,0e4h,09eh,00ah,098h,00ah,09ah,0e4h,09bh,00ah	; b010  ................
-	defb 098h,00ch,09ah,0e4h,09dh,00ah,098h,00eh,09ah,0e4h,09fh,00ah,098h,010h,09ah,0e4h	; b020  ................
-	defb 0a9h,0cah,0a8h,012h,0aah,0e4h,0a6h,00ah,0a8h,014h,0aah,0dch,0fbh,004h,030h,0b0h	; b030  ..............0.
-	defb 079h,0cah,078h,012h,07ah,0e4h,076h,00ah,078h,014h,07ah,0dch,0fbh,004h,040h,0b0h	; b040  y.x.z.v.x.z...@.
-	defb 059h,0cah,058h,012h,05ah,0e4h,056h,00ah,058h,014h,05ah,0dch,0fbh,002h,050h,0b0h	; b050  Y.X.Z.V.X.Z...P.
-	defb 039h,0cah,038h,012h,03ah,0e4h,036h,00ah,038h,014h,03ah,0dch,0fbh,002h,060h,0b0h	; b060  9.8.:.6.8.:...`.
-	defb 009h,0cah,008h,012h,00ah,0e4h,006h,00ah,008h,014h,00ah,0dch,0fbh,002h,070h,0b0h	; b070  ..............p.
-	defb 0e0h,026h,0fah,0feh,002h,0e1h,001h,0e4h,01bh,003h,0e4h,01fh,004h,0e4h,01eh,005h	; b080  .&..............
-	defb 0e4h,01dh,006h,0e4h,01fh,007h,0e4h,01dh,008h,0e4h,01fh,009h,0e4h,01dh,00ah,0e4h	; b090  ................
-	defb 017h,00ah,0e4h,01fh,00ah,0e4h,01dh,00ah,0e4h,01fh,00ah,0e4h,01dh,00ah,00ah,0e4h	; b0a0  ................
-	defb 01eh,00ah,0e4h,01fh,00ah,0e4h,01dh,00ah,0e4h,01eh,00ah,0e4h,018h,00ah,0e4h,01dh	; b0b0  ................
-	defb 00ah,0e4h,01fh,00ah,0fbh,038h,0beh,0b0h,0e4h,01dh,009h,0e4h,01fh,009h,0fbh,010h	; b0c0  .....8..........
-	defb 0c8h,0b0h,0e4h,01dh,008h,0e4h,01fh,008h,0fbh,008h,0d2h,0b0h,0e4h,01dh,007h,0e4h	; b0d0  ................
-	defb 01fh,007h,0fbh,004h,0dch,0b0h,0e4h,01dh,006h,0e4h,01fh,006h,0fbh,004h,0e6h,0b0h	; b0e0  ................
-	defb 0e4h,01dh,005h,0e4h,01fh,005h,0fbh,004h,0f0h,0b0h,0e4h,01dh,004h,0e4h,01fh,004h	; b0f0  ................
-	defb 0fbh,004h,0fah,0b0h,0fah,0feh,002h,0f8h,01dh,0e2h,001h,038h,000h,04ah,0e4h,05ah	; b100  ...........8.J.Z
-	defb 00ah,068h,002h,07ah,0e4h,086h,00ah,098h,004h,09ah,0e4h,09ah,00ah,098h,006h,09ah	; b110  .h.z............
-	defb 0e4h,09eh,00ah,098h,008h,09ah,0e4h,09eh,00ah,098h,00ah,09ah,0e4h,09bh,00ah,098h	; b120  ................
-	defb 00ch,09ah,0e4h,09dh,00ah,098h,00eh,09ah,0e4h,09fh,00ah,098h,010h,09ah,0e4h,0f8h	; b130  ................
-	defb 015h,0e2h,001h,050h,02ah,060h,027h,070h,02ah,070h,027h,070h,02ah,070h,027h,070h	; b140  ...P*`'p*p'p*p'p
-	defb 02ah,0fbh,00ch,049h,0b1h,0e0h,003h,0fch,002h,041h,0b1h,0e0h,04dh,0fah	; b150  *..I.....A..M.
+	defb 0e0h,001h,0fah	; a3f0
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A3F3: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x15 (tools/partituras.py); lo leen p06:B51E (9 bytes)
+;   0xa3f3..0xa3fc  (9 bytes)
+DATA_partitura_A3F3:
+	defb 0feh,002h,0f9h,039h,09fh,0f9h,017h,0a4h,0ffh	; a3f3  ...9.....
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A3FC: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x15 (tools/partituras.py); lo leen p06:B51E (9 bytes)
+;   0xa3fc..0xa405  (9 bytes)
+DATA_partitura_A3FC:
+	defb 0feh,002h,0f9h,06ch,09fh,0f9h,03ch,0a4h,0ffh	; a3fc  ...l..<..
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A405: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x16 (tools/partituras.py); lo leen p06:B51E (9 bytes)
+;   0xa405..0xa40e  (9 bytes)
+DATA_partitura_A405:
+	defb 0feh,002h,0f9h,097h,09fh,0f9h,017h,0a4h,0ffh	; a405  .........
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A40E: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x15, 0x16 (tools/partituras.py); lo leen p06:B51E (83 bytes)
+;   0xa40e..0xa461  (83 bytes)
+DATA_partitura_A40E:
+	defb 0feh,002h,0f9h,0d1h,09fh,0f9h,03ch,0a4h,0ffh,0e0h,002h,0eeh,005h,0e2h,001h,063h	; a40e  ......<........c
+	defb 000h,074h,020h,081h,0fah,0e2h,002h,091h,06ah,081h,07fh,051h,097h,081h,0b3h,041h	; a41e  .t .....j..Q...A
+	defb 0d5h,031h,0d5h,021h,07fh,021h,0d5h,011h,0d5h,021h,0b3h,001h,0d8h,0fah,0f8h,023h	; a42e  .1.!.!...!.....#
+	defb 0e2h,001h,093h,000h,0a4h,020h,0b1h,0fah,0e2h,002h,0c1h,06ah,0b1h,07fh,071h,097h	; a43e  ..... .....j..q.
+	defb 0b1h,0b3h,061h,0d5h,041h,0d5h,031h,07fh,031h,0d5h,021h,0d5h,031h,0b3h,011h,0d8h	; a44e  ..a.A.1.1.!.1...
+	defb 0e0h,002h,0fah	; a45e
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A461: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x17 (tools/partituras.py); lo leen p06:B51E (12 bytes)
+;   0xa461..0xa46d  (12 bytes)
+DATA_partitura_A461:
+	defb 0feh,002h,0f9h,039h,09fh,0f9h,091h,0a4h,0f9h,051h,0adh,0ffh	; a461  ...9.....Q..
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A46D: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x17 (tools/partituras.py); lo leen p06:B51E (12 bytes)
+;   0xa46d..0xa479  (12 bytes)
+DATA_partitura_A46D:
+	defb 0feh,002h,0f9h,06ch,09fh,0f9h,0c6h,0a4h,0f9h,0d3h,0adh,0ffh	; a46d  ...l........
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A479: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x18 (tools/partituras.py); lo leen p06:B51E (12 bytes)
+;   0xa479..0xa485  (12 bytes)
+DATA_partitura_A479:
+	defb 0feh,002h,0f9h,097h,09fh,0f9h,091h,0a4h,0f9h,051h,0adh,0ffh	; a479  .........Q..
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A485: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x17, 0x18 (tools/partituras.py); lo leen p06:B51E (118 bytes)
+;   0xa485..0xa4fb  (118 bytes)
+DATA_partitura_A485:
+	defb 0feh,002h,0f9h,0d1h,09fh,0f9h,0c6h,0a4h,0f9h,0d3h,0adh,0ffh,0e0h,002h,0eeh,005h	; a485  ................
+	defb 0e2h,001h,064h,000h,063h,010h,071h,0e8h,071h,085h,071h,046h,061h,050h,071h,049h	; a495  ..d.c.q.q.qFaPqI
+	defb 071h,038h,063h,000h,074h,020h,071h,0fah,0e2h,002h,081h,06ah,071h,07fh,061h,097h	; a4a5  q8c.t q....jq.a.
+	defb 071h,0b3h,061h,0d5h,041h,0d5h,021h,07fh,021h,0d5h,011h,0d5h,021h,0b3h,001h,0d8h	; a4b5  q.a.A.!.!...!...
+	defb 0fah,0f8h,023h,0e2h,001h,0a4h,000h,0a3h,010h,0a1h,0e8h,0a1h,085h,0a1h,046h,091h	; a4c5  ..#...........F.
+	defb 050h,0a1h,049h,0a1h,038h,083h,000h,094h,020h,0a1h,0fah,0e2h,002h,0c1h,06ah,0b1h	; a4d5  P.I.8... .....j.
+	defb 07fh,061h,097h,0a1h,0b3h,0c1h,0d5h,0a1h,0d5h,021h,07fh,021h,0d5h,011h,0d5h,021h	; a4e5  .a.......!.!...!
+	defb 0b3h,001h,0d8h,0e0h,002h,0fah	; a4f5
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A4FB: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x19 (tools/partituras.py); lo leen p06:B51E (46 bytes)
+;   0xa4fb..0xa529  (46 bytes)
+DATA_partitura_A4FB:
+	defb 0feh,002h,0e0h,002h,0eeh,005h,0e2h,001h,0f7h,002h,0f9h,054h,0a5h,0dfh,0f9h,061h	; a4fb  ...........T...a
+	defb 0a5h,042h,0f0h,054h,010h,061h,0eah,0e2h,002h,061h,06ah,051h,07fh,041h,087h,051h	; a50b  .B.T.a...ajQ.A.Q
+	defb 0b3h,061h,0d5h,051h,0d5h,021h,07fh,021h,0d5h,011h,0d5h,021h,0b3h,0ffh	; a51b  .a.Q.!.!...!..
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A529: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x19 (tools/partituras.py); lo leen p06:B51E (81 bytes)
+;   0xa529..0xa57a  (81 bytes)
+DATA_partitura_A529:
+	defb 0feh,002h,0f8h,023h,0e2h,001h,0f9h,054h,0a5h,0f9h,061h,0a5h,062h,0f0h,074h,010h	; a529  ...#...T..a.b.t.
+	defb 081h,0eah,0e2h,002h,0a1h,06ah,091h,07fh,051h,087h,081h,0b3h,0a1h,0d5h,081h,0d5h	; a539  .....j..Q.......
+	defb 021h,07fh,021h,0d5h,011h,0d5h,021h,0b3h,0e0h,002h,0ffh,084h,000h,083h,010h,000h	; a549  !.!...!.........
+	defb 000h,081h,076h,081h,045h,081h,008h,0fah,030h,0fdh,040h,0f8h,021h,008h,031h,076h	; a559  ..v.E...0.@.!.1v
+	defb 020h,0fdh,021h,008h,031h,020h,041h,030h,041h,045h,031h,064h,031h,089h,031h,090h	; a569   .!.1 A0AE1d1.1.
+	defb 0fah	; a579
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A57A: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x1A (tools/partituras.py); lo leen p06:B51E (47 bytes)
+;   0xa57a..0xa5a9  (47 bytes)
+DATA_partitura_A57A:
+	defb 0feh,002h,0e0h,002h,0eeh,005h,0e2h,001h,074h,030h,063h,040h,061h,090h,061h,0c0h	; a57a  ........t0c@a.a.
+	defb 000h,000h,061h,0b6h,061h,075h,061h,050h,051h,043h,061h,038h,041h,032h,031h,038h	; a58a  ..a.auaPQCa8A218
+	defb 041h,0a6h,031h,032h,031h,038h,041h,050h,0f9h,0dbh,0a5h,0f9h,0e6h,0a5h,0ffh	; a59a  A.1218AP.......
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A5A9: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x1A (tools/partituras.py); lo leen p06:B51E (72 bytes)
+;   0xa5a9..0xa5f1  (72 bytes)
+DATA_partitura_A5A9:
+	defb 0feh,002h,0f8h,023h,0e2h,001h,0c4h,030h,0c3h,040h,0a1h,090h,0a1h,0c0h,000h,000h	; a5a9  ...#...0.@......
+	defb 0a1h,0b6h,0a1h,075h,091h,050h,061h,043h,081h,038h,041h,032h,021h,038h,031h,0a6h	; a5b9  ...u.PaC.8A2!81.
+	defb 021h,032h,021h,038h,031h,050h,0f9h,0dbh,0a5h,0f7h,002h,0f9h,0e6h,0a5h,0dfh,0e0h	; a5c9  !2!81P..........
+	defb 002h,0ffh,041h,060h,041h,075h,031h,094h,031h,0c9h,031h,0d0h,0fah,021h,038h,0f4h	; a5d9  ..A`Au1.1.1..!8.
+	defb 050h,060h,075h,094h,0c9h,0d0h,0f6h,0fah	; a5e9  P`u.....
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A5F1: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x1B (tools/partituras.py); lo leen p06:B51E (39 bytes)
+;   0xa5f1..0xa618  (39 bytes)
+DATA_partitura_A5F1:
+	defb 0feh,002h,0e0h,001h,0eeh,005h,0e2h,001h,083h,000h,082h,040h,081h,063h,0e2h,004h	; a5f1  ...........@.c..
+	defb 081h,034h,081h,064h,081h,076h,061h,084h,0e2h,001h,081h,0a4h,043h,000h,042h,040h	; a601  .4.d.va.....C.B@
+	defb 0e2h,004h,031h,076h,031h,084h,0ffh	; a611
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A618: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x1B (tools/partituras.py); lo leen p06:B51E (39 bytes)
+;   0xa618..0xa63f  (39 bytes)
+DATA_partitura_A618:
+	defb 0feh,002h,0f8h,023h,0e2h,001h,0a3h,000h,092h,040h,0a1h,063h,0e2h,004h,0a1h,034h	; a618  ...#.....@.c...4
+	defb 0a1h,064h,0a1h,076h,061h,084h,0e2h,001h,0a1h,0a4h,043h,000h,042h,040h,0e2h,004h	; a628  .d.va.....C.B@..
+	defb 001h,076h,001h,084h,0e0h,001h,0ffh	; a638
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A63F: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x1C (tools/partituras.py); lo leen p06:B51E (40 bytes)
+;   0xa63f..0xa667  (40 bytes)
+DATA_partitura_A63F:
+	defb 0feh,002h,0e0h,002h,0e2h,004h,080h,047h,080h,054h,0fbh,002h,045h,0a6h,070h,047h	; a63f  .......G.T..E.pG
+	defb 070h,054h,060h,047h,060h,054h,050h,047h,050h,054h,040h,047h,040h,054h,030h,054h	; a64f  pT`G`TPGPT@G@T0T
+	defb 030h,054h,0e0h,006h,0f9h,083h,0b0h,0ffh	; a65f  0T......
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A667: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x1C (tools/partituras.py); lo leen p06:B51E (44 bytes)
+;   0xa667..0xa693  (44 bytes)
+DATA_partitura_A667:
+	defb 0feh,002h,0f8h,023h,0e2h,004h,0c0h,047h,0c0h,054h,0fbh,002h,06dh,0a6h,060h,047h	; a667  ...#...G.T..m.`G
+	defb 060h,054h,040h,047h,040h,054h,030h,047h,030h,054h,010h,047h,010h,054h,000h,047h	; a677  `T@G@T0G0T.G.T.G
+	defb 000h,054h,000h,047h,000h,054h,0e0h,002h,0f9h,005h,0b1h,0ffh	; a687  .T.G.T......
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A693: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x1D (tools/partituras.py); lo leen p06:B51E (21 bytes)
+;   0xa693..0xa6a8  (21 bytes)
+DATA_partitura_A693:
+	defb 0feh,002h,0e0h,001h,0eeh,001h,0e2h,007h,090h,0a3h,090h,0c1h,0fbh,003h,09bh,0a6h	; a693  ................
+	defb 030h,0a3h,030h,0c1h,0ffh	; a6a3
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A6A8: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x1D (tools/partituras.py); lo leen p06:B51E (21 bytes)
+;   0xa6a8..0xa6bd  (21 bytes)
+DATA_partitura_A6A8:
+	defb 0feh,002h,0f8h,023h,0e2h,007h,0a0h,0a3h,0a0h,0c1h,0fbh,003h,0aeh,0a6h,010h,0a3h	; a6a8  ...#............
+	defb 010h,0c1h,0e0h,001h,0ffh	; a6b8
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A6BD: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x1E (tools/partituras.py); lo leen p06:B51E (6 bytes)
+;   0xa6bd..0xa6c3  (6 bytes)
+DATA_partitura_A6BD:
+	defb 0feh,001h,0f9h,083h,0b0h,0ffh	; a6bd
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A6C3: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x1E (tools/partituras.py); lo leen p06:B51E (6 bytes)
+;   0xa6c3..0xa6c9  (6 bytes)
+DATA_partitura_A6C3:
+	defb 0feh,001h,0f9h,005h,0b1h,0ffh	; a6c3
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A6C9: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x1F (tools/partituras.py); lo leen p06:B51E (6 bytes)
+;   0xa6c9..0xa6cf  (6 bytes)
+DATA_partitura_A6C9:
+	defb 0feh,001h,0f9h,051h,0adh,0ffh	; a6c9
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A6CF: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x1F (tools/partituras.py); lo leen p06:B51E (6 bytes)
+;   0xa6cf..0xa6d5  (6 bytes)
+DATA_partitura_A6CF:
+	defb 0feh,001h,0f9h,0d3h,0adh,0ffh	; a6cf
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A6D5: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x20 (tools/partituras.py); lo leen p06:B51E (6 bytes)
+;   0xa6d5..0xa6db  (6 bytes)
+DATA_partitura_A6D5:
+	defb 0feh,001h,0f9h,08fh,0afh,0ffh	; a6d5
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A6DB: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x20 (tools/partituras.py); lo leen p06:B51E (6 bytes)
+;   0xa6db..0xa6e1  (6 bytes)
+DATA_partitura_A6DB:
+	defb 0feh,001h,0f9h,0f6h,0afh,0ffh	; a6db
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A6E1: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x21 (tools/partituras.py); lo leen p06:B51E (6 bytes)
+;   0xa6e1..0xa6e7  (6 bytes)
+DATA_partitura_A6E1:
+	defb 0feh,001h,0f9h,070h,0aeh,0ffh	; a6e1
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A6E7: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x21 (tools/partituras.py); lo leen p06:B51E (6 bytes)
+;   0xa6e7..0xa6ed  (6 bytes)
+DATA_partitura_A6E7:
+	defb 0feh,001h,0f9h,0f2h,0aeh,0ffh	; a6e7
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A6ED: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x22 (tools/partituras.py); lo leen p06:B51E (6 bytes)
+;   0xa6ed..0xa6f3  (6 bytes)
+DATA_partitura_A6ED:
+	defb 0feh,001h,0f9h,070h,0aeh,0ffh	; a6ed
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A6F3: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x23 (tools/partituras.py); lo leen p06:B51E (27 bytes)
+;   0xa6f3..0xa70e  (27 bytes)
+DATA_partitura_A6F3:
+	defb 0feh,001h,0e9h,006h,0c3h,0feh,004h,0d0h,0e9h,004h,071h,0feh,001h,0e9h,001h,0c0h	; a6f3  ..........q.....
+	defb 0fbh,006h,0f8h,0a6h,0feh,004h,0d0h,0e9h,006h,07fh,0ffh	; a703  ...........
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A70E: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x23 (tools/partituras.py); lo leen p06:B51E (13 bytes)
+;   0xa70e..0xa71b  (13 bytes)
+DATA_partitura_A70E:
+	defb 0feh,001h,0e9h,006h,0c5h,0feh,004h,0d0h,0e9h,004h,087h,08fh,0ffh	; a70e  .............
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A71B: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x23 (tools/partituras.py); lo leen p06:B51E (66 bytes)
+;   0xa71b..0xa75d  (66 bytes)
+DATA_partitura_A71B:
+	defb 0feh,002h,0f9h,0d2h,0a7h,0e4h,01dh,00ah,0e4h,01fh,00ah,0fbh,018h,020h,0a7h,0e4h	; a71b  ............. ..
+	defb 01dh,009h,0e4h,01fh,009h,0fbh,010h,02ah,0a7h,0e4h,01dh,008h,0e4h,01fh,008h,0fbh	; a72b  .......*........
+	defb 008h,034h,0a7h,0e4h,01dh,007h,0e4h,01fh,007h,0fbh,006h,03eh,0a7h,0e4h,01dh,004h	; a73b  .4.........>....
+	defb 0e4h,01fh,004h,0fbh,004h,048h,0a7h,0e4h,01dh,003h,0e4h,01fh,003h,0fbh,002h,052h	; a74b  .....H.........R
+	defb 0a7h,0ffh	; a75b
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A75D: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x23 (tools/partituras.py); lo leen p06:B51E (36 bytes)
+;   0xa75d..0xa781  (36 bytes)
+DATA_partitura_A75D:
+	defb 0feh,002h,0f9h,00ch,0a8h,0f9h,0c5h,0a7h,0fbh,00bh,062h,0a7h,0f7h,004h,0f9h,0c5h	; a75d  ..........b.....
+	defb 0a7h,0fbh,004h,06bh,0a7h,0f7h,007h,0f9h,0c5h,0a7h,0fbh,002h,074h,0a7h,0f7h,008h	; a76d  ...k........t...
+	defb 0f9h,0c5h,0a7h,0ffh	; a77d
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A781: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x23 (tools/partituras.py); lo leen p06:B51E (19 bytes)
+;   0xa781..0xa794  (19 bytes)
+DATA_partitura_A781:
+	defb 0feh,001h,0e9h,006h,0c2h,0feh,004h,0d0h,0f8h,004h,0e9h,004h,0a1h,0fbh,00ah,08dh	; a781  ................
+	defb 0a7h,0afh,0ffh	; a791
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A794: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x23 (tools/partituras.py); lo leen p06:B51E (19 bytes)
+;   0xa794..0xa7a7  (19 bytes)
+DATA_partitura_A794:
+	defb 0feh,001h,0e9h,006h,0c2h,0feh,004h,0d0h,0f8h,00dh,0e9h,004h,061h,0fbh,00ah,0a0h	; a794  ............a...
+	defb 0a7h,06fh,0ffh	; a7a4
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A7A7: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x23 (tools/partituras.py); lo leen p06:B51E (16 bytes)
+;   0xa7a7..0xa7b7  (16 bytes)
+DATA_partitura_A7A7:
+	defb 0feh,001h,0e9h,006h,0c2h,0feh,004h,0d0h,0f8h,004h,0e9h,004h,05fh,053h,05fh,0ffh	; a7a7  ............_S_.
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A7B7: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x23, 0x24, 0x28 (tools/partituras.py); lo leen p06:B51E (142 bytes)
+;   0xa7b7..0xa845  (142 bytes)
+DATA_partitura_A7B7:
+	defb 0feh,001h,0e9h,006h,0c2h,0feh,004h,0d0h,0e9h,004h,05bh,052h,05fh,0ffh,089h,0cah	; a7b7  ..........[R_...
+	defb 088h,012h,08ah,0e4h,086h,00ah,088h,014h,08ah,0dch,0fah,0e1h,001h,0e4h,01bh,002h	; a7c7  ................
+	defb 0e4h,01fh,003h,0e4h,01eh,004h,0e4h,01dh,005h,0e4h,01fh,006h,0e4h,01dh,007h,0e4h	; a7d7  ................
+	defb 01fh,008h,0e4h,01dh,009h,0e4h,017h,009h,0e4h,01fh,009h,0e4h,01dh,009h,0e4h,01fh	; a7e7  ................
+	defb 009h,0e4h,01dh,009h,009h,0e4h,01eh,009h,0e4h,01fh,009h,0e4h,01dh,009h,0e4h,01eh	; a7f7  ................
+	defb 009h,0e4h,018h,009h,0fah,0f8h,01dh,0e2h,001h,018h,000h,02ah,0e4h,03ah,00ah,048h	; a807  ...........*.:.H
+	defb 002h,05ah,0e4h,066h,00ah,078h,004h,07ah,0e4h,07ah,00ah,078h,006h,07ah,0e4h,07eh	; a817  .Z.f.x.z.z.x.z.~
+	defb 00ah,078h,008h,07ah,0e4h,07eh,00ah,078h,00ah,07ah,0e4h,07bh,00ah,078h,00ch,07ah	; a827  .x.z.~.x.z.{.x.z
+	defb 0e4h,07dh,00ah,078h,00eh,07ah,0e4h,07fh,00ah,078h,010h,07ah,0e4h,0fah	; a837  .}.x.z...x.z..
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A845: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x24 (tools/partituras.py); lo leen p06:B51E (73 bytes)
+;   0xa845..0xa88e  (73 bytes)
+DATA_partitura_A845:
+	defb 0feh,002h,0f9h,015h,0a9h,0feh,002h,0f9h,0d2h,0a7h,0e4h,01dh,00ah,0e4h,01fh,00ah	; a845  ................
+	defb 0fbh,020h,04fh,0a8h,0e4h,01dh,009h,0e4h,01fh,009h,0fbh,010h,059h,0a8h,0e4h,01dh	; a855  . O.........Y...
+	defb 008h,0e4h,01fh,008h,0fbh,008h,063h,0a8h,0e4h,01dh,007h,0e4h,01fh,007h,0fbh,006h	; a865  ......c.........
+	defb 06dh,0a8h,0e4h,01dh,005h,0e4h,01fh,005h,0fbh,004h,077h,0a8h,0e4h,01dh,003h,0e4h	; a875  m.........w.....
+	defb 01fh,003h,0fbh,002h,081h,0a8h,0e0h,00fh,0ffh	; a885  .........
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A88E: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x24 (tools/partituras.py); lo leen p06:B51E (41 bytes)
+;   0xa88e..0xa8b7  (41 bytes)
+DATA_partitura_A88E:
+	defb 0feh,002h,0f9h,032h,0a9h,0feh,002h,0f9h,00ch,0a8h,0f9h,0c5h,0a7h,0fbh,00dh,098h	; a88e  ...2............
+	defb 0a8h,0f7h,004h,0f9h,0c5h,0a7h,0fbh,004h,0a1h,0a8h,0f7h,006h,0f9h,0c5h,0a7h,0fbh	; a89e  ................
+	defb 002h,0aah,0a8h,0f7h,008h,0f9h,0c5h,0a7h,0ffh	; a8ae  .........
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A8B7: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x25 (tools/partituras.py); lo leen p06:B51E (6 bytes)
+;   0xa8b7..0xa8bd  (6 bytes)
+DATA_partitura_A8B7:
+	defb 0feh,002h,0f9h,051h,0adh,0ffh	; a8b7
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A8BD: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x25 (tools/partituras.py); lo leen p06:B51E (6 bytes)
+;   0xa8bd..0xa8c3  (6 bytes)
+DATA_partitura_A8BD:
+	defb 0feh,002h,0f9h,0d3h,0adh,0ffh	; a8bd
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A8C3: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x26 (tools/partituras.py); lo leen p06:B51E (35 bytes)
+;   0xa8c3..0xa8e6  (35 bytes)
+DATA_partitura_A8C3:
+	defb 0feh,002h,0eeh,002h,0e0h,001h,0e2h,001h,070h,0c0h,080h,060h,080h,030h,060h,018h	; a8c3  ........p..`.0`.
+	defb 030h,018h,020h,018h,0e0h,003h,0e2h,001h,030h,0c0h,030h,060h,030h,030h,020h,018h	; a8d3  0. .....0.0`00 .
+	defb 0e0h,001h,0ffh	; a8e3
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A8E6: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x26 (tools/partituras.py); lo leen p06:B51E (35 bytes)
+;   0xa8e6..0xa909  (35 bytes)
+DATA_partitura_A8E6:
+	defb 0feh,002h,0f8h,005h,0e2h,001h,0a0h,0c0h,0b0h,060h,0b0h,030h,070h,018h,020h,018h	; a8e6  .........`.0p. .
+	defb 000h,018h,0e0h,003h,0e2h,001h,020h,0c0h,020h,060h,020h,030h,020h,018h,000h,018h	; a8f6  ...... . ` 0 ...
+	defb 000h,018h,0ffh	; a906
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A909: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x27 (tools/partituras.py); lo leen p06:B51E (6 bytes)
+;   0xa909..0xa90f  (6 bytes)
+DATA_partitura_A909:
+	defb 0feh,002h,0f9h,015h,0a9h,0ffh	; a909
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A90F: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x24, 0x27 (tools/partituras.py); lo leen p06:B51E (70 bytes)
+;   0xa90f..0xa955  (70 bytes)
+DATA_partitura_A90F:
+	defb 0feh,002h,0f9h,032h,0a9h,0ffh,0e0h,001h,0e2h,003h,080h,0beh,080h,061h,090h,020h	; a90f  ...2.........a.
+	defb 0f4h,010h,015h,013h,0f6h,050h,020h,0f4h,010h,015h,013h,0f6h,030h,020h,0f4h,010h	; a91f  .....P .....0 ..
+	defb 015h,013h,0fah,0f8h,005h,0e2h,003h,0c0h,0bah,0c0h,05dh,0f8h,01dh,050h,080h,050h	; a92f  ..........]..P.P
+	defb 040h,090h,052h,090h,040h,020h,080h,0f4h,040h,052h,040h,0f6h,000h,080h,0f4h,040h	; a93f  @.R.@ ..@R@....@
+	defb 052h,040h,0f6h,0e0h,001h,0fah	; a94f
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A955: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x48 (tools/partituras.py); lo leen p06:B51E (1 bytes)
+;   0xa955..0xa956  (1 bytes)
+DATA_partitura_A955:
+	defb 0ffh	; a955
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0xa956..0xa977  (33 bytes)
+DATA_A956:
+	defb 0feh,002h,0e0h,005h,0eeh,001h,0e2h,005h,090h,0ach,061h,00fh,090h,0ach,041h,00fh	; a956  ..........a...A.
+	defb 060h,0ach,041h,00fh,050h,0ach,031h,00fh,040h,0ach,031h,00fh,030h,0ach,021h,00fh	; a966  `.A.P.1.@.1.0.!.
+	defb 0ffh	; a976
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A977: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x48 (tools/partituras.py); lo leen p06:B51E (1 bytes)
+;   0xa977..0xa978  (1 bytes)
+DATA_partitura_A977:
+	defb 0ffh	; a977
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0xa978..0xa999  (33 bytes)
+DATA_A978:
+	defb 0feh,002h,0f8h,025h,0e2h,005h,0c0h,0ach,081h,00fh,0c0h,0ach,031h,00fh,050h,0ach	; a978  ...%........1.P.
+	defb 021h,00fh,030h,0ach,001h,00fh,020h,0ach,001h,00fh,010h,0ach,001h,00fh,000h,0ach	; a988  !.0... .........
+	defb 0ffh	; a998
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A999: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x28 (tools/partituras.py); lo leen p06:B51E (101 bytes)
+;   0xa999..0xa9fe  (101 bytes)
+DATA_partitura_A999:
+	defb 0feh,002h,0e3h,001h,0e4h,017h,070h,01fh,030h,060h,000h,000h,0e2h,001h,0e5h,009h	; a999  ......p.0`......
+	defb 009h,000h,000h,098h,0e3h,001h,0e4h,002h,0b0h,00eh,060h,0a0h,030h,0a0h,000h,000h	; a9a9  ..........`.0...
+	defb 0e3h,003h,0e4h,001h,080h,004h,0e2h,001h,080h,098h,0e3h,004h,0e4h,002h,050h,00eh	; a9b9  ..............P.
+	defb 0e3h,003h,0e4h,001h,040h,004h,0e2h,001h,050h,098h,0e3h,004h,0e4h,002h,020h,00eh	; a9c9  ....@...P..... .
+	defb 0e3h,003h,0e4h,001h,010h,004h,0e2h,001h,030h,098h,0e3h,004h,0e4h,002h,000h,00eh	; a9d9  ........0.......
+	defb 0e3h,003h,0e4h,001h,000h,004h,0feh,001h,0e9h,006h,0c7h,0feh,004h,0d0h,0e9h,004h	; a9e9  ................
+	defb 0eeh,001h,08fh,08fh,0ffh	; a9f9
+
+; ----------------------------------------------------------------------
+; DATOS partitura_A9FE: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x28 (tools/partituras.py); lo leen p06:B51E (43 bytes)
+;   0xa9fe..0xaa29  (43 bytes)
+DATA_partitura_A9FE:
+	defb 0feh,002h,0e0h,003h,0e2h,001h,0c0h,097h,0e2h,007h,000h,097h,0e2h,001h,060h,097h	; a9fe  ..............`.
+	defb 0e0h,007h,0e2h,001h,040h,097h,0e0h,007h,0e2h,001h,020h,097h,0e0h,007h,0feh,001h	; aa0e  ....@..... .....
+	defb 0e9h,006h,0c7h,0feh,004h,0d0h,0e9h,004h,08fh,08fh,0ffh	; aa1e  ...........
+
+; ----------------------------------------------------------------------
+; DATOS partitura_AA29: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x28 (tools/partituras.py); lo leen p06:B51E (96 bytes)
+;   0xaa29..0xaa89  (96 bytes)
+DATA_partitura_AA29:
+	defb 0feh,002h,0e0h,003h,0e2h,001h,0c0h,099h,0e2h,007h,000h,099h,0e2h,001h,060h,099h	; aa29  ..............`.
+	defb 0e0h,007h,0e2h,001h,040h,099h,0e0h,007h,0e2h,001h,020h,099h,0e0h,007h,0f7h,001h	; aa39  ....@..... .....
+	defb 0f9h,0d2h,0a7h,0e4h,01dh,009h,0e4h,01fh,009h,0fbh,030h,04ch,0aah,0e4h,01dh,008h	; aa49  ..........0L....
+	defb 0e4h,01fh,008h,0fbh,00ch,056h,0aah,0e4h,01dh,007h,0e4h,01fh,007h,0fbh,008h,060h	; aa59  .....V.........`
+	defb 0aah,0e4h,01dh,006h,0e4h,01fh,006h,0fbh,006h,06ah,0aah,0e4h,01dh,004h,0e4h,01fh	; aa69  .........j......
+	defb 004h,0fbh,004h,074h,0aah,0e4h,01dh,003h,0e4h,01fh,003h,0fbh,002h,07eh,0aah,0ffh	; aa79  ...t.........~..
+
+; ----------------------------------------------------------------------
+; DATOS partitura_AA89: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x28 (tools/partituras.py); lo leen p06:B51E (115 bytes)
+;   0xaa89..0xaafc  (115 bytes)
+DATA_partitura_AA89:
+	defb 0feh,002h,0e0h,003h,0e2h,001h,0f8h,031h,0c0h,098h,0e0h,007h,0f8h,005h,0e2h,001h	; aa89  .......1........
+	defb 040h,098h,0e0h,007h,0e2h,001h,000h,098h,0e0h,00eh,0f8h,01dh,0e2h,001h,008h,000h	; aa99  @...............
+	defb 01ah,0e4h,02ah,00ah,038h,002h,04ah,0e4h,056h,00ah,068h,004h,06ah,0e4h,06ah,00ah	; aaa9  ..*.8.J.V.h.j.j.
+	defb 068h,006h,06ah,0e4h,06eh,00ah,068h,008h,06ah,0e4h,06eh,00ah,068h,00ah,06ah,0e4h	; aab9  h.j.n.h.j.n.h.j.
+	defb 06bh,00ah,068h,00ch,06ah,0e4h,06dh,00ah,068h,00eh,06ah,0e4h,06fh,00ah,068h,010h	; aac9  k.h.j.m.h.j.o.h.
+	defb 06ah,0e4h,0f7h,001h,0f9h,0c5h,0a7h,0fbh,00ch,0ddh,0aah,0f7h,005h,0f9h,0c5h,0a7h	; aad9  j...............
+	defb 0fbh,004h,0e6h,0aah,0f7h,007h,0f9h,0c5h,0a7h,0fbh,002h,0efh,0aah,0f7h,008h,0f9h	; aae9  ................
+	defb 0c5h,0a7h,0ffh	; aaf9
+
+; ----------------------------------------------------------------------
+; DATOS partitura_AAFC: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x28 (tools/partituras.py); lo leen p06:B51E (28 bytes)
+;   0xaafc..0xab18  (28 bytes)
+DATA_partitura_AAFC:
+	defb 0feh,002h,0e0h,003h,0e2h,001h,0f8h,031h,0c0h,098h,0e0h,01fh,0e0h,003h,0feh,004h	; aafc  .......1........
+	defb 0d0h,0f8h,004h,0e9h,004h,0a1h,0fbh,00eh,011h,0abh,0afh,0ffh	; ab0c  ............
+
+; ----------------------------------------------------------------------
+; DATOS partitura_AB18: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x28 (tools/partituras.py); lo leen p06:B51E (31 bytes)
+;   0xab18..0xab37  (31 bytes)
+DATA_partitura_AB18:
+	defb 0feh,002h,0e0h,003h,0e2h,001h,0f8h,00dh,0c0h,098h,0e0h,01fh,0feh,001h,0e9h,006h	; ab18  ................
+	defb 0c1h,0feh,004h,0d0h,0f8h,00dh,0e9h,004h,061h,0fbh,00dh,030h,0abh,06fh,0ffh	; ab28  ........a..0.o.
+
+; ----------------------------------------------------------------------
+; DATOS partitura_AB37: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x28 (tools/partituras.py); lo leen p06:B51E (28 bytes)
+;   0xab37..0xab53  (28 bytes)
+DATA_partitura_AB37:
+	defb 0feh,002h,0e0h,003h,0f8h,00ch,0e2h,001h,0c0h,097h,0e0h,01fh,0feh,001h,0e9h,006h	; ab37  ................
+	defb 0c0h,0feh,004h,0d0h,0f8h,005h,0e9h,004h,05fh,053h,05fh,0ffh	; ab47  ........_S_.
+
+; ----------------------------------------------------------------------
+; DATOS partitura_AB53: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x28 (tools/partituras.py); lo leen p06:B51E (24 bytes)
+;   0xab53..0xab6b  (24 bytes)
+DATA_partitura_AB53:
+	defb 0feh,002h,0e0h,003h,0e2h,001h,0c0h,098h,0e0h,01fh,0feh,001h,0e9h,006h,0c2h,0feh	; ab53  ................
+	defb 004h,0d0h,0e9h,004h,05bh,052h,05fh,0ffh	; ab63  ....[R_.
+
+; ----------------------------------------------------------------------
+; DATOS partitura_AB6B: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x29 (tools/partituras.py); lo leen p06:B51E (40 bytes)
+;   0xab6b..0xab93  (40 bytes)
+DATA_partitura_AB6B:
+	defb 0feh,002h,0e3h,001h,0e4h,006h,0c0h,08fh,0e4h,004h,040h,024h,0e4h,006h,070h,01fh	; ab6b  ..........@$..p.
+	defb 0e0h,004h,0e3h,001h,0e4h,003h,030h,01fh,0e0h,007h,0e3h,001h,020h,01fh,0e0h,008h	; ab7b  ......0..... ...
+	defb 0e3h,001h,010h,01fh,0f9h,08fh,0afh,0ffh	; ab8b  ........
+
+; ----------------------------------------------------------------------
+; DATOS partitura_AB93: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x29 (tools/partituras.py); lo leen p06:B51E (21 bytes)
+;   0xab93..0xaba8  (21 bytes)
+DATA_partitura_AB93:
+	defb 0feh,002h,0f8h,014h,0e2h,001h,0a1h,070h,001h,070h,0e0h,005h,0e2h,001h,0f8h,00ch	; ab93  .......p.p......
+	defb 001h,070h,0e0h,011h,0ffh	; aba3
+
+; ----------------------------------------------------------------------
+; DATOS partitura_ABA8: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x2A (tools/partituras.py); lo leen p06:B51E (38 bytes)
+;   0xaba8..0xabce  (38 bytes)
+DATA_partitura_ABA8:
+	defb 0feh,002h,0e2h,001h,0e5h,009h,009h,000h,000h,0b0h,0e3h,001h,0e4h,008h,0b0h,008h	; aba8  ................
+	defb 0e0h,005h,0e2h,001h,090h,0b0h,0e0h,007h,0e2h,001h,050h,0b0h,0e0h,008h,0e2h,001h	; abb8  ..........P.....
+	defb 040h,0b0h,0f9h,051h,0adh,0ffh	; abc8
+
+; ----------------------------------------------------------------------
+; DATOS partitura_ABCE: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x2A (tools/partituras.py); lo leen p06:B51E (31 bytes)
+;   0xabce..0xabed  (31 bytes)
+DATA_partitura_ABCE:
+	defb 0feh,002h,0f8h,004h,0e2h,001h,0c0h,0b1h,000h,0b2h,0e0h,005h,0e2h,001h,0f8h,00ch	; abce  ................
+	defb 040h,0b1h,0e0h,007h,0e2h,001h,020h,0b1h,0e0h,008h,0e2h,001h,000h,0b1h,0ffh	; abde  @..... ........
+
+; ----------------------------------------------------------------------
+; DATOS partitura_ABED: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x2B (tools/partituras.py); lo leen p06:B51E (74 bytes)
+;   0xabed..0xac37  (74 bytes)
+DATA_partitura_ABED:
+	defb 0feh,002h,0e3h,001h,0e4h,017h,0c0h,021h,0e4h,01dh,040h,062h,0e2h,001h,0e5h,009h	; abed  .......!..@b....
+	defb 009h,000h,000h,098h,0e3h,001h,0e4h,00eh,080h,03eh,040h,03eh,030h,03eh,020h,03eh	; abfd  .........>@>0> >
+	defb 0e2h,001h,0a0h,098h,0e3h,001h,060h,03eh,040h,03eh,030h,03eh,0e0h,004h,0e2h,001h	; ac0d  ......`>@>0>....
+	defb 060h,098h,0e3h,001h,040h,03eh,030h,03eh,020h,03eh,0e0h,004h,0e2h,001h,040h,098h	; ac1d  `...@>0> >....@.
+	defb 0e3h,001h,030h,03eh,020h,03eh,0f9h,083h,0b0h,0ffh	; ac2d  ..0> >....
+
+; ----------------------------------------------------------------------
+; DATOS partitura_AC37: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x2B (tools/partituras.py); lo leen p06:B51E (53 bytes)
+;   0xac37..0xac6c  (53 bytes)
+DATA_partitura_AC37:
+	defb 0feh,002h,0f8h,028h,0e2h,001h,041h,021h,000h,000h,0f8h,031h,0c0h,096h,0f8h,00bh	; ac37  ...(..A!...1....
+	defb 020h,030h,000h,030h,000h,030h,000h,000h,0f8h,031h,080h,096h,0f8h,00bh,000h,030h	; ac47   0.0.0...1.....0
+	defb 0e0h,006h,0f8h,031h,0e2h,001h,030h,096h,0f8h,00bh,000h,030h,0e0h,006h,0e2h,001h	; ac57  ...1..0....0....
+	defb 0f8h,005h,010h,096h,0ffh	; ac67
+
+; ----------------------------------------------------------------------
+; DATOS partitura_AC6C: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x47 (tools/partituras.py); lo leen p06:B51E (74 bytes)
+;   0xac6c..0xacb6  (74 bytes)
+DATA_partitura_AC6C:
+	defb 0feh,002h,0e3h,001h,0e4h,017h,0c0h,01fh,040h,060h,0e2h,001h,0e5h,009h,009h,000h	; ac6c  ........@`......
+	defb 000h,078h,0e3h,001h,0e4h,013h,0c0h,01fh,060h,060h,0e2h,003h,080h,078h,0e3h,002h	; ac7c  .x......``...x..
+	defb 080h,01fh,050h,060h,0e2h,003h,060h,078h,0e3h,002h,070h,01fh,040h,060h,0e2h,003h	; ac8c  ..P`..`x..p.@`..
+	defb 050h,078h,0e3h,002h,060h,01fh,030h,060h,0e2h,003h,040h,078h,0e3h,002h,050h,01fh	; ac9c  Px..`.0`..@x..P.
+	defb 020h,060h,0e2h,003h,030h,078h,0f9h,083h,0b0h,0ffh	; acac   `..0x....
+
+; ----------------------------------------------------------------------
+; DATOS partitura_ACB6: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x47 (tools/partituras.py); lo leen p06:B51E (48 bytes)
+;   0xacb6..0xace6  (48 bytes)
+DATA_partitura_ACB6:
+	defb 0feh,002h,0f8h,028h,0e2h,001h,0c1h,0d6h,020h,010h,0f8h,031h,0c0h,078h,0f8h,004h	; acb6  ...(.... ..1.x..
+	defb 0e0h,004h,0e2h,001h,090h,078h,0e0h,006h,0e2h,001h,040h,078h,0f8h,00ch,0e0h,006h	; acc6  .....x....@x....
+	defb 0e2h,001h,040h,078h,0e0h,006h,0e2h,001h,020h,078h,0e0h,007h,0f9h,005h,0b1h,0ffh	; acd6  ..@x.... x......
+
+; ----------------------------------------------------------------------
+; DATOS partitura_ACE6: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x2C (tools/partituras.py); lo leen p06:B51E (35 bytes)
+;   0xace6..0xad09  (35 bytes)
+DATA_partitura_ACE6:
+	defb 0feh,002h,0e0h,060h,0feh,004h,0e9h,004h,0d0h,0a3h,0a3h,0a7h,0a3h,0a3h,0a7h,0a3h	; ace6  ...`............
+	defb 0a3h,0a3h,0a3h,0a3h,0a3h,0a7h,0fbh,002h,0efh,0ach,0a1h,0fbh,010h,000h,0adh,0abh	; acf6  ................
+	defb 0a1h,0abh,0ffh	; ad06
+
+; ----------------------------------------------------------------------
+; DATOS partitura_AD09: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x2C (tools/partituras.py); lo leen p06:B51E (35 bytes)
+;   0xad09..0xad2c  (35 bytes)
+DATA_partitura_AD09:
+	defb 0feh,002h,0e0h,060h,0feh,004h,0e9h,004h,0d1h,0b3h,0b3h,0b7h,0b3h,0b3h,0b7h,0b3h	; ad09  ...`............
+	defb 0b3h,0b3h,0b3h,0b3h,0b3h,0b7h,0fbh,002h,012h,0adh,0b1h,0fbh,010h,023h,0adh,0bbh	; ad19  .............#..
+	defb 0b1h,0bbh,0ffh	; ad29
+
+; ----------------------------------------------------------------------
+; DATOS partitura_AD2C: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
+;   notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos
+;   0x07, 0x08, 0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x12, 0x17, 0x18, 0x1C, 0x1E y
+;   11 mas (tools/partituras.py); lo leen p06:B51E (1074 bytes)
+;   0xad2c..0xb15e  (1074 bytes)
+DATA_partitura_AD2C:
+	defb 0feh,002h,0e0h,060h,0feh,004h,0f8h,028h,0e9h,004h,0d0h,053h,053h,057h,053h,053h	; ad2c  ...`...(...SSWSS
+	defb 057h,053h,053h,053h,053h,053h,053h,057h,0fbh,002h,037h,0adh,051h,0fbh,010h,048h	; ad3c  WSSSSSSW..7.Q..H
+	defb 0adh,05bh,051h,06bh,0ffh,0feh,002h,0e1h,001h,0e4h,01bh,001h,0e4h,01fh,002h,0e4h	; ad4c  .[Qk............
+	defb 01eh,003h,0e4h,01dh,004h,0e4h,01fh,005h,0e4h,01dh,006h,0e4h,01fh,007h,0e4h,01dh	; ad5c  ................
+	defb 008h,0e4h,017h,008h,0e4h,01fh,008h,0e4h,01dh,008h,0e4h,01fh,008h,0e4h,01dh,008h	; ad6c  ................
+	defb 008h,0e4h,01eh,008h,0e4h,01fh,008h,0e4h,01dh,008h,0e4h,01eh,008h,0e4h,018h,008h	; ad7c  ................
+	defb 0e4h,01dh,009h,0e4h,01fh,009h,0fbh,030h,08ch,0adh,0e4h,01dh,008h,0e4h,01fh,008h	; ad8c  .......0........
+	defb 0fbh,00ch,096h,0adh,0e4h,01dh,007h,0e4h,01fh,007h,0fbh,008h,0a0h,0adh,0e4h,01dh	; ad9c  ................
+	defb 006h,0e4h,01fh,006h,0fbh,006h,0aah,0adh,0e4h,01dh,005h,0e4h,01fh,005h,0fbh,005h	; adac  ................
+	defb 0b4h,0adh,0e4h,01dh,004h,0e4h,01fh,004h,0fbh,004h,0beh,0adh,0e4h,01dh,003h,0e4h	; adbc  ................
+	defb 01fh,003h,0fbh,002h,0c8h,0adh,0fah,0feh,002h,0f8h,01dh,0e2h,001h,038h,000h,04ah	; adcc  .............8.J
+	defb 0e4h,05ah,00ah,068h,002h,07ah,0e4h,086h,00ah,098h,004h,09ah,0e4h,09ah,00ah,098h	; addc  .Z.h.z..........
+	defb 006h,09ah,0e4h,09eh,00ah,098h,008h,09ah,0e4h,09eh,00ah,098h,00ah,09ah,0e4h,09bh	; adec  ................
+	defb 00ah,098h,00ch,09ah,0e4h,09dh,00ah,098h,00eh,09ah,0e4h,09fh,00ah,098h,010h,09ah	; adfc  ................
+	defb 0e4h,0a9h,0cah,0a8h,012h,0aah,0e4h,0a6h,00ah,0a8h,014h,0aah,0dch,0fbh,00ch,00dh	; ae0c  ................
+	defb 0aeh,079h,0cah,078h,012h,07ah,0e4h,076h,00ah,078h,014h,07ah,0dch,0fbh,004h,01dh	; ae1c  .y.x.z.v.x.z....
+	defb 0aeh,079h,0cah,078h,012h,07ah,0e4h,076h,00ah,078h,014h,07ah,0dch,0fbh,002h,02dh	; ae2c  .y.x.z.v.x.z...-
+	defb 0aeh,059h,0cah,058h,012h,05ah,0e4h,056h,00ah,058h,014h,05ah,0dch,0fbh,002h,03dh	; ae3c  .Y.X.Z.V.X.Z...=
+	defb 0aeh,039h,0cah,038h,012h,03ah,0e4h,036h,00ah,038h,014h,03ah,0dch,0fbh,002h,04dh	; ae4c  .9.8.:.6.8.:...M
+	defb 0aeh,009h,0cah,008h,012h,00ah,0e4h,006h,00ah,008h,014h,00ah,0dch,0fbh,002h,05dh	; ae5c  ...............]
+	defb 0aeh,0e0h,013h,0fah,0feh,002h,0e1h,001h,0e4h,01bh,001h,0e4h,01fh,002h,0e4h,01eh	; ae6c  ................
+	defb 003h,0e4h,01dh,004h,0e4h,01fh,005h,0e4h,01dh,006h,0e4h,01fh,007h,0e4h,01dh,008h	; ae7c  ................
+	defb 0e4h,017h,008h,0e4h,01fh,008h,0e4h,01dh,008h,0e4h,01fh,008h,0e4h,01dh,008h,008h	; ae8c  ................
+	defb 0e4h,01eh,008h,0e4h,01fh,008h,0e4h,01dh,008h,0e4h,01eh,008h,0e4h,018h,008h,0e4h	; ae9c  ................
+	defb 01dh,009h,0e4h,01fh,009h,0fbh,070h,0abh,0aeh,0e4h,01dh,008h,0e4h,01fh,008h,0fbh	; aeac  ......p.........
+	defb 00ch,0b5h,0aeh,0e4h,01dh,007h,0e4h,01fh,007h,0fbh,008h,0bfh,0aeh,0e4h,01dh,006h	; aebc  ................
+	defb 0e4h,01fh,006h,0fbh,006h,0c9h,0aeh,0e4h,01dh,005h,0e4h,01fh,005h,0fbh,005h,0d3h	; aecc  ................
+	defb 0aeh,0e4h,01dh,004h,0e4h,01fh,004h,0fbh,004h,0ddh,0aeh,0e4h,01dh,003h,0e4h,01fh	; aedc  ................
+	defb 003h,0fbh,002h,0e7h,0aeh,0fah,0feh,002h,0f8h,01dh,0e2h,001h,038h,000h,04ah,0e4h	; aeec  ............8.J.
+	defb 05ah,00ah,068h,002h,07ah,0e4h,086h,00ah,098h,004h,09ah,0e4h,09ah,00ah,098h,006h	; aefc  Z.h.z...........
+	defb 09ah,0e4h,09eh,00ah,098h,008h,09ah,0e4h,09eh,00ah,098h,00ah,09ah,0e4h,09bh,00ah	; af0c  ................
+	defb 098h,00ch,09ah,0e4h,09dh,00ah,098h,00eh,09ah,0e4h,09fh,00ah,098h,010h,09ah,0e4h	; af1c  ................
+	defb 0a9h,0cah,0a8h,012h,0aah,0e4h,0a6h,00ah,0a8h,014h,0aah,0dch,0fbh,01ch,02ch,0afh	; af2c  ..............,.
+	defb 079h,0cah,078h,012h,07ah,0e4h,076h,00ah,078h,014h,07ah,0dch,0fbh,005h,03ch,0afh	; af3c  y.x.z.v.x.z...<.
+	defb 079h,0cah,078h,012h,07ah,0e4h,076h,00ah,078h,014h,07ah,0dch,0fbh,002h,04ch,0afh	; af4c  y.x.z.v.x.z...L.
+	defb 059h,0cah,058h,012h,05ah,0e4h,056h,00ah,058h,014h,05ah,0dch,0fbh,002h,05ch,0afh	; af5c  Y.X.Z.V.X.Z...\.
+	defb 039h,0cah,038h,012h,03ah,0e4h,036h,00ah,038h,014h,03ah,0dch,0fbh,002h,06ch,0afh	; af6c  9.8.:.6.8.:...l.
+	defb 009h,0cah,008h,012h,00ah,0e4h,006h,00ah,008h,014h,00ah,0dch,0fbh,002h,07ch,0afh	; af7c  ..............|.
+	defb 0e0h,045h,0fah,0feh,002h,0e1h,001h,0e4h,01fh,002h,0e4h,01dh,003h,0e4h,01fh,004h	; af8c  .E..............
+	defb 0e4h,01fh,005h,0e4h,01dh,007h,0e4h,01fh,007h,0e4h,01dh,007h,007h,0e4h,01eh,007h	; af9c  ................
+	defb 0e4h,018h,007h,0e4h,01dh,009h,0e4h,01fh,009h,0fbh,022h,0afh,0afh,0e4h,01dh,008h	; afac  ..........".....
+	defb 0e4h,01fh,008h,0fbh,00ah,0b9h,0afh,0e4h,01dh,007h,0e4h,01fh,007h,0fbh,008h,0c3h	; afbc  ................
+	defb 0afh,0e4h,01dh,006h,0e4h,01fh,006h,0fbh,006h,0cdh,0afh,0e4h,01dh,005h,0e4h,01fh	; afcc  ................
+	defb 005h,0fbh,005h,0d7h,0afh,0e4h,01dh,004h,0e4h,01fh,004h,0fbh,004h,0e1h,0afh,0e4h	; afdc  ................
+	defb 01dh,003h,0e4h,01fh,003h,0fbh,002h,0ebh,0afh,0fah,0feh,002h,0f8h,01dh,0e2h,001h	; afec  ................
+	defb 038h,000h,04ah,0e4h,05ah,00ah,068h,002h,07ah,0e4h,086h,00ah,098h,004h,09ah,0e4h	; affc  8.J.Z.h.z.......
+	defb 09ah,00ah,098h,006h,09ah,0e4h,09eh,00ah,098h,008h,09ah,0e4h,09eh,00ah,098h,00ah	; b00c  ................
+	defb 09ah,0e4h,09bh,00ah,098h,00ch,09ah,0e4h,09dh,00ah,098h,00eh,09ah,0e4h,09fh,00ah	; b01c  ................
+	defb 098h,010h,09ah,0e4h,0a9h,0cah,0a8h,012h,0aah,0e4h,0a6h,00ah,0a8h,014h,0aah,0dch	; b02c  ................
+	defb 0fbh,004h,030h,0b0h,079h,0cah,078h,012h,07ah,0e4h,076h,00ah,078h,014h,07ah,0dch	; b03c  ..0.y.x.z.v.x.z.
+	defb 0fbh,004h,040h,0b0h,059h,0cah,058h,012h,05ah,0e4h,056h,00ah,058h,014h,05ah,0dch	; b04c  ..@.Y.X.Z.V.X.Z.
+	defb 0fbh,002h,050h,0b0h,039h,0cah,038h,012h,03ah,0e4h,036h,00ah,038h,014h,03ah,0dch	; b05c  ..P.9.8.:.6.8.:.
+	defb 0fbh,002h,060h,0b0h,009h,0cah,008h,012h,00ah,0e4h,006h,00ah,008h,014h,00ah,0dch	; b06c  ..`.............
+	defb 0fbh,002h,070h,0b0h,0e0h,026h,0fah,0feh,002h,0e1h,001h,0e4h,01bh,003h,0e4h,01fh	; b07c  ..p..&..........
+	defb 004h,0e4h,01eh,005h,0e4h,01dh,006h,0e4h,01fh,007h,0e4h,01dh,008h,0e4h,01fh,009h	; b08c  ................
+	defb 0e4h,01dh,00ah,0e4h,017h,00ah,0e4h,01fh,00ah,0e4h,01dh,00ah,0e4h,01fh,00ah,0e4h	; b09c  ................
+	defb 01dh,00ah,00ah,0e4h,01eh,00ah,0e4h,01fh,00ah,0e4h,01dh,00ah,0e4h,01eh,00ah,0e4h	; b0ac  ................
+	defb 018h,00ah,0e4h,01dh,00ah,0e4h,01fh,00ah,0fbh,038h,0beh,0b0h,0e4h,01dh,009h,0e4h	; b0bc  .........8......
+	defb 01fh,009h,0fbh,010h,0c8h,0b0h,0e4h,01dh,008h,0e4h,01fh,008h,0fbh,008h,0d2h,0b0h	; b0cc  ................
+	defb 0e4h,01dh,007h,0e4h,01fh,007h,0fbh,004h,0dch,0b0h,0e4h,01dh,006h,0e4h,01fh,006h	; b0dc  ................
+	defb 0fbh,004h,0e6h,0b0h,0e4h,01dh,005h,0e4h,01fh,005h,0fbh,004h,0f0h,0b0h,0e4h,01dh	; b0ec  ................
+	defb 004h,0e4h,01fh,004h,0fbh,004h,0fah,0b0h,0fah,0feh,002h,0f8h,01dh,0e2h,001h,038h	; b0fc  ...............8
+	defb 000h,04ah,0e4h,05ah,00ah,068h,002h,07ah,0e4h,086h,00ah,098h,004h,09ah,0e4h,09ah	; b10c  .J.Z.h.z........
+	defb 00ah,098h,006h,09ah,0e4h,09eh,00ah,098h,008h,09ah,0e4h,09eh,00ah,098h,00ah,09ah	; b11c  ................
+	defb 0e4h,09bh,00ah,098h,00ch,09ah,0e4h,09dh,00ah,098h,00eh,09ah,0e4h,09fh,00ah,098h	; b12c  ................
+	defb 010h,09ah,0e4h,0f8h,015h,0e2h,001h,050h,02ah,060h,027h,070h,02ah,070h,027h,070h	; b13c  .......P*`'p*p'p
+	defb 02ah,070h,027h,070h,02ah,0fbh,00ch,049h,0b1h,0e0h,003h,0fch,002h,041h,0b1h,0e0h	; b14c  *p'p*..I.....A..
+	defb 04dh,0fah	; b15c
 
 ; ======================================================================
 ; CODIGO 0xb15e..0xb325  (455 bytes)
@@ -534,8 +1238,12 @@ L_B305:
 	ret			;b324
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb325..0xb331  (12 bytes)
-DATA_B325:
+; DATOS sonido_B325: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
+;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x01,
+;   0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C y 60 mas
+;   (tools/partituras.py); lo leen p06:B51E (12 bytes)
+;   0xb325..0xb331  (12 bytes)
+DATA_sonido_B325:
 	defb 001h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; b325  ............
 
 ; ======================================================================
@@ -846,9 +1554,18 @@ L_B599:
 	ret			;b59d
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb59e..0xb5ab  (13 bytes)
-DATA_B59E:
-	defb 06ah,064h,05eh,059h,054h,04fh,04ah,046h,042h,03fh,03bh,038h,035h	; b59e  jd^YTOJFB?.85
+; DATOS sonido_B59E: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
+;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D,
+;   0x2E, 0x2F, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38 y 13 mas
+;   (tools/partituras.py); lo leen p06:B51E (12 bytes)
+;   0xb59e..0xb5aa  (12 bytes)
+DATA_sonido_B59E:
+	defb 06ah,064h,05eh,059h,054h,04fh,04ah,046h,042h,03fh,03bh,038h	; b59e  jd^YTOJFB?.8
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0xb5aa..0xb5ab  (1 bytes)
+DATA_B5AA:
+	defb 035h	; b5aa
 
 ; ======================================================================
 ; CODIGO 0xb5ab..0xb944  (921 bytes)
@@ -1337,9 +2054,26 @@ L_B92F:
 	jp (hl)			;b943
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb944..0xb982  (62 bytes)
-DATA_B944:
-	defb 082h,0b9h,098h,0b9h,082h,0b9h,098h,0b9h,0b5h,0b9h,0dfh,0b9h,0f3h,0b9h,003h,0bah	; b944  ................
+; DATOS sonido_B944: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
+;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x02,
+;   0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D y 57 mas
+;   (tools/partituras.py); lo leen p06:B51E (12 bytes)
+;   0xb944..0xb950  (12 bytes)
+DATA_sonido_B944:
+	defb 082h,0b9h,098h,0b9h,082h,0b9h,098h,0b9h,0b5h,0b9h,0dfh,0b9h	; b944  ............
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0xb950..0xb954  (4 bytes)
+DATA_B950:
+	defb 0f3h,0b9h,003h,0bah	; b950
+
+; ----------------------------------------------------------------------
+; DATOS sonido_B954: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
+;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x02,
+;   0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D y 57 mas
+;   (tools/partituras.py); lo leen p06:B51E (46 bytes)
+;   0xb954..0xb982  (46 bytes)
+DATA_sonido_B954:
 	defb 015h,0bah,026h,0bah,02dh,0bah,034h,0bah,087h,0bah,091h,0bah,098h,0bah,0a3h,0bah	; b954  ..&.-.4.........
 	defb 0a9h,0bah,0b3h,0bah,0ceh,0bah,0ddh,0bah,0e3h,0bah,0e9h,0bah,0efh,0bah,0f9h,0bah	; b964  ................
 	defb 004h,0bbh,01eh,0bbh,029h,0bbh,031h,0bbh,04bh,0bbh,060h,0bbh,063h,0bbh	; b974  ....).1.K.`.c.
@@ -1833,8 +2567,12 @@ L_BC9D:
 	ret			;bca3
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbca4..0xbcb0  (12 bytes)
-DATA_BCA4:
+; DATOS sonido_BCA4: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
+;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x01,
+;   0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C y 60 mas
+;   (tools/partituras.py); lo leen p06:B51E (12 bytes)
+;   0xbca4..0xbcb0  (12 bytes)
+DATA_sonido_BCA4:
 	defb 089h,081h,088h,080h,092h,082h,090h,080h,0a4h,084h,0a0h,080h	; bca4  ............
 
 ; ======================================================================
