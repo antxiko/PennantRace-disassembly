@@ -178,6 +178,8 @@ D 0x7384 0x73C4 dibujo_7384  4 caracteres de 8x8 a 2 bits por punto (16 bytes ca
 F 0x7384 16
 D 0x73C4 0x73C8 paletas_73C4  2 punteros a los colores de cada paleta (p00:556D desde p00:4FB0), para la lista 0x73D6; lo leen p00:54C5 (4 bytes)
 F 0x73C4 w2
+D 0x73C8 0x73CA paletas_sobran_73C8  1 punteros mas de la tabla de paletas de 0x73C4: ninguna ficha de la lista pide ese numero de paleta (p00:4FB0); lo leen nadie (2 bytes)
+F 0x73C8 w1
 D 0x73CA 0x73D6 colores_73CA  8 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0x73D6; se solapan 2 bloques: (colores_73CE 73CE-73D6); lo leen p00:54C5 (12 bytes)
 F 0x73CA 8
 D 0x73D6 0x73EF lista_73D6  4 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x73C4); lo leen p00:54C5 (25 bytes)
@@ -188,6 +190,8 @@ D 0x74C7 0x75B7 dibujo_74C7  10 caracteres de 8x8 a 3 bits por punto (24 bytes c
 F 0x74C7 24
 D 0x75B7 0x75CF paletas_75B7  12 punteros a los colores de cada paleta (p00:556D desde p00:4FB0), para la lista 0x75EC; lo leen p00:54CE (24 bytes)
 F 0x75B7 w8
+D 0x75CF 0x75D1 paletas_sobran_75CF  1 punteros mas de la tabla de paletas de delante: ninguna ficha de la lista pide ese numero de paleta (p00:4FB0); lo leen nadie (2 bytes)
+F 0x75CF w1
 D 0x75D1 0x75E0 colores_75D1  8 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0x75EC; se solapan 4 bloques: (colores_75D8 75D8-75DC) (colores_75DA 75DA-75DE) (colores_75DC 75DC-75E0); lo leen p00:54CE (15 bytes)
 F 0x75D1 8
 D 0x75E0 0x75EC colores_75E0  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 8 de la lista 0x75EC; se solapan 4 bloques: (colores_75E2 75E2-75E6) (colores_75E4 75E4-75EC) (colores_75E6 75E6-75EA); lo leen p00:54CE (12 bytes)

@@ -6,6 +6,8 @@ D 0xA088 0xA5D8 mosaicos_A088  85 mosaicos de 16 bytes (4 filas de 4 bytes: 8x4 
 F 0xA088 16
 D 0xA5D8 0xA5F4 paletas_A5D8  14 punteros a los colores de cada paleta (p00:556D desde p00:4FB0), para la lista 0xA619; lo leen p00:544D (28 bytes)
 F 0xA5D8 w8
+D 0xA5F4 0xA5F8 paletas_sobran_A5F4  2 punteros mas de la tabla de paletas de 0xA5D8: ninguna ficha de la lista pide ese numero de paleta (p00:4FB0); lo leen nadie (4 bytes)
+F 0xA5F4 w2
 D 0xA5F8 0xA606 colores_A5F8  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0xA619; se solapan 7 bloques: (colores_A5FA A5FA-A5FE) (colores_A5FC A5FC-A600) (colores_A5FE A5FE-A602) (colores_A600 A600-A604) (colores_A602 A602-A606) (colores_A604 A604-A606); lo leen p00:544D (14 bytes)
 F 0xA5F8 4
 D 0xA606 0xA60A colores_A606  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 7 de la lista 0xA619; lo leen p00:544D (4 bytes)
@@ -78,6 +80,8 @@ F 0xB349 16
 D 0xB6B9 0xB747 fuente_B6B9  caracteres de la fuente (p00:4EFC): 0xFF acaba, 0xFE [dy] baja de linea; lo leen p00:52F9 (142 bytes)
 D 0xB747 0xB74B paletas_B747  2 punteros a los colores de cada paleta (p00:556D desde p00:4FB0), para la lista 0xB759; lo leen p00:54E9 (4 bytes)
 F 0xB747 w2
+D 0xB74B 0xB74F paletas_sobran_B74B  2 punteros mas de la tabla de paletas de 0xB747: ninguna ficha de la lista pide ese numero de paleta (p00:4FB0); lo leen nadie (4 bytes)
+F 0xB74B w2
 D 0xB74F 0xB759 colores_B74F  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0xB759; se solapan 2 bloques: (colores_B751 B751-B759); lo leen p00:54E9 (10 bytes)
 F 0xB74F 4
 D 0xB759 0xB772 lista_B759  4 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0xB747); lo leen p00:54E9 (25 bytes)
@@ -92,6 +96,8 @@ D 0xB912 0xB942 dibujo_B912  2 caracteres de 8x8 a 3 bits por punto (24 bytes ca
 F 0xB912 24
 D 0xB942 0xB9CA caracteres_B942  17 caracteres de 8x8 a un bit por punto que p00:4E47 pinta en la VRAM 0xF818 con el color 13; lo leen p00:52C1 (136 bytes)
 F 0xB942 8
+D 0xB9CA 0xB9DA dos_caracteres  16 bytes entre las dos tiras de caracteres de un bit (0xB942, 17 caracteres, y 0xB9DA): dos caracteres mas que no pinta nadie: SIN LECTOR A LA VISTA; lo leen nadie (16 bytes)
+F 0xB9CA 8
 D 0xB9DA 0xBA8A caracteres_B9DA  11 caracteres de 8x8 a un bit por punto que p00:4E47 pinta en la VRAM 0x0028 con el color 13; se solapan 2 bloques: (efecto_al_azar BA2A-BA8A); lo leen p00:52D3, p00:5A6D (176 bytes)
 F 0xB9DA 8
 D 0xBA8A 0xBA90 tablas_de_fuerza  3 punteros (IX+7 - 2, p00:59FF) a tablas de punteros; lo leen p00:5A01 (6 bytes)
@@ -187,6 +193,10 @@ D 0xBE96 0xBF96 direcciones  256 bytes: p00:5F35 lee 0xBE96 + (dx & 0xF0) + dy >
 F 0xBE96 16
 D 0xBF96 0xBFD6 senos  64 bytes: p00:5ECE y p00:5F88 leen el n y el 0x3F - n; lo leen p00:5ECA (64 bytes)
 F 0xBF96 16
+D 0xBFD6 0xBFDE tras_los_senos  8 bytes detras de los 64 de 0xBF96: SIN LECTOR A LA VISTA; lo leen nadie (8 bytes)
+F 0xBFD6 8
 D 0xBFDE 0xBFFE colores_de_equipo  16 colores de 2 bytes [rojo-azul][verde] que p00:5525 y p00:5558 ponen con p00:4BF0 (indice 0xD70A & 0x0F); lo leen p00:5520 (32 bytes)
 F 0xBFDE 2
+D 0xBFFE 0xC000 relleno_ff  2 bytes a 0xFF hasta el final del banco: relleno; lo leen nadie (2 bytes)
+F 0xBFFE 2
 # --- fin de los bloques de bloques.py ---

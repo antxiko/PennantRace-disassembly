@@ -29,7 +29,7 @@
 0x40B7   # codigo huerfano: 9 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x40B7
 0x40C0   # p14:9411 call
 0x40C9   # p14:942A call
-0x40D2   # p15:B34C call
+0x40D2   # p15:B4F1 call
 0x40DB   # p14:9A23 jp
 0x40E1   # p15:A11A call
 0x40E7   # p02:9EB5 call
@@ -48,26 +48,20 @@
 0x47B8   # p00:4491 entrada 7 de la tabla de 0x4494 (call 0x4220 en 0x4491)
 0x4A16   # p00:4491 entrada 8 de la tabla de 0x4494 (call 0x4220 en 0x4491)
 0x4A2D   # p00:4491 entrada 9 de la tabla de 0x4494 (call 0x4220 en 0x4491)
+0x4A42   # vuelta del despachador: p00:448D hace ld hl,0x4A42 / push hl / call p00:4220
 0x4ACA   # p13:628E jp
-0x4B9F   # p14:9CF6 call
+0x4B9F   # p01:6520 call
 0x4BA2   # p02:9EA9 call
-0x4BB8   # p01:66B0 jp
-0x4BC5   # p03:B484 call
-0x4BF0   # p14:9D04 call
-0x4C21   # p15:A43E entrada 5 de la tabla de 0xA441 (call 0x4220 en 0xA43E)
 0x4C25   # p03:B673 call
 0x4CFE   # p15:BA71 jp
-0x4D2A   # p15:BA8B jp
-0x4D66   # p15:BA7F jp
 0x4DAA   # codigo huerfano: 81 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4DAA
 0x4DFB   # p01:690D jp
-0x4EA6   # p03:B12D call cc
+0x4EA6   # p14:8466 call
 0x4EAB   # p13:6205 call
 0x4EB0   # codigo huerfano: 5 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4EB0
-0x4EB5   # p03:BD01 jp
+0x4EB5   # p14:847C call
 0x4F5A   # p15:B230 call
 0x4F5E   # p15:A25C call
-0x4F6F   # p03:A407 call
 0x5153   # p03:ACF6 call
 0x5185   # p03:A786 jp
 0x5193   # p03:A77B jp cc
@@ -76,6 +70,7 @@
 0x51CD   # p01:6CFB call
 0x51FC   # p14:9D07 call
 0x52E1   # p15:BBAC call
+0x52E7   # p01:6532 call
 0x530F   # p01:67B0 call
 0x5336   # p01:6863 call
 0x5348   # p01:682A call cc
@@ -89,6 +84,7 @@
 0x5403   # p02:9690 jp
 0x541B   # p15:BBA9 call
 0x5421   # p15:BC0C call
+0x5427   # p01:6523 call
 0x547A   # p03:ACC2 call
 0x549B   # p03:AD20 call
 0x54B3   # p03:AD1D call
@@ -105,7 +101,6 @@
 0x572E   # p01:6CF8 call
 0x57B9   # p03:AD23 jp
 0x57C6   # p03:B682 call
-0x57FF   # p03:B133 call
 0x5832   # p03:B995 call
 0x583B   # p03:ACE4 call
 0x58C5   # p02:8AAC call
@@ -121,7 +116,7 @@
 0x5B76   # p03:B182 call
 0x5BCC   # p03:AB28 call
 0x5BE4   # p14:9C9D call
-0x5BE6   # p03:A404 call
+0x5BE6   # p03:A3D0 call
 0x5BF1   # p01:60B9 call
 0x5C34   # p15:B06E jp
 0x5C56   # p15:B065 jp
@@ -156,8 +151,6 @@
 0x5DA9   # p03:B2D4 jp cc
 0x5DB2   # p03:BD6E call
 0x5DBB   # p15:BC69 call
-0x5E9F   # p01:6CCD call
 0x5F71   # p02:80B6 jp cc
-0x5F79   # p02:9C06 call cc
 0x5F81   # p02:883A call
 0x5FF7   # p02:923E call

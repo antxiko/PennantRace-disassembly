@@ -59,11 +59,21 @@ def main(argv):
             entradas.append((int(m.group(1), 16), m.group(2)))
 
     malas = []
+    partidas = []
     for a, nombre in entradas:
         for ini, fin, texto in zonas:
             if ini <= a < fin:
-                malas.append((a, nombre, ini, fin, texto))
+                # el principio de una instruccion partida entre dos bancos
+                # (tools/bloques.py partidas()): es codigo de verdad, pero no
+                # cabe en el listado de un solo banco y va como datos
+                if a == ini and texto.startswith("partida_"):
+                    partidas.append(a)
+                else:
+                    malas.append((a, nombre, ini, fin, texto))
                 break
+    for a in partidas:
+        print("  (0x%04X empieza una instruccion partida entre dos bancos: va como datos "
+              "en este listado)" % a)
 
     print("  %d puntos de entrada contra %d rangos de datos declarados"
           % (len(entradas), len(zonas)))

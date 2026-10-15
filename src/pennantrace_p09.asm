@@ -126,9 +126,12 @@ DATA_paletas_A5D8:
 	defw 0a60ah,0a60eh,0a610h,0a611h,0a612h,0a614h	; a5e8
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa5f4..0xa5f8  (4 bytes)
-DATA_A5F4:
-	defb 016h,0a6h,018h,0a6h	; a5f4
+; DATOS paletas_sobran_A5F4: 2 punteros mas de la tabla de paletas de 0xA5D8:
+;   ninguna ficha de la lista pide ese numero de paleta (p00:4FB0); lo leen
+;   nadie (4 bytes)
+;   0xa5f4..0xa5f8  (4 bytes)
+DATA_paletas_sobran_A5F4:
+	defw 0a616h,0a618h	; a5f4
 
 ; ----------------------------------------------------------------------
 ; DATOS colores_A5F8: 4 colores (un nibble cada uno, ya en su sitio) que
@@ -689,9 +692,12 @@ DATA_paletas_B747:
 	defw 0b74fh,0b751h	; b747  -> DATA_colores_B74F 0xb751
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb74b..0xb74f  (4 bytes)
-DATA_B74B:
-	defb 053h,0b7h,055h,0b7h	; b74b
+; DATOS paletas_sobran_B74B: 2 punteros mas de la tabla de paletas de 0xB747:
+;   ninguna ficha de la lista pide ese numero de paleta (p00:4FB0); lo leen
+;   nadie (4 bytes)
+;   0xb74b..0xb74f  (4 bytes)
+DATA_paletas_sobran_B74B:
+	defw 0b753h,0b755h	; b74b
 
 ; ----------------------------------------------------------------------
 ; DATOS colores_B74F: 4 colores (un nibble cada uno, ya en su sitio) que
@@ -797,9 +803,13 @@ DATA_caracteres_B942:
 	defb 008h,07fh,004h,059h,02eh,008h,07fh,008h	; b9c2  ...Y....
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb9ca..0xb9da  (16 bytes)
-DATA_B9CA:
-	defb 0eah,0a4h,0ffh,0aah,0f1h,0aeh,0aah,0b6h,074h,057h,079h,055h,075h,072h,026h,059h	; b9ca  ........tWyUur&Y
+; DATOS dos_caracteres: 16 bytes entre las dos tiras de caracteres de un bit
+;   (0xB942, 17 caracteres, y 0xB9DA): dos caracteres mas que no pinta nadie:
+;   SIN LECTOR A LA VISTA; lo leen nadie (16 bytes)
+;   0xb9ca..0xb9da  (16 bytes)
+DATA_dos_caracteres:
+	defb 0eah,0a4h,0ffh,0aah,0f1h,0aeh,0aah,0b6h	; b9ca  ........
+	defb 074h,057h,079h,055h,075h,072h,026h,059h	; b9d2  tWyUur&Y
 
 ; ----------------------------------------------------------------------
 ; DATOS caracteres_B9DA: 11 caracteres de 8x8 a un bit por punto que p00:4E47
@@ -1267,8 +1277,10 @@ DATA_senos:
 	defb 0edh,0efh,0f1h,0f3h,0f5h,0f7h,0f8h,0fah,0fbh,0fch,0fdh,0feh,0feh,0ffh,0ffh,0ffh	; bfc6  ................
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbfd6..0xbfde  (8 bytes)
-DATA_BFD6:
+; DATOS tras_los_senos: 8 bytes detras de los 64 de 0xBF96: SIN LECTOR A LA
+;   VISTA; lo leen nadie (8 bytes)
+;   0xbfd6..0xbfde  (8 bytes)
+DATA_tras_los_senos:
 	defb 000h,007h,003h,0ffh,000h,000h,000h,0ffh	; bfd6  ........
 
 ; ----------------------------------------------------------------------
@@ -1295,6 +1307,8 @@ DATA_colores_de_equipo:
 	defb 050h,004h	; bffc
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbffe..0xc000  (2 bytes)
-DATA_BFFE:
+; DATOS relleno_ff: 2 bytes a 0xFF hasta el final del banco: relleno; lo leen
+;   nadie (2 bytes)
+;   0xbffe..0xc000  (2 bytes)
+DATA_relleno_ff:
 	defb 0ffh,0ffh	; bffe

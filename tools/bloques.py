@@ -288,6 +288,49 @@ def junta(bloques):
     return out
 
 
+SIN_LECTOR = []
+
+
+def restos(p, cod, mano, buenos, lineas):
+    """Lo que queda sin declarar entre el codigo y los bloques: si alguna
+    instruccion lo apunta con su banco puesto (tools/quien_lee.py), se declara
+    con ese lector y el tamano es lo que hay hasta lo siguiente (no sale de
+    recorrerlo, y lo dice). Lo que no apunta nadie NO se declara: se apunta en
+    SIN_LECTOR para mirarlo a mano."""
+    import quien_lee
+    if not hasattr(restos, "ap"):
+        restos.ap = quien_lee.apuntadores(trazador())
+    m = bytearray(cod)
+    for i, f in mano:
+        for x in range(i, f):
+            m[x - ORG[p]] = 1
+    for b in buenos:
+        for x in range(b["ini"], b["fin"]):
+            m[x - ORG[p]] = 1
+    i = 0
+    while i < TAM_PAGINA:
+        if m[i]:
+            i += 1
+            continue
+        j = i
+        while j < TAM_PAGINA and not m[j]:
+            j += 1
+        ini, fin = ORG[p] + i, ORG[p] + j
+        ls = sorted({(w, b, pc) for (d, w), xs in restos.ap.items() if d == p and ini <= w < fin
+                     for b, pc, _ in xs})
+        if ls:
+            lect = ["%s:%04X" % (nombre(b), pc) for w, b, pc in ls[:6]]
+            lineas.append("D 0x%04X 0x%04X resto_%04X  lo apuntan con el banco puesto %s; el "
+                          "tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo "
+                          "leen %s (%d bytes)" % (ini, fin, ini, ", ".join(
+                              "%s:%04X (0x%04X)" % (nombre(b), pc, w) for w, b, pc in ls[:6]),
+                              ", ".join(lect), fin - ini))
+            lineas.append("F 0x%04X 16" % ini)
+        else:
+            SIN_LECTOR.append((p, ini, fin))
+        i = j
+
+
 def main(argv):
     # lectores.py importa este modulo como `bloques`: que sea este mismo y no
     # una segunda copia con su propia lista de BLOQUES
@@ -328,6 +371,7 @@ def main(argv):
             if b["F"]:
                 lineas.append("F 0x%04X %s" % (b["ini"], b["F"]))
             total += b["fin"] - b["ini"]
+        restos(p, cod, mano, junta(buenos), lineas)
         n = len([l for l in lineas if l.startswith("D ")])
         if n:
             print("%s: %d bloques, %d bytes" % (nombre(p), n,
@@ -345,6 +389,9 @@ def main(argv):
                 filas += ["", CAB] + lineas + [FIN, ""]
             open(ruta, "w", encoding="utf-8", newline="\n").write("\n".join(filas))
     print("total %d bytes" % total)
+    print("sin lector: %d huecos, %d bytes" % (len(SIN_LECTOR), sum(f - i for _, i, f in SIN_LECTOR)))
+    for p, i, f in SIN_LECTOR:
+        print("  SIN LECTOR %s %04X-%04X %d" % (nombre(p), i, f, f - i))
     for a in AVISOS:
         print("AVISO:", a)
     return 0

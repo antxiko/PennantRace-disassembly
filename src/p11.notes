@@ -3,6 +3,8 @@
 D 0x8000 0x814B copia280_7ECB_cola  lo que queda de los 640 bytes de 0x7ECB (banco 10), que p00:5697 copia a la VRAM 0x7880; lo leen p00:569D (331 bytes)
 F 0x8000 16
 D 0x814B 0x8499 rachas_destino_814B  [destino lo hi] y rachas a la VRAM (p00:4B2D -> p00:4B35); lo leen p00:53D2 (846 bytes)
+D 0x8499 0x8719 dibujos128_8499  5 dibujos de 128 bytes: p00:572E lee 0x8499 + 128 x A y los copia a la VRAM 0xFAC0; p01:6CF8 solo pide el 0 y el 1 (A = el bit alto de H); lo leen p00:5731 (640 bytes)
+F 0x8499 16
 D 0x8719 0x8759 copia_8719  64 bytes que p00:4AB7 copia tal cual a la VRAM 0xFA00; lo leen p00:51D9 (64 bytes)
 F 0x8719 16
 D 0x8759 0x8799 dibujo64_00  dibujo 0 de 64 bytes que p00:5716 (0x8759 + 64 x A) copia a la VRAM 0xFFC0; lo leen p00:5724 (64 bytes)
@@ -119,4 +121,6 @@ F 0x9F3A 4
 D 0x9F42 0x9F4A fichas_9F42  2 fichas de sprite de 4 bytes [y][x][dibujo][color] (p00:5929, B = 2); lo leen p00:58FD (8 bytes)
 F 0x9F42 4
 D 0x9FEA 0xA000 fuente_9FEA  caracteres de la fuente (p00:4EFC): 0xFF acaba, 0xFE [dy] baja de linea (sigue en el banco 12, en 0xA000); lo leen p00:5243 (22 bytes)
+D 0x9F4A 0x9FEA resto_9F4A  lo apuntan con el banco puesto p00:5249 (0x9F4A); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p00:5249 (160 bytes)
+F 0x9F4A 16
 # --- fin de los bloques de bloques.py ---

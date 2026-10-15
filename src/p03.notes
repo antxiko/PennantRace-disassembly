@@ -4,10 +4,22 @@ D 0xA000 0xA002 partida_A000  los 2 ultimos bytes de la instruccion de p02:9FFF 
 F 0xA000 2
 D 0xA52B 0xA539 tabla_A52B  7 destinos del despachador p00:4220 (call en p03:A528, el indice en A): A539, A57E, A597, A5F2, A68E, A7DB, A7EF; lo leen p03:A528 (14 bytes)
 F 0xA52B w7
+D 0xAD5C 0xAD60 datos_AD5C  4 bytes detras de un ret (0x38 0x78 0x00 0x00): SIN LECTOR A LA VISTA; lo leen nadie (4 bytes)
+F 0xAD5C 4
 D 0xB69A 0xB6A6 tabla_B69A  6 destinos del despachador p00:4220 (call en p03:B697, el indice en A): BC22, B6A6, B967, B995, B9B2, B9BA; lo leen p03:B697 (12 bytes)
 F 0xB69A w6
 D 0xBC28 0xBC36 tabla_BC28  7 destinos del despachador p00:4220 (call en p03:BC25, el indice en A): BC36, BC8D, BCA0, BD04, BD56, BD7C, BD8E; lo leen p03:BC25 (14 bytes)
 F 0xBC28 w7
 D 0xBE62 0xC000 relleno_ff  414 bytes a 0xFF hasta el final del banco: relleno; lo leen nadie (414 bytes)
 F 0xBE62 16
+D 0xA2BC 0xA2ED resto_A2BC  lo apuntan con el banco puesto p03:A2FC (0xA2BC), p03:A1CA (0xA2DC), p03:A20F (0xA2DC), p03:A2AF (0xA2DC); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p03:A2FC, p03:A1CA, p03:A20F, p03:A2AF (49 bytes)
+F 0xA2BC 16
+D 0xA83F 0xA844 resto_A83F  lo apuntan con el banco puesto p03:A834 (0xA83F); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p03:A834 (5 bytes)
+F 0xA83F 16
+D 0xB30A 0xB317 resto_B30A  lo apuntan con el banco puesto p03:B2F8 (0xB30A); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p03:B2F8 (13 bytes)
+F 0xB30A 16
+D 0xBAAF 0xBB73 resto_BAAF  lo apuntan con el banco puesto p03:B9FD (0xBAAF), p03:B889 (0xBAB3), p03:B88E (0xBB13); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p03:B9FD, p03:B889, p03:B88E (196 bytes)
+F 0xBAAF 16
+D 0xBE24 0xBE62 resto_BE24  lo apuntan con el banco puesto p03:BDC4 (0xBE24), p03:BC6A (0xBE42); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p03:BDC4, p03:BC6A (62 bytes)
+F 0xBE24 16
 # --- fin de los bloques de bloques.py ---

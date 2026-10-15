@@ -32,6 +32,8 @@ D 0x9260 0x92C0 dibujo_9260  6 caracteres de 8x8 a 2 bits por punto (16 bytes ca
 F 0x9260 16
 D 0x92C0 0x92C8 dibujo_92C0  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 1 de la lista 0x90DB (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:5324 (8 bytes)
 F 0x92C0 8
+D 0x92C8 0x9348 datos_92C8  128 bytes (pares 0x00/0x0F y 0xFF: parecen mascaras) que no apunta nadie: SIN LECTOR A LA VISTA; lo leen nadie (128 bytes)
+F 0x92C8 16
 D 0x97F5 0x97FA texto_97F5  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:9776, p14:97AE, p14:97DC (5 bytes)
 D 0x97FA 0x9804 texto_97FA  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:9798 (10 bytes)
 D 0x980E 0x9814 texto_980E  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:97A8 (6 bytes)
@@ -48,4 +50,26 @@ D 0x9F7F 0x9FA7 tabla_9F7F  20 destinos del despachador p00:4220 (call en p14:9F
 F 0x9F7F w8
 D 0x9FFF 0xA000 partida_9FFF  los 1 primeros bytes de una instruccion de 3 (CD 6B A2) que sigue en el banco 15: el trazador de un solo banco no puede verla entera (tools/bancos.py); lo leen p14:9FFF (1 bytes)
 F 0x9FFF 1
+D 0x8132 0x813D resto_8132  lo apuntan con el banco puesto p14:80C5 (0x8132), p14:8111 (0x8132); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p14:80C5, p14:8111 (11 bytes)
+F 0x8132 16
+D 0x8434 0x843F resto_8434  lo apuntan con el banco puesto p14:844F (0x8434); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p14:844F (11 bytes)
+F 0x8434 16
+D 0x84D4 0x8506 resto_84D4  lo apuntan con el banco puesto p14:8361 (0x84D4); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p14:8361 (50 bytes)
+F 0x84D4 16
+D 0x8539 0x8547 resto_8539  lo apuntan con el banco puesto p14:8510 (0x8539); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p14:8510 (14 bytes)
+F 0x8539 16
+D 0x8554 0x85E0 resto_8554  lo apuntan con el banco puesto p14:821B (0x85C5); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p14:821B (140 bytes)
+F 0x8554 16
+D 0x86E8 0x86F8 resto_86E8  lo apuntan con el banco puesto p14:86D2 (0x86E8); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p14:86D2 (16 bytes)
+F 0x86E8 16
+D 0x9701 0x971A resto_9701  lo apuntan con el banco puesto p14:96D4 (0x9701); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p14:96D4 (25 bytes)
+F 0x9701 16
+D 0x9804 0x980E resto_9804  lo apuntan con el banco puesto p14:97A0 (0x9804); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p14:97A0 (10 bytes)
+F 0x9804 16
+D 0x9BAB 0x9BCC resto_9BAB  lo apuntan con el banco puesto p14:9D0D (0x9BAB), p14:9B31 (0x9BBB), p14:9B4E (0x9BBB), p14:9B5E (0x9BBB), p14:9C37 (0x9BBB), p14:9CCC (0x9BBB); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p14:9D0D, p14:9B31, p14:9B4E, p14:9B5E, p14:9C37, p14:9CCC (33 bytes)
+F 0x9BAB 16
+D 0x9D9E 0x9DC0 resto_9D9E  lo apuntan con el banco puesto p14:9D78 (0x9D9E), p14:9D88 (0x9DAE); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p14:9D78, p14:9D88 (34 bytes)
+F 0x9D9E 16
+D 0x9F1A 0x9F22 resto_9F1A  lo apuntan con el banco puesto p14:9E66 (0x9F1A); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p14:9E66 (8 bytes)
+F 0x9F1A 16
 # --- fin de los bloques de bloques.py ---

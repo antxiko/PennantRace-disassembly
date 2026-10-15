@@ -61,7 +61,7 @@ DATA_tabla_604D:
 	defw 06ffeh,064dfh,06606h,0662ah,06650h,064dfh,06081h	; 605d
 
 ; ======================================================================
-; CODIGO 0x606b..0x6096  (43 bytes)
+; CODIGO 0x606b..0x6115  (170 bytes)
 ; ======================================================================
 
 
@@ -87,17 +87,14 @@ L_6086:
 	ld a,020h		;6090
 	ld (0de04h),a		;6092
 	ret			;6095
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6096..0x60a1  (11 bytes)
-DATA_6096:
-	defb 021h,04ch,0d7h,035h,023h,036h,000h,0c9h,0cdh,0a7h,060h	; 6096  !L.5#6....`
-
-; ======================================================================
-; CODIGO 0x60a1..0x6115  (116 bytes)
-; ======================================================================
-
-
+L_6096:
+	ld hl,0d74ch		;6096
+	dec (hl)			;6099
+	inc hl			;609a
+	ld (hl),000h		;609b
+	ret			;609d
+L_609E:
+	call L_60A7		;609e
 L_60A1:
 	call L_60A7		;60a1
 L_60A4:
@@ -603,7 +600,7 @@ DATA_tabla_648D:
 	defw 06491h,064b4h	; 648d  -> L_6491 L_64B4
 
 ; ======================================================================
-; CODIGO 0x6491..0x64b3  (34 bytes)
+; CODIGO 0x6491..0x6594  (259 bytes)
 ; ======================================================================
 
 
@@ -622,17 +619,8 @@ L_6491:
 	ld hl,062d1h		;64aa
 	call 04ea6h		;64ad
 	jp L_60AF		;64b0
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x64b3..0x64b4  (1 bytes)
-DATA_64B3:
-	defb 0c9h	; 64b3
-
-; ======================================================================
-; CODIGO 0x64b4..0x6594  (224 bytes)
-; ======================================================================
-
-
+L_64B3:
+	ret			;64b3
 L_64B4:
 	call L_6BA1		;64b4
 	ld de,0d72ah		;64b7
@@ -3140,8 +3128,11 @@ DATA_textos_7BBA:
 	defb 02ah,02ch,0ffh,058h,034h,021h,00fh,024h,013h,039h,05dh,02bh,03bh,00ch,035h,0ffh	; 7bda  *,.X4!.$.9]+..5.
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7bea..0x7c06  (28 bytes)
-DATA_7BEA:
+; DATOS resto_7BEA: lo apuntan con el banco puesto p13:6D94 (0x7BEA); el
+;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
+;   p13:6D94 (28 bytes)
+;   0x7bea..0x7c06  (28 bytes)
+DATA_resto_7BEA:
 	defb 058h,034h,012h,017h,021h,019h,000h,013h,020h,020h,01dh,020h,0feh,068h,04ch,04bh	; 7bea  X4..!...  . .hLK
 	defb 02bh,02ah,039h,03ch,00ch,0feh,068h,058h,02dh,054h,051h,0ffh	; 7bfa  +*9<..hX-TQ.
 
@@ -3202,8 +3193,11 @@ DATA_texto_7CB9:
 	defb 048h,0b8h,01eh,023h,021h,016h,000h,000h,014h,002h,000h,019h,013h,027h,0ffh	; 7cb9  H..#!........'.
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7cc8..0x7cd1  (9 bytes)
-DATA_7CC8:
+; DATOS texto_suelto_7CC8: con forma de texto ([x y], caracteres y 0xFF), pero
+;   ninguna instruccion ni palabra lo apunta: SIN LECTOR A LA VISTA; lo leen
+;   nadie (9 bytes)
+;   0x7cc8..0x7cd1  (9 bytes)
+DATA_texto_suelto_7CC8:
 	defb 058h,0ach,02dh,054h,051h,0ffh,0ffh,0ffh,0ffh	; 7cc8  X.-TQ....
 
 ; ----------------------------------------------------------------------
@@ -3352,8 +3346,11 @@ DATA_texto_7E05:
 	defb 05ch,028h,012h,013h,00fh,012h,000h,010h,00fh,01ah,01ah,0ffh	; 7e05  \(..........
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7e11..0x7e1e  (13 bytes)
-DATA_7E11:
+; DATOS texto_suelto_7E11: con forma de texto ([x y], caracteres y 0xFF), pero
+;   ninguna instruccion ni palabra lo apunta: SIN LECTOR A LA VISTA; lo leen
+;   nadie (13 bytes)
+;   0x7e11..0x7e1e  (13 bytes)
+DATA_texto_suelto_7E11:
 	defb 058h,058h,015h,00fh,01bh,013h,000h,000h,01dh,024h,013h,020h,0ffh	; 7e11  XX.......$. .
 
 ; ----------------------------------------------------------------------
@@ -3375,14 +3372,15 @@ DATA_texto_7E44:
 	defb 084h,070h,095h,096h,0ffh	; 7e44
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7e49..0x7e4e  (5 bytes)
-DATA_7E49:
+; DATOS texto_7E49: texto ([x y] y caracteres hasta 0xFF): p01:644E lo pinta
+;   con p00:4EA6; lo leen p01:6446 (5 bytes)
+;   0x7e49..0x7e4e  (5 bytes)
+DATA_texto_7E49:
 	defb 0e0h,078h,098h,099h,0ffh	; 7e49
 
 ; ----------------------------------------------------------------------
-; DATOS texto_7E4E: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
-;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
-;   medio espacio; lo leen p01:644E (5 bytes)
+; DATOS texto_7E4E: texto ([x y] y caracteres hasta 0xFF): p01:644E lo pinta
+;   con p00:4EA6; lo leen p01:644B, p01:644E (5 bytes)
 ;   0x7e4e..0x7e53  (5 bytes)
 DATA_texto_7E4E:
 	defb 0e0h,078h,060h,061h,0ffh	; 7e4e
@@ -3404,8 +3402,11 @@ DATA_texto_7E5A:
 	defb 070h,0f0h,014h,01dh,023h,01ah,0ffh	; 7e5a
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7e61..0x7e69  (8 bytes)
-DATA_7E61:
+; DATOS resto_7E61: lo apuntan con el banco puesto p14:9467 (0x7E61); el
+;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
+;   p14:9467 (8 bytes)
+;   0x7e61..0x7e69  (8 bytes)
+DATA_resto_7E61:
 	defb 013h,01ch,022h,017h,022h,01ah,013h,0ffh	; 7e61  .."."...
 
 ; ----------------------------------------------------------------------
@@ -3425,8 +3426,11 @@ DATA_texto_7E71:
 	defb 070h,0f0h,021h,00fh,014h,013h,0ffh	; 7e71
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7e78..0x7e86  (14 bytes)
-DATA_7E78:
+; DATOS texto_suelto_7E78: con forma de texto ([x y], caracteres y 0xFF), pero
+;   ninguna instruccion ni palabra lo apunta: SIN LECTOR A LA VISTA; lo leen
+;   nadie (14 bytes)
+;   0x7e78..0x7e86  (14 bytes)
+DATA_texto_suelto_7E78:
 	defb 048h,008h,022h,013h,00fh,01bh,000h,021h,013h,01ah,013h,011h,022h,0ffh	; 7e78  H."....!....".
 
 ; ----------------------------------------------------------------------

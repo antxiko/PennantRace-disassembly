@@ -13,6 +13,8 @@
 # Este fichero lo regenera `make semillas` (tools/bancos.py escribe).
 0x6000   # p00:598B call
 0x6081   # p13:604A entrada 14 de la tabla de 0x604D (call 0x4220 en 0x604A)
+0x6096   # codigo huerfano: ld hl,0xD74C / dec (hl) / inc hl / ld (hl),0 / ret (como p15:A44B)
+0x609E   # codigo huerfano: call 0x60A7 y cae en p13:60A1
 0x60D8   # p13:604A entrada 0 de la tabla de 0x604D (call 0x4220 en 0x604A)
 0x6148   # p13:604A entrada 1 de la tabla de 0x604D (call 0x4220 en 0x604A)
 0x6187   # p15:AAE7 call
@@ -33,6 +35,7 @@
 0x646D   # p15:B054 call
 0x6487   # p13:604A entrada 6 de la tabla de 0x604D (call 0x4220 en 0x604A)
 0x6491   # p13:648A entrada 0 de la tabla de 0x648D (call 0x4220 en 0x648A)
+0x64B3   # codigo huerfano: un ret suelto entre dos rutinas
 0x64B4   # p13:648A entrada 1 de la tabla de 0x648D (call 0x4220 en 0x648A)
 0x65FB   # p15:AF86 call
 0x6606   # p13:604A entrada 10 de la tabla de 0x604D (call 0x4220 en 0x604A)

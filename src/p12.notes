@@ -3,6 +3,8 @@
 D 0xA000 0xA01F fuente_9FEA_cola  caracteres de la fuente (p00:4EFC): 0xFF acaba, 0xFE [dy] baja de linea (sigue del banco 11); lo leen p00:5243 (31 bytes)
 D 0xA01F 0xA039 paletas_A01F  13 punteros a los colores de cada paleta (p00:556D desde p00:4FB0), para la lista 0xA05F; lo leen p00:522E (26 bytes)
 F 0xA01F w8
+D 0xA039 0xA03F paletas_sobran_A039  3 punteros mas de la tabla de paletas de 0xA01F: ninguna ficha de la lista pide ese numero de paleta (p00:4FB0); lo leen nadie (6 bytes)
+F 0xA039 w3
 D 0xA03F 0xA043 colores_A03F  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0xA05F; se solapan 2 bloques: (colores_A041 A041-A043); lo leen p00:522E (4 bytes)
 F 0xA03F 4
 D 0xA043 0xA045 colores_A043  2 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 2 de la lista 0xA05F; lo leen p00:522E (2 bytes)
@@ -48,6 +50,8 @@ F 0xA3D0 24
 D 0xA7B8 0xA7EF fuente_A7B8  caracteres de la fuente (p00:4EFC): 0xFF acaba, 0xFE [dy] baja de linea; lo leen p00:5298 (55 bytes)
 D 0xA7EF 0xA80D paletas_A7EF  15 punteros a los colores de cada paleta (p00:556D desde p00:4FB0), para la lista 0xA82F; lo leen p00:527A (30 bytes)
 F 0xA7EF w8
+D 0xA80D 0xA80F paletas_sobran_A80D  1 punteros mas de la tabla de paletas de 0xA7EF: ninguna ficha de la lista pide ese numero de paleta (p00:4FB0); lo leen nadie (2 bytes)
+F 0xA80D w1
 D 0xA80F 0xA81D colores_A80F  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0xA82F; se solapan 6 bloques: (colores_A811 A811-A815) (colores_A813 A813-A817) (colores_A815 A815-A819) (colores_A817 A817-A81B) (colores_A819 A819-A81D); lo leen p00:527A (14 bytes)
 F 0xA80F 4
 D 0xA81D 0xA827 colores_A81D  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 7 de la lista 0xA82F; se solapan 4 bloques: (colores_A81F A81F-A823) (colores_A821 A821-A825) (colores_A823 A823-A827); lo leen p00:527A (10 bytes)
@@ -92,6 +96,8 @@ D 0xAD48 0xAD58 dibujo_AD48  1 caracteres de 8x8 a 2 bits por punto (16 bytes ca
 F 0xAD48 16
 D 0xAD58 0xAD60 paletas_AD58  4 punteros a los colores de cada paleta (p00:556D desde p00:4FB0), para la lista 0xAD72; lo leen p00:5283 (8 bytes)
 F 0xAD58 w4
+D 0xAD60 0xAD66 paletas_sobran_AD60  3 punteros mas de la tabla de paletas de 0xAD58: ninguna ficha de la lista pide ese numero de paleta (p00:4FB0); lo leen nadie (6 bytes)
+F 0xAD60 w3
 D 0xAD66 0xAD72 colores_AD66  8 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0xAD72; se solapan 4 bloques: (colores_AD67 AD67-AD6F) (colores_AD69 AD69-AD71) (colores_AD6A AD6A-AD72); lo leen p00:5283 (12 bytes)
 F 0xAD66 8
 D 0xAD72 0xAD8B lista_AD72  4 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0xAD58); lo leen p00:5283 (25 bytes)
@@ -115,4 +121,8 @@ D 0xBC2F 0xBC3C rachas_BC2F  rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p0
 D 0xBC3C 0xBC78 rachas_BC3C  rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p00:53A6 (60 bytes)
 D 0xBCA0 0xC000 relleno_ff  864 bytes a 0xFF hasta el final del banco: relleno; lo leen nadie (864 bytes)
 F 0xBCA0 16
+D 0xA718 0xA7B8 resto_A718  lo apuntan con el banco puesto p00:529E (0xA718); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p00:529E (160 bytes)
+F 0xA718 16
+D 0xBC78 0xBCA0 resto_BC78  lo apuntan con el banco puesto p00:5B6C (0xBC78); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p00:5B6C (40 bytes)
+F 0xBC78 16
 # --- fin de los bloques de bloques.py ---

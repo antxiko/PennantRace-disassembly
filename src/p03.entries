@@ -19,6 +19,7 @@
 0xA218   # p00:4057 call
 0xA220   # p00:4069 call
 0xA2ED   # p00:4657 call
+0xA3B2   # codigo huerfano: ld c,4 y cae en p03:A3B4 (puerta gemela)
 0xA452   # p00:4060 call
 0xA463   # p02:9D5D call
 0xA492   # p02:9FE5 jp cc

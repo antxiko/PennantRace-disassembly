@@ -96,8 +96,11 @@ DATA_rachas_destino_814B:
 	defb 0d0h,000h,080h,000h,030h,003h,0f8h,085h,0ech,0fch,078h,07ch,07ch,000h	; 848b  ....0.....x||.
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8499..0x8719  (640 bytes)
-DATA_8499:
+; DATOS dibujos128_8499: 5 dibujos de 128 bytes: p00:572E lee 0x8499 + 128 x A
+;   y los copia a la VRAM 0xFAC0; p01:6CF8 solo pide el 0 y el 1 (A = el bit
+;   alto de H); lo leen p00:5731 (640 bytes)
+;   0x8499..0x8719  (640 bytes)
+DATA_dibujos128_8499:
 	defb 000h,00fh,01fh,01fh,01fh,01fh,01fh,01fh,00fh,03bh,03ch,01fh,00ch,01eh,00ch,000h	; 8499  ..........<.....
 	defb 000h,0e0h,0f0h,0f0h,0f0h,0f7h,0f7h,0efh,0eeh,0d0h,0a0h,0c0h,000h,000h,090h,0f0h	; 84a9  ................
 	defb 000h,00fh,01fh,01fh,017h,000h,002h,010h,038h,03fh,03fh,013h,013h,01eh,00ch,000h	; 84b9  ........8??.....
@@ -1238,8 +1241,11 @@ DATA_fichas_9F42:
 	defb 010h,0eeh,09ch,018h	; 9f46
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9f4a..0x9fea  (160 bytes)
-DATA_9F4A:
+; DATOS resto_9F4A: lo apuntan con el banco puesto p00:5249 (0x9F4A); el
+;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
+;   p00:5249 (160 bytes)
+;   0x9f4a..0x9fea  (160 bytes)
+DATA_resto_9F4A:
 	defb 073h,074h,058h,052h,052h,052h,052h,052h,052h,052h,052h,052h,052h,057h,075h,076h	; 9f4a  stXRRRRRRRRRRWuv
 	defb 042h,041h,041h,041h,041h,041h,053h,054h,055h,056h,041h,041h,041h,041h,041h,043h	; 9f5a  BAAAAASTUVAAAAAC
 	defb 078h,063h,063h,063h,063h,063h,063h,063h,063h,063h,063h,063h,063h,063h,063h,07ah	; 9f6a  xccccccccccccccz

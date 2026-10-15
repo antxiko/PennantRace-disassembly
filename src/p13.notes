@@ -97,6 +97,7 @@ D 0x7C33 0x7C79 textos_7C33  3 textos seguidos ([x y] y caracteres hasta 0xFF; 0
 D 0x7C79 0x7C8A texto_7C79  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p00:480C (17 bytes)
 D 0x7C8A 0x7CB9 textos_7C8A  2 textos seguidos ([x y] y caracteres hasta 0xFF; 0xFE trae otra posicion) (HL = 0x7C8A); se solapan 2 bloques: (texto_7CA8 7CA8-7CB9); lo leen p00:483C, p00:4848 (47 bytes)
 D 0x7CB9 0x7CC8 texto_7CB9  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p00:4863 (15 bytes)
+D 0x7CC8 0x7CD1 texto_suelto_7CC8  con forma de texto ([x y], caracteres y 0xFF), pero ninguna instruccion ni palabra lo apunta: SIN LECTOR A LA VISTA; lo leen nadie (9 bytes)
 D 0x7CD1 0x7CEF texto_7CD1  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p00:47EA (30 bytes)
 D 0x7CEF 0x7CFA texto_7CEF  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p13:632C (11 bytes)
 D 0x7CFA 0x7D09 texto_7CFA  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p13:6DE3, p13:6E8F (15 bytes)
@@ -114,13 +115,16 @@ D 0x7DE1 0x7DF7 texto_7DE1  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): 
 D 0x7DF7 0x7DF9 texto_7DF7  texto (p00:4EB5, con 13-14-15 puesto por p00:439C): caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:65BB, p03:BD01, p15:AACC (2 bytes)
 D 0x7DF9 0x7E05 texto_7DF9  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:61AB (12 bytes)
 D 0x7E05 0x7E11 texto_7E05  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p02:8AB2 (12 bytes)
+D 0x7E11 0x7E1E texto_suelto_7E11  con forma de texto ([x y], caracteres y 0xFF), pero ninguna instruccion ni palabra lo apunta: SIN LECTOR A LA VISTA; lo leen nadie (13 bytes)
 D 0x7E1E 0x7E44 texto_7E1E  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:63F9 (38 bytes)
 D 0x7E44 0x7E49 texto_7E44  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:64F7 (5 bytes)
-D 0x7E4E 0x7E53 texto_7E4E  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:644E (5 bytes)
+D 0x7E49 0x7E4E texto_7E49  texto ([x y] y caracteres hasta 0xFF): p01:644E lo pinta con p00:4EA6; lo leen p01:6446 (5 bytes)
+D 0x7E4E 0x7E53 texto_7E4E  texto ([x y] y caracteres hasta 0xFF): p01:644E lo pinta con p00:4EA6; lo leen p01:644B, p01:644E (5 bytes)
 D 0x7E53 0x7E5A texto_7E53  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:650B (7 bytes)
 D 0x7E5A 0x7E61 texto_7E5A  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:93FE (7 bytes)
 D 0x7E69 0x7E71 texto_7E69  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:7014, p02:8FDE, p03:B12D (8 bytes)
 D 0x7E71 0x7E78 texto_7E71  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:B104 (7 bytes)
+D 0x7E78 0x7E86 texto_suelto_7E78  con forma de texto ([x y], caracteres y 0xFF), pero ninguna instruccion ni palabra lo apunta: SIN LECTOR A LA VISTA; lo leen nadie (14 bytes)
 D 0x7E86 0x7EAB texto_7E86  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:A323 (37 bytes)
 D 0x7EAB 0x7EB6 texto_7EAB  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:6A21 (11 bytes)
 D 0x7EB6 0x7EBD texto_7EB6  texto (p00:4EB5, con 13-14-15 puesto por p00:439C): caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:A261 (7 bytes)
@@ -129,4 +133,8 @@ D 0x7EC6 0x7F55 texto_7EC6  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): 
 D 0x7F55 0x7F70 texto_7F55  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p02:9ECC (27 bytes)
 D 0x7F70 0x8000 relleno_ff  144 bytes a 0xFF hasta el final del banco: relleno; lo leen nadie (144 bytes)
 F 0x7F70 16
+D 0x7BEA 0x7C06 resto_7BEA  lo apuntan con el banco puesto p13:6D94 (0x7BEA); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p13:6D94 (28 bytes)
+F 0x7BEA 16
+D 0x7E61 0x7E69 resto_7E61  lo apuntan con el banco puesto p14:9467 (0x7E61); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p14:9467 (8 bytes)
+F 0x7E61 16
 # --- fin de los bloques de bloques.py ---

@@ -146,76 +146,144 @@ D 0x633A 0x6340 cabecera_633A  cabecera de sonido (p06:B211): [canales 30][prior
 F 0x633A 2
 D 0x6340 0x6346 cabecera_6340  cabecera de sonido (p06:B211): [canales 30][prioridad 11] y 2 punteros, uno por canal encendido (bit 7 = el primero de 0xEE00); lo leen p06:B217 (6 bytes)
 F 0x6340 2
-D 0x6346 0x6352 sonido_6346  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x02, 0x03, 0x06, 0x09, 0x0D, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16 y 24 mas (tools/partituras.py); lo leen p06:B51E (12 bytes)
-F 0x6346 16
-D 0x6354 0x6358 sonido_6354  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x0A, 0x0B, 0x2E, 0x2F, 0x31 (tools/partituras.py); lo leen p06:B51E (4 bytes)
-F 0x6354 16
-D 0x635A 0x6362 sonido_635A  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x05, 0x07, 0x0A, 0x0C, 0x23, 0x28, 0x29, 0x2A, 0x2B, 0x2D, 0x30, 0x35 y 2 mas (tools/partituras.py); lo leen p06:B51E (8 bytes)
-F 0x635A 16
-D 0x636C 0x6372 sonido_636C  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x02, 0x05, 0x07, 0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15 y 30 mas (tools/partituras.py); lo leen p06:B51E (6 bytes)
-F 0x636C 16
-D 0x6380 0x6382 sonido_6380  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x04, 0x07, 0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x12, 0x17, 0x18, 0x1C, 0x1E y 11 mas (tools/partituras.py); lo leen p06:B51E (2 bytes)
-F 0x6380 16
-D 0x6384 0x6386 sonido_6384  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x08 (tools/partituras.py); lo leen p06:B51E (2 bytes)
-F 0x6384 16
-D 0x638A 0x638E sonido_638A  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x07, 0x0C, 0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x13, 0x14, 0x15, 0x16, 0x17 y 8 mas (tools/partituras.py); lo leen p06:B51E (4 bytes)
-F 0x638A 16
-D 0x6390 0x6394 sonido_6390  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D, 0x3B, 0x3C, 0x42, 0x43, 0x45 (tools/partituras.py); lo leen p06:B51E (4 bytes)
-F 0x6390 16
-D 0x6396 0x639A sonido_6396  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x02, 0x07, 0x10, 0x11, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x2B, 0x2C y 22 mas (tools/partituras.py); lo leen p06:B51E (4 bytes)
-F 0x6396 16
-D 0x639C 0x639E sonido_639C  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (2 bytes)
-F 0x639C 16
-D 0x63A8 0x63AA sonido_63A8  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x28, 0x2B, 0x47 (tools/partituras.py); lo leen p06:B51E (2 bytes)
-F 0x63A8 16
-D 0x63D6 0x6616 sonido_63D6  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D y 56 mas (tools/partituras.py); lo leen p06:B51E (576 bytes)
+D 0x6346 0x63D6 tabla_6346  72 punteros de envolventes (orden 0xF8 n, p06:BB04: palabra n) del motor de sonido; lo leen p06:BB07 (144 bytes)
+F 0x6346 w8
+D 0x63D6 0x63F6 motor_63D6  lo apuntan las entradas 0x6346[0], 0x6346[1], 0x6346[2]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
 F 0x63D6 16
-D 0x6636 0x68FE sonido_6636  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x23, 0x28, 0x2B, 0x2C, 0x2D, 0x2E, 0x2F, 0x30, 0x31, 0x32, 0x33, 0x34 y 17 mas (tools/partituras.py); lo leen p06:B51E (712 bytes)
+D 0x63F6 0x6416 motor_63F6  lo apuntan las entradas 0x6346[3], 0x6346[4]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+F 0x63F6 16
+D 0x6416 0x6436 motor_6416  lo apuntan las entradas 0x6346[5]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+F 0x6416 16
+D 0x6436 0x6456 motor_6436  lo apuntan las entradas 0x6346[6], 0x6346[7]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+F 0x6436 16
+D 0x6456 0x6476 motor_6456  lo apuntan las entradas 0x6346[8], 0x6346[9], 0x6346[10]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+F 0x6456 16
+D 0x6476 0x6496 motor_6476  lo apuntan las entradas 0x6346[11]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+F 0x6476 16
+D 0x6496 0x64B6 motor_6496  lo apuntan las entradas 0x6346[12]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+F 0x6496 16
+D 0x64B6 0x64D6 motor_64B6  lo apuntan las entradas 0x6346[13]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+F 0x64B6 16
+D 0x64D6 0x64F6 motor_64D6  lo apuntan las entradas 0x6346[14], 0x6346[15], 0x6346[16], 0x6346[17]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+F 0x64D6 16
+D 0x64F6 0x6516 motor_64F6  lo apuntan las entradas 0x6346[20]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+F 0x64F6 16
+D 0x6516 0x6536 motor_6516  lo apuntan las entradas 0x6346[21]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+F 0x6516 16
+D 0x6536 0x6556 motor_6536  lo apuntan las entradas 0x6346[22], 0x6346[23], 0x6346[24], 0x6346[25]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+F 0x6536 16
+D 0x6556 0x6576 motor_6556  lo apuntan las entradas 0x6346[30], 0x6346[31]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+F 0x6556 16
+D 0x6576 0x6596 motor_6576  lo apuntan las entradas 0x6346[32], 0x6346[33], 0x6346[34], 0x6346[35]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+F 0x6576 16
+D 0x6596 0x65B6 motor_6596  lo apuntan las entradas 0x6346[36], 0x6346[37]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+F 0x6596 16
+D 0x65B6 0x65D6 motor_65B6  lo apuntan las entradas 0x6346[38]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+F 0x65B6 16
+D 0x65D6 0x65F6 motor_65D6  lo apuntan las entradas 0x6346[39], 0x6346[40]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+F 0x65D6 16
+D 0x65F6 0x6616 motor_65F6  lo apuntan las entradas 0x6346[41]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+F 0x65F6 16
+D 0x6616 0x6636 motor_6616  lo apuntan las entradas 0x6346[42], 0x6346[43]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+F 0x6616 16
+D 0x6636 0x6656 motor_6636  lo apuntan las entradas 0x6346[44], 0x6346[45], 0x6346[46], 0x6346[47]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
 F 0x6636 16
-D 0x6903 0x6913 sonido_6903  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D, 0x2E, 0x2F, 0x30, 0x31 (tools/partituras.py); lo leen p06:B51E (16 bytes)
-F 0x6903 16
-D 0x6917 0x693C sonido_6917  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2C, 0x2D, 0x36, 0x3A, 0x3D, 0x3E, 0x42, 0x43, 0x44, 0x45 (tools/partituras.py); lo leen p06:B51E (37 bytes)
-F 0x6917 16
-D 0x693D 0x69B3 sonido_693D  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D, 0x2E, 0x2F, 0x30, 0x31 (tools/partituras.py); lo leen p06:B51E (118 bytes)
+D 0x6656 0x666E tabla_6656  12 punteros de bateria del motor de sonido; se solapan 2 bloques: (motor_6656 6656-666E); lo leen p06:B67D, p06:BB07 (24 bytes)
+F 0x6656 w8
+D 0x666E 0x6674 motor_666E  lo apuntan las entradas 0x6656[0]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (6 bytes)
+F 0x666E 16
+D 0x6674 0x6681 motor_6674  lo apuntan las entradas 0x6656[1]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (13 bytes)
+F 0x6674 16
+D 0x6681 0x6696 motor_6681  lo apuntan las entradas 0x6656[2]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (21 bytes)
+F 0x6681 16
+D 0x6696 0x66AF motor_6696  lo apuntan las entradas 0x6656[3]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (25 bytes)
+F 0x6696 16
+D 0x66AF 0x66BE motor_66AF  lo apuntan las entradas 0x6656[4]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (15 bytes)
+F 0x66AF 16
+D 0x66BE 0x6715 motor_66BE  lo apuntan las entradas 0x6656[5]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (87 bytes)
+F 0x66BE 16
+D 0x6715 0x676C motor_6715  lo apuntan las entradas 0x6656[6]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (87 bytes)
+F 0x6715 16
+D 0x676C 0x67AB motor_676C  lo apuntan las entradas 0x6656[7]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (63 bytes)
+F 0x676C 16
+D 0x67AB 0x67EA motor_67AB  lo apuntan las entradas 0x6656[8]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (63 bytes)
+F 0x67AB 16
+D 0x67EA 0x6835 motor_67EA  lo apuntan las entradas 0x6656[9]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (75 bytes)
+F 0x67EA 16
+D 0x6835 0x6890 motor_6835  lo apuntan las entradas 0x6656[10]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (91 bytes)
+F 0x6835 16
+D 0x6890 0x6903 motor_6890  lo apuntan las entradas 0x6656[11]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (115 bytes)
+F 0x6890 16
+D 0x6903 0x691B tabla_6903  12 punteros de bateria del motor de sonido; lo leen p06:B681 (24 bytes)
+F 0x6903 w8
+D 0x691B 0x6931 motor_691B  lo apuntan las entradas 0x6903[0]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (22 bytes)
+F 0x691B 16
+D 0x6931 0x693D motor_6931  lo apuntan las entradas 0x6903[1]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (12 bytes)
+F 0x6931 16
+D 0x693D 0x6949 motor_693D  lo apuntan las entradas 0x6903[2]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (12 bytes)
 F 0x693D 16
-D 0x69B6 0x69C4 sonido_69B6  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D, 0x2E, 0x31 (tools/partituras.py); lo leen p06:B51E (14 bytes)
+D 0x6949 0x6966 motor_6949  lo apuntan las entradas 0x6903[3]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (29 bytes)
+F 0x6949 16
+D 0x6966 0x6983 motor_6966  lo apuntan las entradas 0x6903[4]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (29 bytes)
+F 0x6966 16
+D 0x6983 0x69A0 motor_6983  lo apuntan las entradas 0x6903[5]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (29 bytes)
+F 0x6983 16
+D 0x69A0 0x69B6 motor_69A0  lo apuntan las entradas 0x6903[6]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (22 bytes)
+F 0x69A0 16
+D 0x69B6 0x69C5 motor_69B6  lo apuntan las entradas 0x6903[7]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (15 bytes)
 F 0x69B6 16
-D 0x6A0C 0x6A9A sonido_6A0C  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2C, 0x2D, 0x36, 0x3A, 0x3D, 0x3E, 0x42, 0x43, 0x44, 0x45 (tools/partituras.py); lo leen p06:B51E (142 bytes)
+D 0x69C5 0x69D9 motor_69C5  lo apuntan las entradas 0x6903[8]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (20 bytes)
+F 0x69C5 16
+D 0x69D9 0x6A0C motor_69D9  lo apuntan las entradas 0x6903[9]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (51 bytes)
+F 0x69D9 16
+D 0x6A0C 0x6A4B motor_6A0C  lo apuntan las entradas 0x6903[10]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (63 bytes)
 F 0x6A0C 16
-D 0x6A9C 0x6A9E sonido_6A9C  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (2 bytes)
-F 0x6A9C 16
-D 0x6AA0 0x6AB2 sonido_6AA0  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (18 bytes)
-F 0x6AA0 16
-D 0x6AB5 0x6ABF sonido_6AB5  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (10 bytes)
+D 0x6A4B 0x6A8A motor_6A4B  lo apuntan las entradas 0x6903[11]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (63 bytes)
+F 0x6A4B 16
+D 0x6A8A 0x6AA2 tabla_6A8A  12 punteros de bateria del motor de sonido; lo leen p06:B692 (24 bytes)
+F 0x6A8A w8
+D 0x6AA2 0x6AB5 motor_6AA2  lo apuntan las entradas 0x6A8A[0]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B692 (19 bytes)
+F 0x6AA2 16
+D 0x6AB5 0x6AC8 motor_6AB5  lo apuntan las entradas 0x6A8A[1]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B692 (19 bytes)
 F 0x6AB5 16
-D 0x6AC8 0x6AE5 sonido_6AC8  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (29 bytes)
+D 0x6AC8 0x6ADB motor_6AC8  lo apuntan las entradas 0x6A8A[2]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B692 (19 bytes)
 F 0x6AC8 16
-D 0x6AEE 0x6AFE sonido_6AEE  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (16 bytes)
+D 0x6ADB 0x6AEE motor_6ADB  lo apuntan las entradas 0x6A8A[3]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B692 (19 bytes)
+F 0x6ADB 16
+D 0x6AEE 0x6B01 motor_6AEE  lo apuntan las entradas 0x6A8A[4]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B692 (19 bytes)
 F 0x6AEE 16
-D 0x6B01 0x6B11 sonido_6B01  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (16 bytes)
+D 0x6B01 0x6B14 motor_6B01  lo apuntan las entradas 0x6A8A[5]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B692 (19 bytes)
 F 0x6B01 16
-D 0x6B14 0x6B24 sonido_6B14  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (16 bytes)
+D 0x6B14 0x6B27 motor_6B14  lo apuntan las entradas 0x6A8A[6]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B692 (19 bytes)
 F 0x6B14 16
-D 0x6B27 0x6B4A sonido_6B27  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (35 bytes)
+D 0x6B27 0x6B3A motor_6B27  lo apuntan las entradas 0x6A8A[7]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B692 (19 bytes)
 F 0x6B27 16
-D 0x6B4D 0x6B5D sonido_6B4D  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (16 bytes)
+D 0x6B3A 0x6B4D motor_6B3A  lo apuntan las entradas 0x6A8A[8], 0x6A8A[9]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B692 (19 bytes)
+F 0x6B3A 16
+D 0x6B4D 0x6B60 motor_6B4D  lo apuntan las entradas 0x6A8A[10], 0x6A8A[11]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B692 (19 bytes)
 F 0x6B4D 16
-D 0x6B68 0x6B6A sonido_6B68  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (2 bytes)
-F 0x6B68 16
-D 0x6B6C 0x6B70 sonido_6B6C  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (4 bytes)
-F 0x6B6C 16
-D 0x6B72 0x6B88 sonido_6B72  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (22 bytes)
-F 0x6B72 16
-D 0x6B8B 0x6B91 sonido_6B8B  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (6 bytes)
+D 0x6B60 0x6B78 tabla_6B60  12 punteros de bateria del motor de sonido; lo leen p06:B696 (24 bytes)
+F 0x6B60 w8
+D 0x6B78 0x6B8B motor_6B78  lo apuntan las entradas 0x6B60[0], 0x6B60[1], 0x6B60[2], 0x6B60[3]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B696 (19 bytes)
+F 0x6B78 16
+D 0x6B8B 0x6B9E motor_6B8B  lo apuntan las entradas 0x6B60[5], 0x6B60[6]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B696 (19 bytes)
 F 0x6B8B 16
-D 0x6B9E 0x6BAE sonido_6B9E  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (16 bytes)
+D 0x6B9E 0x6BB1 motor_6B9E  lo apuntan las entradas 0x6B60[7]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B696 (19 bytes)
 F 0x6B9E 16
-D 0x6BB1 0x6BB7 sonido_6BB1  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (6 bytes)
+D 0x6BB1 0x6BC4 motor_6BB1  lo apuntan las entradas 0x6B60[8], 0x6B60[9]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B696 (19 bytes)
 F 0x6BB1 16
-D 0x6BC4 0x6BCA sonido_6BC4  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (6 bytes)
+D 0x6BC4 0x6BD7 motor_6BC4  lo apuntan las entradas 0x6B60[10]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B696 (19 bytes)
 F 0x6BC4 16
-D 0x6BD7 0x6BEA sonido_6BD7  datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (19 bytes)
+D 0x6BD7 0x6BEA motor_6BD7  lo apuntan las entradas 0x6B60[11]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B696 (19 bytes)
 F 0x6BD7 16
+D 0x6BEA 0x6C02 tabla_6BEA  12 punteros de bateria del motor de sonido; lo leen p06:B6A7 (24 bytes)
+F 0x6BEA w8
+D 0x6C02 0x6C03 motor_6C02  lo apuntan las entradas 0x6BEA[0], 0x6BEA[1], 0x6BEA[2], 0x6BEA[3]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B6A7 (1 bytes)
+F 0x6C02 16
+D 0x6C03 0x6C1B tabla_6C03  12 punteros de bateria del motor de sonido; lo leen p06:B6AB (24 bytes)
+F 0x6C03 w8
+D 0x6C1B 0x6C1C motor_6C1B  lo apuntan las entradas 0x6C03[0], 0x6C03[1], 0x6C03[2], 0x6C03[3]; el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B6AB (1 bytes)
+F 0x6C1B 16
 D 0x6C1C 0x6CE1 partitura_6C1C  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (197 bytes)
 F 0x6C1C 16
 D 0x6CE1 0x6E5C partitura_6CE1  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D (tools/partituras.py); lo leen p06:B51E (379 bytes)
@@ -266,6 +334,8 @@ D 0x7AC1 0x7ADB partitura_7AC1  partitura de canal (ordenes 0xD0-0xFE de p06:B92
 F 0x7AC1 16
 D 0x7ADB 0x7AEE partitura_7ADB  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x30 (tools/partituras.py); lo leen p06:B51E (19 bytes)
 F 0x7ADB 16
+D 0x7AEE 0x7AEF cierre_7AEE  0xFF de cierre que no se alcanza: la partitura de delante acaba saltando; lo leen nadie (1 bytes)
+F 0x7AEE 1
 D 0x7AEF 0x7B0C partitura_7AEF  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x30 (tools/partituras.py); lo leen p06:B51E (29 bytes)
 F 0x7AEF 16
 D 0x7B0C 0x7B63 partitura_7B0C  partitura de canal (ordenes 0xD0-0xFE de p06:B92F, notas por debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x30 (tools/partituras.py); lo leen p06:B51E (87 bytes)

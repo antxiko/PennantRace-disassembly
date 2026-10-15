@@ -2,8 +2,8 @@
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA000 0xA002 partida_A000  los 2 ultimos bytes de la instruccion de p14:9FFF (CD 6B A2), que empieza en el banco 14; lo leen p14:9FFF (2 bytes)
 F 0xA000 2
-D 0xA441 0xA44D tabla_A441  6 destinos del despachador p00:4220 (call en p15:A43E, el indice en A): A470, A4F2, A55B, A57F, A5A3, 4C21; lo leen p15:A43E (12 bytes)
-F 0xA441 w6
+D 0xA441 0xA44B tabla_A441  5 destinos del despachador p00:4220 (call en p15:A43E, el indice en A): A470, A4F2, A55B, A57F, A5A3; lo leen p15:A43E (10 bytes)
+F 0xA441 w5
 D 0xA52F 0xA532 copia_A52F  3 bytes que p00:4AB7 copia tal cual a la VRAM 0xF600; lo leen p15:A519 (3 bytes)
 F 0xA52F 16
 D 0xA5A9 0xA5AD tabla_A5A9  2 destinos del despachador p00:4220 (call en p15:A5A6, el indice en A): A5AD, A5CB; lo leen p15:A5A6 (4 bytes)
@@ -24,6 +24,11 @@ D 0xB094 0xB099 texto_B094  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): 
 D 0xB099 0xB09E texto_B099  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:AE82 (5 bytes)
 D 0xB09E 0xB0A6 texto_B09E  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:AE88 (8 bytes)
 D 0xB0A6 0xB0AC texto_B0A6  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:AE58 (6 bytes)
+D 0xB23F 0xB24F copia16_B23F  16 bytes que p00:5DA1 copia (BC = 0x10) con 13-14-15 puesto a 0xE231 / 0xE241; lo leen p03:B518 (16 bytes)
+F 0xB23F 16
+D 0xB24F 0xB25F copia16_B24F  16 bytes que p00:5DA1 copia (BC = 0x10) con 13-14-15 puesto a 0xE231 / 0xE241; lo leen p03:B510 (16 bytes)
+F 0xB24F 16
+D 0xB68C 0xB693 texto_suelto_B68C  con forma de texto ([x y], caracteres y 0xFF), pero ninguna instruccion ni palabra lo apunta: SIN LECTOR A LA VISTA; lo leen nadie (7 bytes)
 D 0xBA8E 0xBA9B lista_BA8E  2 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x51B2); lo leen p00:5174 (13 bytes)
 F 0xBA8E 6
 D 0xBA9B 0xBAA8 lista_BA9B  2 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x51B2); lo leen p00:5174 (13 bytes)
@@ -35,7 +40,33 @@ F 0xBAF8 16
 D 0xBB8D 0xBB97 tabla_BB8D  5 destinos del despachador p00:4220 (call en p15:BB8A, el indice en A): BB97, BBBD, BBE4, BC22, BC64; lo leen p15:BB8A (10 bytes)
 F 0xBB8D w5
 D 0xBE24 0xBE27 texto_BE24  texto (p00:4EBA, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:BDC7 (3 bytes)
+D 0xBE27 0xBE42 relleno_ff  27 bytes a 0xFF entre los textos: relleno; lo leen nadie (27 bytes)
+F 0xBE27 16
 D 0xBE42 0xBE45 texto_BE42  texto (p00:4EBA, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:BC6D (3 bytes)
 D 0xBE45 0xC000 relleno_ff  443 bytes a 0xFF hasta el final del banco: relleno; lo leen nadie (443 bytes)
 F 0xBE45 16
+D 0xA133 0xA13D resto_A133  lo apuntan con el banco puesto p15:A120 (0xA133); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p15:A120 (10 bytes)
+F 0xA133 16
+D 0xA307 0xA43B resto_A307  lo apuntan con el banco puesto p15:A047 (0xA307), p14:9EE7 (0xA339), p14:9E17 (0xA38B), p14:9F2E (0xA38B), p14:9FD0 (0xA38B), p14:9FAC (0xA3DB); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p15:A047, p14:9EE7, p14:9E17, p14:9F2E, p14:9FD0, p14:9FAC (308 bytes)
+F 0xA307 16
+D 0xA6BE 0xA6F0 resto_A6BE  lo apuntan con el banco puesto p15:A6A8 (0xA6BE), p13:61EB (0xA6C6), p15:A6B9 (0xA6C6); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p15:A6A8, p13:61EB, p15:A6B9 (50 bytes)
+F 0xA6BE 16
+D 0xA74F 0xA76A resto_A74F  lo apuntan con el banco puesto p15:A4E1 (0xA74F), p15:A686 (0xA74F); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p15:A4E1, p15:A686 (27 bytes)
+F 0xA74F 16
+D 0xA770 0xA792 resto_A770  lo apuntan con el banco puesto p15:A4DA (0xA770), p15:A67F (0xA770); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p15:A4DA, p15:A67F (34 bytes)
+F 0xA770 16
+D 0xABA0 0xABB0 resto_ABA0  lo apuntan con el banco puesto p15:AB89 (0xABA0), p15:AB94 (0xABA0); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p15:AB89, p15:AB94 (16 bytes)
+F 0xABA0 16
+D 0xABE1 0xAC1A resto_ABE1  lo apuntan con el banco puesto p15:ABBA (0xABE1), p00:5C97 (0xABF2); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p15:ABBA, p00:5C97 (57 bytes)
+F 0xABE1 16
+D 0xB20D 0xB22D resto_B20D  lo apuntan con el banco puesto p15:B150 (0xB20D); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p15:B150 (32 bytes)
+F 0xB20D 16
+D 0xB5ED 0xB611 resto_B5ED  lo apuntan con el banco puesto p15:B2BA (0xB5ED); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p15:B2BA (36 bytes)
+F 0xB5ED 16
+D 0xB8DC 0xB8E2 resto_B8DC  lo apuntan con el banco puesto p15:B782 (0xB8DC), p15:B779 (0xB8DF); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p15:B782, p15:B779 (6 bytes)
+F 0xB8DC 16
+D 0xBB7D 0xBB87 resto_BB7D  lo apuntan con el banco puesto p15:BB69 (0xBB7D); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p15:BB69 (10 bytes)
+F 0xBB7D 16
+D 0xBD13 0xBE24 resto_BD13  lo apuntan con el banco puesto p15:BCB2 (0xBD13), p15:BCBC (0xBD31), p15:BBC5 (0xBD99), p15:BC12 (0xBDA2); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p15:BCB2, p15:BCBC, p15:BBC5, p15:BC12 (273 bytes)
+F 0xBD13 16
 # --- fin de los bloques de bloques.py ---

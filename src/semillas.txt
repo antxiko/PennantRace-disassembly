@@ -61,3 +61,20 @@ p14 0x9B4C 13 14 15  # codigo huerfano: 2 bytes que acaban en ret; el trazado no
 p15 0xB5CD 13 14 15  # codigo huerfano: 16 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0xB5CD
 p15 0xBA52 13 14 15  # codigo huerfano: 20 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0xBA52
 p15 0xBA74 13 14 15  # codigo huerfano: 14 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0xBA74
+#
+# p00:448D mete 0x4A42 en la pila (push hl) antes de llamar al despachador p00:4220: es la vuelta.
+p00 0x4A42 1 2 3  # vuelta del despachador: p00:448D hace ld hl,0x4A42 / push hl / call p00:4220
+#
+# Codigo que no alcanza nadie, mirado a mano (desensamblado entero; ninguna
+# instruccion salta, llama o carga su direccion). Casi todos caen al acabar en
+# codigo ya trazado: son puertas alternativas de la rutina de al lado.
+p01 0x651C 1 2 3  # codigo huerfano: 39 bytes (xor a / ld (0xED09),a / ... / call 0x4D66) que caen en p01:6543
+p03 0xA3B2 1 2 3  # codigo huerfano: ld c,4 y cae en p03:A3B4 (puerta gemela)
+p13 0x6096 13 14 15  # codigo huerfano: ld hl,0xD74C / dec (hl) / inc hl / ld (hl),0 / ret (como p15:A44B)
+p13 0x609E 13 14 15  # codigo huerfano: call 0x60A7 y cae en p13:60A1
+p13 0x64B3 13 14 15  # codigo huerfano: un ret suelto entre dos rutinas
+p14 0x82A4 13 14 15  # codigo huerfano: ld (0xD2A5),hl y cae en p14:82A7 (puerta gemela)
+p14 0x8460 13 14 15  # codigo huerfano: call p15:BA52 y cae en p14:8463
+p15 0xA44B 13 14 15  # codigo huerfano: ld hl,0xD74C / dec (hl) / inc hl / ld (hl),0 / ret, detras de la tabla de p15:A441
+p15 0xA453 13 14 15  # codigo huerfano: call 0xA456 y cae en p15:A456
+p15 0xB4E9 13 14 15  # codigo huerfano: 35 bytes que llaman a p00:40D2 y acaban en ret

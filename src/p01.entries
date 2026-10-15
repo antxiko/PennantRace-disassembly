@@ -29,10 +29,14 @@
 0x64FA   # p03:A7E3 jp
 0x6508   # p03:A770 jp cc
 0x650E   # p00:451D call
+0x651C   # codigo huerfano: 39 bytes (xor a / ld (0xED09),a / ... / call 0x4D66) que caen en p01:6543
 0x6543   # p00:5DBE call
 0x6561   # p00:44FE jp cc
+0x6577   # p00:4A80 jp
 0x65BE   # p00:4173 call
 0x65F0   # p00:41FD call
+0x65F6   # p00:4A48 call
+0x6608   # p00:4A42 call
 0x668F   # p00:4A37 call
 0x66B3   # p00:49C0 call
 0x66E3   # p02:943D call

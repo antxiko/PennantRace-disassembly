@@ -707,8 +707,11 @@ DATA_partitura_A955:
 	defb 0ffh	; a955
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa956..0xa977  (33 bytes)
-DATA_A956:
+; DATOS partitura_A956: 33 bytes con forma de partitura (0xFE 0x02 y ordenes
+;   0xE0-0xFE) que no apunta ninguna cabecera ni ningun salto de los 72
+;   sonidos: SIN LECTOR A LA VISTA; lo leen nadie (33 bytes)
+;   0xa956..0xa977  (33 bytes)
+DATA_partitura_A956:
 	defb 0feh,002h,0e0h,005h,0eeh,001h,0e2h,005h,090h,0ach,061h,00fh,090h,0ach,041h,00fh	; a956  ..........a...A.
 	defb 060h,0ach,041h,00fh,050h,0ach,031h,00fh,040h,0ach,031h,00fh,030h,0ach,021h,00fh	; a966  `.A.P.1.@.1.0.!.
 	defb 0ffh	; a976
@@ -722,8 +725,11 @@ DATA_partitura_A977:
 	defb 0ffh	; a977
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa978..0xa999  (33 bytes)
-DATA_A978:
+; DATOS partitura_A978: 33 bytes con forma de partitura (0xFE 0x02 y ordenes
+;   0xE0-0xFE) que no apunta ninguna cabecera ni ningun salto de los 72
+;   sonidos: SIN LECTOR A LA VISTA; lo leen nadie (33 bytes)
+;   0xa978..0xa999  (33 bytes)
+DATA_partitura_A978:
 	defb 0feh,002h,0f8h,025h,0e2h,005h,0c0h,0ach,081h,00fh,0c0h,0ach,031h,00fh,050h,0ach	; a978  ...%........1.P.
 	defb 021h,00fh,030h,0ach,001h,00fh,020h,0ach,001h,00fh,010h,0ach,001h,00fh,000h,0ach	; a988  !.0... .........
 	defb 0ffh	; a998
@@ -1557,15 +1563,11 @@ L_B599:
 ; DATOS sonido_B59E: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
 ;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D,
 ;   0x2E, 0x2F, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38 y 13 mas
-;   (tools/partituras.py); lo leen p06:B51E (12 bytes)
-;   0xb59e..0xb5aa  (12 bytes)
+;   (tools/partituras.py); se solapan 2 bloques: (notas B59E-B5AB); lo leen
+;   p06:B51E, p06:B569 (13 bytes)
+;   0xb59e..0xb5ab  (13 bytes)
 DATA_sonido_B59E:
-	defb 06ah,064h,05eh,059h,054h,04fh,04ah,046h,042h,03fh,03bh,038h	; b59e  jd^YTOJFB?.8
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb5aa..0xb5ab  (1 bytes)
-DATA_B5AA:
-	defb 035h	; b5aa
+	defb 06ah,064h,05eh,059h,054h,04fh,04ah,046h,042h,03fh,03bh,038h,035h	; b59e  jd^YTOJFB?.85
 
 ; ======================================================================
 ; CODIGO 0xb5ab..0xb944  (921 bytes)
@@ -2057,23 +2059,11 @@ L_B92F:
 ; DATOS sonido_B944: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
 ;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x02,
 ;   0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D y 57 mas
-;   (tools/partituras.py); lo leen p06:B51E (12 bytes)
-;   0xb944..0xb950  (12 bytes)
+;   (tools/partituras.py); se solapan 3 bloques: (ordenes B944-B982)
+;   (sonido_B954 B954-B982); lo leen p06:B51E, p06:B937 (62 bytes)
+;   0xb944..0xb982  (62 bytes)
 DATA_sonido_B944:
-	defb 082h,0b9h,098h,0b9h,082h,0b9h,098h,0b9h,0b5h,0b9h,0dfh,0b9h	; b944  ............
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb950..0xb954  (4 bytes)
-DATA_B950:
-	defb 0f3h,0b9h,003h,0bah	; b950
-
-; ----------------------------------------------------------------------
-; DATOS sonido_B954: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x02,
-;   0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D y 57 mas
-;   (tools/partituras.py); lo leen p06:B51E (46 bytes)
-;   0xb954..0xb982  (46 bytes)
-DATA_sonido_B954:
+	defb 082h,0b9h,098h,0b9h,082h,0b9h,098h,0b9h,0b5h,0b9h,0dfh,0b9h,0f3h,0b9h,003h,0bah	; b944  ................
 	defb 015h,0bah,026h,0bah,02dh,0bah,034h,0bah,087h,0bah,091h,0bah,098h,0bah,0a3h,0bah	; b954  ..&.-.4.........
 	defb 0a9h,0bah,0b3h,0bah,0ceh,0bah,0ddh,0bah,0e3h,0bah,0e9h,0bah,0efh,0bah,0f9h,0bah	; b964  ................
 	defb 004h,0bbh,01eh,0bbh,029h,0bbh,031h,0bbh,04bh,0bbh,060h,0bbh,063h,0bbh	; b974  ....).1.K.`.c.

@@ -27,6 +27,8 @@
 0xA26B   # p14:9FFF call
 0xA28B   # p14:9F00 jp
 0xA43B   # p00:5982 call
+0xA44B   # codigo huerfano: ld hl,0xD74C / dec (hl) / inc hl / ld (hl),0 / ret, detras de la tabla de p15:A441
+0xA453   # codigo huerfano: call 0xA456 y cae en p15:A456
 0xA470   # p15:A43E entrada 0 de la tabla de 0xA441 (call 0x4220 en 0xA43E)
 0xA4F2   # p15:A43E entrada 1 de la tabla de 0xA441 (call 0x4220 en 0xA43E)
 0xA4F8   # p00:5D65 call
@@ -47,6 +49,7 @@
 0xB0AC   # p00:5D0B call
 0xB158   # p00:5D14 call
 0xB25F   # p00:5D1D call
+0xB4E9   # codigo huerfano: 35 bytes que llaman a p00:40D2 y acaban en ret
 0xB5CD   # codigo huerfano: 16 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0xB5CD
 0xB693   # p00:5D38 call
 0xBA52   # codigo huerfano: 20 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0xBA52

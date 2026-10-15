@@ -10,4 +10,14 @@ D 0x51BA 0x51BE colores_51BA  4 colores (un nibble cada uno, ya en su sitio) que
 F 0x51BA 4
 D 0x5975 0x597F tabla_5975  5 destinos del despachador p00:4220 (call en p00:5972, el indice en A): 597F, 597F, 5988, 597F, 597F; lo leen p00:5972 (10 bytes)
 F 0x5975 w5
+D 0x4000 0x4030 resto_4000  lo apuntan con el banco puesto p02:86FD (0x4001), p13:70D0 (0x4010), p13:70DA (0x4011), p00:536D (0x4020), p01:6902 (0x4020), p03:B2DA (0x4020); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p02:86FD, p13:70D0, p13:70DA, p00:536D, p01:6902, p03:B2DA (48 bytes)
+F 0x4000 16
+D 0x4C39 0x4C59 resto_4C39  lo apuntan con el banco puesto p00:4C25 (0x4C39); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p00:4C25 (32 bytes)
+F 0x4C39 16
+D 0x5A85 0x5A8B resto_5A85  lo apuntan con el banco puesto p00:5A7C (0x5A85); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p00:5A7C (6 bytes)
+F 0x5A85 16
+D 0x5E74 0x5E80 resto_5E74  lo apuntan con el banco puesto p00:5E30 (0x5E74), p00:5E35 (0x5E7A); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p00:5E30, p00:5E35 (12 bytes)
+F 0x5E74 16
+D 0x5FB5 0x5FF1 resto_5FB5  lo apuntan con el banco puesto p03:BBF7 (0x5FB5), p03:BC00 (0x5FC6), p03:BC06 (0x5FD0), p14:8600 (0x5FD0), p03:BC0D (0x5FDE), p14:8628 (0x5FDE); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p03:BBF7, p03:BC00, p03:BC06, p14:8600, p03:BC0D, p14:8628 (60 bytes)
+F 0x5FB5 16
 # --- fin de los bloques de bloques.py ---

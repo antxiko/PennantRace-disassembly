@@ -17,9 +17,11 @@
 0x80F4   # p13:6F97 call
 0x814B   # p13:6D66 call
 0x81FC   # p15:A545 call
+0x82A4   # codigo huerfano: ld (0xD2A5),hl y cae en p14:82A7 (puerta gemela)
 0x839E   # p13:7110 call
 0x83D7   # p00:5D2F call
 0x845B   # p13:6D31 call
+0x8460   # codigo huerfano: call p15:BA52 y cae en p14:8463
 0x84A6   # codigo huerfano: 9 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x84A6
 0x84AF   # p00:5D26 call
 0x85E0   # p00:5D6E call

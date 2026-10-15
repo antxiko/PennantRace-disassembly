@@ -128,7 +128,8 @@ sanity: trace
 	@echo " ningun byte declarado como datos puede salir como codigo"
 	@echo "=================================================================="
 	@for p in $(PAGINAS); do \
-	  python3 tools/check_trace.py $(WORK)/p$$p.trace.json $(SRC)/p$$p.nocode | tail -1 || exit 1; \
+	  python3 tools/check_trace.py $(WORK)/p$$p.trace.json $(SRC)/p$$p.nocode > $(WORK)/chk.txt \
+	    || { cat $(WORK)/chk.txt; exit 1; }; tail -1 $(WORK)/chk.txt; \
 	done
 	@python3 tools/check_datos_como_codigo.py $(WORK) $(SRC)
 	@echo "=================================================================="
@@ -140,7 +141,8 @@ sanity: trace
 	@echo "=================================================================="
 	@for p in $(PAGINAS); do \
 	  python3 tools/check_entradas.py $(SRC)/p$$p.entries $(SRC)/p$$p.notes \
-	          $(SRC)/p$$p.nocode | tail -1 || exit 1; \
+	          $(SRC)/p$$p.nocode > $(WORK)/chk.txt || { cat $(WORK)/chk.txt; exit 1; }; \
+	  tail -1 $(WORK)/chk.txt; \
 	done
 	@echo "=================================================================="
 	@echo " ni un byte del cartucho sin asignar (los 16 bancos)"

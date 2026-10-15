@@ -239,6 +239,28 @@ def sonido():
                   "cabecera de sonido (p06:B211): [canales %02X][prioridad %02X] y %d "
                   "punteros, uno por canal encendido (bit 7 = el primero de 0xEE00)"
                   % (mascara, v(h + 1), len(canales)), "p06:B217", F=2)
+    # las tablas del motor: 0x6346 (orden 0xF8, p06:BB07) y las seis de bateria
+    # que elige p06:B65B. Esta zona se declara por su estructura: cada destino
+    # hasta el siguiente.
+    tablas = {0x6346: (72, "p06:BB07", "envolventes (orden 0xF8 n, p06:BB04: palabra n)"),
+              0x6656: (12, "p06:B67D", "bateria"), 0x6903: (12, "p06:B681", "bateria"),
+              0x6A8A: (12, "p06:B692", "bateria"), 0x6B60: (12, "p06:B696", "bateria"),
+              0x6BEA: (12, "p06:B6A7", "bateria"), 0x6C03: (12, "p06:B6AB", "bateria")}
+    zona = (0x6346, 0x6C1C)
+    destinos = {}
+    for t, (n, sitio, que) in tablas.items():
+        B.declara(v, t, t + 2 * n, "tabla_%04X" % t, "%d punteros de %s del motor de sonido"
+                  % (n, que), sitio, F="w%d" % min(n, 8))
+        for k in range(n):
+            destinos.setdefault(v.w(t + 2 * k), []).append((t, k))
+    bordes = sorted(set(destinos) | set(tablas) | {t + 2 * n for t, (n, _, _) in tablas.items()}
+                    | {zona[1]})
+    for d in sorted(destinos):
+        f = min(x for x in bordes if x > d)
+        quien_t = ", ".join("0x%04X[%d]" % tk for tk in destinos[d][:4])
+        B.declara(v, d, f, "motor_%04X" % d, "lo apuntan las entradas %s; el tamano llega hasta "
+                  "el siguiente destino o tabla, no sale de recorrerlo" % quien_t,
+                  tablas[destinos[d][0][0]][1], F=16)
     quien = {}
     for n, ts in leidos.items():
         for b, i, f in ts:
@@ -249,6 +271,8 @@ def sonido():
     tramos = []
     for (b, x) in sorted(quien):
         if b not in org or x in cabeceras or 0x600C <= x < 0x600C + 2 * n_sonidos:
+            continue
+        if b == 4 and zona[0] <= x < zona[1]:
             continue
         a = x if b != 5 else x
         if tramo and tramo[0] == b and tramo[2] == a and a not in inicios:
@@ -477,7 +501,71 @@ def banco13():
     textos_seguidos(v, 0x7DA9, 4, "p00:4559", "(DE = 0x7DA9 / 0x7DB4 segun A)")
 
 
+def sueltos():
+    """Lo que queda: cada cosa con su lector, y lo que no tiene lector a la
+    vista dicho asi."""
+    v = B.Ventana((13, 14, 15))
+    for a, sitio in ((0x7E49, "p01:6446"), (0x7E4E, "p01:644B")):
+        B.declara(v, a, texto(v, a), "texto_%04X" % a, "texto ([x y] y caracteres hasta 0xFF): "
+                  "p01:644E lo pinta con p00:4EA6", sitio)
+    for a, sitio in ((0xB23F, "p03:B518"), (0xB24F, "p03:B510")):
+        B.declara(v, a, a + 16, "copia16_%04X" % a, "16 bytes que p00:5DA1 copia (BC = 0x10) "
+                  "con 13-14-15 puesto a 0xE231 / 0xE241", sitio, F=16)
+    v1 = B.Ventana((10, 11, 12))
+    B.declara(v1, 0x8499, 0x8719, "dibujos128_8499", "5 dibujos de 128 bytes: p00:572E lee "
+              "0x8499 + 128 x A y los copia a la VRAM 0xFAC0; p01:6CF8 solo pide el 0 y el 1 "
+              "(A = el bit alto de H)", "p00:5731", F=16)
+    v6 = B.Ventana((4, 5, 6))
+    B.declara(v6, 0xB59E, 0xB5AB, "notas", "13 divisores de nota (de do a do): p06:B569 lee "
+              "0xB59E + A, pero p06:B565 corta en 0x0C y el 13.o no se lee", "p06:B569", F=13)
+    B.declara(v6, 0xB944, 0xB982, "ordenes", "31 destinos, uno por orden de la partitura de 0xE0 "
+              "a 0xFE (p06:B937: 0xB944 + 2 x (orden & 0x1F); jp (hl) en p06:B943)", "p06:B937",
+              F="w8")
+
+
+def sin_lector():
+    """Lo que no lee nadie a la vista, dicho asi, y los rellenos."""
+    v4 = B.Ventana((4, 5, 6))
+    B.declara(v4, 0x7AEE, 0x7AEF, "cierre_7AEE", "0xFF de cierre que no se alcanza: la "
+              "partitura de delante acaba saltando", "nadie", F=1)
+    for a in (0xA956, 0xA978):
+        B.declara(v4, a, texto(v4, a, False) if False else a + 33, "partitura_%04X" % a,
+                  "33 bytes con forma de partitura (0xFE 0x02 y ordenes 0xE0-0xFE) que no apunta "
+                  "ninguna cabecera ni ningun salto de los 72 sonidos: SIN LECTOR A LA VISTA",
+                  "nadie", F=16)
+    for trio, a, f, tabla in (((7, 8, 9), 0x73C8, 0x73CA, 0x73C4), ((7, 8, 9), 0x75CF, 0x75D1, 0),
+                              ((7, 8, 9), 0xA5F4, 0xA5F8, 0xA5D8), ((7, 8, 9), 0xB74B, 0xB74F, 0xB747),
+                              ((10, 11, 12), 0xA039, 0xA03F, 0xA01F),
+                              ((10, 11, 12), 0xA80D, 0xA80F, 0xA7EF),
+                              ((10, 11, 12), 0xAD60, 0xAD66, 0xAD58)):
+        B.declara(B.Ventana(trio), a, f, "paletas_sobran_%04X" % a,
+                  "%d punteros mas de la tabla de paletas%s: ninguna ficha de la lista pide ese "
+                  "numero de paleta (p00:4FB0)" % ((f - a) // 2, " de 0x%04X" % tabla if tabla
+                                                  else " de delante"), "nadie", F="w%d" % ((f - a) // 2))
+    v7 = B.Ventana((7, 8, 9))
+    B.declara(v7, 0xB9CA, 0xB9DA, "dos_caracteres", "16 bytes entre las dos tiras de caracteres "
+              "de un bit (0xB942, 17 caracteres, y 0xB9DA): dos caracteres mas que no pinta "
+              "nadie: SIN LECTOR A LA VISTA", "nadie", F=8)
+    B.declara(v7, 0xBFD6, 0xBFDE, "tras_los_senos", "8 bytes detras de los 64 de 0xBF96: SIN "
+              "LECTOR A LA VISTA", "nadie", F=8)
+    B.declara(v7, 0xBFFE, 0xC000, "relleno_ff", "2 bytes a 0xFF hasta el final del banco: "
+              "relleno", "nadie", F=2)
+    v = B.Ventana((13, 14, 15))
+    for a, f in ((0x7CC8, 0x7CD1), (0x7E11, 0x7E1E), (0x7E78, 0x7E86), (0xB68C, 0xB693)):
+        B.declara(v, a, f, "texto_suelto_%04X" % a, "con forma de texto ([x y], caracteres y "
+                  "0xFF), pero ninguna instruccion ni palabra lo apunta: SIN LECTOR A LA VISTA",
+                  "nadie")
+    B.declara(v, 0x92C8, 0x9348, "datos_92C8", "128 bytes (pares 0x00/0x0F y 0xFF: parecen "
+              "mascaras) que no apunta nadie: SIN LECTOR A LA VISTA", "nadie", F=16)
+    B.declara(v, 0xBE27, 0xBE42, "relleno_ff", "27 bytes a 0xFF entre los textos: relleno",
+              "nadie", F=16)
+    B.declara(B.Ventana((1, 2, 3)), 0xAD5C, 0xAD60, "datos_AD5C", "4 bytes detras de un ret "
+              "(0x38 0x78 0x00 0x00): SIN LECTOR A LA VISTA", "nadie", F=4)
+
+
 def todo():
+    sin_lector()
+    sueltos()
     banco13()
     banco8_9()
     sonido()

@@ -1106,9 +1106,12 @@ DATA_paletas_73C4:
 	defw 073cah,073ceh	; 73c4  -> DATA_colores_73CA 0x73ce
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x73c8..0x73ca  (2 bytes)
-DATA_73C8:
-	defb 0d2h,073h	; 73c8
+; DATOS paletas_sobran_73C8: 1 punteros mas de la tabla de paletas de 0x73C4:
+;   ninguna ficha de la lista pide ese numero de paleta (p00:4FB0); lo leen
+;   nadie (2 bytes)
+;   0x73c8..0x73ca  (2 bytes)
+DATA_paletas_sobran_73C8:
+	defw 073d2h	; 73c8
 
 ; ----------------------------------------------------------------------
 ; DATOS colores_73CA: 8 colores (un nibble cada uno, ya en su sitio) que
@@ -1173,9 +1176,12 @@ DATA_paletas_75B7:
 	defw 075e0h,075e2h,075e4h,075e6h	; 75c7  -> DATA_colores_75E0 0x75e2 0x75e4 0x75e6
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x75cf..0x75d1  (2 bytes)
-DATA_75CF:
-	defb 0eah,075h	; 75cf
+; DATOS paletas_sobran_75CF: 1 punteros mas de la tabla de paletas de delante:
+;   ninguna ficha de la lista pide ese numero de paleta (p00:4FB0); lo leen
+;   nadie (2 bytes)
+;   0x75cf..0x75d1  (2 bytes)
+DATA_paletas_sobran_75CF:
+	defw 075eah	; 75cf
 
 ; ----------------------------------------------------------------------
 ; DATOS colores_75D1: 8 colores (un nibble cada uno, ya en su sitio) que

@@ -883,582 +883,648 @@ DATA_cabecera_6340:
 	defb 077h,0a9h	; 6344
 
 ; ----------------------------------------------------------------------
-; DATOS sonido_6346: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x02,
-;   0x03, 0x06, 0x09, 0x0D, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16 y 24 mas
-;   (tools/partituras.py); lo leen p06:B51E (12 bytes)
-;   0x6346..0x6352  (12 bytes)
-DATA_sonido_6346:
-	defb 0d6h,063h,0d6h,063h,0d6h,063h,0f6h,063h,0f6h,063h,016h,064h	; 6346  .c.c.c.c.c.d
+; DATOS tabla_6346: 72 punteros de envolventes (orden 0xF8 n, p06:BB04:
+;   palabra n) del motor de sonido; lo leen p06:BB07 (144 bytes)
+;   0x6346..0x63d6  (144 bytes)
+DATA_tabla_6346:
+	defw 063d6h,063d6h,063d6h,063f6h,063f6h,06416h,06436h,06436h	; 6346
+	defw 06456h,06456h,06456h,06476h,06496h,064b6h,064d6h,064d6h	; 6356
+	defw 064d6h,064d6h,064d6h,064d6h,064f6h,06516h,06536h,06536h	; 6366
+	defw 06536h,06536h,06536h,06536h,06536h,06536h,06556h,06556h	; 6376
+	defw 06576h,06576h,06576h,06576h,06596h,06596h,065b6h,065d6h	; 6386
+	defw 065d6h,065f6h,06616h,06616h,06636h,06636h,06636h,06636h	; 6396
+	defw 06636h,06636h,06656h,06656h,06656h,06656h,06656h,06656h	; 63a6
+	defw 06656h,06656h,06656h,06656h,06656h,06656h,06656h,06656h	; 63b6
+	defw 06656h,06656h,06656h,06656h,06656h,06656h,06656h,06656h	; 63c6
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6352..0x6354  (2 bytes)
-DATA_6352:
-	defb 036h,064h	; 6352
-
-; ----------------------------------------------------------------------
-; DATOS sonido_6354: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x0A,
-;   0x0B, 0x2E, 0x2F, 0x31 (tools/partituras.py); lo leen p06:B51E (4 bytes)
-;   0x6354..0x6358  (4 bytes)
-DATA_sonido_6354:
-	defb 036h,064h,056h,064h	; 6354
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6358..0x635a  (2 bytes)
-DATA_6358:
-	defb 056h,064h	; 6358
-
-; ----------------------------------------------------------------------
-; DATOS sonido_635A: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x05,
-;   0x07, 0x0A, 0x0C, 0x23, 0x28, 0x29, 0x2A, 0x2B, 0x2D, 0x30, 0x35 y 2 mas
-;   (tools/partituras.py); lo leen p06:B51E (8 bytes)
-;   0x635a..0x6362  (8 bytes)
-DATA_sonido_635A:
-	defb 056h,064h,076h,064h,096h,064h,0b6h,064h	; 635a  Vdvd.d.d
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6362..0x636c  (10 bytes)
-DATA_6362:
-	defb 0d6h,064h,0d6h,064h,0d6h,064h,0d6h,064h,0d6h,064h	; 6362  .d.d.d.d.d
-
-; ----------------------------------------------------------------------
-; DATOS sonido_636C: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x02,
-;   0x05, 0x07, 0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15 y 30 mas
-;   (tools/partituras.py); lo leen p06:B51E (6 bytes)
-;   0x636c..0x6372  (6 bytes)
-DATA_sonido_636C:
-	defb 0d6h,064h,0f6h,064h,016h,065h	; 636c
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6372..0x6380  (14 bytes)
-DATA_6372:
-	defb 036h,065h,036h,065h,036h,065h,036h,065h,036h,065h,036h,065h,036h,065h	; 6372  6e6e6e6e6e6e6e
-
-; ----------------------------------------------------------------------
-; DATOS sonido_6380: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x04,
-;   0x07, 0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x12, 0x17, 0x18, 0x1C, 0x1E y 11 mas
-;   (tools/partituras.py); lo leen p06:B51E (2 bytes)
-;   0x6380..0x6382  (2 bytes)
-DATA_sonido_6380:
-	defb 036h,065h	; 6380
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6382..0x6384  (2 bytes)
-DATA_6382:
-	defb 056h,065h	; 6382
-
-; ----------------------------------------------------------------------
-; DATOS sonido_6384: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x08
-;   (tools/partituras.py); lo leen p06:B51E (2 bytes)
-;   0x6384..0x6386  (2 bytes)
-DATA_sonido_6384:
-	defb 056h,065h	; 6384
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6386..0x638a  (4 bytes)
-DATA_6386:
-	defb 076h,065h,076h,065h	; 6386
-
-; ----------------------------------------------------------------------
-; DATOS sonido_638A: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x07,
-;   0x0C, 0x0D, 0x0E, 0x0F, 0x10, 0x11, 0x13, 0x14, 0x15, 0x16, 0x17 y 8 mas
-;   (tools/partituras.py); lo leen p06:B51E (4 bytes)
-;   0x638a..0x638e  (4 bytes)
-DATA_sonido_638A:
-	defb 076h,065h,076h,065h	; 638a
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x638e..0x6390  (2 bytes)
-DATA_638E:
-	defb 096h,065h	; 638e
-
-; ----------------------------------------------------------------------
-; DATOS sonido_6390: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D,
-;   0x3B, 0x3C, 0x42, 0x43, 0x45 (tools/partituras.py); lo leen p06:B51E (4
-;   bytes)
-;   0x6390..0x6394  (4 bytes)
-DATA_sonido_6390:
-	defb 096h,065h,0b6h,065h	; 6390
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6394..0x6396  (2 bytes)
-DATA_6394:
-	defb 0d6h,065h	; 6394
-
-; ----------------------------------------------------------------------
-; DATOS sonido_6396: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x02,
-;   0x07, 0x10, 0x11, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x2B, 0x2C y 22 mas
-;   (tools/partituras.py); lo leen p06:B51E (4 bytes)
-;   0x6396..0x639a  (4 bytes)
-DATA_sonido_6396:
-	defb 0d6h,065h,0f6h,065h	; 6396
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x639a..0x639c  (2 bytes)
-DATA_639A:
-	defb 016h,066h	; 639a
-
-; ----------------------------------------------------------------------
-; DATOS sonido_639C: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D
-;   (tools/partituras.py); lo leen p06:B51E (2 bytes)
-;   0x639c..0x639e  (2 bytes)
-DATA_sonido_639C:
-	defb 016h,066h	; 639c
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x639e..0x63a8  (10 bytes)
-DATA_639E:
-	defb 036h,066h,036h,066h,036h,066h,036h,066h,036h,066h	; 639e  6f6f6f6f6f
-
-; ----------------------------------------------------------------------
-; DATOS sonido_63A8: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x28,
-;   0x2B, 0x47 (tools/partituras.py); lo leen p06:B51E (2 bytes)
-;   0x63a8..0x63aa  (2 bytes)
-DATA_sonido_63A8:
-	defb 036h,066h	; 63a8
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x63aa..0x63d6  (44 bytes)
-DATA_63AA:
-	defb 056h,066h,056h,066h,056h,066h,056h,066h,056h,066h,056h,066h,056h,066h,056h,066h	; 63aa  VfVfVfVfVfVfVfVf
-	defb 056h,066h,056h,066h,056h,066h,056h,066h,056h,066h,056h,066h,056h,066h,056h,066h	; 63ba  VfVfVfVfVfVfVfVf
-	defb 056h,066h,056h,066h,056h,066h,056h,066h,056h,066h,056h,066h	; 63ca  VfVfVfVfVfVf
-
-; ----------------------------------------------------------------------
-; DATOS sonido_63D6: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x02,
-;   0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D y 56 mas
-;   (tools/partituras.py); lo leen p06:B51E (576 bytes)
-;   0x63d6..0x6616  (576 bytes)
-DATA_sonido_63D6:
+; DATOS motor_63D6: lo apuntan las entradas 0x6346[0], 0x6346[1], 0x6346[2];
+;   el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo;
+;   lo leen p06:BB07 (32 bytes)
+;   0x63d6..0x63f6  (32 bytes)
+DATA_motor_63D6:
 	defb 000h,0f8h,0f0h,0e8h,0e0h,0d8h,0d0h,0c8h,0c0h,0b8h,0b0h,0a8h,0a0h,098h,090h,088h	; 63d6  ................
 	defb 080h,078h,070h,068h,060h,058h,050h,048h,040h,038h,030h,028h,020h,018h,010h,008h	; 63e6  .xph`XPH@80( ...
+
+; ----------------------------------------------------------------------
+; DATOS motor_63F6: lo apuntan las entradas 0x6346[3], 0x6346[4]; el tamano
+;   llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen
+;   p06:BB07 (32 bytes)
+;   0x63f6..0x6416  (32 bytes)
+DATA_motor_63F6:
 	defb 000h,04eh,062h,06dh,075h,07ah,07dh,07eh,07fh,07eh,07dh,07ah,075h,06dh,062h,04eh	; 63f6  .Nbmuz}~.~}zumbN
 	defb 000h,0b1h,09dh,092h,08ah,085h,082h,081h,080h,081h,082h,085h,08ah,092h,09dh,0b1h	; 6406  ................
+
+; ----------------------------------------------------------------------
+; DATOS motor_6416: lo apuntan las entradas 0x6346[5]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32
+;   bytes)
+;   0x6416..0x6436  (32 bytes)
+DATA_motor_6416:
 	defb 000h,019h,031h,047h,05ah,06ah,075h,07dh,07fh,07dh,075h,06ah,05ah,047h,031h,019h	; 6416  ..1GZju}.}ujZG1.
 	defb 000h,0e7h,0cfh,0b9h,0a6h,096h,08bh,083h,080h,083h,08bh,096h,0a6h,0b9h,0cfh,0e7h	; 6426  ................
+
+; ----------------------------------------------------------------------
+; DATOS motor_6436: lo apuntan las entradas 0x6346[6], 0x6346[7]; el tamano
+;   llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen
+;   p06:BB07 (32 bytes)
+;   0x6436..0x6456  (32 bytes)
+DATA_motor_6436:
 	defb 000h,0e0h,0c0h,0a0h,080h,0a0h,0c0h,0e0h,000h,020h,040h,060h,07fh,060h,040h,020h	; 6436  ......... @`.`@
 	defb 000h,0e0h,0c0h,0a0h,080h,0a0h,0c0h,0e0h,000h,020h,040h,060h,07fh,060h,040h,020h	; 6446  ......... @`.`@
+
+; ----------------------------------------------------------------------
+; DATOS motor_6456: lo apuntan las entradas 0x6346[8], 0x6346[9], 0x6346[10];
+;   el tamano llega hasta el siguiente destino o tabla, no sale de recorrerlo;
+;   lo leen p06:BB07 (32 bytes)
+;   0x6456..0x6476  (32 bytes)
+DATA_motor_6456:
 	defb 000h,019h,031h,047h,05ah,06ah,075h,07dh,07fh,07dh,075h,06ah,05ah,047h,031h,019h	; 6456  ..1GZju}.}ujZG1.
 	defb 080h,090h,0a0h,0b0h,0c0h,0d0h,0e0h,0f0h,000h,010h,020h,030h,040h,050h,060h,070h	; 6466  .......... 0@P`p
+
+; ----------------------------------------------------------------------
+; DATOS motor_6476: lo apuntan las entradas 0x6346[11]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32
+;   bytes)
+;   0x6476..0x6496  (32 bytes)
+DATA_motor_6476:
 	defb 000h,019h,031h,047h,05ah,06ah,075h,07dh,07fh,07dh,075h,06ah,05ah,047h,031h,019h	; 6476  ..1GZju}.}ujZG1.
 	defb 080h,0a0h,0c0h,0e0h,000h,020h,040h,060h,080h,0a0h,0c0h,0e0h,000h,020h,040h,060h	; 6486  ..... @`..... @`
+
+; ----------------------------------------------------------------------
+; DATOS motor_6496: lo apuntan las entradas 0x6346[12]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32
+;   bytes)
+;   0x6496..0x64b6  (32 bytes)
+DATA_motor_6496:
 	defb 001h,02ah,040h,050h,05ch,068h,070h,078h,07fh,078h,070h,068h,05ch,050h,040h,02ah	; 6496  .*@P\hpx.xph\P@*
 	defb 0ffh,0d6h,0c0h,0b0h,0a4h,098h,090h,088h,081h,088h,090h,098h,0a4h,0b0h,0c0h,0d6h	; 64a6  ................
+
+; ----------------------------------------------------------------------
+; DATOS motor_64B6: lo apuntan las entradas 0x6346[13]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32
+;   bytes)
+;   0x64b6..0x64d6  (32 bytes)
+DATA_motor_64B6:
 	defb 000h,040h,07fh,040h,001h,0c0h,081h,0c0h,001h,040h,07fh,040h,001h,0c0h,001h,040h	; 64b6  .@.@.....@.@...@
 	defb 001h,0e0h,001h,020h,001h,0f0h,001h,010h,001h,0ffh,0ffh,0ffh,0ffh,040h,040h,040h	; 64c6  ... .........@@@
+
+; ----------------------------------------------------------------------
+; DATOS motor_64D6: lo apuntan las entradas 0x6346[14], 0x6346[15],
+;   0x6346[16], 0x6346[17]; el tamano llega hasta el siguiente destino o
+;   tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+;   0x64d6..0x64f6  (32 bytes)
+DATA_motor_64D6:
 	defb 000h,0f0h,0e0h,0d0h,0c0h,0b0h,0a0h,090h,080h,080h,080h,080h,080h,080h,080h,080h	; 64d6  ................
 	defb 080h,080h,080h,080h,080h,080h,080h,080h,07fh,070h,060h,050h,040h,030h,020h,010h	; 64e6  .........p`P@0 .
+
+; ----------------------------------------------------------------------
+; DATOS motor_64F6: lo apuntan las entradas 0x6346[20]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32
+;   bytes)
+;   0x64f6..0x6516  (32 bytes)
+DATA_motor_64F6:
 	defb 000h,030h,050h,060h,070h,060h,050h,030h,000h,0d0h,0b0h,0a0h,090h,0a0h,0b0h,0d0h	; 64f6  .0P`p`P0........
 	defb 000h,040h,060h,070h,060h,040h,000h,0c0h,0a0h,090h,0a0h,0c0h,000h,070h,000h,090h	; 6506  .@`p`@.......p..
+
+; ----------------------------------------------------------------------
+; DATOS motor_6516: lo apuntan las entradas 0x6346[21]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32
+;   bytes)
+;   0x6516..0x6536  (32 bytes)
+DATA_motor_6516:
 	defb 030h,050h,050h,030h,000h,000h,010h,040h,060h,070h,060h,030h,0f0h,0e0h,0e0h,000h	; 6516  0PP0...@`p`0....
 	defb 020h,020h,010h,0c0h,0a0h,090h,0a0h,0c0h,000h,000h,0d0h,0b0h,0b0h,0d0h,000h,000h	; 6526    ..............
+
+; ----------------------------------------------------------------------
+; DATOS motor_6536: lo apuntan las entradas 0x6346[22], 0x6346[23],
+;   0x6346[24], 0x6346[25]; el tamano llega hasta el siguiente destino o
+;   tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+;   0x6536..0x6556  (32 bytes)
+DATA_motor_6536:
 	defb 000h,070h,050h,020h,050h,070h,030h,000h,050h,07fh,060h,010h,030h,040h,000h,0b0h	; 6536  .pP Pp0.P.`.0@..
 	defb 010h,060h,000h,0e0h,0f0h,000h,0b0h,090h,0c0h,010h,0e0h,0a0h,0c0h,0f0h,0c0h,0a0h	; 6546  .`..............
+
+; ----------------------------------------------------------------------
+; DATOS motor_6556: lo apuntan las entradas 0x6346[30], 0x6346[31]; el tamano
+;   llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen
+;   p06:BB07 (32 bytes)
+;   0x6556..0x6576  (32 bytes)
+DATA_motor_6556:
 	defb 000h,020h,030h,040h,050h,060h,068h,070h,078h,070h,068h,060h,050h,040h,030h,020h	; 6556  . 0@P`hpxph`P@0
 	defb 000h,0e0h,0d0h,0c0h,0b0h,0a0h,098h,090h,088h,090h,098h,0a0h,0b0h,0c0h,0d0h,0e0h	; 6566  ................
+
+; ----------------------------------------------------------------------
+; DATOS motor_6576: lo apuntan las entradas 0x6346[32], 0x6346[33],
+;   0x6346[34], 0x6346[35]; el tamano llega hasta el siguiente destino o
+;   tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+;   0x6576..0x6596  (32 bytes)
+DATA_motor_6576:
 	defb 080h,0b0h,0c0h,010h,01ah,02ah,02ch,01ah,000h,0e0h,0d0h,0e0h,022h,053h,070h,075h	; 6576  .....*,....."Spu
 	defb 070h,031h,0eah,080h,088h,08ah,08ch,08eh,000h,07fh,075h,073h,062h,000h,0c0h,090h	; 6586  p1........usb...
+
+; ----------------------------------------------------------------------
+; DATOS motor_6596: lo apuntan las entradas 0x6346[36], 0x6346[37]; el tamano
+;   llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen
+;   p06:BB07 (32 bytes)
+;   0x6596..0x65b6  (32 bytes)
+DATA_motor_6596:
 	defb 000h,000h,000h,000h,000h,070h,070h,000h,000h,080h,080h,080h,000h,000h,000h,000h	; 6596  .....pp.........
 	defb 070h,070h,070h,000h,080h,080h,000h,000h,000h,000h,070h,070h,000h,000h,080h,080h	; 65a6  ppp.......pp....
+
+; ----------------------------------------------------------------------
+; DATOS motor_65B6: lo apuntan las entradas 0x6346[38]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32
+;   bytes)
+;   0x65b6..0x65d6  (32 bytes)
+DATA_motor_65B6:
 	defb 000h,000h,000h,080h,000h,070h,070h,070h,000h,000h,000h,080h,000h,000h,000h,080h	; 65b6  .....ppp........
 	defb 080h,080h,080h,000h,080h,000h,000h,000h,000h,080h,080h,080h,000h,080h,080h,080h	; 65c6  ................
+
+; ----------------------------------------------------------------------
+; DATOS motor_65D6: lo apuntan las entradas 0x6346[39], 0x6346[40]; el tamano
+;   llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen
+;   p06:BB07 (32 bytes)
+;   0x65d6..0x65f6  (32 bytes)
+DATA_motor_65D6:
 	defb 070h,070h,070h,070h,070h,070h,070h,070h,080h,080h,080h,080h,080h,080h,080h,080h	; 65d6  pppppppp........
 	defb 070h,070h,070h,080h,080h,080h,070h,070h,070h,070h,080h,080h,080h,080h,080h,080h	; 65e6  ppp...pppp......
+
+; ----------------------------------------------------------------------
+; DATOS motor_65F6: lo apuntan las entradas 0x6346[41]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:BB07 (32
+;   bytes)
+;   0x65f6..0x6616  (32 bytes)
+DATA_motor_65F6:
 	defb 0a0h,090h,090h,090h,0a0h,0a0h,0b0h,0b0h,0c0h,0c0h,0d0h,0d0h,0e0h,0e0h,0f0h,0f0h	; 65f6  ................
 	defb 000h,000h,010h,010h,020h,020h,030h,030h,040h,040h,050h,050h,060h,060h,060h,050h	; 6606  ....  00@@PP```P
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6616..0x6636  (32 bytes)
-DATA_6616:
+; DATOS motor_6616: lo apuntan las entradas 0x6346[42], 0x6346[43]; el tamano
+;   llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen
+;   p06:BB07 (32 bytes)
+;   0x6616..0x6636  (32 bytes)
+DATA_motor_6616:
 	defb 000h,040h,07fh,040h,001h,0c0h,081h,0c0h,001h,040h,07fh,040h,001h,0c0h,001h,040h	; 6616  .@.@.....@.@...@
 	defb 001h,0e0h,001h,020h,001h,0f0h,001h,010h,001h,0ffh,0ffh,0ffh,0ffh,040h,040h,040h	; 6626  ... .........@@@
 
 ; ----------------------------------------------------------------------
-; DATOS sonido_6636: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x23,
-;   0x28, 0x2B, 0x2C, 0x2D, 0x2E, 0x2F, 0x30, 0x31, 0x32, 0x33, 0x34 y 17 mas
-;   (tools/partituras.py); lo leen p06:B51E (712 bytes)
-;   0x6636..0x68fe  (712 bytes)
-DATA_sonido_6636:
+; DATOS motor_6636: lo apuntan las entradas 0x6346[44], 0x6346[45],
+;   0x6346[46], 0x6346[47]; el tamano llega hasta el siguiente destino o
+;   tabla, no sale de recorrerlo; lo leen p06:BB07 (32 bytes)
+;   0x6636..0x6656  (32 bytes)
+DATA_motor_6636:
 	defb 001h,02ah,040h,050h,05ch,068h,070h,078h,07fh,078h,070h,068h,05ch,050h,040h,02ah	; 6636  .*@P\hpx.xph\P@*
 	defb 0ffh,0d6h,0c0h,0b0h,0a4h,098h,090h,088h,081h,088h,090h,098h,0a4h,0b0h,0c0h,0d6h	; 6646  ................
-	defb 06eh,066h,074h,066h,081h,066h,096h,066h,0afh,066h,0beh,066h,015h,067h,06ch,067h	; 6656  nftf.f.f.f.f.glg
-	defb 0abh,067h,0eah,067h,035h,068h,090h,068h,0e1h,001h,0e4h,000h,007h,0ffh,0e3h,001h	; 6666  .g.g5h.h........
-	defb 0e4h,000h,08ah,000h,0e1h,004h,006h,005h,004h,003h,0ffh,0e1h,001h,0e4h,014h,007h	; 6676  ................
-	defb 0e2h,001h,072h,000h,0e1h,002h,0e4h,010h,003h,002h,0e1h,001h,0e4h,006h,002h,0ffh	; 6686  ..r.............
+
+; ----------------------------------------------------------------------
+; DATOS tabla_6656: 12 punteros de bateria del motor de sonido; se solapan 2
+;   bloques: (motor_6656 6656-666E); lo leen p06:B67D, p06:BB07 (24 bytes)
+;   0x6656..0x666e  (24 bytes)
+DATA_tabla_6656:
+	defw 0666eh,06674h,06681h,06696h,066afh,066beh,06715h,0676ch	; 6656
+	defw 067abh,067eah,06835h,06890h	; 6666  -> DATA_motor_67AB DATA_motor_67EA DATA_motor_6835 DATA_motor_6890
+
+; ----------------------------------------------------------------------
+; DATOS motor_666E: lo apuntan las entradas 0x6656[0]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (6
+;   bytes)
+;   0x666e..0x6674  (6 bytes)
+DATA_motor_666E:
+	defb 0e1h,001h,0e4h,000h,007h,0ffh	; 666e
+
+; ----------------------------------------------------------------------
+; DATOS motor_6674: lo apuntan las entradas 0x6656[1]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (13
+;   bytes)
+;   0x6674..0x6681  (13 bytes)
+DATA_motor_6674:
+	defb 0e3h,001h,0e4h,000h,08ah,000h,0e1h,004h,006h,005h,004h,003h,0ffh	; 6674  .............
+
+; ----------------------------------------------------------------------
+; DATOS motor_6681: lo apuntan las entradas 0x6656[2]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (21
+;   bytes)
+;   0x6681..0x6696  (21 bytes)
+DATA_motor_6681:
+	defb 0e1h,001h,0e4h,014h,007h,0e2h,001h,072h,000h,0e1h,002h,0e4h,010h,003h,002h,0e1h	; 6681  .......r........
+	defb 001h,0e4h,006h,002h,0ffh	; 6691
+
+; ----------------------------------------------------------------------
+; DATOS motor_6696: lo apuntan las entradas 0x6656[3]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (25
+;   bytes)
+;   0x6696..0x66af  (25 bytes)
+DATA_motor_6696:
 	defb 0e2h,001h,0e5h,00ah,000h,042h,0c1h,0b0h,0e8h,0e1h,001h,0e4h,008h,008h,007h,006h	; 6696  .....B..........
-	defb 005h,004h,003h,002h,002h,001h,001h,000h,0ffh,0e2h,001h,0e5h,009h,003h,000h,093h	; 66a6  ................
-	defb 0d0h,096h,000h,097h,000h,098h,000h,0ffh,0e2h,001h,0b3h,080h,0a4h,000h,0a4h,0d0h	; 66b6  ................
-	defb 0a5h,060h,0a6h,080h,0a7h,040h,053h,0b0h,054h,030h,055h,000h,055h,0a0h,056h,0d0h	; 66c6  .`...@S.T0U.U.V.
-	defb 057h,0a0h,043h,080h,044h,000h,044h,0d0h,045h,060h,046h,080h,047h,040h,033h,0b0h	; 66d6  W.C.D.D.E`F.G@3.
-	defb 034h,030h,035h,000h,035h,0a0h,036h,0d0h,037h,0a0h,023h,080h,024h,000h,024h,0d0h	; 66e6  405.5.6.7.#.$.$.
-	defb 025h,060h,026h,080h,027h,040h,013h,0b0h,014h,030h,015h,000h,015h,0a0h,016h,0d0h	; 66f6  %`&.'@...0......
-	defb 017h,0a0h,003h,080h,004h,000h,004h,0d0h,005h,060h,006h,080h,007h,040h,0ffh,0e2h	; 6706  .........`...@..
-	defb 001h,083h,080h,084h,000h,084h,0d0h,085h,060h,086h,080h,087h,040h,053h,0b0h,054h	; 6716  ........`...@S.T
-	defb 030h,055h,000h,055h,0a0h,056h,0d0h,057h,0a0h,043h,080h,044h,000h,044h,0d0h,045h	; 6726  0U.U.V.W.C.D.D.E
-	defb 060h,046h,080h,047h,040h,033h,0b0h,034h,030h,035h,000h,035h,0a0h,036h,0d0h,037h	; 6736  `F.G@3.405.5.6.7
-	defb 0a0h,023h,080h,024h,000h,024h,0d0h,025h,060h,026h,080h,027h,040h,013h,0b0h,014h	; 6746  .#.$.$.%`&.'@...
-	defb 030h,015h,000h,015h,0a0h,016h,0d0h,017h,0a0h,003h,080h,004h,000h,004h,0d0h,005h	; 6756  0...............
-	defb 060h,006h,080h,007h,040h,0ffh,0e2h,001h,080h,026h,060h,024h,070h,027h,060h,024h	; 6766  `...@....&`$p'`$
-	defb 070h,026h,060h,024h,050h,025h,070h,026h,070h,025h,070h,027h,070h,025h,070h,027h	; 6776  p&`$P%p&p%p'p%p'
-	defb 070h,025h,070h,027h,070h,025h,070h,027h,070h,025h,070h,027h,070h,025h,070h,027h	; 6786  p%p'p%p'p%p'p%p'
-	defb 070h,025h,070h,027h,070h,025h,070h,028h,070h,026h,070h,029h,070h,027h,070h,02ah	; 6796  p%p'p%p(p&p)p'p*
-	defb 070h,028h,070h,02bh,0ffh,0e2h,001h,060h,026h,040h,024h,050h,027h,040h,024h,050h	; 67a6  p(p+...`&@$P'@$P
-	defb 026h,040h,024h,030h,025h,050h,026h,050h,025h,050h,027h,050h,025h,050h,027h,050h	; 67b6  &@$0%P&P%P'P%P'P
-	defb 025h,050h,027h,050h,025h,050h,027h,050h,025h,050h,027h,050h,025h,050h,027h,050h	; 67c6  %P'P%P'P%P'P%P'P
-	defb 025h,050h,027h,050h,025h,050h,028h,050h,026h,050h,029h,050h,027h,050h,02ah,050h	; 67d6  %P'P%P(P&P)P'P*P
-	defb 028h,050h,02bh,0ffh,0e1h,002h,0e4h,000h,005h,0e4h,00fh,005h,0e4h,002h,005h,0e4h	; 67e6  (P+.............
-	defb 004h,005h,0e4h,000h,004h,0e4h,00fh,004h,0e4h,002h,004h,0e4h,004h,004h,0e4h,000h	; 67f6  ................
-	defb 003h,0e4h,00fh,003h,0e4h,002h,003h,0e4h,004h,003h,0e4h,000h,002h,0e4h,00fh,002h	; 6806  ................
-	defb 0e4h,002h,002h,0e4h,004h,002h,0e4h,000h,001h,0e4h,00fh,001h,0e4h,002h,002h,0e4h	; 6816  ................
-	defb 004h,002h,0e4h,000h,001h,0e4h,00fh,001h,0e4h,002h,001h,0e4h,004h,001h,0ffh,0e2h	; 6826  ................
-	defb 001h,0a3h,077h,0a4h,062h,0a5h,08ch,0a7h,006h,0a4h,044h,0a5h,066h,0a6h,0d5h,0a8h	; 6836  ..w.b.....D.f...
-	defb 0a5h,000h,000h,053h,077h,054h,062h,055h,08ch,057h,006h,054h,044h,055h,066h,056h	; 6846  ...SwTbU.W.TDUfV
-	defb 0d5h,058h,0a5h,000h,000h,023h,077h,024h,062h,025h,08ch,027h,006h,024h,044h,025h	; 6856  .X...#w$b%.'.$D%
-	defb 066h,026h,0d5h,028h,0a5h,000h,000h,013h,077h,014h,062h,015h,08ch,017h,006h,014h	; 6866  f&.(....w.b.....
-	defb 044h,015h,066h,016h,0d5h,018h,0a5h,000h,000h,003h,077h,004h,062h,005h,08ch,007h	; 6876  D.f.......w.b...
-	defb 006h,004h,044h,005h,066h,006h,0d5h,008h,0a5h,0ffh,0e2h,001h,080h,024h,060h,022h	; 6886  ..D.f........$`"
-	defb 070h,025h,060h,022h,070h,024h,060h,022h,050h,023h,070h,025h,070h,023h,070h,025h	; 6896  p%`"p$`"P#p%p#p%
-	defb 070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,025h	; 68a6  p#p%p#p%p#p%p#p%
-	defb 070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,025h	; 68b6  p#p%p#p%p#p%p#p%
-	defb 070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,025h	; 68c6  p#p%p#p%p#p%p#p%
-	defb 070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,025h	; 68d6  p#p%p#p%p#p%p#p%
-	defb 070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,026h	; 68e6  p#p%p#p%p#p%p#p&
-	defb 070h,024h,070h,027h,070h,025h,070h,028h	; 68f6  p$p'p%p(
+	defb 005h,004h,003h,002h,002h,001h,001h,000h,0ffh	; 66a6  .........
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x68fe..0x6903  (5 bytes)
-DATA_68FE:
-	defb 070h,026h,070h,029h,0ffh	; 68fe
+; DATOS motor_66AF: lo apuntan las entradas 0x6656[4]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (15
+;   bytes)
+;   0x66af..0x66be  (15 bytes)
+DATA_motor_66AF:
+	defb 0e2h,001h,0e5h,009h,003h,000h,093h,0d0h,096h,000h,097h,000h,098h,000h,0ffh	; 66af  ...............
 
 ; ----------------------------------------------------------------------
-; DATOS sonido_6903: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D,
-;   0x2E, 0x2F, 0x30, 0x31 (tools/partituras.py); lo leen p06:B51E (16 bytes)
-;   0x6903..0x6913  (16 bytes)
-DATA_sonido_6903:
-	defb 01bh,069h,031h,069h,03dh,069h,049h,069h,066h,069h,083h,069h,0a0h,069h,0b6h,069h	; 6903  .i1i=iIifi.i.i.i
+; DATOS motor_66BE: lo apuntan las entradas 0x6656[5]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (87
+;   bytes)
+;   0x66be..0x6715  (87 bytes)
+DATA_motor_66BE:
+	defb 0e2h,001h,0b3h,080h,0a4h,000h,0a4h,0d0h,0a5h,060h,0a6h,080h,0a7h,040h,053h,0b0h	; 66be  .........`...@S.
+	defb 054h,030h,055h,000h,055h,0a0h,056h,0d0h,057h,0a0h,043h,080h,044h,000h,044h,0d0h	; 66ce  T0U.U.V.W.C.D.D.
+	defb 045h,060h,046h,080h,047h,040h,033h,0b0h,034h,030h,035h,000h,035h,0a0h,036h,0d0h	; 66de  E`F.G@3.405.5.6.
+	defb 037h,0a0h,023h,080h,024h,000h,024h,0d0h,025h,060h,026h,080h,027h,040h,013h,0b0h	; 66ee  7.#.$.$.%`&.'@..
+	defb 014h,030h,015h,000h,015h,0a0h,016h,0d0h,017h,0a0h,003h,080h,004h,000h,004h,0d0h	; 66fe  .0..............
+	defb 005h,060h,006h,080h,007h,040h,0ffh	; 670e
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6913..0x6917  (4 bytes)
-DATA_6913:
-	defb 0c5h,069h,0d9h,069h	; 6913
+; DATOS motor_6715: lo apuntan las entradas 0x6656[6]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (87
+;   bytes)
+;   0x6715..0x676c  (87 bytes)
+DATA_motor_6715:
+	defb 0e2h,001h,083h,080h,084h,000h,084h,0d0h,085h,060h,086h,080h,087h,040h,053h,0b0h	; 6715  .........`...@S.
+	defb 054h,030h,055h,000h,055h,0a0h,056h,0d0h,057h,0a0h,043h,080h,044h,000h,044h,0d0h	; 6725  T0U.U.V.W.C.D.D.
+	defb 045h,060h,046h,080h,047h,040h,033h,0b0h,034h,030h,035h,000h,035h,0a0h,036h,0d0h	; 6735  E`F.G@3.405.5.6.
+	defb 037h,0a0h,023h,080h,024h,000h,024h,0d0h,025h,060h,026h,080h,027h,040h,013h,0b0h	; 6745  7.#.$.$.%`&.'@..
+	defb 014h,030h,015h,000h,015h,0a0h,016h,0d0h,017h,0a0h,003h,080h,004h,000h,004h,0d0h	; 6755  .0..............
+	defb 005h,060h,006h,080h,007h,040h,0ffh	; 6765
 
 ; ----------------------------------------------------------------------
-; DATOS sonido_6917: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2C,
-;   0x2D, 0x36, 0x3A, 0x3D, 0x3E, 0x42, 0x43, 0x44, 0x45
-;   (tools/partituras.py); lo leen p06:B51E (37 bytes)
-;   0x6917..0x693c  (37 bytes)
-DATA_sonido_6917:
-	defb 00ch,06ah,04bh,06ah,0e1h,003h,0e4h,002h,00ah,0e4h,000h,00ah,0e1h,006h,0e4h,001h	; 6917  .jKj............
-	defb 009h,0e4h,000h,008h,007h,006h,005h,004h,003h,0ffh,0e1h,004h,0e4h,000h,00bh,00ah	; 6927  ................
-	defb 009h,008h,007h,006h,005h	; 6937
+; DATOS motor_676C: lo apuntan las entradas 0x6656[7]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (63
+;   bytes)
+;   0x676c..0x67ab  (63 bytes)
+DATA_motor_676C:
+	defb 0e2h,001h,080h,026h,060h,024h,070h,027h,060h,024h,070h,026h,060h,024h,050h,025h	; 676c  ...&`$p'`$p&`$P%
+	defb 070h,026h,070h,025h,070h,027h,070h,025h,070h,027h,070h,025h,070h,027h,070h,025h	; 677c  p&p%p'p%p'p%p'p%
+	defb 070h,027h,070h,025h,070h,027h,070h,025h,070h,027h,070h,025h,070h,027h,070h,025h	; 678c  p'p%p'p%p'p%p'p%
+	defb 070h,028h,070h,026h,070h,029h,070h,027h,070h,02ah,070h,028h,070h,02bh,0ffh	; 679c  p(p&p)p'p*p(p+.
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x693c..0x693d  (1 bytes)
-DATA_693C:
-	defb 0ffh	; 693c
+; DATOS motor_67AB: lo apuntan las entradas 0x6656[8]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (63
+;   bytes)
+;   0x67ab..0x67ea  (63 bytes)
+DATA_motor_67AB:
+	defb 0e2h,001h,060h,026h,040h,024h,050h,027h,040h,024h,050h,026h,040h,024h,030h,025h	; 67ab  ..`&@$P'@$P&@$0%
+	defb 050h,026h,050h,025h,050h,027h,050h,025h,050h,027h,050h,025h,050h,027h,050h,025h	; 67bb  P&P%P'P%P'P%P'P%
+	defb 050h,027h,050h,025h,050h,027h,050h,025h,050h,027h,050h,025h,050h,027h,050h,025h	; 67cb  P'P%P'P%P'P%P'P%
+	defb 050h,028h,050h,026h,050h,029h,050h,027h,050h,02ah,050h,028h,050h,02bh,0ffh	; 67db  P(P&P)P'P*P(P+.
 
 ; ----------------------------------------------------------------------
-; DATOS sonido_693D: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D,
-;   0x2E, 0x2F, 0x30, 0x31 (tools/partituras.py); lo leen p06:B51E (118 bytes)
-;   0x693d..0x69b3  (118 bytes)
-DATA_sonido_693D:
-	defb 0e1h,004h,0e4h,000h,009h,008h,007h,006h,005h,004h,003h,0ffh,0e2h,001h,093h,000h	; 693d  ................
-	defb 085h,000h,076h,000h,067h,000h,0e2h,003h,058h,000h,049h,000h,03ah,000h,02bh,000h	; 694d  ..v.g...X.I.:.+.
-	defb 01ch,000h,00dh,000h,00eh,000h,00fh,000h,0ffh,0e2h,001h,0a3h,000h,095h,000h,086h	; 695d  ................
-	defb 000h,077h,000h,0e2h,003h,068h,000h,059h,000h,04ah,000h,03bh,000h,02ch,000h,01dh	; 696d  .w...h.Y.J...,..
-	defb 000h,00eh,000h,00fh,000h,0ffh,0e2h,001h,053h,000h,045h,000h,046h,000h,037h,000h	; 697d  ........S.E.F.7.
-	defb 0e2h,003h,038h,000h,029h,000h,02ah,000h,01bh,000h,01ch,000h,00dh,000h,00eh,000h	; 698d  ..8.).*.........
-	defb 00fh,000h,0ffh,0e1h,002h,0e4h,002h,00ah,0e4h,000h,00ah,0e1h,004h,0e4h,001h,009h	; 699d  ................
-	defb 0e4h,000h,008h,007h,006h,005h	; 69ad
+; DATOS motor_67EA: lo apuntan las entradas 0x6656[9]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (75
+;   bytes)
+;   0x67ea..0x6835  (75 bytes)
+DATA_motor_67EA:
+	defb 0e1h,002h,0e4h,000h,005h,0e4h,00fh,005h,0e4h,002h,005h,0e4h,004h,005h,0e4h,000h	; 67ea  ................
+	defb 004h,0e4h,00fh,004h,0e4h,002h,004h,0e4h,004h,004h,0e4h,000h,003h,0e4h,00fh,003h	; 67fa  ................
+	defb 0e4h,002h,003h,0e4h,004h,003h,0e4h,000h,002h,0e4h,00fh,002h,0e4h,002h,002h,0e4h	; 680a  ................
+	defb 004h,002h,0e4h,000h,001h,0e4h,00fh,001h,0e4h,002h,002h,0e4h,004h,002h,0e4h,000h	; 681a  ................
+	defb 001h,0e4h,00fh,001h,0e4h,002h,001h,0e4h,004h,001h,0ffh	; 682a  ...........
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x69b3..0x69b6  (3 bytes)
-DATA_69B3:
-	defb 004h,003h,0ffh	; 69b3
+; DATOS motor_6835: lo apuntan las entradas 0x6656[10]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (91
+;   bytes)
+;   0x6835..0x6890  (91 bytes)
+DATA_motor_6835:
+	defb 0e2h,001h,0a3h,077h,0a4h,062h,0a5h,08ch,0a7h,006h,0a4h,044h,0a5h,066h,0a6h,0d5h	; 6835  ...w.b.....D.f..
+	defb 0a8h,0a5h,000h,000h,053h,077h,054h,062h,055h,08ch,057h,006h,054h,044h,055h,066h	; 6845  ....SwTbU.W.TDUf
+	defb 056h,0d5h,058h,0a5h,000h,000h,023h,077h,024h,062h,025h,08ch,027h,006h,024h,044h	; 6855  V.X...#w$b%.'.$D
+	defb 025h,066h,026h,0d5h,028h,0a5h,000h,000h,013h,077h,014h,062h,015h,08ch,017h,006h	; 6865  %f&.(....w.b....
+	defb 014h,044h,015h,066h,016h,0d5h,018h,0a5h,000h,000h,003h,077h,004h,062h,005h,08ch	; 6875  .D.f.......w.b..
+	defb 007h,006h,004h,044h,005h,066h,006h,0d5h,008h,0a5h,0ffh	; 6885  ...D.f.....
 
 ; ----------------------------------------------------------------------
-; DATOS sonido_69B6: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D,
-;   0x2E, 0x31 (tools/partituras.py); lo leen p06:B51E (14 bytes)
-;   0x69b6..0x69c4  (14 bytes)
-DATA_sonido_69B6:
-	defb 0e2h,001h,092h,080h,0e3h,001h,0e4h,000h,081h,0f0h,072h,050h,073h,000h	; 69b6  ..........rPs.
+; DATOS motor_6890: lo apuntan las entradas 0x6656[11]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B67D (115
+;   bytes)
+;   0x6890..0x6903  (115 bytes)
+DATA_motor_6890:
+	defb 0e2h,001h,080h,024h,060h,022h,070h,025h,060h,022h,070h,024h,060h,022h,050h,023h	; 6890  ...$`"p%`"p$`"P#
+	defb 070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h	; 68a0  p%p#p%p#p%p#p%p#
+	defb 070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h	; 68b0  p%p#p%p#p%p#p%p#
+	defb 070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h	; 68c0  p%p#p%p#p%p#p%p#
+	defb 070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h	; 68d0  p%p#p%p#p%p#p%p#
+	defb 070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h	; 68e0  p%p#p%p#p%p#p%p#
+	defb 070h,025h,070h,023h,070h,026h,070h,024h,070h,027h,070h,025h,070h,028h,070h,026h	; 68f0  p%p#p&p$p'p%p(p&
+	defb 070h,029h,0ffh	; 6900
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x69c4..0x6a0c  (72 bytes)
-DATA_69C4:
-	defb 0ffh,0e1h,002h,0e4h,002h,008h,0e4h,000h,007h,0e1h,004h,0e4h,001h,006h,0e4h,000h	; 69c4  ................
-	defb 005h,004h,003h,002h,0ffh,0e2h,001h,020h,024h,030h,027h,030h,022h,030h,025h,040h	; 69d4  ....... $0'0"0%@
-	defb 020h,040h,023h,040h,020h,040h,023h,040h,020h,040h,023h,040h,020h,040h,023h,040h	; 69e4   @#@ @#@ @#@ @#@
-	defb 020h,040h,023h,040h,020h,040h,023h,040h,020h,040h,023h,040h,020h,040h,023h,040h	; 69f4   @#@ @#@ @#@ @#@
-	defb 022h,030h,025h,020h,024h,010h,027h,0ffh	; 6a04  "0% $.'.
+; DATOS tabla_6903: 12 punteros de bateria del motor de sonido; lo leen
+;   p06:B681 (24 bytes)
+;   0x6903..0x691b  (24 bytes)
+DATA_tabla_6903:
+	defw 0691bh,06931h,0693dh,06949h,06966h,06983h,069a0h,069b6h	; 6903
+	defw 069c5h,069d9h,06a0ch,06a4bh	; 6913  -> DATA_motor_69C5 DATA_motor_69D9 DATA_motor_6A0C DATA_motor_6A4B
 
 ; ----------------------------------------------------------------------
-; DATOS sonido_6A0C: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2C,
-;   0x2D, 0x36, 0x3A, 0x3D, 0x3E, 0x42, 0x43, 0x44, 0x45
-;   (tools/partituras.py); lo leen p06:B51E (142 bytes)
-;   0x6a0c..0x6a9a  (142 bytes)
-DATA_sonido_6A0C:
+; DATOS motor_691B: lo apuntan las entradas 0x6903[0]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (22
+;   bytes)
+;   0x691b..0x6931  (22 bytes)
+DATA_motor_691B:
+	defb 0e1h,003h,0e4h,002h,00ah,0e4h,000h,00ah,0e1h,006h,0e4h,001h,009h,0e4h,000h,008h	; 691b  ................
+	defb 007h,006h,005h,004h,003h,0ffh	; 692b
+
+; ----------------------------------------------------------------------
+; DATOS motor_6931: lo apuntan las entradas 0x6903[1]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (12
+;   bytes)
+;   0x6931..0x693d  (12 bytes)
+DATA_motor_6931:
+	defb 0e1h,004h,0e4h,000h,00bh,00ah,009h,008h,007h,006h,005h,0ffh	; 6931  ............
+
+; ----------------------------------------------------------------------
+; DATOS motor_693D: lo apuntan las entradas 0x6903[2]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (12
+;   bytes)
+;   0x693d..0x6949  (12 bytes)
+DATA_motor_693D:
+	defb 0e1h,004h,0e4h,000h,009h,008h,007h,006h,005h,004h,003h,0ffh	; 693d  ............
+
+; ----------------------------------------------------------------------
+; DATOS motor_6949: lo apuntan las entradas 0x6903[3]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (29
+;   bytes)
+;   0x6949..0x6966  (29 bytes)
+DATA_motor_6949:
+	defb 0e2h,001h,093h,000h,085h,000h,076h,000h,067h,000h,0e2h,003h,058h,000h,049h,000h	; 6949  ......v.g...X.I.
+	defb 03ah,000h,02bh,000h,01ch,000h,00dh,000h,00eh,000h,00fh,000h,0ffh	; 6959  :.+..........
+
+; ----------------------------------------------------------------------
+; DATOS motor_6966: lo apuntan las entradas 0x6903[4]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (29
+;   bytes)
+;   0x6966..0x6983  (29 bytes)
+DATA_motor_6966:
+	defb 0e2h,001h,0a3h,000h,095h,000h,086h,000h,077h,000h,0e2h,003h,068h,000h,059h,000h	; 6966  ........w...h.Y.
+	defb 04ah,000h,03bh,000h,02ch,000h,01dh,000h,00eh,000h,00fh,000h,0ffh	; 6976  J...,........
+
+; ----------------------------------------------------------------------
+; DATOS motor_6983: lo apuntan las entradas 0x6903[5]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (29
+;   bytes)
+;   0x6983..0x69a0  (29 bytes)
+DATA_motor_6983:
+	defb 0e2h,001h,053h,000h,045h,000h,046h,000h,037h,000h,0e2h,003h,038h,000h,029h,000h	; 6983  ..S.E.F.7...8.).
+	defb 02ah,000h,01bh,000h,01ch,000h,00dh,000h,00eh,000h,00fh,000h,0ffh	; 6993  *............
+
+; ----------------------------------------------------------------------
+; DATOS motor_69A0: lo apuntan las entradas 0x6903[6]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (22
+;   bytes)
+;   0x69a0..0x69b6  (22 bytes)
+DATA_motor_69A0:
+	defb 0e1h,002h,0e4h,002h,00ah,0e4h,000h,00ah,0e1h,004h,0e4h,001h,009h,0e4h,000h,008h	; 69a0  ................
+	defb 007h,006h,005h,004h,003h,0ffh	; 69b0
+
+; ----------------------------------------------------------------------
+; DATOS motor_69B6: lo apuntan las entradas 0x6903[7]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (15
+;   bytes)
+;   0x69b6..0x69c5  (15 bytes)
+DATA_motor_69B6:
+	defb 0e2h,001h,092h,080h,0e3h,001h,0e4h,000h,081h,0f0h,072h,050h,073h,000h,0ffh	; 69b6  ..........rPs..
+
+; ----------------------------------------------------------------------
+; DATOS motor_69C5: lo apuntan las entradas 0x6903[8]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (20
+;   bytes)
+;   0x69c5..0x69d9  (20 bytes)
+DATA_motor_69C5:
+	defb 0e1h,002h,0e4h,002h,008h,0e4h,000h,007h,0e1h,004h,0e4h,001h,006h,0e4h,000h,005h	; 69c5  ................
+	defb 004h,003h,002h,0ffh	; 69d5
+
+; ----------------------------------------------------------------------
+; DATOS motor_69D9: lo apuntan las entradas 0x6903[9]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (51
+;   bytes)
+;   0x69d9..0x6a0c  (51 bytes)
+DATA_motor_69D9:
+	defb 0e2h,001h,020h,024h,030h,027h,030h,022h,030h,025h,040h,020h,040h,023h,040h,020h	; 69d9  .. $0'0"0%@ @#@
+	defb 040h,023h,040h,020h,040h,023h,040h,020h,040h,023h,040h,020h,040h,023h,040h,020h	; 69e9  @#@ @#@ @#@ @#@
+	defb 040h,023h,040h,020h,040h,023h,040h,020h,040h,023h,040h,022h,030h,025h,020h,024h	; 69f9  @#@ @#@ @#@"0% $
+	defb 010h,027h,0ffh	; 6a09
+
+; ----------------------------------------------------------------------
+; DATOS motor_6A0C: lo apuntan las entradas 0x6903[10]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (63
+;   bytes)
+;   0x6a0c..0x6a4b  (63 bytes)
+DATA_motor_6A0C:
 	defb 0e2h,001h,080h,025h,060h,023h,070h,026h,060h,023h,070h,025h,060h,023h,050h,024h	; 6a0c  ...%`#p&`#p%`#P$
 	defb 070h,026h,070h,024h,070h,026h,070h,024h,070h,026h,070h,024h,070h,026h,070h,024h	; 6a1c  p&p$p&p$p&p$p&p$
 	defb 070h,026h,070h,024h,070h,026h,070h,024h,070h,026h,070h,024h,070h,026h,070h,024h	; 6a2c  p&p$p&p$p&p$p&p$
-	defb 070h,027h,070h,025h,070h,028h,070h,026h,070h,029h,070h,027h,070h,02ah,0ffh,0e2h	; 6a3c  p'p%p(p&p)p'p*..
-	defb 001h,080h,024h,060h,022h,070h,025h,060h,022h,070h,024h,060h,022h,050h,023h,070h	; 6a4c  ..$`"p%`"p$`"P#p
-	defb 025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h	; 6a5c  %p#p%p#p%p#p%p#p
-	defb 025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h	; 6a6c  %p#p%p#p%p#p%p#p
-	defb 026h,070h,024h,070h,027h,070h,025h,070h,028h,070h,026h,070h,029h,0ffh,0a2h,06ah	; 6a7c  &p$p'p%p(p&p)..j
-	defb 0b5h,06ah,0c8h,06ah,0dbh,06ah,0eeh,06ah,001h,06bh,014h,06bh,027h,06bh	; 6a8c  .j.j.j.j.k.k'k
+	defb 070h,027h,070h,025h,070h,028h,070h,026h,070h,029h,070h,027h,070h,02ah,0ffh	; 6a3c  p'p%p(p&p)p'p*.
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6a9a..0x6a9c  (2 bytes)
-DATA_6A9A:
-	defb 03ah,06bh	; 6a9a
+; DATOS motor_6A4B: lo apuntan las entradas 0x6903[11]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B681 (63
+;   bytes)
+;   0x6a4b..0x6a8a  (63 bytes)
+DATA_motor_6A4B:
+	defb 0e2h,001h,080h,024h,060h,022h,070h,025h,060h,022h,070h,024h,060h,022h,050h,023h	; 6a4b  ...$`"p%`"p$`"P#
+	defb 070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h	; 6a5b  p%p#p%p#p%p#p%p#
+	defb 070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h,070h,025h,070h,023h	; 6a6b  p%p#p%p#p%p#p%p#
+	defb 070h,026h,070h,024h,070h,027h,070h,025h,070h,028h,070h,026h,070h,029h,0ffh	; 6a7b  p&p$p'p%p(p&p).
 
 ; ----------------------------------------------------------------------
-; DATOS sonido_6A9C: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D
-;   (tools/partituras.py); lo leen p06:B51E (2 bytes)
-;   0x6a9c..0x6a9e  (2 bytes)
-DATA_sonido_6A9C:
-	defb 03ah,06bh	; 6a9c
+; DATOS tabla_6A8A: 12 punteros de bateria del motor de sonido; lo leen
+;   p06:B692 (24 bytes)
+;   0x6a8a..0x6aa2  (24 bytes)
+DATA_tabla_6A8A:
+	defw 06aa2h,06ab5h,06ac8h,06adbh,06aeeh,06b01h,06b14h,06b27h	; 6a8a
+	defw 06b3ah,06b3ah,06b4dh,06b4dh	; 6a9a  -> DATA_motor_6B3A DATA_motor_6B3A DATA_motor_6B4D DATA_motor_6B4D
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6a9e..0x6aa0  (2 bytes)
-DATA_6A9E:
-	defb 04dh,06bh	; 6a9e
-
-; ----------------------------------------------------------------------
-; DATOS sonido_6AA0: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D
-;   (tools/partituras.py); lo leen p06:B51E (18 bytes)
-;   0x6aa0..0x6ab2  (18 bytes)
-DATA_sonido_6AA0:
-	defb 04dh,06bh,0e2h,004h,050h,035h,040h,035h,030h,035h,020h,035h,010h,035h,010h,035h	; 6aa0  Mk..P5@505 5.5.5
-	defb 010h,035h	; 6ab0
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6ab2..0x6ab5  (3 bytes)
-DATA_6AB2:
+; DATOS motor_6AA2: lo apuntan las entradas 0x6A8A[0]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B692 (19
+;   bytes)
+;   0x6aa2..0x6ab5  (19 bytes)
+DATA_motor_6AA2:
+	defb 0e2h,004h,050h,035h,040h,035h,030h,035h,020h,035h,010h,035h,010h,035h,010h,035h	; 6aa2  ..P5@505 5.5.5.5
 	defb 000h,035h,0ffh	; 6ab2
 
 ; ----------------------------------------------------------------------
-; DATOS sonido_6AB5: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D
-;   (tools/partituras.py); lo leen p06:B51E (10 bytes)
-;   0x6ab5..0x6abf  (10 bytes)
-DATA_sonido_6AB5:
-	defb 0e2h,004h,050h,032h,040h,032h,030h,032h,020h,032h	; 6ab5  ..P2@202 2
+; DATOS motor_6AB5: lo apuntan las entradas 0x6A8A[1]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B692 (19
+;   bytes)
+;   0x6ab5..0x6ac8  (19 bytes)
+DATA_motor_6AB5:
+	defb 0e2h,004h,050h,032h,040h,032h,030h,032h,020h,032h,010h,032h,010h,032h,010h,032h	; 6ab5  ..P2@202 2.2.2.2
+	defb 000h,032h,0ffh	; 6ac5
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6abf..0x6ac8  (9 bytes)
-DATA_6ABF:
-	defb 010h,032h,010h,032h,010h,032h,000h,032h,0ffh	; 6abf  .2.2.2.2.
-
-; ----------------------------------------------------------------------
-; DATOS sonido_6AC8: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D
-;   (tools/partituras.py); lo leen p06:B51E (29 bytes)
-;   0x6ac8..0x6ae5  (29 bytes)
-DATA_sonido_6AC8:
+; DATOS motor_6AC8: lo apuntan las entradas 0x6A8A[2]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B692 (19
+;   bytes)
+;   0x6ac8..0x6adb  (19 bytes)
+DATA_motor_6AC8:
 	defb 0e2h,004h,050h,02fh,040h,02fh,030h,02fh,020h,02fh,010h,02fh,010h,02fh,010h,02fh	; 6ac8  ..P/@/0/ /./././
-	defb 000h,02fh,0ffh,0e2h,004h,050h,02ch,040h,02ch,030h,02ch,020h,02ch	; 6ad8  ./...P,@,0, ,
+	defb 000h,02fh,0ffh	; 6ad8
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6ae5..0x6aee  (9 bytes)
-DATA_6AE5:
-	defb 010h,02ch,010h,02ch,010h,02ch,000h,02ch,0ffh	; 6ae5  .,.,.,.,.
+; DATOS motor_6ADB: lo apuntan las entradas 0x6A8A[3]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B692 (19
+;   bytes)
+;   0x6adb..0x6aee  (19 bytes)
+DATA_motor_6ADB:
+	defb 0e2h,004h,050h,02ch,040h,02ch,030h,02ch,020h,02ch,010h,02ch,010h,02ch,010h,02ch	; 6adb  ..P,@,0, ,.,.,.,
+	defb 000h,02ch,0ffh	; 6aeb
 
 ; ----------------------------------------------------------------------
-; DATOS sonido_6AEE: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D
-;   (tools/partituras.py); lo leen p06:B51E (16 bytes)
-;   0x6aee..0x6afe  (16 bytes)
-DATA_sonido_6AEE:
+; DATOS motor_6AEE: lo apuntan las entradas 0x6A8A[4]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B692 (19
+;   bytes)
+;   0x6aee..0x6b01  (19 bytes)
+DATA_motor_6AEE:
 	defb 0e2h,004h,050h,02ah,040h,02ah,030h,02ah,020h,02ah,010h,02ah,010h,02ah,010h,02ah	; 6aee  ..P*@*0* *.*.*.*
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6afe..0x6b01  (3 bytes)
-DATA_6AFE:
 	defb 000h,02ah,0ffh	; 6afe
 
 ; ----------------------------------------------------------------------
-; DATOS sonido_6B01: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D
-;   (tools/partituras.py); lo leen p06:B51E (16 bytes)
-;   0x6b01..0x6b11  (16 bytes)
-DATA_sonido_6B01:
+; DATOS motor_6B01: lo apuntan las entradas 0x6A8A[5]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B692 (19
+;   bytes)
+;   0x6b01..0x6b14  (19 bytes)
+DATA_motor_6B01:
 	defb 0e2h,004h,050h,028h,040h,028h,030h,028h,020h,028h,010h,028h,010h,028h,010h,028h	; 6b01  ..P(@(0( (.(.(.(
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6b11..0x6b14  (3 bytes)
-DATA_6B11:
 	defb 000h,028h,0ffh	; 6b11
 
 ; ----------------------------------------------------------------------
-; DATOS sonido_6B14: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D
-;   (tools/partituras.py); lo leen p06:B51E (16 bytes)
-;   0x6b14..0x6b24  (16 bytes)
-DATA_sonido_6B14:
+; DATOS motor_6B14: lo apuntan las entradas 0x6A8A[6]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B692 (19
+;   bytes)
+;   0x6b14..0x6b27  (19 bytes)
+DATA_motor_6B14:
 	defb 0e2h,004h,050h,025h,040h,025h,030h,025h,020h,025h,010h,025h,010h,025h,010h,025h	; 6b14  ..P%@%0% %.%.%.%
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6b24..0x6b27  (3 bytes)
-DATA_6B24:
 	defb 000h,025h,0ffh	; 6b24
 
 ; ----------------------------------------------------------------------
-; DATOS sonido_6B27: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D
-;   (tools/partituras.py); lo leen p06:B51E (35 bytes)
-;   0x6b27..0x6b4a  (35 bytes)
-DATA_sonido_6B27:
+; DATOS motor_6B27: lo apuntan las entradas 0x6A8A[7]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B692 (19
+;   bytes)
+;   0x6b27..0x6b3a  (19 bytes)
+DATA_motor_6B27:
 	defb 0e2h,004h,050h,023h,040h,023h,030h,023h,020h,023h,010h,023h,010h,023h,010h,023h	; 6b27  ..P#@#0# #.#.#.#
-	defb 000h,023h,0ffh,0e2h,004h,050h,01fh,040h,01fh,030h,01fh,020h,01fh,010h,01fh,010h	; 6b37  .#...P.@.0. ....
-	defb 01fh,010h,01fh	; 6b47
+	defb 000h,023h,0ffh	; 6b37
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6b4a..0x6b4d  (3 bytes)
-DATA_6B4A:
+; DATOS motor_6B3A: lo apuntan las entradas 0x6A8A[8], 0x6A8A[9]; el tamano
+;   llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen
+;   p06:B692 (19 bytes)
+;   0x6b3a..0x6b4d  (19 bytes)
+DATA_motor_6B3A:
+	defb 0e2h,004h,050h,01fh,040h,01fh,030h,01fh,020h,01fh,010h,01fh,010h,01fh,010h,01fh	; 6b3a  ..P.@.0. .......
 	defb 000h,01fh,0ffh	; 6b4a
 
 ; ----------------------------------------------------------------------
-; DATOS sonido_6B4D: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D
-;   (tools/partituras.py); lo leen p06:B51E (16 bytes)
-;   0x6b4d..0x6b5d  (16 bytes)
-DATA_sonido_6B4D:
+; DATOS motor_6B4D: lo apuntan las entradas 0x6A8A[10], 0x6A8A[11]; el tamano
+;   llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen
+;   p06:B692 (19 bytes)
+;   0x6b4d..0x6b60  (19 bytes)
+DATA_motor_6B4D:
 	defb 0e2h,004h,050h,01ch,040h,01ch,030h,01ch,020h,01ch,010h,01ch,010h,01ch,010h,01ch	; 6b4d  ..P.@.0. .......
+	defb 000h,01ch,0ffh	; 6b5d
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6b5d..0x6b68  (11 bytes)
-DATA_6B5D:
-	defb 000h,01ch,0ffh,078h,06bh,078h,06bh,078h,06bh,078h,06bh	; 6b5d  ...xkxkxkxk
+; DATOS tabla_6B60: 12 punteros de bateria del motor de sonido; lo leen
+;   p06:B696 (24 bytes)
+;   0x6b60..0x6b78  (24 bytes)
+DATA_tabla_6B60:
+	defw 06b78h,06b78h,06b78h,06b78h,06b78h,06b8bh,06b8bh,06b9eh	; 6b60
+	defw 06bb1h,06bb1h,06bc4h,06bd7h	; 6b70  -> DATA_motor_6BB1 DATA_motor_6BB1 DATA_motor_6BC4 DATA_motor_6BD7
 
 ; ----------------------------------------------------------------------
-; DATOS sonido_6B68: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D
-;   (tools/partituras.py); lo leen p06:B51E (2 bytes)
-;   0x6b68..0x6b6a  (2 bytes)
-DATA_sonido_6B68:
-	defb 078h,06bh	; 6b68
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6b6a..0x6b6c  (2 bytes)
-DATA_6B6A:
-	defb 08bh,06bh	; 6b6a
-
-; ----------------------------------------------------------------------
-; DATOS sonido_6B6C: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D
-;   (tools/partituras.py); lo leen p06:B51E (4 bytes)
-;   0x6b6c..0x6b70  (4 bytes)
-DATA_sonido_6B6C:
-	defb 08bh,06bh,09eh,06bh	; 6b6c
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6b70..0x6b72  (2 bytes)
-DATA_6B70:
-	defb 0b1h,06bh	; 6b70
-
-; ----------------------------------------------------------------------
-; DATOS sonido_6B72: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D
-;   (tools/partituras.py); lo leen p06:B51E (22 bytes)
-;   0x6b72..0x6b88  (22 bytes)
-DATA_sonido_6B72:
-	defb 0b1h,06bh,0c4h,06bh,0d7h,06bh,0e2h,004h,050h,054h,040h,054h,030h,054h,020h,054h	; 6b72  .k.k.k..PT@T0T T
-	defb 010h,054h,010h,054h,010h,054h	; 6b82
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6b88..0x6b8b  (3 bytes)
-DATA_6B88:
+; DATOS motor_6B78: lo apuntan las entradas 0x6B60[0], 0x6B60[1], 0x6B60[2],
+;   0x6B60[3]; el tamano llega hasta el siguiente destino o tabla, no sale de
+;   recorrerlo; lo leen p06:B696 (19 bytes)
+;   0x6b78..0x6b8b  (19 bytes)
+DATA_motor_6B78:
+	defb 0e2h,004h,050h,054h,040h,054h,030h,054h,020h,054h,010h,054h,010h,054h,010h,054h	; 6b78  ..PT@T0T T.T.T.T
 	defb 000h,054h,0ffh	; 6b88
 
 ; ----------------------------------------------------------------------
-; DATOS sonido_6B8B: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D
-;   (tools/partituras.py); lo leen p06:B51E (6 bytes)
-;   0x6b8b..0x6b91  (6 bytes)
-DATA_sonido_6B8B:
-	defb 0e2h,004h,050h,04ah,040h,04ah	; 6b8b
+; DATOS motor_6B8B: lo apuntan las entradas 0x6B60[5], 0x6B60[6]; el tamano
+;   llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen
+;   p06:B696 (19 bytes)
+;   0x6b8b..0x6b9e  (19 bytes)
+DATA_motor_6B8B:
+	defb 0e2h,004h,050h,04ah,040h,04ah,030h,04ah,020h,04ah,010h,04ah,010h,04ah,010h,04ah	; 6b8b  ..PJ@J0J J.J.J.J
+	defb 000h,04ah,0ffh	; 6b9b
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6b91..0x6b9e  (13 bytes)
-DATA_6B91:
-	defb 030h,04ah,020h,04ah,010h,04ah,010h,04ah,010h,04ah,000h,04ah,0ffh	; 6b91  0J J.J.J.J.J.
-
-; ----------------------------------------------------------------------
-; DATOS sonido_6B9E: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D
-;   (tools/partituras.py); lo leen p06:B51E (16 bytes)
-;   0x6b9e..0x6bae  (16 bytes)
-DATA_sonido_6B9E:
+; DATOS motor_6B9E: lo apuntan las entradas 0x6B60[7]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B696 (19
+;   bytes)
+;   0x6b9e..0x6bb1  (19 bytes)
+DATA_motor_6B9E:
 	defb 0e2h,004h,050h,046h,040h,046h,030h,046h,020h,046h,010h,046h,010h,046h,010h,046h	; 6b9e  ..PF@F0F F.F.F.F
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6bae..0x6bb1  (3 bytes)
-DATA_6BAE:
 	defb 000h,046h,0ffh	; 6bae
 
 ; ----------------------------------------------------------------------
-; DATOS sonido_6BB1: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D
-;   (tools/partituras.py); lo leen p06:B51E (6 bytes)
-;   0x6bb1..0x6bb7  (6 bytes)
-DATA_sonido_6BB1:
-	defb 0e2h,004h,050h,03fh,040h,03fh	; 6bb1
+; DATOS motor_6BB1: lo apuntan las entradas 0x6B60[8], 0x6B60[9]; el tamano
+;   llega hasta el siguiente destino o tabla, no sale de recorrerlo; lo leen
+;   p06:B696 (19 bytes)
+;   0x6bb1..0x6bc4  (19 bytes)
+DATA_motor_6BB1:
+	defb 0e2h,004h,050h,03fh,040h,03fh,030h,03fh,020h,03fh,010h,03fh,010h,03fh,010h,03fh	; 6bb1  ..P?@?0? ?.?.?.?
+	defb 000h,03fh,0ffh	; 6bc1
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6bb7..0x6bc4  (13 bytes)
-DATA_6BB7:
-	defb 030h,03fh,020h,03fh,010h,03fh,010h,03fh,010h,03fh,000h,03fh,0ffh	; 6bb7  0? ?.?.?.?.?.
+; DATOS motor_6BC4: lo apuntan las entradas 0x6B60[10]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B696 (19
+;   bytes)
+;   0x6bc4..0x6bd7  (19 bytes)
+DATA_motor_6BC4:
+	defb 0e2h,004h,050h,03bh,040h,03bh,030h,03bh,020h,03bh,010h,03bh,010h,03bh,010h,03bh	; 6bc4  ..P.@.0. .......
+	defb 000h,03bh,0ffh	; 6bd4
 
 ; ----------------------------------------------------------------------
-; DATOS sonido_6BC4: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D
-;   (tools/partituras.py); lo leen p06:B51E (6 bytes)
-;   0x6bc4..0x6bca  (6 bytes)
-DATA_sonido_6BC4:
-	defb 0e2h,004h,050h,03bh,040h,03bh	; 6bc4
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6bca..0x6bd7  (13 bytes)
-DATA_6BCA:
-	defb 030h,03bh,020h,03bh,010h,03bh,010h,03bh,010h,03bh,000h,03bh,0ffh	; 6bca  0. ..........
-
-; ----------------------------------------------------------------------
-; DATOS sonido_6BD7: datos de sonido (ordenes 0xD0-0xFE de p06:B92F, notas por
-;   debajo, 0xFF acaba) que lee el motor de p06 al tocar los sonidos 0x2D
-;   (tools/partituras.py); lo leen p06:B51E (19 bytes)
+; DATOS motor_6BD7: lo apuntan las entradas 0x6B60[11]; el tamano llega hasta
+;   el siguiente destino o tabla, no sale de recorrerlo; lo leen p06:B696 (19
+;   bytes)
 ;   0x6bd7..0x6bea  (19 bytes)
-DATA_sonido_6BD7:
+DATA_motor_6BD7:
 	defb 0e2h,004h,050h,038h,040h,038h,030h,038h,020h,038h,010h,038h,010h,038h,010h,038h	; 6bd7  ..P8@808 8.8.8.8
 	defb 000h,038h,0ffh	; 6be7
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6bea..0x6c1c  (50 bytes)
-DATA_6BEA:
-	defb 002h,06ch,002h,06ch,002h,06ch,002h,06ch,002h,06ch,002h,06ch,002h,06ch,002h,06ch	; 6bea  .l.l.l.l.l.l.l.l
-	defb 002h,06ch,002h,06ch,002h,06ch,002h,06ch,0ffh,01bh,06ch,01bh,06ch,01bh,06ch,01bh	; 6bfa  .l.l.l.l..l.l.l.
-	defb 06ch,01bh,06ch,01bh,06ch,01bh,06ch,01bh,06ch,01bh,06ch,01bh,06ch,01bh,06ch,01bh	; 6c0a  l.l.l.l.l.l.l.l.
-	defb 06ch,0ffh	; 6c1a
+; DATOS tabla_6BEA: 12 punteros de bateria del motor de sonido; lo leen
+;   p06:B6A7 (24 bytes)
+;   0x6bea..0x6c02  (24 bytes)
+DATA_tabla_6BEA:
+	defw 06c02h,06c02h,06c02h,06c02h,06c02h,06c02h,06c02h,06c02h	; 6bea
+	defw 06c02h,06c02h,06c02h,06c02h	; 6bfa  -> DATA_motor_6C02 DATA_motor_6C02 DATA_motor_6C02 DATA_motor_6C02
+
+; ----------------------------------------------------------------------
+; DATOS motor_6C02: lo apuntan las entradas 0x6BEA[0], 0x6BEA[1], 0x6BEA[2],
+;   0x6BEA[3]; el tamano llega hasta el siguiente destino o tabla, no sale de
+;   recorrerlo; lo leen p06:B6A7 (1 bytes)
+;   0x6c02..0x6c03  (1 bytes)
+DATA_motor_6C02:
+	defb 0ffh	; 6c02
+
+; ----------------------------------------------------------------------
+; DATOS tabla_6C03: 12 punteros de bateria del motor de sonido; lo leen
+;   p06:B6AB (24 bytes)
+;   0x6c03..0x6c1b  (24 bytes)
+DATA_tabla_6C03:
+	defw 06c1bh,06c1bh,06c1bh,06c1bh,06c1bh,06c1bh,06c1bh,06c1bh	; 6c03
+	defw 06c1bh,06c1bh,06c1bh,06c1bh	; 6c13  -> DATA_motor_6C1B DATA_motor_6C1B DATA_motor_6C1B DATA_motor_6C1B
+
+; ----------------------------------------------------------------------
+; DATOS motor_6C1B: lo apuntan las entradas 0x6C03[0], 0x6C03[1], 0x6C03[2],
+;   0x6C03[3]; el tamano llega hasta el siguiente destino o tabla, no sale de
+;   recorrerlo; lo leen p06:B6AB (1 bytes)
+;   0x6c1b..0x6c1c  (1 bytes)
+DATA_motor_6C1B:
+	defb 0ffh	; 6c1b
 
 ; ----------------------------------------------------------------------
 ; DATOS partitura_6C1C: partitura de canal (ordenes 0xD0-0xFE de p06:B92F,
@@ -1889,8 +1955,10 @@ DATA_partitura_7ADB:
 	defb 043h,04fh,0ffh	; 7aeb
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7aee..0x7aef  (1 bytes)
-DATA_7AEE:
+; DATOS cierre_7AEE: 0xFF de cierre que no se alcanza: la partitura de delante
+;   acaba saltando; lo leen nadie (1 bytes)
+;   0x7aee..0x7aef  (1 bytes)
+DATA_cierre_7AEE:
 	defb 0ffh	; 7aee
 
 ; ----------------------------------------------------------------------

@@ -1,0 +1,2 @@
+# Tamanos de tabla del despachador puestos a mano: 'pNN 0xCALL n  # por que'.
+p15 0xA43E 5  # 5 destinos (0xD74C = 0..4): la sexta palabra (0x4C21) son los dos primeros bytes de la rutina de 0xA44B

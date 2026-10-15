@@ -26,9 +26,12 @@ DATA_paletas_A01F:
 	defw 0a051h,0a054h,0a057h,0a058h,0a059h	; a02f
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa039..0xa03f  (6 bytes)
-DATA_A039:
-	defb 05bh,0a0h,05ch,0a0h,05dh,0a0h	; a039
+; DATOS paletas_sobran_A039: 3 punteros mas de la tabla de paletas de 0xA01F:
+;   ninguna ficha de la lista pide ese numero de paleta (p00:4FB0); lo leen
+;   nadie (6 bytes)
+;   0xa039..0xa03f  (6 bytes)
+DATA_paletas_sobran_A039:
+	defw 0a05bh,0a05ch,0a05dh	; a039
 
 ; ----------------------------------------------------------------------
 ; DATOS colores_A03F: 4 colores (un nibble cada uno, ya en su sitio) que
@@ -294,8 +297,11 @@ DATA_dibujo_A3D0:
 	defb 0aah,000h,0feh,00eh,000h,0f0h,0beh,000h,0e0h,07eh,000h,0c0h,0aeh,010h,0d0h,060h,01eh,0deh,0c2h,03ch,0fch,0c8h,036h,0f6h	; a700  .........~.....`...<..6.
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa718..0xa7b8  (160 bytes)
-DATA_A718:
+; DATOS resto_A718: lo apuntan con el banco puesto p00:529E (0xA718); el
+;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
+;   p00:529E (160 bytes)
+;   0xa718..0xa7b8  (160 bytes)
+DATA_resto_A718:
 	defb 0a0h,099h,09ah,099h,09ah,099h,09ah,099h,09ah,099h,09ah,099h,09ah,099h,09ah,09eh	; a718  ................
 	defb 09bh,09ch,09dh,09ch,0aah,0abh,0aah,0abh,0aah,0abh,0aah,0abh,09dh,09ch,09dh,09fh	; a728  ................
 	defb 0a6h,0a7h,0a5h,0a7h,097h,0a9h,097h,0a9h,097h,0a9h,097h,0a9h,0a5h,0a7h,0a5h,0a2h	; a738  ................
@@ -326,9 +332,12 @@ DATA_paletas_A7EF:
 	defw 0a81fh,0a821h,0a823h,0a825h,0a827h,0a829h,0a82bh	; a7ff
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa80d..0xa80f  (2 bytes)
-DATA_A80D:
-	defb 02dh,0a8h	; a80d
+; DATOS paletas_sobran_A80D: 1 punteros mas de la tabla de paletas de 0xA7EF:
+;   ninguna ficha de la lista pide ese numero de paleta (p00:4FB0); lo leen
+;   nadie (2 bytes)
+;   0xa80d..0xa80f  (2 bytes)
+DATA_paletas_sobran_A80D:
+	defw 0a82dh	; a80d
 
 ; ----------------------------------------------------------------------
 ; DATOS colores_A80F: 4 colores (un nibble cada uno, ya en su sitio) que
@@ -603,9 +612,12 @@ DATA_paletas_AD58:
 	defw 0ad66h,0ad67h,0ad69h,0ad6ah	; ad58  -> DATA_colores_AD66 0xad67 0xad69 0xad6a
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xad60..0xad66  (6 bytes)
-DATA_AD60:
-	defb 06eh,0adh,06fh,0adh,071h,0adh	; ad60
+; DATOS paletas_sobran_AD60: 3 punteros mas de la tabla de paletas de 0xAD58:
+;   ninguna ficha de la lista pide ese numero de paleta (p00:4FB0); lo leen
+;   nadie (6 bytes)
+;   0xad60..0xad66  (6 bytes)
+DATA_paletas_sobran_AD60:
+	defw 0ad6eh,0ad6fh,0ad71h	; ad60
 
 ; ----------------------------------------------------------------------
 ; DATOS colores_AD66: 8 colores (un nibble cada uno, ya en su sitio) que
@@ -999,8 +1011,11 @@ DATA_rachas_BC3C:
 	defb 000h,087h,020h,04ch,010h,004h,0b0h,088h,080h,004h,000h,000h	; bc6c  .. L........
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbc78..0xbca0  (40 bytes)
-DATA_BC78:
+; DATOS resto_BC78: lo apuntan con el banco puesto p00:5B6C (0xBC78); el
+;   tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen
+;   p00:5B6C (40 bytes)
+;   0xbc78..0xbca0  (40 bytes)
+DATA_resto_BC78:
 	defb 007h,005h,001h,000h,007h,005h,003h,001h,007h,005h,002h,002h,007h,005h,002h,003h	; bc78  ................
 	defb 008h,006h,003h,002h,009h,007h,006h,005h,00ah,007h,006h,006h,00ah,009h,008h,007h	; bc88  ................
 	defb 00bh,00ah,009h,008h,00bh,00ah,009h,008h	; bc98  ........
