@@ -1,0 +1,114 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The game — The Pro Yakyuu Gekitotsu Pennant Race (Konami, 1988)</title>
+<style>
+:root{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;--linea:#23262e;
+  --rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}
+@media (prefers-color-scheme:light){:root{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;
+  --panel:#f7f6f2;--linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}}
+:root[data-theme="dark"]{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;
+  --linea:#23262e;--rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}
+:root[data-theme="light"]{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;--panel:#f7f6f2;
+  --linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fondo);color:var(--tinta);padding:0 1.25rem 6rem;
+  font:15px/1.7 ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+.w{max-width:1120px;margin:0 auto}
+.n{max-width:68ch}
+h1,h2,h3,h4{font-weight:400;text-wrap:balance}
+a{color:var(--cyan)}
+img{image-rendering:pixelated;max-width:100%;height:auto;display:block}
+header.top{display:flex;flex-direction:column;align-items:center;gap:1.5rem;
+  padding:4rem 0 2rem;text-align:center}
+header.top img{width:min(100%,642px)}
+.claim{max-width:60ch;color:var(--suave);font-size:1.05rem}
+.claim b{color:var(--tinta);font-weight:400}
+.ficha{display:flex;flex-wrap:wrap;justify-content:center;gap:0 1.5rem;width:100%;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--suave);
+  border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);padding:.85rem 0}
+.ficha b{color:var(--rojo);font-weight:400}
+nav{display:flex;flex-wrap:wrap;gap:1.25rem;justify-content:center;padding:1.25rem 0;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+nav a{color:var(--suave);text-decoration:none;border-bottom:1px solid transparent}
+nav a:hover,nav a:focus{color:var(--tinta);border-bottom-color:var(--rojo)}
+nav.docs{border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);
+  margin-bottom:1rem}
+section{margin-top:4.5rem;scroll-margin-top:1rem}
+section>h2{font-size:1rem;letter-spacing:.1em;text-transform:uppercase;
+  border-left:3px solid var(--rojo);padding-left:.9rem;margin:0 0 1.5rem}
+.cifras{display:grid;gap:1px;background:var(--linea);border:1px solid var(--linea);
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.cifra{background:var(--panel);padding:1.1rem}
+.cifra b{display:block;font-size:1.7rem;color:var(--oro);font-weight:400;
+  font-variant-numeric:tabular-nums;line-height:1.2}
+.cifra span{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--suave)}
+.hall{border-top:1px solid var(--linea);padding-top:1.75rem;margin-top:2.5rem}
+.hall:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.hall h3{margin:0 0 .75rem;font-size:1.15rem;color:var(--rojo)}
+.hall h4{color:var(--oro);margin:1.5rem 0 .5rem;font-size:.95rem}
+.hall p{margin:0 0 1rem}
+pre.asm{background:var(--panel);border-left:2px solid var(--verde);margin:1.25rem 0;
+  padding:1rem 1.1rem;overflow-x:auto;font-size:13px;line-height:1.6;color:var(--tinta)}
+.par{display:grid;gap:1.25rem;grid-template-columns:1fr}
+@media(min-width:820px){.par{grid-template-columns:1fr 1fr}}
+.par figure{margin:0}
+table{border-collapse:collapse;width:100%;margin:1.25rem 0;font-size:13px;display:block;
+  overflow-x:auto}
+th,td{text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--linea)}
+th{color:var(--suave);font-weight:400;font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+td.num{font-variant-numeric:tabular-nums;color:var(--oro)}
+.nivel{margin-top:2rem}
+.nivel h3{margin:0 0 .9rem;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase}
+.nivel em{color:var(--cyan);font-style:normal}
+.sep{color:var(--suave);margin:0 .6rem}
+.rejilla{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.rejilla figure{margin:0;background:var(--panel);box-shadow:0 0 0 1px var(--linea)}
+.rejilla figcaption{display:flex;justify-content:space-between;padding:.45rem .65rem;
+  font-size:11px;color:var(--suave);border-top:1px solid var(--linea)}
+.dir{font-variant-numeric:tabular-nums;color:var(--verde)}
+footer{margin-top:5rem;padding-top:1.5rem;border-top:1px solid var(--linea);
+  color:var(--suave);font-size:12px}
+
+/* Aviso de trabajo en curso: tiene que verse antes que las cifras, porque un
+   100% mal leido hace mas dano que no ponerlo. */
+.aviso{background:#3a2a10;border-left:3px solid var(--oro);margin:1.5rem auto;
+  padding:1rem 1.2rem;max-width:900px;border-radius:4px}
+.aviso p{margin:0;color:var(--tinta);font-size:15px;line-height:1.65}
+.galeria{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;margin:1.5rem 0}
+.galeria figure{margin:0}
+.galeria img{width:100%;height:auto;image-rendering:pixelated;
+  border:1px solid var(--linea);border-radius:3px}
+.galeria figcaption{color:var(--suave);font-size:13px;margin-top:.5rem}
+audio{display:block;width:100%;max-width:640px;margin:.75rem 0 1.5rem}
+</style>
+<div class="w"><nav class="top"><a href="index.html">Home</a><a href="GETTING-STARTED.html">Start</a><a href="THE-GAME.html" style=color:var(--tinta)>The game</a><a href="THE-SCREENS.html">The screens</a><a href="THE-MUSIC.html">The music</a><a href="THE-TEXTS.html">The texts</a><a href="THE-CARTRIDGE.html">The cartridge</a><a href="THE-CODE.html">The code</a><a href="FINDINGS.html">Findings</a><a href="OPEN-QUESTIONS.html">Open questions</a><a href="es/EL-JUEGO.html" style="margin-left:auto;color:var(--oro)">Castellano</a></nav>
+<h1 id="the-game">The game</h1>
+<p>Everything on this page is read in the cartridge&#x27;s code; each item carries the address where it can be seen.</p>
+<h2 id="the-modes">The modes</h2>
+<p>The menu (<code>p01:6543</code>) has five: <b>1PLAYER</b>, <b>2PLAYERS</b>, <b>PENNANT</b>, <b>TEAM EDIT</b> and <b>WATCH</b>. If there is both a disk drive and a Game Master 2, a sixth one appears, <b>MEDIA SELECT</b>, to choose where to save (<code>p01:6561</code>). The mode is kept as a number from 0 to 5 and, for the game, as flags: one player, two, PENNANT or the computer alone (<code>p00:4A5E</code>).</p>
+<ul><li><b>PENNANT</b> is the league: 1 to 6 players (<code>p13:633A</code>) and 1 to 26 games per pair of teams (<code>p13:641A</code>). It keeps the results table (試合結果) and the standings (順位表) with wins, losses, percentage and games behind. With a single player the other two games of the round are drawn by lot: each team gets 0 to 15 runs and, on a tie, one of the two gets one more (<code>p15:AC31</code>).</li><li><b>TEAM EDIT</b> changes the teams&#x27; names and figures, within caps (below), and saves them to disk or to the Game Master 2&#x27;s SRAM.</li></ul>
+<h2 id="the-rules">The rules</h2>
+<ul><li>Three strikes; four balls (FOUR BALL) or a hit by pitch (DEAD BALL) give the base.</li><li>The game ends (<code>p02:940A</code>, <code>p00:46A1</code>):</li><li>after any bottom half, with a ten-run difference, and as soon as the home team leads by ten during a bottom half;</li><li>from the ninth on, after the top half if the home team is ahead, after the bottom half if the score is not tied, and as soon as the home team goes ahead in the bottom half;</li><li>if a score reaches 99.</li><li>The speed of a pitch comes from the three SPD digits of the card: 80 to 199 km/h (<code>p03:AAE1</code>). Pressing down on release makes it a quarter faster; up, a quarter slower (<code>p03:AB32</code>).</li><li>Every pitch tires: 1 the normal one, 4 the fast one and 2 the slow one. When the stamina runs out, the card&#x27;s speed drops by 4 to 7 km/h (never below 80) and, every so often, each breaking ball loses a point (<code>p03:ABAA</code>).</li><li>In TEAM EDIT, a change that goes over the caps is undone (<code>p15:B693</code>):</li><li>the 12 fielders add up to at most 3.500 of 打率, 200 HR and 600 of RUN;</li><li>the 4 pitchers add up to at most 540 of SPD, 9.90 of 防御率, 200 of STM and 25 in each of the three breaking balls (C, S and F).</li></ul>
+<h2 id="the-teams">The teams</h2>
+<p>Six stock teams (<code>p13:731F</code>): each card has the name, 12 fielders and 4 pitchers. The columns are those of the TEAM EDIT screen; the names are in hiragana. The stock teams do not have to meet the TEAM EDIT caps: the FLYERS add up to 590 of SPD.</p>
+<p>Each team has a theme (our reading of the names): the FLYERS are named after aircraft (ふぁんとむ phantom, ぜろ zero, とむきゃっと tomcat), the RIDERS after motorbikes (かたな katana, にんじゃ ninja), the KOBE LINES after Kobe stations (ろっこう Rokkō, さんのみや Sannomiya), the BRENDS after coffees and teas (きりまん Kilimanjaro, だじりん Darjeeling), the PROGRAMS after programming terms (にーもにっく mnemonic, れじすた register, あせんぶる assemble) and the DARKS carry surnames.</p>
+<h3 id="flyers-p13-7727">FLYERS (p13:7727)</h3>
+<table><tr><th></th><th>NAME</th><th>LR</th><th>打率</th><th>HR</th><th>RUN</th></tr><tr><td>1</td><td>ふぁんとむ</td><td>R</td><td>.287</td><td>24</td><td>99</td></tr><tr><td>2</td><td>ひえん</td><td>R</td><td>.290</td><td>32</td><td>82</td></tr><tr><td>3</td><td>とむきゃっと</td><td>L</td><td>.342</td><td>37</td><td>75</td></tr><tr><td>4</td><td>ぜろ</td><td>R</td><td>.337</td><td>50</td><td>50</td></tr><tr><td>5</td><td>いーぐる</td><td>L</td><td>.307</td><td>44</td><td>62</td></tr><tr><td>6</td><td>はりあー</td><td>R</td><td>.310</td><td>30</td><td>44</td></tr><tr><td>7</td><td>たいがー</td><td>R</td><td>.283</td><td>29</td><td>72</td></tr><tr><td>8</td><td>すかいほーく</td><td>L</td><td>.261</td><td>33</td><td>65</td></tr><tr><td>9</td><td>もすきーと</td><td>L</td><td>.284</td><td>51</td><td>81</td></tr><tr><td>10</td><td>らいでん</td><td>R</td><td>.275</td><td>26</td><td>93</td></tr><tr><td>11</td><td>あるはとろす</td><td>R</td><td>.274</td><td>33</td><td>86</td></tr><tr><td>12</td><td>ふおけうるふ</td><td>L</td><td>.248</td><td>35</td><td>70</td></tr></table>
+<table><tr><th></th><th>NAME</th><th>LR</th><th>U/D</th><th>SPD</th><th>防御率</th><th>STM</th><th>C</th><th>S</th><th>F</th></tr><tr><td>1</td><td>しでんかい</td><td>R</td><td>U</td><td>160</td><td>1.32</td><td>43</td><td>9</td><td>9</td><td>9</td></tr><tr><td>2</td><td>みらーじゅ</td><td>L</td><td>U</td><td>150</td><td>2.79</td><td>75</td><td>3</td><td>8</td><td>1</td></tr><tr><td>3</td><td>ふぉっかー</td><td>L</td><td>D</td><td>140</td><td>2.61</td><td>40</td><td>9</td><td>9</td><td>1</td></tr><tr><td>4</td><td>しゅみっと</td><td>R</td><td>U</td><td>140</td><td>2.60</td><td>19</td><td>9</td><td>0</td><td>9</td></tr></table>
+<h3 id="riders-p13-732b">RIDERS (p13:732B)</h3>
+<table><tr><th></th><th>NAME</th><th>LR</th><th>打率</th><th>HR</th><th>RUN</th></tr><tr><td>1</td><td>はりけーん</td><td>R</td><td>.287</td><td>5</td><td>96</td></tr><tr><td>2</td><td>かたな</td><td>L</td><td>.310</td><td>11</td><td>91</td></tr><tr><td>3</td><td>しゃどう</td><td>R</td><td>.326</td><td>38</td><td>78</td></tr><tr><td>4</td><td>はあれい</td><td>L</td><td>.333</td><td>45</td><td>82</td></tr><tr><td>5</td><td>とらい</td><td>R</td><td>.324</td><td>32</td><td>36</td></tr><tr><td>6</td><td>じいた</td><td>L</td><td>.290</td><td>20</td><td>65</td></tr><tr><td>7</td><td>にんじゃ</td><td>R</td><td>.348</td><td>14</td><td>72</td></tr><tr><td>8</td><td>ば は</td><td>L</td><td>.254</td><td>9</td><td>84</td></tr><tr><td>9</td><td>えりみねーた</td><td>R</td><td>.257</td><td>12</td><td>55</td></tr><tr><td>10</td><td>いんとるーた</td><td>L</td><td>.270</td><td>6</td><td>42</td></tr><tr><td>11</td><td>ふぁらお</td><td>R</td><td>.246</td><td>10</td><td>46</td></tr><tr><td>12</td><td>りくおう</td><td>L</td><td>.301</td><td>18</td><td>62</td></tr></table>
+<table><tr><th></th><th>NAME</th><th>LR</th><th>U/D</th><th>SPD</th><th>防御率</th><th>STM</th><th>C</th><th>S</th><th>F</th></tr><tr><td>1</td><td>ふぇいざー</td><td>R</td><td>U</td><td>161</td><td>1.45</td><td>55</td><td>8</td><td>8</td><td>8</td></tr><tr><td>2</td><td>ぱりだか</td><td>L</td><td>D</td><td>130</td><td>2.09</td><td>82</td><td>2</td><td>9</td><td>0</td></tr><tr><td>3</td><td>ほうく</td><td>R</td><td>U</td><td>140</td><td>2.25</td><td>41</td><td>5</td><td>5</td><td>5</td></tr><tr><td>4</td><td>ぶろす</td><td>L</td><td>U</td><td>145</td><td>3.60</td><td>34</td><td>2</td><td>9</td><td>0</td></tr></table>
+<h3 id="kobe-lines-p13-742a">KOBE LINES (p13:742A)</h3>
+<table><tr><th></th><th>NAME</th><th>LR</th><th>打率</th><th>HR</th><th>RUN</th></tr><tr><td>1</td><td>ろっこう</td><td>L</td><td>.230</td><td>5</td><td>53</td></tr><tr><td>2</td><td>みかげ</td><td>R</td><td>.243</td><td>6</td><td>50</td></tr><tr><td>3</td><td>あしや</td><td>R</td><td>.280</td><td>9</td><td>31</td></tr><tr><td>4</td><td>おかもと</td><td>L</td><td>.298</td><td>12</td><td>23</td></tr><tr><td>5</td><td>たかとり</td><td>L</td><td>.203</td><td>8</td><td>36</td></tr><tr><td>6</td><td>にしのみや</td><td>R</td><td>.221</td><td>8</td><td>40</td></tr><tr><td>7</td><td>ぽーあい</td><td>R</td><td>.159</td><td>5</td><td>42</td></tr><tr><td>8</td><td>いたやど</td><td>L</td><td>.188</td><td>7</td><td>10</td></tr><tr><td>9</td><td>はなくま</td><td>L</td><td>.199</td><td>7</td><td>4</td></tr><tr><td>10</td><td>たるみ</td><td>R</td><td>.205</td><td>3</td><td>18</td></tr><tr><td>11</td><td>おうじ</td><td>R</td><td>.176</td><td>4</td><td>25</td></tr><tr><td>12</td><td>ふかえ</td><td>L</td><td>.243</td><td>1</td><td>21</td></tr></table>
+<table><tr><th></th><th>NAME</th><th>LR</th><th>U/D</th><th>SPD</th><th>防御率</th><th>STM</th><th>C</th><th>S</th><th>F</th></tr><tr><td>1</td><td>さんのみや</td><td>R</td><td>D</td><td>130</td><td>2.04</td><td>91</td><td>9</td><td>9</td><td>0</td></tr><tr><td>2</td><td>な だ</td><td>R</td><td>U</td><td>155</td><td>2.82</td><td>34</td><td>5</td><td>3</td><td>1</td></tr><tr><td>3</td><td>もとまち</td><td>R</td><td>U</td><td>140</td><td>1.53</td><td>50</td><td>5</td><td>2</td><td>0</td></tr><tr><td>4</td><td>す ま</td><td>L</td><td>U</td><td>150</td><td>2.26</td><td>18</td><td>3</td><td>9</td><td>9</td></tr></table>
+<h3 id="brends-p13-7628">BRENDS (p13:7628)</h3>
+<table><tr><th></th><th>NAME</th><th>LR</th><th>打率</th><th>HR</th><th>RUN</th></tr><tr><td>1</td><td>あめりかん</td><td>R</td><td>.208</td><td>15</td><td>41</td></tr><tr><td>2</td><td>も か</td><td>L</td><td>.254</td><td>27</td><td>32</td></tr><tr><td>3</td><td>きりまん</td><td>L</td><td>.320</td><td>31</td><td>15</td></tr><tr><td>4</td><td>ぶるまん</td><td>R</td><td>.303</td><td>39</td><td>8</td></tr><tr><td>5</td><td>えすぷれそ</td><td>R</td><td>.298</td><td>25</td><td>44</td></tr><tr><td>6</td><td>ぶらじる</td><td>R</td><td>.267</td><td>18</td><td>72</td></tr><tr><td>7</td><td>ぎょくろ</td><td>L</td><td>.244</td><td>11</td><td>33</td></tr><tr><td>8</td><td>ぺこ</td><td>L</td><td>.235</td><td>6</td><td>82</td></tr><tr><td>9</td><td>てっかんのん</td><td>R</td><td>.222</td><td>12</td><td>21</td></tr><tr><td>10</td><td>だじりん</td><td>L</td><td>.211</td><td>15</td><td>36</td></tr><tr><td>11</td><td>あるぐれい</td><td>R</td><td>.198</td><td>10</td><td>42</td></tr><tr><td>12</td><td>うーろん</td><td>L</td><td>.232</td><td>7</td><td>79</td></tr></table>
+<table><tr><th></th><th>NAME</th><th>LR</th><th>U/D</th><th>SPD</th><th>防御率</th><th>STM</th><th>C</th><th>S</th><th>F</th></tr><tr><td>1</td><td>ぷーある</td><td>R</td><td>U</td><td>150</td><td>2.14</td><td>92</td><td>9</td><td>3</td><td>8</td></tr><tr><td>2</td><td>さんとす</td><td>L</td><td>U</td><td>160</td><td>1.17</td><td>71</td><td>3</td><td>9</td><td>4</td></tr><tr><td>3</td><td>げんまい</td><td>R</td><td>U</td><td>145</td><td>2.02</td><td>43</td><td>7</td><td>7</td><td>7</td></tr><tr><td>4</td><td>やむちゃ</td><td>R</td><td>D</td><td>140</td><td>2.71</td><td>56</td><td>9</td><td>5</td><td>0</td></tr></table>
+<h3 id="programs-p13-7529">PROGRAMS (p13:7529)</h3>
+<table><tr><th></th><th>NAME</th><th>LR</th><th>打率</th><th>HR</th><th>RUN</th></tr><tr><td>1</td><td>にーもにっく</td><td>L</td><td>.255</td><td>21</td><td>55</td></tr><tr><td>2</td><td>れじすた</td><td>R</td><td>.302</td><td>13</td><td>90</td></tr><tr><td>3</td><td>さぶるちん</td><td>R</td><td>.299</td><td>20</td><td>41</td></tr><tr><td>4</td><td>おうえす</td><td>L</td><td>.260</td><td>34</td><td>23</td></tr><tr><td>5</td><td>りたーん</td><td>R</td><td>.246</td><td>30</td><td>36</td></tr><tr><td>6</td><td>あせんぶる</td><td>L</td><td>.240</td><td>17</td><td>65</td></tr><tr><td>7</td><td>りんく</td><td>L</td><td>.276</td><td>17</td><td>13</td></tr><tr><td>8</td><td>しふと</td><td>R</td><td>.247</td><td>6</td><td>25</td></tr><tr><td>9</td><td>ろうど</td><td>R</td><td>.267</td><td>15</td><td>52</td></tr><tr><td>10</td><td>いんく</td><td>R</td><td>.238</td><td>9</td><td>78</td></tr><tr><td>11</td><td>あんどおあ</td><td>L</td><td>.272</td><td>11</td><td>63</td></tr><tr><td>12</td><td>こーる</td><td>R</td><td>.250</td><td>4</td><td>29</td></tr></table>
+<table><tr><th></th><th>NAME</th><th>LR</th><th>U/D</th><th>SPD</th><th>防御率</th><th>STM</th><th>C</th><th>S</th><th>F</th></tr><tr><td>1</td><td>じゃんぷ</td><td>R</td><td>U</td><td>160</td><td>1.66</td><td>66</td><td>7</td><td>1</td><td>1</td></tr><tr><td>2</td><td>りすとあ</td><td>L</td><td>D</td><td>135</td><td>1.37</td><td>90</td><td>1</td><td>6</td><td>5</td></tr><tr><td>3</td><td>へっくす</td><td>L</td><td>U</td><td>135</td><td>2.38</td><td>29</td><td>2</td><td>5</td><td>7</td></tr><tr><td>4</td><td>こんぺあ</td><td>R</td><td>U</td><td>140</td><td>3.15</td><td>42</td><td>5</td><td>0</td><td>0</td></tr></table>
+<h3 id="darks-p13-7826">DARKS (p13:7826)</h3>
+<table><tr><th></th><th>NAME</th><th>LR</th><th>打率</th><th>HR</th><th>RUN</th></tr><tr><td>1</td><td>いわさき</td><td>R</td><td>.300</td><td>11</td><td>80</td></tr><tr><td>2</td><td>まつい</td><td>R</td><td>.220</td><td>8</td><td>38</td></tr><tr><td>3</td><td>しょうがき</td><td>R</td><td>.201</td><td>32</td><td>12</td></tr><tr><td>4</td><td>もあい</td><td>L</td><td>.354</td><td>50</td><td>2</td></tr><tr><td>5</td><td>ながえ</td><td>R</td><td>.270</td><td>21</td><td>21</td></tr><tr><td>6</td><td>ちあき</td><td>L</td><td>.224</td><td>5</td><td>65</td></tr><tr><td>7</td><td>ふくい</td><td>R</td><td>.199</td><td>8</td><td>24</td></tr><tr><td>8</td><td>みよし</td><td>L</td><td>.210</td><td>10</td><td>9</td></tr><tr><td>9</td><td>ながた</td><td>R</td><td>.200</td><td>12</td><td>32</td></tr><tr><td>10</td><td>かみお</td><td>L</td><td>.175</td><td>7</td><td>71</td></tr><tr><td>11</td><td>は る</td><td>R</td><td>.205</td><td>9</td><td>25</td></tr><tr><td>12</td><td>おーた</td><td>R</td><td>.211</td><td>4</td><td>34</td></tr></table>
+<table><tr><th></th><th>NAME</th><th>LR</th><th>U/D</th><th>SPD</th><th>防御率</th><th>STM</th><th>C</th><th>S</th><th>F</th></tr><tr><td>1</td><td>おーつか</td><td>R</td><td>U</td><td>140</td><td>2.45</td><td>73</td><td>9</td><td>1</td><td>1</td></tr><tr><td>2</td><td>うえはら</td><td>L</td><td>U</td><td>130</td><td>2.19</td><td>36</td><td>7</td><td>7</td><td>2</td></tr><tr><td>3</td><td>あかだ</td><td>R</td><td>D</td><td>130</td><td>2.71</td><td>12</td><td>4</td><td>6</td><td>3</td></tr><tr><td>4</td><td>さぎさか</td><td>R</td><td>U</td><td>160</td><td>2.07</td><td>99</td><td>3</td><td>0</td><td>0</td></tr></table>
+<footer><p><em>The Pro Yakyuu Gekitotsu Pennant Race</em> was published by Konami for the MSX2 in 1988; its catalogue number is RC-757 and it is 128 KB with the SCC. All rights remain with their holders. This is preservation, study and documentation work, and the cartridge image is not distributed.</p></footer></div>

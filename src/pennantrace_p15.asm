@@ -3332,7 +3332,7 @@ L_B801:
 	push bc			;b828
 	push hl			;b829
 	ld (hl),a			;b82a
-	ld hl,0e226h		;b82b   ; la suma BCD de las tres
+	ld hl,0e226h		;b82b   ; la suma BCD de los 4 lanzadores (el primero y tres sumas)
 	ld b,003h		;b82e
 	ld a,(hl)			;b830
 	inc hl			;b831
@@ -3573,7 +3573,7 @@ L_B981:
 	ld b,003h		;b987
 	jp 05c34h		;b989   ; cifras_bcd: B cifras BCD con ceros, empezando por la baja si B es impar
 L_B98C:
-	ld a,(0e1a2h)		;b98c   ; una curva de un lanzador (0xE220 + n): la suma de las 3 no puede pasar de 0x25
+	ld a,(0e1a2h)		;b98c   ; una curva de un lanzador (0xE220 + n): la suma de los 4 lanzadores no puede pasar de 0x25
 	sub 00dh		;b98f   ; la casilla 0xE220 + fila - 13
 	ld e,a			;b991
 	ld d,000h		;b992
@@ -3585,7 +3585,7 @@ L_B98C:
 	push bc			;b99d
 	push hl			;b99e
 	ld (hl),a			;b99f
-	ld hl,0e220h		;b9a0   ; la suma BCD de las tres
+	ld hl,0e220h		;b9a0   ; la suma BCD de los 4 (el primero y tres sumas)
 	ld b,003h		;b9a3
 	ld a,(hl)			;b9a5
 	inc hl			;b9a6
@@ -3626,7 +3626,7 @@ L_B9CB:
 	ld (hl),a			;b9dc
 	push bc			;b9dd
 	push hl			;b9de
-	ld hl,0e21ah		;b9df   ; la suma de las tres
+	ld hl,0e21ah		;b9df   ; la suma de los 4
 	ld b,003h		;b9e2
 	ld a,(hl)			;b9e4
 	inc hl			;b9e5

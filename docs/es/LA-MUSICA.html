@@ -1,0 +1,168 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>La música — The Pro Yakyuu Gekitotsu Pennant Race (Konami, 1988)</title>
+<style>
+:root{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;--linea:#23262e;
+  --rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}
+@media (prefers-color-scheme:light){:root{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;
+  --panel:#f7f6f2;--linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}}
+:root[data-theme="dark"]{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;
+  --linea:#23262e;--rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}
+:root[data-theme="light"]{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;--panel:#f7f6f2;
+  --linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fondo);color:var(--tinta);padding:0 1.25rem 6rem;
+  font:15px/1.7 ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+.w{max-width:1120px;margin:0 auto}
+.n{max-width:68ch}
+h1,h2,h3,h4{font-weight:400;text-wrap:balance}
+a{color:var(--cyan)}
+img{image-rendering:pixelated;max-width:100%;height:auto;display:block}
+header.top{display:flex;flex-direction:column;align-items:center;gap:1.5rem;
+  padding:4rem 0 2rem;text-align:center}
+header.top img{width:min(100%,642px)}
+.claim{max-width:60ch;color:var(--suave);font-size:1.05rem}
+.claim b{color:var(--tinta);font-weight:400}
+.ficha{display:flex;flex-wrap:wrap;justify-content:center;gap:0 1.5rem;width:100%;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--suave);
+  border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);padding:.85rem 0}
+.ficha b{color:var(--rojo);font-weight:400}
+nav{display:flex;flex-wrap:wrap;gap:1.25rem;justify-content:center;padding:1.25rem 0;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+nav a{color:var(--suave);text-decoration:none;border-bottom:1px solid transparent}
+nav a:hover,nav a:focus{color:var(--tinta);border-bottom-color:var(--rojo)}
+nav.docs{border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);
+  margin-bottom:1rem}
+section{margin-top:4.5rem;scroll-margin-top:1rem}
+section>h2{font-size:1rem;letter-spacing:.1em;text-transform:uppercase;
+  border-left:3px solid var(--rojo);padding-left:.9rem;margin:0 0 1.5rem}
+.cifras{display:grid;gap:1px;background:var(--linea);border:1px solid var(--linea);
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.cifra{background:var(--panel);padding:1.1rem}
+.cifra b{display:block;font-size:1.7rem;color:var(--oro);font-weight:400;
+  font-variant-numeric:tabular-nums;line-height:1.2}
+.cifra span{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--suave)}
+.hall{border-top:1px solid var(--linea);padding-top:1.75rem;margin-top:2.5rem}
+.hall:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.hall h3{margin:0 0 .75rem;font-size:1.15rem;color:var(--rojo)}
+.hall h4{color:var(--oro);margin:1.5rem 0 .5rem;font-size:.95rem}
+.hall p{margin:0 0 1rem}
+pre.asm{background:var(--panel);border-left:2px solid var(--verde);margin:1.25rem 0;
+  padding:1rem 1.1rem;overflow-x:auto;font-size:13px;line-height:1.6;color:var(--tinta)}
+.par{display:grid;gap:1.25rem;grid-template-columns:1fr}
+@media(min-width:820px){.par{grid-template-columns:1fr 1fr}}
+.par figure{margin:0}
+table{border-collapse:collapse;width:100%;margin:1.25rem 0;font-size:13px;display:block;
+  overflow-x:auto}
+th,td{text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--linea)}
+th{color:var(--suave);font-weight:400;font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+td.num{font-variant-numeric:tabular-nums;color:var(--oro)}
+.nivel{margin-top:2rem}
+.nivel h3{margin:0 0 .9rem;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase}
+.nivel em{color:var(--cyan);font-style:normal}
+.sep{color:var(--suave);margin:0 .6rem}
+.rejilla{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.rejilla figure{margin:0;background:var(--panel);box-shadow:0 0 0 1px var(--linea)}
+.rejilla figcaption{display:flex;justify-content:space-between;padding:.45rem .65rem;
+  font-size:11px;color:var(--suave);border-top:1px solid var(--linea)}
+.dir{font-variant-numeric:tabular-nums;color:var(--verde)}
+footer{margin-top:5rem;padding-top:1.5rem;border-top:1px solid var(--linea);
+  color:var(--suave);font-size:12px}
+
+/* Aviso de trabajo en curso: tiene que verse antes que las cifras, porque un
+   100% mal leido hace mas dano que no ponerlo. */
+.aviso{background:#3a2a10;border-left:3px solid var(--oro);margin:1.5rem auto;
+  padding:1rem 1.2rem;max-width:900px;border-radius:4px}
+.aviso p{margin:0;color:var(--tinta);font-size:15px;line-height:1.65}
+.galeria{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;margin:1.5rem 0}
+.galeria figure{margin:0}
+.galeria img{width:100%;height:auto;image-rendering:pixelated;
+  border:1px solid var(--linea);border-radius:3px}
+.galeria figcaption{color:var(--suave);font-size:13px;margin-top:.5rem}
+audio{display:block;width:100%;max-width:640px;margin:.75rem 0 1.5rem}
+</style>
+<div class="w"><nav class="top"><a href="index.html">Portada</a><a href="EMPEZAR.html">Empezar</a><a href="EL-JUEGO.html">El juego</a><a href="LAS-PANTALLAS.html">Las pantallas</a><a href="LA-MUSICA.html" style=color:var(--tinta)>La música</a><a href="LOS-TEXTOS.html">Los textos</a><a href="EL-CARTUCHO.html">El cartucho</a><a href="EL-CODIGO.html">El código</a><a href="HALLAZGOS.html">Hallazgos</a><a href="PREGUNTAS-ABIERTAS.html">Preguntas abiertas</a><a href="../THE-MUSIC.html" style="margin-left:auto;color:var(--oro)">English</a></nav>
+<h1 id="la-musica">La música</h1>
+<p>26 piezas. El motor de sonido (banco 6, con las partituras en el 5 y la tabla de 72 sonidos en <code>p04:600C</code>) lleva ocho canales: los tres del PSG y los cinco del SCC. La cabecera de cada sonido dice qué canales usa: las músicas usan 6 u 8 y los efectos solo dos, el 3 del PSG y el 1 del SCC. Un canal toma un sonido nuevo si su prioridad no es menor que la del que suena (<code>p06:B305</code>).</p>
+<p>Durante el partido, la música de fondo depende de la base más adelantada que esté ocupada y de quién batea (<code>p00:5E74</code>, <code>p00:5E7A</code>): ocho temas, más los de la séptima entrada. El home run son dos peticiones seguidas: la 0x2C (PSG y un canal del SCC) y la 0x3F (los otros tres del SCC). F5 quita y pone la música.</p>
+<p>Las piezas no se han reescrito: se ejecuta el propio motor del cartucho en un Z80 de Python (<code>tools/musica.py</code>) y lo que escribe en el PSG y en el SCC se pasa a sonido. Cada una se ha cotejado con openMSX (<code>tools/omsx_psg.tcl</code>, <code>tools/coteja_psg.py</code>): el estado de los dos chips coincide cuadro a cuadro. Siete coinciden con el «tono libre» del canal 4 apagado (<code>0xEFF4</code>): es un silbido que el juego enciende por su cuenta durante el partido y que esas piezas no usan. Los efectos no van.</p>
+<h2 id="0x28-la-presentacion">0x28: La presentación</h2>
+<audio controls preload="none" src="../audio/musica_28.mp3?v=4adcf3e0"></audio>
+<p>Lo pide p15:BBD8. 3,6 s. Cotejada: 218 cuadros iguales.</p>
+<h2 id="0x2d-el-titulo-y-la-demostracion">0x2D: El título y la demostración</h2>
+<audio controls preload="none" src="../audio/musica_2D.mp3?v=b814b4a5"></audio>
+<p>Lo pide p00:44DD, p15:AB3B. 63,2 s y vuelve al cuadro 1998. Cotejada: 3790 cuadros iguales.</p>
+<h2 id="0x23-al-elegir-el-modo">0x23: Al elegir el modo</h2>
+<audio controls preload="none" src="../audio/musica_23.mp3?v=5d0f175a"></audio>
+<p>Lo pide p00:45C8. 2,9 s. Cotejada: 176 cuadros iguales.</p>
+<h2 id="0x2e-los-menus-de-pennant">0x2E: Los menús de PENNANT</h2>
+<audio controls preload="none" src="../audio/musica_2E.mp3?v=bc7be881"></audio>
+<p>Lo pide p13:622A, p15:A548. 51,2 s y vuelve al cuadro 1921. Cotejada: 3073 cuadros iguales.</p>
+<h2 id="0x2f-antes-del-partido-lanzadores-y-orden">0x2F: Antes del partido: lanzadores y orden</h2>
+<audio controls preload="none" src="../audio/musica_2F.mp3?v=4db6ae48"></audio>
+<p>Lo pide p00:463A. 38,4 s y vuelve al cuadro 1153. Cotejada: 2305 cuadros iguales con el tono libre apagado.</p>
+<h2 id="0x33-batea-el-visitante-bases-vacias">0x33: Batea el visitante: bases vacías</h2>
+<audio controls preload="none" src="../audio/musica_33.mp3?v=de169fd4"></audio>
+<p>Lo pide p00:5E74; 0x32, la de empezar el partido en p00:466E, es la misma. 33,6 s y vuelve al cuadro 865. Cotejada: 2017 cuadros iguales con el tono libre apagado.</p>
+<h2 id="0x34-batea-el-visitante-corredor-en-primera">0x34: Batea el visitante: corredor en primera</h2>
+<audio controls preload="none" src="../audio/musica_34.mp3?v=72b2625c"></audio>
+<p>19,2 s y vuelve al cuadro 577. Cotejada: 1153 cuadros iguales.</p>
+<h2 id="0x35-batea-el-visitante-corredor-en-segunda">0x35: Batea el visitante: corredor en segunda</h2>
+<audio controls preload="none" src="../audio/musica_35.mp3?v=db24cb00"></audio>
+<p>16,0 s y vuelve al cuadro 481. Cotejada: 961 cuadros iguales.</p>
+<h2 id="0x36-batea-el-visitante-corredor-en-tercera">0x36: Batea el visitante: corredor en tercera</h2>
+<audio controls preload="none" src="../audio/musica_36.mp3?v=111cc7c1"></audio>
+<p>32,0 s y vuelve al cuadro 961. Cotejada: 1921 cuadros iguales con el tono libre apagado.</p>
+<h2 id="0x37-batea-el-local-bases-vacias">0x37: Batea el local: bases vacías</h2>
+<audio controls preload="none" src="../audio/musica_37.mp3?v=bb2161b9"></audio>
+<p>Lo pide p00:5E7A. 30,4 s y vuelve al cuadro 865. Cotejada: 1825 cuadros iguales con el tono libre apagado.</p>
+<h2 id="0x38-batea-el-local-corredor-en-primera">0x38: Batea el local: corredor en primera</h2>
+<audio controls preload="none" src="../audio/musica_38.mp3?v=45f54dad"></audio>
+<p>25,6 s y vuelve al cuadro 769. Cotejada: 1537 cuadros iguales.</p>
+<h2 id="0x39-batea-el-local-corredor-en-segunda">0x39: Batea el local: corredor en segunda</h2>
+<audio controls preload="none" src="../audio/musica_39.mp3?v=66742abe"></audio>
+<p>32,0 s y vuelve al cuadro 961. Cotejada: 1921 cuadros iguales con el tono libre apagado.</p>
+<h2 id="0x3a-batea-el-local-corredor-en-tercera">0x3A: Batea el local: corredor en tercera</h2>
+<audio controls preload="none" src="../audio/musica_3A.mp3?v=2cb80405"></audio>
+<p>26,7 s y vuelve al cuadro 801. Cotejada: 1601 cuadros iguales con el tono libre apagado.</p>
+<h2 id="0x3b-la-septima-entrada-alta">0x3B: La séptima entrada, alta</h2>
+<audio controls preload="none" src="../audio/musica_3B.mp3?v=7f2a02f1"></audio>
+<p>Lo pide p02:94E3. 37,8 s y vuelve al cuadro 1115. Cotejada: 2267 cuadros iguales.</p>
+<h2 id="0x3c-la-septima-entrada-baja">0x3C: La séptima entrada, baja</h2>
+<audio controls preload="none" src="../audio/musica_3C.mp3?v=8146116f"></audio>
+<p>Lo pide p02:94ED. 34,6 s y vuelve al cuadro 1115. Cotejada: 2075 cuadros iguales con el tono libre apagado.</p>
+<h2 id="0x3d-la-pelota-en-juego-alta">0x3D: La pelota en juego, alta</h2>
+<audio controls preload="none" src="../audio/musica_3D.mp3?v=a7a9d795"></audio>
+<p>Lo pide p01:6003. 10,2 s. Cotejada: 611 cuadros iguales.</p>
+<h2 id="0x3e-la-pelota-en-juego-baja">0x3E: La pelota en juego, baja</h2>
+<audio controls preload="none" src="../audio/musica_3E.mp3?v=597d30bb"></audio>
+<p>Lo pide p01:6003. 6,3 s. Cotejada: 379 cuadros iguales.</p>
+<h2 id="0x2c-home-run-0x2c-con-0x3f-p02-9357">0x2C: Home run (0x2C con 0x3F, p02:9357)</h2>
+<audio controls preload="none" src="../audio/musica_2C.mp3?v=9baba99f"></audio>
+<p>14,1 s. Cotejada: 843 cuadros iguales (cada mitad por separado).</p>
+<h2 id="0x42-out">0x42: Out</h2>
+<audio controls preload="none" src="../audio/musica_42.mp3?v=69b7637b"></audio>
+<p>Lo pide p01:6171, p03:B131. 3,8 s. Cotejada: 229 cuadros iguales.</p>
+<h2 id="0x45-cogida-al-vuelo">0x45: Cogida al vuelo</h2>
+<audio controls preload="none" src="../audio/musica_45.mp3?v=6c28f39d"></audio>
+<p>Lo pide p03:AE58. 4,3 s. Cotejada: 259 cuadros iguales.</p>
+<h2 id="0x43-base-por-bolas">0x43: Base por bolas</h2>
+<audio controls preload="none" src="../audio/musica_43.mp3?v=5411e68b"></audio>
+<p>Lo pide p01:61BD. 3,6 s. Cotejada: 215 cuadros iguales.</p>
+<h2 id="0x44-carrera">0x44: Carrera</h2>
+<audio controls preload="none" src="../audio/musica_44.mp3?v=d882ad0e"></audio>
+<p>Lo pide p02:8FA3. 4,1 s. Cotejada: 247 cuadros iguales.</p>
+<h2 id="0x40-fin-de-la-media-entrada-con-corredores">0x40: Fin de la media entrada, con corredores</h2>
+<audio controls preload="none" src="../audio/musica_40.mp3?v=e0cbe0cc"></audio>
+<p>Lo pide p02:9466. 3,4 s. Cotejada: 205 cuadros iguales.</p>
+<h2 id="0x41-fin-de-la-media-entrada-sin-corredores">0x41: Fin de la media entrada, sin corredores</h2>
+<audio controls preload="none" src="../audio/musica_41.mp3?v=fca860af"></audio>
+<p>Lo pide p02:945F. 4,4 s. Cotejada: 266 cuadros iguales.</p>
+<h2 id="0x30-cambio-de-lanzador">0x30: Cambio de lanzador</h2>
+<audio controls preload="none" src="../audio/musica_30.mp3?v=e5b00249"></audio>
+<p>Lo pide p00:4A32. 11,1 s. Cotejada: 668 cuadros iguales.</p>
+<h2 id="0x31-el-campeon-y-el-final">0x31: El campeón y el final</h2>
+<audio controls preload="none" src="../audio/musica_31.mp3?v=15b63dfd"></audio>
+<p>Lo pide p00:4925, p00:49A6. 76,8 s y vuelve al cuadro 2049. Cotejada: 3968 cuadros iguales de 4609; luego el juego la corta.</p>
+<footer><p><em>The Pro Yakyuu Gekitotsu Pennant Race</em> lo public&oacute; Konami para MSX2 en 1988; su n&uacute;mero de cat&aacute;logo es RC-757 y son 128 KB con el SCC. Todos los derechos siguen siendo de sus titulares. Este trabajo es de preservaci&oacute;n, estudio y documentaci&oacute;n, y la imagen del cartucho no se distribuye.</p></footer></div>

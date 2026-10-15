@@ -1,0 +1,101 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>El cartucho — The Pro Yakyuu Gekitotsu Pennant Race (Konami, 1988)</title>
+<style>
+:root{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;--linea:#23262e;
+  --rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}
+@media (prefers-color-scheme:light){:root{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;
+  --panel:#f7f6f2;--linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}}
+:root[data-theme="dark"]{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;
+  --linea:#23262e;--rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}
+:root[data-theme="light"]{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;--panel:#f7f6f2;
+  --linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fondo);color:var(--tinta);padding:0 1.25rem 6rem;
+  font:15px/1.7 ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+.w{max-width:1120px;margin:0 auto}
+.n{max-width:68ch}
+h1,h2,h3,h4{font-weight:400;text-wrap:balance}
+a{color:var(--cyan)}
+img{image-rendering:pixelated;max-width:100%;height:auto;display:block}
+header.top{display:flex;flex-direction:column;align-items:center;gap:1.5rem;
+  padding:4rem 0 2rem;text-align:center}
+header.top img{width:min(100%,642px)}
+.claim{max-width:60ch;color:var(--suave);font-size:1.05rem}
+.claim b{color:var(--tinta);font-weight:400}
+.ficha{display:flex;flex-wrap:wrap;justify-content:center;gap:0 1.5rem;width:100%;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--suave);
+  border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);padding:.85rem 0}
+.ficha b{color:var(--rojo);font-weight:400}
+nav{display:flex;flex-wrap:wrap;gap:1.25rem;justify-content:center;padding:1.25rem 0;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+nav a{color:var(--suave);text-decoration:none;border-bottom:1px solid transparent}
+nav a:hover,nav a:focus{color:var(--tinta);border-bottom-color:var(--rojo)}
+nav.docs{border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);
+  margin-bottom:1rem}
+section{margin-top:4.5rem;scroll-margin-top:1rem}
+section>h2{font-size:1rem;letter-spacing:.1em;text-transform:uppercase;
+  border-left:3px solid var(--rojo);padding-left:.9rem;margin:0 0 1.5rem}
+.cifras{display:grid;gap:1px;background:var(--linea);border:1px solid var(--linea);
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.cifra{background:var(--panel);padding:1.1rem}
+.cifra b{display:block;font-size:1.7rem;color:var(--oro);font-weight:400;
+  font-variant-numeric:tabular-nums;line-height:1.2}
+.cifra span{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--suave)}
+.hall{border-top:1px solid var(--linea);padding-top:1.75rem;margin-top:2.5rem}
+.hall:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.hall h3{margin:0 0 .75rem;font-size:1.15rem;color:var(--rojo)}
+.hall h4{color:var(--oro);margin:1.5rem 0 .5rem;font-size:.95rem}
+.hall p{margin:0 0 1rem}
+pre.asm{background:var(--panel);border-left:2px solid var(--verde);margin:1.25rem 0;
+  padding:1rem 1.1rem;overflow-x:auto;font-size:13px;line-height:1.6;color:var(--tinta)}
+.par{display:grid;gap:1.25rem;grid-template-columns:1fr}
+@media(min-width:820px){.par{grid-template-columns:1fr 1fr}}
+.par figure{margin:0}
+table{border-collapse:collapse;width:100%;margin:1.25rem 0;font-size:13px;display:block;
+  overflow-x:auto}
+th,td{text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--linea)}
+th{color:var(--suave);font-weight:400;font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+td.num{font-variant-numeric:tabular-nums;color:var(--oro)}
+.nivel{margin-top:2rem}
+.nivel h3{margin:0 0 .9rem;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase}
+.nivel em{color:var(--cyan);font-style:normal}
+.sep{color:var(--suave);margin:0 .6rem}
+.rejilla{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.rejilla figure{margin:0;background:var(--panel);box-shadow:0 0 0 1px var(--linea)}
+.rejilla figcaption{display:flex;justify-content:space-between;padding:.45rem .65rem;
+  font-size:11px;color:var(--suave);border-top:1px solid var(--linea)}
+.dir{font-variant-numeric:tabular-nums;color:var(--verde)}
+footer{margin-top:5rem;padding-top:1.5rem;border-top:1px solid var(--linea);
+  color:var(--suave);font-size:12px}
+
+/* Aviso de trabajo en curso: tiene que verse antes que las cifras, porque un
+   100% mal leido hace mas dano que no ponerlo. */
+.aviso{background:#3a2a10;border-left:3px solid var(--oro);margin:1.5rem auto;
+  padding:1rem 1.2rem;max-width:900px;border-radius:4px}
+.aviso p{margin:0;color:var(--tinta);font-size:15px;line-height:1.65}
+.galeria{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;margin:1.5rem 0}
+.galeria figure{margin:0}
+.galeria img{width:100%;height:auto;image-rendering:pixelated;
+  border:1px solid var(--linea);border-radius:3px}
+.galeria figcaption{color:var(--suave);font-size:13px;margin-top:.5rem}
+audio{display:block;width:100%;max-width:640px;margin:.75rem 0 1.5rem}
+</style>
+<div class="w"><nav class="top"><a href="index.html">Portada</a><a href="EMPEZAR.html">Empezar</a><a href="EL-JUEGO.html">El juego</a><a href="LAS-PANTALLAS.html">Las pantallas</a><a href="LA-MUSICA.html">La música</a><a href="LOS-TEXTOS.html">Los textos</a><a href="EL-CARTUCHO.html" style=color:var(--tinta)>El cartucho</a><a href="EL-CODIGO.html">El código</a><a href="HALLAZGOS.html">Hallazgos</a><a href="PREGUNTAS-ABIERTAS.html">Preguntas abiertas</a><a href="../THE-CARTRIDGE.html" style="margin-left:auto;color:var(--oro)">English</a></nav>
+<h1 id="el-cartucho">El cartucho</h1>
+<h2 id="los-bancos">Los bancos</h2>
+<p>128 KB en 16 bancos de 8 KB con el mapper Konami SCC: cuatro ventanas (<code>0x4000</code>, <code>0x6000</code>, <code>0x8000</code> y <code>0xA000</code>) que se cambian escribiendo el número del banco en <code>0x5000</code>, <code>0x7000</code>, <code>0x9000</code> y <code>0xB000</code>. El banco <code>0x3F</code> en <code>0x9000</code> abre el SCC en <code>0x9800</code>-<code>0x98FF</code>.</p>
+<p>El banco 0 se queda siempre en <code>0x4000</code> y las otras tres ventanas se ponen de tres en tres: 1-2-3 (<code>p00:438D</code>), 7-8-9 (<code>p00:4392</code>), 10-11-12 (<code>p00:4397</code>) y 13-14-15 (<code>p00:439F</code>). El reparto puesto se guarda en <code>0xDDF1</code>-<code>0xDDF3</code>. El sonido pone los bancos 4-5-6 un momento y vuelve al reparto de antes.</p>
+<table><tr><th>bancos</th><th>qué hay</th></tr><tr><td>p00</td><td>el núcleo: el arranque, la interrupción, el despachador de estados (<code>p00:4220</code>), el VDP, los dibujos, los textos y las peticiones de sonido</td></tr><tr><td>p01-p03</td><td>el partido: lanzamiento, bateo, corredores, defensa, cámara, marcador y orden de bateo</td></tr><tr><td>p04-p06</td><td>el sonido: la tabla de 72 sonidos (<code>p04:600C</code>), las partituras (p05) y el motor (p06)</td></tr><tr><td>p07-p12</td><td>los gráficos: paletas, dibujos, el mapa del campo (<code>p08:9432</code>) y sus mosaicos, los kanji (p09), los sprites (p10-p11) y la fuente (p12)</td></tr><tr><td>p13-p15</td><td>los menús, PENNANT, TEAM EDIT, la grabación, la presentación y los seis equipos (<code>p13:731F</code>)</td></tr></table>
+<h2 id="los-dibujos">Los dibujos</h2>
+<p>Casi todo lo que se ve sale de listas de dibujos (<code>p00:4FA3</code>): un número de fichas y, por ficha, 6 bytes <code>[paleta-tipo][VRAM][n][puntero]</code>. El tipo dice cuántos bits lleva cada punto: 0 y 1, un bit; 2 y 3, dos; 4 y 5, tres. Los impares se pintan en espejo. El nibble alto elige la paleta en una tabla que da 2, 4 u 8 colores; cada combinación de bits es uno de ellos.</p>
+<p>Lo grande va en rachas (<code>p00:4B35</code>): un byte de cuenta; 0 acaba, con el bit 7 a 0 repite el byte siguiente, <code>0x80</code> trae otro destino y de <code>0x81</code> a <code>0xFF</code> copia los bytes tal cual.</p>
+<h2 id="los-textos">Los textos</h2>
+<p><code>p00:4EA6</code> y sus hermanas ponen los bancos 13-14-15 y leen <code>[x y]</code> y caracteres de la fuente hasta <code>0xFF</code>; <code>0xFE</code> trae otra posición y <code>0xFD</code> es medio espacio. Ver <a href="LOS-TEXTOS.html">Los textos</a>.</p>
+<h2 id="el-sonido">El sonido</h2>
+<p>Cada sonido tiene una cabecera (<code>p04:600A</code> + 2 × número): una máscara de canales (bit 7 el canal 1, bit 0 el canal 8; del 1 al 3 el PSG, del 4 al 8 el SCC), una prioridad y un puntero a la partitura de cada canal. En las partituras, de <code>0xD0</code> a <code>0xFE</code> son órdenes (<code>p06:B92F</code>: la octava, la prioridad y otras por una tabla), lo de debajo son notas y <code>0xFF</code> acaba. El motor avanza cada canal en la interrupción (<code>p06:B41E</code>) y escribe el PSG y el SCC (<code>p06:BBB8</code>). Ver <a href="LA-MUSICA.html">La música</a>.</p>
+<h2 id="la-grabacion">La grabación</h2>
+<p>TEAM EDIT y PENNANT graban en uno de tres sitios: la RAM, el disco o la SRAM del Game Master 2 (<code>p13:6007</code>).</p>
+<ul><li><b>El disco</b> va por el BDOS (<code>0xF37D</code>). Antes de cada llamada se aparta la RAM del juego que pisaría el DOS (<code>p14:8334</code>) y después se devuelve.</li><li><b>El Game Master 2</b> se busca en los cuatro slots y sus subslots: es el cartucho que lleva <code>YZ</code> en <code>0x4010</code> (<code>p13:709A</code>). Para usarlo, pone su banco 4 en <code>0x8000</code> y llama a <code>0x8000</code> con la orden en C: 5 el directorio, <code>0x0A</code> grabar y <code>0x0B</code> leer (<code>p13:721D</code>). La liga se graba con el nombre <code>PENAN</code>. Mientras tanto quita el gancho H.KEYI (H.TIMI para el directorio).</li></ul>
+<footer><p><em>The Pro Yakyuu Gekitotsu Pennant Race</em> lo public&oacute; Konami para MSX2 en 1988; su n&uacute;mero de cat&aacute;logo es RC-757 y son 128 KB con el SCC. Todos los derechos siguen siendo de sus titulares. Este trabajo es de preservaci&oacute;n, estudio y documentaci&oacute;n, y la imagen del cartucho no se distribuye.</p></footer></div>

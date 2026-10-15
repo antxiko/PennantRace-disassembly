@@ -851,10 +851,10 @@ C 0x941F ...menos las del local (valor absoluto)
 C 0x9424 10 o mas (BCD): se acaba
 C 0x9428 ...desde la 9.a (0xE19B >= 0x10)...
 C 0x942E antes de la 9.a: sigue
-C 0x9431 en la alta...
-C 0x9438 ...si el local va por delante al acabar la alta, la X en su casilla (p01:66E3)
-C 0x943A en la baja: si el local no va por delante, sigue; si va, p01:66E3 y se acaba
-C 0x9442 en la alta: si empatan, sigue; si no, se acaba
+C 0x9431 la alta o la baja (bit 0)...
+C 0x9438 la baja: p02:9442
+C 0x943A en la alta: si el local no va por delante, sigue; si va, la X en su casilla (p01:66E3) y se acaba
+C 0x9442 en la baja: si empatan, sigue; si no, se acaba
 C 0x9445 se acaba el partido (0xED87)
 C 0x944B si no: 0xEDDB = 1 y la musica del cambio: 0x41 sin corredores, 0x40 con ellos
 C 0x9450 sin corredores (la copia de 0xECA3)...

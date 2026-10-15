@@ -160,9 +160,19 @@ test:
 	@echo "=================================================================="
 	@python3 -m unittest discover -s tests -v
 
+# La web: las paginas se escriben en markdown y se convierten con md2html.py;
+# la portada la monta make_web.py con lo de tools/contenido_web.py. La pagina
+# de la musica sale de tools/pagina_musica.py (ejecuta el motor de sonido).
+web: $(ROM)
+	python3 tools/md2html.py docs en
+	python3 tools/md2html.py docs/es es
+	python3 tools/make_web.py docs/imagenes docs/index.html en
+	python3 tools/make_web.py docs/imagenes docs/es/index.html es
+	python3 tools/check_enlaces.py docs
+
 clean:
 	rm -f $(WORK)/p*.trace.json $(WORK)/p*.blocks $(WORK)/p*.out.bin \
 	      $(WORK)/reensamblada.rom $(WORK)/pasmo.err
 
 .PHONY: all comprueba reconoce paginas semillas trace listado verify \
-        sanity densidad test clean
+        sanity densidad test web clean

@@ -913,7 +913,7 @@ L_46A1:
 	ld (hl),000h		;46c0   ; a 0
 	or a			;46c2
 	ret nz			;46c3   ; este cuadro no: nada
-	ld a,(0e19bh)		;46c4   ; solo al acabar una baja (bit 0 de 0xE19B)
+	ld a,(0e19bh)		;46c4   ; solo durante una baja (bit 0 de 0xE19B), en cada cuadro
 	ld b,a			;46c7
 	rra			;46c8
 	ret nc			;46c9   ; en la alta, nada

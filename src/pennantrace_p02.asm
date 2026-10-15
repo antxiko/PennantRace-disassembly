@@ -2938,18 +2938,18 @@ L_9428:
 	cp 010h		;942c
 	jr c,L_944B		;942e   ; antes de la 9.a: sigue
 	ld a,b			;9430
-	rra			;9431   ; en la alta...
+	rra			;9431   ; la alta o la baja (bit 0)...
 	ld hl,0e194h		;9432   ; apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 	ld a,(hl)			;9435
 	inc hl			;9436
 	inc hl			;9437
-	jr c,L_9442		;9438   ; ...si el local va por delante al acabar la alta, la X en su casilla (p01:66E3)
-	cp (hl)			;943a   ; en la baja: si el local no va por delante, sigue; si va, p01:66E3 y se acaba
+	jr c,L_9442		;9438   ; la baja: p02:9442
+	cp (hl)			;943a   ; en la alta: si el local no va por delante, sigue; si va, la X en su casilla (p01:66E3) y se acaba
 	jr nc,L_944B		;943b
 	call 066e3h		;943d
 	jr L_9445		;9440
 L_9442:
-	cp (hl)			;9442   ; en la alta: si empatan, sigue; si no, se acaba
+	cp (hl)			;9442   ; en la baja: si empatan, sigue; si no, se acaba
 	jr z,L_944B		;9443
 L_9445:
 	ld a,001h		;9445   ; se acaba el partido (0xED87)

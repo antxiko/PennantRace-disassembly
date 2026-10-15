@@ -1154,12 +1154,12 @@ C 0x7AA8 de 0x40 vuelve a 0
 C 0x7AB0 IX = 0xE231 + 0xED6C
 C 0x7AB9 ...carry si esta vacio
 C 0x7ABD con marcas: sin carry
-C 0x7AC0 que vuelva: segun su base, el mando 1, 4 o 2 con el bit 5
+C 0x7AC0 su base y su estado: el bateador, o el que ya corre sin parar ni volver, se quedan como estan
 C 0x7AC4 el bateador (1): nada
 C 0x7AC9 en marcha sin parar ni volver: nada
 C 0x7AD3 bit 5 + la direccion
 C 0x7AD7 la base 2 -> 1, 3 -> 4, 4 -> 2
-C 0x7AE3 que avance (si no esta ya corriendo): el mando 8, 1 o 4 con el bit 4
+C 0x7AE3 su base y su estado: el que ya esta parado o volviendo se queda como esta
 C 0x7AE7 ya parado o volviendo: nada
 C 0x7AEF el bateador: nada
 C 0x7AF5 bit 4 + la direccion

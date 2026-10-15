@@ -30,6 +30,9 @@ JUEGO = {0x6412: "B82", 0xB071: "BA0", 0xB07B: "BA0", 0xB081: "BA0", 0xB08F: "BA
 SIN_XY = {0x4EB5}
 # tablas de punteros a textos: (direccion, cuantos)
 TABLAS = [(0x6828, 3), (0x6CB4, 5), (0xA6BE, 4), (0xA6C6, 4), (0x8539, 7)]
+# textos que se pintan uno detras de otro: (el primero, cuantos). El menu de
+# modos (p01:6543): 5 seguidos y MEDIA SELECT con disco y Game Master 2
+SEGUIDOS = [(0x7D8F, 6)]
 
 
 def lee(a, trio=13):
@@ -102,6 +105,11 @@ def llamadas():
                 continue
             e = out.setdefault((13, p), [True, []])
             e[1].append("tabla %04X" % t)
+    for primero, n in SEGUIDOS:
+        t = primero
+        for k in range(n):
+            out.setdefault((13, t), [True, []])[1].append("seguidos %04X" % primero)
+            t = descodifica(t)[1]
     return out
 
 

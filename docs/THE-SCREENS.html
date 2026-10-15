@@ -1,0 +1,110 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The screens — The Pro Yakyuu Gekitotsu Pennant Race (Konami, 1988)</title>
+<style>
+:root{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;--linea:#23262e;
+  --rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}
+@media (prefers-color-scheme:light){:root{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;
+  --panel:#f7f6f2;--linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}}
+:root[data-theme="dark"]{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;
+  --linea:#23262e;--rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}
+:root[data-theme="light"]{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;--panel:#f7f6f2;
+  --linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fondo);color:var(--tinta);padding:0 1.25rem 6rem;
+  font:15px/1.7 ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+.w{max-width:1120px;margin:0 auto}
+.n{max-width:68ch}
+h1,h2,h3,h4{font-weight:400;text-wrap:balance}
+a{color:var(--cyan)}
+img{image-rendering:pixelated;max-width:100%;height:auto;display:block}
+header.top{display:flex;flex-direction:column;align-items:center;gap:1.5rem;
+  padding:4rem 0 2rem;text-align:center}
+header.top img{width:min(100%,642px)}
+.claim{max-width:60ch;color:var(--suave);font-size:1.05rem}
+.claim b{color:var(--tinta);font-weight:400}
+.ficha{display:flex;flex-wrap:wrap;justify-content:center;gap:0 1.5rem;width:100%;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--suave);
+  border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);padding:.85rem 0}
+.ficha b{color:var(--rojo);font-weight:400}
+nav{display:flex;flex-wrap:wrap;gap:1.25rem;justify-content:center;padding:1.25rem 0;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+nav a{color:var(--suave);text-decoration:none;border-bottom:1px solid transparent}
+nav a:hover,nav a:focus{color:var(--tinta);border-bottom-color:var(--rojo)}
+nav.docs{border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);
+  margin-bottom:1rem}
+section{margin-top:4.5rem;scroll-margin-top:1rem}
+section>h2{font-size:1rem;letter-spacing:.1em;text-transform:uppercase;
+  border-left:3px solid var(--rojo);padding-left:.9rem;margin:0 0 1.5rem}
+.cifras{display:grid;gap:1px;background:var(--linea);border:1px solid var(--linea);
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.cifra{background:var(--panel);padding:1.1rem}
+.cifra b{display:block;font-size:1.7rem;color:var(--oro);font-weight:400;
+  font-variant-numeric:tabular-nums;line-height:1.2}
+.cifra span{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--suave)}
+.hall{border-top:1px solid var(--linea);padding-top:1.75rem;margin-top:2.5rem}
+.hall:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.hall h3{margin:0 0 .75rem;font-size:1.15rem;color:var(--rojo)}
+.hall h4{color:var(--oro);margin:1.5rem 0 .5rem;font-size:.95rem}
+.hall p{margin:0 0 1rem}
+pre.asm{background:var(--panel);border-left:2px solid var(--verde);margin:1.25rem 0;
+  padding:1rem 1.1rem;overflow-x:auto;font-size:13px;line-height:1.6;color:var(--tinta)}
+.par{display:grid;gap:1.25rem;grid-template-columns:1fr}
+@media(min-width:820px){.par{grid-template-columns:1fr 1fr}}
+.par figure{margin:0}
+table{border-collapse:collapse;width:100%;margin:1.25rem 0;font-size:13px;display:block;
+  overflow-x:auto}
+th,td{text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--linea)}
+th{color:var(--suave);font-weight:400;font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+td.num{font-variant-numeric:tabular-nums;color:var(--oro)}
+.nivel{margin-top:2rem}
+.nivel h3{margin:0 0 .9rem;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase}
+.nivel em{color:var(--cyan);font-style:normal}
+.sep{color:var(--suave);margin:0 .6rem}
+.rejilla{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.rejilla figure{margin:0;background:var(--panel);box-shadow:0 0 0 1px var(--linea)}
+.rejilla figcaption{display:flex;justify-content:space-between;padding:.45rem .65rem;
+  font-size:11px;color:var(--suave);border-top:1px solid var(--linea)}
+.dir{font-variant-numeric:tabular-nums;color:var(--verde)}
+footer{margin-top:5rem;padding-top:1.5rem;border-top:1px solid var(--linea);
+  color:var(--suave);font-size:12px}
+
+/* Aviso de trabajo en curso: tiene que verse antes que las cifras, porque un
+   100% mal leido hace mas dano que no ponerlo. */
+.aviso{background:#3a2a10;border-left:3px solid var(--oro);margin:1.5rem auto;
+  padding:1rem 1.2rem;max-width:900px;border-radius:4px}
+.aviso p{margin:0;color:var(--tinta);font-size:15px;line-height:1.65}
+.galeria{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;margin:1.5rem 0}
+.galeria figure{margin:0}
+.galeria img{width:100%;height:auto;image-rendering:pixelated;
+  border:1px solid var(--linea);border-radius:3px}
+.galeria figcaption{color:var(--suave);font-size:13px;margin-top:.5rem}
+audio{display:block;width:100%;max-width:640px;margin:.75rem 0 1.5rem}
+</style>
+<div class="w"><nav class="top"><a href="index.html">Home</a><a href="GETTING-STARTED.html">Start</a><a href="THE-GAME.html">The game</a><a href="THE-SCREENS.html" style=color:var(--tinta)>The screens</a><a href="THE-MUSIC.html">The music</a><a href="THE-TEXTS.html">The texts</a><a href="THE-CARTRIDGE.html">The cartridge</a><a href="THE-CODE.html">The code</a><a href="FINDINGS.html">Findings</a><a href="OPEN-QUESTIONS.html">Open questions</a><a href="es/LAS-PANTALLAS.html" style="margin-left:auto;color:var(--oro)">Castellano</a></nav>
+<h1 id="the-screens">The screens</h1>
+<p>All of them are drawn with our own code (<code>tools/vram.py</code> and <code>tools/pantallas.py</code>) following the steps of the routine that paints them, cited for each one. None is a capture. Each one has been compared with the openMSX VRAM dumped with the game running (<code>tools/omsx_vram.tcl</code>, <code>tools/coteja_vram.py</code>); under each one is how much matches.</p>
+<p>The game runs in SCREEN 5 on the V9938 (256 × 212 pixels, 16 colours). Almost everything is drawn in two steps: first the graphics are built on page 1 of the VRAM (the &quot;sheet&quot;, 32 characters per row) and then copied to the visible page with VDP commands.</p>
+<h2 id="the-intro">The intro</h2>
+<p><img src="imagenes/rotulo.png" alt="The title"></p>
+<p>The &quot;THEプロ野球 激突ペナントレース&quot; title (<code>p15:BB97</code>, <code>p00:52E7</code>): the pictures at <code>p09:B07A</code> and the character list at <code>p09:B6B9</code>, built on page 1. The intro uncovers it column by column (<code>p15:BC39</code>). <b>Checked: 0 bytes different.</b></p>
+<p><img src="imagenes/estadio.png" alt="The stadium"></p>
+<p>The stadium below it (<code>p00:5427</code>): the pictures at <code>p09:A619</code> and 16 × 11 characters in runs from <code>p09:AFC4</code>, with the palette at <code>p07:6000</code>. <b>Checked: 0 bytes different.</b></p>
+<h2 id="the-field">The field</h2>
+<p><img src="imagenes/campo_1.png" alt="The centre zone"></p>
+<p>The field has three zones: the centre and the two sides. Each one is 256 × 512 pixels and is a map of 16 × 8 tiles of 4 × 4 characters (<code>p08:9432</code>); the tiles come from <code>p08:95B8</code> (and from <code>p08:9A58</code> in the last two strips of the list). The screen shows part of the zone at a time. <b>Checked: centre zone, the 256 lines that were in the VRAM, identical in two dumps;</b> in another three, 8 to 22 lines differ: the signs and strips the game was drawing at that moment.</p>
+<p><img src="imagenes/campo_0.png" alt="Left field"></p>
+<p>The left field zone (tiles at <code>p08:9B28</code>).</p>
+<p><img src="imagenes/campo_2.png" alt="Right field"></p>
+<p>The right field zone (tiles at <code>p09:A088</code>). These two are drawn with the same code as the centre one, but <b>they are not checked</b>: the demo never leaves the centre zone.</p>
+<h2 id="the-pitch">The pitch</h2>
+<p><img src="imagenes/lanceo.png" alt="The pitching screen"></p>
+<p>The pitching screen, seen from behind home plate (<code>p01:6352</code>): the background in runs from <code>p08:9220</code>, two frames and the text at <code>p13:7E1E</code> (S B O, the 回 of the inning, HR and 打率). With no game going, the boxes and figures are empty. <b>Checked: 728 of 864 blocks identical</b>; the rest is the little bases window and the figures of the game being played.</p>
+<h2 id="the-sprites">The sprites</h2>
+<p><img src="imagenes/sprites.png" alt="The sprite patterns"></p>
+<p>The 64 patterns of 16 × 16 used in a game (VRAM <code>0xF800</code>-<code>0xFFFF</code>), set by <code>p00:537C</code>, <code>p00:539D</code> and <code>p00:53CC</code>. During a play <code>p00:572E</code> changes the pitcher&#x27;s pose at <code>0xFAC0</code> and <code>p00:5716</code> the catcher&#x27;s at <code>0xFFC0</code>. <b>Checked: identical</b> except for those two poses, which depend on the moment.</p>
+<h2 id="the-font">The font</h2>
+<p><img src="imagenes/fuente.png" alt="The font"></p>
+<p>161 one-bit characters at <code>p12:B6C3</code>: digits, letters, hiragana, katakana and signs. They are put twice on the sheet, the second time in colour 4. On top go two kanji sets: 17 from <code>p09:B942</code> for the game (戦打数安本塁三振四死球盗失策防御率) and 11 from <code>p09:B9DA</code> for the PENNANT screens (試合結果勝敗差順位表 and a quote mark).</p>
+<footer><p><em>The Pro Yakyuu Gekitotsu Pennant Race</em> was published by Konami for the MSX2 in 1988; its catalogue number is RC-757 and it is 128 KB with the SCC. All rights remain with their holders. This is preservation, study and documentation work, and the cartridge image is not distributed.</p></footer></div>

@@ -23,7 +23,9 @@ KATA = ("ウラヒッチャヘナントレスケムセコ" "ニテタィュロ�
         "サシソツヌノハホマミメモユヨリル")
 OTROS = {0x00: " ", 0x0B: "(C)", 0x0C: "゛", 0x0D: "゜", 0x0E: "ー",
          0x90: ".", 0x91: "ワ", 0x92: "球", 0x93: "第", 0x94: "節",
-         0x95: "km", 0x96: "/h", 0x97: "回", 0x98: "村", 0x99: "済", 0x9B: "H", 0x9C: "R"}
+         0x95: "km", 0x96: "/h", 0x97: "回", 0x98: "村", 0x99: "済", 0x9B: "H", 0x9C: "R",
+         # 0x9A: el marcador de la opcion elegida (p01:65AF), dibujado como una pelota
+         0x9A: "●"}
 
 
 # Los kanji que se cargan encima de la fuente:
@@ -38,6 +40,8 @@ def caracter(c, juego=""):
     """El caracter del codigo c. juego: "" (la fuente con KANJI_A), "B82"
     (con KANJI_B en 0x82-0x8C) o "BA0" (con KANJI_B en 0xA0-0xAA)."""
     c &= 0xFF
+    if c == 0xFD:               # medio espacio (p00:4EC0), no un caracter
+        return " "
     if juego == "B82" and 0x82 <= c <= 0x8C:
         return KANJI_B[c - 0x82]
     if juego == "BA0" and 0xA0 <= c <= 0xAA:

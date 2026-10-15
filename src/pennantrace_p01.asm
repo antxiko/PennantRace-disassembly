@@ -3920,7 +3920,7 @@ L_7AAD:
 	scf			;7abe
 	ret			;7abf
 que_avance:		; el corredor IX parado o volviendo avanza: segun su base, el mando 1, 4 o 2 con el bit 5
-	ld a,(ix+00bh)		;7ac0   ; que vuelva: segun su base, el mando 1, 4 o 2 con el bit 5
+	ld a,(ix+00bh)		;7ac0   ; su base y su estado: el bateador, o el que ya corre sin parar ni volver, se quedan como estan
 	ld b,a			;7ac3
 	cp 001h		;7ac4   ; el bateador (1): nada
 	ret z			;7ac6
@@ -3944,7 +3944,7 @@ L_7AD7:
 	ld b,002h		;7ae0
 	ret			;7ae2
 que_vuelva:		; el corredor IX que avanza vuelve: segun su base, el mando 8, 1 o 4 con el bit 4
-	ld a,(ix+00bh)		;7ae3   ; que avance (si no esta ya corriendo): el mando 8, 1 o 4 con el bit 4
+	ld a,(ix+00bh)		;7ae3   ; su base y su estado: el que ya esta parado o volviendo se queda como esta
 	ld b,a			;7ae6
 	and 0c0h		;7ae7   ; ya parado o volviendo: nada
 	ret nz			;7ae9

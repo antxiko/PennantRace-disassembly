@@ -260,7 +260,7 @@ C 0x46AE ...o un marcador llega a 99
 C 0x46BC 0xEDDA: este cuadro no se mira
 C 0x46C0 a 0
 C 0x46C3 este cuadro no: nada
-C 0x46C4 solo al acabar una baja (bit 0 de 0xE19B)
+C 0x46C4 solo durante una baja (bit 0 de 0xE19B), en cada cuadro
 C 0x46C9 en la alta, nada
 C 0x46CA la diferencia de carreras: visitante - local
 C 0x46D0 las del visitante menos las del local

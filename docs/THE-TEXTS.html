@@ -1,0 +1,91 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The texts — The Pro Yakyuu Gekitotsu Pennant Race (Konami, 1988)</title>
+<style>
+:root{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;--linea:#23262e;
+  --rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}
+@media (prefers-color-scheme:light){:root{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;
+  --panel:#f7f6f2;--linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}}
+:root[data-theme="dark"]{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;
+  --linea:#23262e;--rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}
+:root[data-theme="light"]{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;--panel:#f7f6f2;
+  --linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fondo);color:var(--tinta);padding:0 1.25rem 6rem;
+  font:15px/1.7 ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+.w{max-width:1120px;margin:0 auto}
+.n{max-width:68ch}
+h1,h2,h3,h4{font-weight:400;text-wrap:balance}
+a{color:var(--cyan)}
+img{image-rendering:pixelated;max-width:100%;height:auto;display:block}
+header.top{display:flex;flex-direction:column;align-items:center;gap:1.5rem;
+  padding:4rem 0 2rem;text-align:center}
+header.top img{width:min(100%,642px)}
+.claim{max-width:60ch;color:var(--suave);font-size:1.05rem}
+.claim b{color:var(--tinta);font-weight:400}
+.ficha{display:flex;flex-wrap:wrap;justify-content:center;gap:0 1.5rem;width:100%;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--suave);
+  border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);padding:.85rem 0}
+.ficha b{color:var(--rojo);font-weight:400}
+nav{display:flex;flex-wrap:wrap;gap:1.25rem;justify-content:center;padding:1.25rem 0;
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+nav a{color:var(--suave);text-decoration:none;border-bottom:1px solid transparent}
+nav a:hover,nav a:focus{color:var(--tinta);border-bottom-color:var(--rojo)}
+nav.docs{border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);
+  margin-bottom:1rem}
+section{margin-top:4.5rem;scroll-margin-top:1rem}
+section>h2{font-size:1rem;letter-spacing:.1em;text-transform:uppercase;
+  border-left:3px solid var(--rojo);padding-left:.9rem;margin:0 0 1.5rem}
+.cifras{display:grid;gap:1px;background:var(--linea);border:1px solid var(--linea);
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.cifra{background:var(--panel);padding:1.1rem}
+.cifra b{display:block;font-size:1.7rem;color:var(--oro);font-weight:400;
+  font-variant-numeric:tabular-nums;line-height:1.2}
+.cifra span{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--suave)}
+.hall{border-top:1px solid var(--linea);padding-top:1.75rem;margin-top:2.5rem}
+.hall:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.hall h3{margin:0 0 .75rem;font-size:1.15rem;color:var(--rojo)}
+.hall h4{color:var(--oro);margin:1.5rem 0 .5rem;font-size:.95rem}
+.hall p{margin:0 0 1rem}
+pre.asm{background:var(--panel);border-left:2px solid var(--verde);margin:1.25rem 0;
+  padding:1rem 1.1rem;overflow-x:auto;font-size:13px;line-height:1.6;color:var(--tinta)}
+.par{display:grid;gap:1.25rem;grid-template-columns:1fr}
+@media(min-width:820px){.par{grid-template-columns:1fr 1fr}}
+.par figure{margin:0}
+table{border-collapse:collapse;width:100%;margin:1.25rem 0;font-size:13px;display:block;
+  overflow-x:auto}
+th,td{text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--linea)}
+th{color:var(--suave);font-weight:400;font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+td.num{font-variant-numeric:tabular-nums;color:var(--oro)}
+.nivel{margin-top:2rem}
+.nivel h3{margin:0 0 .9rem;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase}
+.nivel em{color:var(--cyan);font-style:normal}
+.sep{color:var(--suave);margin:0 .6rem}
+.rejilla{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.rejilla figure{margin:0;background:var(--panel);box-shadow:0 0 0 1px var(--linea)}
+.rejilla figcaption{display:flex;justify-content:space-between;padding:.45rem .65rem;
+  font-size:11px;color:var(--suave);border-top:1px solid var(--linea)}
+.dir{font-variant-numeric:tabular-nums;color:var(--verde)}
+footer{margin-top:5rem;padding-top:1.5rem;border-top:1px solid var(--linea);
+  color:var(--suave);font-size:12px}
+
+/* Aviso de trabajo en curso: tiene que verse antes que las cifras, porque un
+   100% mal leido hace mas dano que no ponerlo. */
+.aviso{background:#3a2a10;border-left:3px solid var(--oro);margin:1.5rem auto;
+  padding:1rem 1.2rem;max-width:900px;border-radius:4px}
+.aviso p{margin:0;color:var(--tinta);font-size:15px;line-height:1.65}
+.galeria{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;margin:1.5rem 0}
+.galeria figure{margin:0}
+.galeria img{width:100%;height:auto;image-rendering:pixelated;
+  border:1px solid var(--linea);border-radius:3px}
+.galeria figcaption{color:var(--suave);font-size:13px;margin-top:.5rem}
+audio{display:block;width:100%;max-width:640px;margin:.75rem 0 1.5rem}
+</style>
+<div class="w"><nav class="top"><a href="index.html">Home</a><a href="GETTING-STARTED.html">Start</a><a href="THE-GAME.html">The game</a><a href="THE-SCREENS.html">The screens</a><a href="THE-MUSIC.html">The music</a><a href="THE-TEXTS.html" style=color:var(--tinta)>The texts</a><a href="THE-CARTRIDGE.html">The cartridge</a><a href="THE-CODE.html">The code</a><a href="FINDINGS.html">Findings</a><a href="OPEN-QUESTIONS.html">Open questions</a><a href="es/LOS-TEXTOS.html" style="margin-left:auto;color:var(--oro)">Castellano</a></nav>
+<h1 id="the-texts">The texts</h1>
+<p>100 texts taken from the ROM with <code>tools/textos.py</code>. The text routines at <code>p00:4EA6</code> read a position <code>[x y]</code> and then font characters up to <code>0xFF</code>; <code>0xFE</code> brings another position and <code>0xFD</code> is a half space (<code>p00:4EC0</code>). The list has the addresses the code loads just before calling them, those of their pointer tables and those of the texts drawn one after another.</p>
+<p>The characters come from the game&#x27;s font (<code>tools/fuente.py</code>): digits, letters, hiragana, katakana and kanji. The kanji of the PENNANT screens (試合結果, 順位表...) use codes that are other characters during a game: another kanji set is loaded on top (<code>p00:52D9</code>, <code>p00:52C7</code>). The ● is character <code>0x9A</code>, the marker of the chosen option (<code>p01:65AF</code>).</p>
+<p>The position is in screen pixels. &quot;Where&quot; is the address of the text and &quot;drawn from&quot; the instruction that asks for it.</p>
+<table><tr><th>text</th><th>where</th><th>drawn from</th></tr><tr><td>(88,52) データを / (88,64) ロードしますか / (104,76) はい / (104,88) いいえ</td><td>p03:BE24</td><td>p03:BDC4</td></tr><tr><td>(88,52) どこから / (88,64) ロードしますか / (104,76) DISK / (104,88) SRAM</td><td>p03:BE42</td><td>p03:BC6A</td></tr><tr><td>(80,56) PLEASE SELECT / (96,96) CONTINUE / (96,112) NEW SEASON / (98,16) ペナントレース</td><td>p13:6115</td><td>p13:6102, p13:615B</td></tr><tr><td>(96,96) CONTINUE / (96,112) NEW SEASON / (98,16) ペナントレース</td><td>p13:6125</td><td>p13:6161</td></tr><tr><td>(96,112) NEW SEASON / (98,16) ペナントレース</td><td>p13:6130</td><td>p13:6167</td></tr><tr><td>(98,16) ペナントレース</td><td>p13:613D</td><td>p13:6202</td></tr><tr><td>(64,0) LEAGUE SELECTION / (104,84) TEAMS / (10,200) PLAYER / (66,200) SELECT / (208,200) CLEAR / (122,200) COUNT / (174,200) END</td><td>p13:6294</td><td>p13:6208</td></tr><tr><td>(174,200) END</td><td>p13:62D1</td><td>p13:64AA</td></tr><tr><td>(100,136) 試 合 数</td><td>p13:6412</td><td>p13:6401</td></tr><tr><td>(48,32) VISITORS / (48,56) HOME / (10,200) VISITORS / (82,200) HOME / (130,200) END</td><td>p13:6594</td><td>p13:6588, p13:6811</td></tr><tr><td>(130,200) END</td><td>p13:65B8</td><td>p13:667A</td></tr><tr><td>(10,200) VISITORS</td><td>p13:682E</td><td>table 6828</td></tr><tr><td>(82,200) HOME</td><td>p13:6839</td><td>table 6828</td></tr><tr><td>(130,200) END</td><td>p13:6840</td><td>table 6828</td></tr><tr><td>(72,16)   / (72,26)   / (72,36)   / (72,46)   / (72,56)   / (72,66)</td><td>p13:6C31</td><td>p13:6C15</td></tr><tr><td>(10,200) PLAYER</td><td>p13:6CBE</td><td>table 6CB4</td></tr><tr><td>(66,200) SELECT</td><td>p13:6CC7</td><td>table 6CB4</td></tr><tr><td>(208,200) CLEAR</td><td>p13:6CD0</td><td>table 6CB4</td></tr><tr><td>(122,200) COUNT</td><td>p13:6CD8</td><td>table 6CB4</td></tr><tr><td>(174,200) END</td><td>p13:6CE0</td><td>table 6CB4</td></tr><tr><td>(10,200) PLAYER / (66,200) SELECT / (208,200) CLEAR / (122,200) COUNT / (174,200) END</td><td>p13:6CE6</td><td>p13:6C9D</td></tr><tr><td>(144,172) ピッチャーをひとりだけ / (144,184) いれてください</td><td>p13:7B48</td><td>p03:A4F0</td></tr><tr><td>(80,12) MEMBER CHANGE / (72,28) BATTER  打 率 HR / (72,160) PITCHER / (134,160) 防御率</td><td>p13:7B63</td><td>p14:9D1B</td></tr><tr><td>(200,120) 00</td><td>p13:7B94</td><td>p01:648B</td></tr><tr><td>(88,52) TEAM EDITを / (88,64) おわりますか / (104,76) はい / (104,88) いいえ</td><td>p13:7B99</td><td>p03:B700</td></tr><tr><td>(88,52) SAVEちゅうです</td><td>p13:7BDD</td><td>p00:48E9, p13:6D5B, p13:6DD0</td></tr><tr><td>(88,52) SRAM ERROR / (104,76) もういちど / (104,88) おわる</td><td>p13:7C06</td><td>p03:BD3E, p13:6D99</td></tr><tr><td>(88,52) SAVE  / (88,64) しゅうりょう</td><td>p13:7C22</td><td>p03:B9A4, p13:6D73, p13:6FB2</td></tr><tr><td>(72,176) PUSH SPACE KEY</td><td>p13:7C79</td><td>p00:4809</td></tr><tr><td>(72,184) PUSH SPACE KEY</td><td>p13:7CA8</td><td>p00:4845</td></tr><tr><td>(72,184) PUSH  F1 KEY</td><td>p13:7CB9</td><td>p00:4860</td></tr><tr><td>(24,96) 打 数 / (24,108) 安 打 / (24,120) 本塁打 / (24,132) 三 振 / (24,144) 四死球</td><td>p13:7CD1</td><td>p00:47E7</td></tr><tr><td>(84,136) プレイヤー 数</td><td>p13:7CEF</td><td>p13:6329</td></tr><tr><td>(88,52) しゅうりょう / (88,64) します</td><td>p13:7CFA</td><td>p13:6DE0, p13:6E8C</td></tr><tr><td>(88,52) LOAD / (88,64) しゅうりょう</td><td>p13:7D09</td><td>p13:7045</td></tr><tr><td>(88,52) コンティニューの / (88,64) データが / (88,76) ありません</td><td>p13:7D19</td><td>p13:607B</td></tr><tr><td>(88,12) 第 / (136,12) 回 / (146,12) 戦</td><td>p13:7D35</td><td>p14:9737</td></tr><tr><td>(88,52) LOADちゅうです</td><td>p13:7D41</td><td>p13:701A</td></tr><tr><td>(88,52) チームデータが / (88,64) ありません</td><td>p13:7D4E</td><td>p03:BC7C</td></tr><tr><td>(24,172) ピッチャーをひとりだけ / (24,184) いれてください</td><td>p13:7D62</td><td>p03:A4BE</td></tr><tr><td>(88,52) どこに / (88,64) セーブしますか</td><td>p13:7D7D</td><td>p14:8463</td></tr><tr><td>(80,80) (C)KONAMI  1988 / (40,112) 1PLAYER</td><td>p13:7D8F</td><td>p01:6543, after 7D8F</td></tr><tr><td>(40,128) 2PLAYERS</td><td>p13:7DA9</td><td>after 7D8F</td></tr><tr><td>(40,144) PENNANT</td><td>p13:7DB4</td><td>after 7D8F</td></tr><tr><td>(40,160) TEAM EDIT</td><td>p13:7DBE</td><td>after 7D8F</td></tr><tr><td>(40,176) WATCH</td><td>p13:7DCA</td><td>after 7D8F</td></tr><tr><td>(40,192) MEDIA SELECT</td><td>p13:7DD2</td><td>p01:655B, after 7D8F</td></tr><tr><td>(56,120) MEDIA / (48,144) DISK / (48,160) SRAM</td><td>p13:7DE1</td><td>p15:AA5A</td></tr><tr><td>●</td><td>p13:7DF7</td><td>p01:65B8, p03:BCFC, p15:AAC9</td></tr><tr><td>(92,40) FOUR BALL</td><td>p13:7DF9</td><td>p01:61A8</td></tr><tr><td>(92,40) DEAD BALL</td><td>p13:7E05</td><td>p02:8AAF</td></tr><tr><td>(16,120) S / (16,128) B / (16,136) O / (216,120) 回 / (204,176) HR / (204,184) 打率 / (8,168) P / (32,176) . / (40,184) 球</td><td>p13:7E1E</td><td>p01:63F6</td></tr><tr><td>(132,112) km/h</td><td>p13:7E44</td><td>p01:64F4</td></tr><tr><td>(224,120) ウラ</td><td>p13:7E4E</td><td>p01:644B</td></tr><tr><td>(112,136) FOUL</td><td>p13:7E53</td><td>p01:6508</td></tr><tr><td>(112,240) FOUL</td><td>p13:7E5A</td><td>p14:93FB</td></tr><tr><td>(112,240)  OUT</td><td>p13:7E69</td><td>p01:7011, p02:8FDB, p03:B129</td></tr><tr><td>(112,240) SAFE</td><td>p13:7E71</td><td>p03:B101</td></tr><tr><td>(68,8) STARTING LINEーUP / (80,32) 打 率 HR / (200,32) 打 率 HR</td><td>p13:7E86</td><td>p03:A320</td></tr><tr><td>(224,184) 150 / (228,176)  0</td><td>p13:7EAB</td><td>p01:6A1E</td></tr><tr><td>150  0</td><td>p13:7EB6</td><td>p03:A25C</td></tr><tr><td>(108,112)  TIME</td><td>p13:7EBD</td><td>p01:649F</td></tr><tr><td>(92,0) TEAM EDIT / (36,12) TEAM NAME / (48,32) NAME  LR   打 率  HR  RUN / (8,40) BA / (8,164) PI / (48,156) NAME  LR / (116,156) SPD / (144,156) 防御率 / (172,156) STM / (208,156) C S F / (128,139) 1700 / (168,139) 200 / (204,139) 600 / (116,199) 540 / (144,199) 990 / (172,199) 200 / (200,199) 252525</td><td>p13:7EC6</td><td>p03:BA8B</td></tr><tr><td>(88,84) せんぱつ ピッチャー / (78,116) 防御率 / (198,116) 防御率</td><td>p13:7F55</td><td>p02:9EC9</td></tr><tr><td>DISK</td><td>p14:8498</td><td>p14:8476</td></tr><tr><td>SRAM</td><td>p14:849D</td><td>p14:8487</td></tr><tr><td>RAM</td><td>p14:84A2</td><td>p14:8490</td></tr><tr><td>(80,140) DISK ERROR</td><td>p14:8547</td><td>p14:8520</td></tr><tr><td>(72,156) DISK IO ERROR</td><td>p14:8554</td><td>table 8539</td></tr><tr><td>(72,156) FILE NOT FOUND</td><td>p14:8564</td><td>table 8539</td></tr><tr><td>(88,156) DISK FULL</td><td>p14:8575</td><td>table 8539</td></tr><tr><td>(64,156) DISK NOT READY</td><td>p14:8581</td><td>table 8539</td></tr><tr><td>(72,156) WRITE PROTECT</td><td>p14:8592</td><td>table 8539</td></tr><tr><td>(72,156) TOO MANY FILES</td><td>p14:85A2</td><td>table 8539</td></tr><tr><td>(72,156) DATA TYPE ERROR</td><td>p14:85B3</td><td>table 8539</td></tr><tr><td>(120,52) VS</td><td>p14:97F5</td><td>p14:9773, p14:97AB, p14:97D9</td></tr><tr><td>(36,32) PLAYER1</td><td>p14:97FA</td><td>p14:9795</td></tr><tr><td>(168,32) CPU</td><td>p14:980E</td><td>p14:97A5</td></tr><tr><td>(36,32) VISITORS / (156,32) HOME</td><td>p14:9814</td><td>p14:97D3</td></tr><tr><td>(56,32) CPU1</td><td>p14:9826</td><td>p14:9779</td></tr><tr><td>(168,32) CPU2</td><td>p14:982D</td><td>p14:977F</td></tr><tr><td>(76,184) ひかえピッチャーがいません</td><td>p14:9DAE</td><td>p14:9D88</td></tr><tr><td>(10,200) 1P</td><td>p15:A6CC</td><td>table A6BE</td></tr><tr><td>(66,200) 2P</td><td>p15:A6D1</td><td>table A6BE</td></tr><tr><td>(66,200) CPU</td><td>p15:A6D6</td><td>table A6BE</td></tr><tr><td>(114,200) END</td><td>p15:A6DC</td><td>table A6BE, table A6C6</td></tr><tr><td>(10,200) CPU1</td><td>p15:A6E2</td><td>table A6C6</td></tr><tr><td>(66,200) CPU2</td><td>p15:A6E9</td><td>table A6C6</td></tr><tr><td>(60,0) TEAM NAME SELECT / (104,84) TEAMS</td><td>p15:A710</td><td>p13:6545, p15:A492</td></tr><tr><td>(56,32) PLAYER1 / (56,56) PLAYER2 / (10,200) 1P / (66,200) 2P / (114,200) END</td><td>p15:A72B</td><td>p15:A4E6, p15:A68B</td></tr><tr><td>(114,200) END</td><td>p15:A76A</td><td>p15:A5CE</td></tr><tr><td>(96,8) 試 合 結 果</td><td>p15:B071</td><td>p15:AE5B</td></tr><tr><td>(68,96) 試合数</td><td>p15:B07B</td><td>p15:AE61</td></tr><tr><td>(104,80) 順 位 表</td><td>p15:B081</td><td>p15:AE67</td></tr><tr><td>(24,96) チーム</td><td>p15:B089</td><td>p15:AE6D</td></tr><tr><td>(108,96) 勝数</td><td>p15:B08F</td><td>p15:AE73</td></tr><tr><td>(140,96) 敗数</td><td>p15:B094</td><td>p15:AE79</td></tr><tr><td>(176,96) 勝率</td><td>p15:B099</td><td>p15:AE7F</td></tr><tr><td>(208,96) ゲーム差</td><td>p15:B09E</td><td>p15:AE85</td></tr><tr><td>(216,108) ーーー</td><td>p15:B0A6</td><td>p15:AE55</td></tr></table>
+<footer><p><em>The Pro Yakyuu Gekitotsu Pennant Race</em> was published by Konami for the MSX2 in 1988; its catalogue number is RC-757 and it is 128 KB with the SCC. All rights remain with their holders. This is preservation, study and documentation work, and the cartridge image is not distributed.</p></footer></div>

@@ -808,7 +808,7 @@ C 0xB805 11-13: el aguante; 14-15: dos cifras; 16 y 17: una curva cada una
 C 0xB817 las de 18 en adelante: la casilla de 0xE226 + fila - 13
 C 0xB823 la cifra elegida - 1...
 C 0xB827 ...guardando la de antes en C
-C 0xB82B la suma BCD de las tres
+C 0xB82B la suma BCD de los 4 lanzadores (el primero y tres sumas)
 C 0xB837 a 0xE22A
 C 0xB83B 0x25 - la suma; si pasa, se deshace
 C 0xB848 ...lo que queda en 0xE22B
@@ -860,16 +860,16 @@ C 0xB962 ...a 0xE216
 C 0xB96A 0x200 - la suma; si pasa, se deshace
 C 0xB97C lo que queda a 0xE218
 C 0xB981 lo que queda, 3 cifras en (0xC7, 0xAC)
-C 0xB98C una curva de un lanzador (0xE220 + n): la suma de las 3 no puede pasar de 0x25
+C 0xB98C una curva de un lanzador (0xE220 + n): la suma de los 4 lanzadores no puede pasar de 0x25
 C 0xB98F la casilla 0xE220 + fila - 13
 C 0xB99B la cifra elegida - 1, con la de antes en C
-C 0xB9A0 la suma BCD de las tres
+C 0xB9A0 la suma BCD de los 4 (el primero y tres sumas)
 C 0xB9AC a 0xE224
 C 0xB9B0 0x25 - la suma; si pasa, se deshace
 C 0xB9C0 lo que queda, 1 cifra en (0xC7, 0xD8)
 C 0xB9CB la otra curva (0xE21A + n): igual
 C 0xB9CE la casilla 0xE21A + fila - 13
-C 0xB9DF la suma de las tres
+C 0xB9DF la suma de los 4
 C 0xB9EB a 0xE21E
 C 0xB9EF 0x25 - la suma; si pasa, se deshace
 C 0xB9FF lo que queda, 1 cifra en (0xC7, 0xC8)
