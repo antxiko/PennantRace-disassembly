@@ -1,0 +1,279 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x6000 0x602B paleta_6000  paleta (p00:4C59): fichas de 3 bytes [color][rojo-azul][verde] hasta 0xFF; lo leen p00:543C, p00:5514, p00:5567 (43 bytes)
+F 0x6000 3
+D 0x602B 0x603F paletas_602B  1 punteros a los colores de cada paleta (p00:556D desde p00:4FB0), para la lista 0x60AE; se solapan 2 bloques: (paletas_602B 602B-603F); lo leen p00:51C7, p00:5483 (20 bytes)
+F 0x602B w1
+D 0x603F 0x6041 colores_603F  2 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0x60AE; lo leen p00:51C7, p00:5483 (2 bytes)
+F 0x603F 2
+D 0x6041 0x6043 colores_6041  2 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 1 de la lista 0x6053; lo leen p00:5483 (2 bytes)
+F 0x6041 2
+D 0x6043 0x6045 colores_6043  2 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 2 de la lista 0x6053; lo leen p00:5483 (2 bytes)
+F 0x6043 2
+D 0x6045 0x6047 colores_6045  2 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 3 de la lista 0x6053; lo leen p00:5483 (2 bytes)
+F 0x6045 2
+D 0x6047 0x6049 colores_6047  2 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 4 de la lista 0x6053; lo leen p00:5483 (2 bytes)
+F 0x6047 2
+D 0x6049 0x604B colores_6049  2 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 5 de la lista 0x6053; lo leen p00:5483 (2 bytes)
+F 0x6049 2
+D 0x604B 0x604D colores_604B  2 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 6 de la lista 0x6053; lo leen p00:5483 (2 bytes)
+F 0x604B 2
+D 0x604D 0x604F colores_604D  2 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 7 de la lista 0x6053; lo leen p00:5483 (2 bytes)
+F 0x604D 2
+D 0x604F 0x6051 colores_604F  2 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 8 de la lista 0x6053; lo leen p00:5483 (2 bytes)
+F 0x604F 2
+D 0x6051 0x6053 colores_6051  2 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 9 de la lista 0x6053; lo leen p00:5483 (2 bytes)
+F 0x6051 2
+D 0x6053 0x60AE lista_6053  15 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x602B); lo leen p00:5483 (91 bytes)
+F 0x6053 6
+D 0x60AE 0x60B5 lista_60AE  1 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x602B); lo leen p00:51C7 (7 bytes)
+F 0x60AE 6
+D 0x60B5 0x60BD dibujo_60B5  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 0 de la lista 0x60AE (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:51C7, p00:5483 (8 bytes)
+F 0x60B5 8
+D 0x60BD 0x60DD dibujo_60BD  4 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 1 de la lista 0x6053 (p00:4FA3, tipo 0 en p00:4FDD); se solapan 2 bloques: (dibujo_60CD 60CD-60DD); lo leen p00:5483 (32 bytes)
+F 0x60BD 8
+D 0x60DD 0x60E5 dibujo_60DD  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 3 de la lista 0x6053 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:5483 (8 bytes)
+F 0x60DD 8
+D 0x60E5 0x6125 dibujo_60E5  8 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 4 de la lista 0x6053 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:5483 (64 bytes)
+F 0x60E5 8
+D 0x6125 0x615D dibujo_6125  7 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 5 de la lista 0x6053 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:5483 (56 bytes)
+F 0x6125 8
+D 0x615D 0x6235 dibujo_615D  27 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 6 de la lista 0x6053 (p00:4FA3, tipo 0 en p00:4FDD); se solapan 2 bloques: (dibujo_6195 6195-6235); lo leen p00:5483 (216 bytes)
+F 0x615D 8
+D 0x6235 0x625D dibujo_6235  5 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 8 de la lista 0x6053 (p00:4FA3, tipo 0 en p00:4FDD); se solapan 2 bloques: (dibujo_624D 624D-625D); lo leen p00:5483 (40 bytes)
+F 0x6235 8
+D 0x625D 0x62C5 dibujo_625D  13 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 10 de la lista 0x6053 (p00:4FA3, tipo 0 en p00:4FDD); se solapan 2 bloques: (dibujo_626D 626D-62C5); lo leen p00:5483 (104 bytes)
+F 0x625D 8
+D 0x62C5 0x62DD dibujo_62C5  3 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 12 de la lista 0x6053 (p00:4FA3, tipo 0 en p00:4FDD); se solapan 2 bloques: (dibujo_62CD 62CD-62DD); lo leen p00:5483 (24 bytes)
+F 0x62C5 8
+D 0x62DD 0x62E5 dibujo_62DD  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 14 de la lista 0x6053 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:5483 (8 bytes)
+F 0x62DD 8
+D 0x62E5 0x62FB paletas_62E5  11 punteros a los colores de cada paleta (p00:556D desde p00:4FB0), para la lista 0x6323; lo leen p00:548C (22 bytes)
+F 0x62E5 w8
+D 0x62FB 0x62FF colores_62FB  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0x6323; lo leen p00:548C (4 bytes)
+F 0x62FB 4
+D 0x62FF 0x6303 colores_62FF  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 1 de la lista 0x6323; lo leen p00:548C (4 bytes)
+F 0x62FF 4
+D 0x6303 0x6307 colores_6303  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 2 de la lista 0x6323; lo leen p00:548C (4 bytes)
+F 0x6303 4
+D 0x6307 0x630B colores_6307  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 3 de la lista 0x6323; lo leen p00:548C (4 bytes)
+F 0x6307 4
+D 0x630B 0x6312 colores_630B  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 4 de la lista 0x6323; se solapan 2 bloques: (colores_630E 630E-6312); lo leen p00:548C (7 bytes)
+F 0x630B 4
+D 0x6312 0x631F colores_6312  8 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 6 de la lista 0x6323; se solapan 2 bloques: (colores_6317 6317-631F); lo leen p00:548C (13 bytes)
+F 0x6312 8
+D 0x631F 0x6323 colores_631F  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 10 de la lista 0x6323; lo leen p00:548C (4 bytes)
+F 0x631F 4
+D 0x6323 0x6384 lista_6323  16 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x62E5); lo leen p00:548C (97 bytes)
+F 0x6323 6
+D 0x6384 0x6434 dibujo_6384  11 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 0 de la lista 0x6323 (p00:4FA3, tipo 2 en p00:4FDD); se solapan 2 bloques: (dibujo_63D4 63D4-6434); lo leen p00:548C (176 bytes)
+F 0x6384 16
+D 0x6434 0x6464 dibujo_6434  3 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 2 de la lista 0x6323 (p00:4FA3, tipo 2 en p00:4FDD); se solapan 2 bloques: (dibujo_6454 6454-6464); lo leen p00:548C (48 bytes)
+F 0x6434 16
+D 0x6464 0x6484 dibujo_6464  2 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 4 de la lista 0x6323 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:548C (32 bytes)
+F 0x6464 16
+D 0x6484 0x6494 dibujo_6484  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 6 de la lista 0x6323 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:548C (16 bytes)
+F 0x6484 16
+D 0x6494 0x64A4 dibujo_6494  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 8 de la lista 0x6323 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:548C (16 bytes)
+F 0x6494 16
+D 0x64A4 0x65B4 dibujo_64A4  17 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 9 de la lista 0x6323 (p00:4FA3, tipo 2 en p00:4FDD); se solapan 2 bloques: (dibujo_6524 6524-65B4); lo leen p00:548C (272 bytes)
+F 0x64A4 16
+D 0x65B4 0x66F4 dibujo_65B4  20 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 11 de la lista 0x6323 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:548C (320 bytes)
+F 0x65B4 16
+D 0x66F4 0x6704 dibujo_66F4  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 12 de la lista 0x6323 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:548C (16 bytes)
+F 0x66F4 16
+D 0x6704 0x6914 dibujo_6704  22 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 13 de la lista 0x6323 (p00:4FA3, tipo 4 en p00:4FDD); se solapan 2 bloques: (dibujo_67C4 67C4-6914); lo leen p00:548C (528 bytes)
+F 0x6704 24
+D 0x6914 0x69A4 dibujo_6914  6 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 15 de la lista 0x6323 (p00:4FA3, tipo 4 en p00:4FDD); lo leen p00:548C (144 bytes)
+F 0x6914 24
+D 0x69A4 0x69B2 paletas_69A4  7 punteros a los colores de cada paleta (p00:556D desde p00:4FB0), para la lista 0x69CA; lo leen p00:5495 (14 bytes)
+F 0x69A4 w7
+D 0x69B2 0x69B6 colores_69B2  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0x69CA; se solapan 2 bloques: (colores_69B4 69B4-69B6); lo leen p00:5495 (4 bytes)
+F 0x69B2 4
+D 0x69B6 0x69BA colores_69B6  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 2 de la lista 0x69CA; se solapan 2 bloques: (colores_69B8 69B8-69BA); lo leen p00:5495 (4 bytes)
+F 0x69B6 4
+D 0x69BA 0x69BE colores_69BA  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 4 de la lista 0x69CA; lo leen p00:5495 (4 bytes)
+F 0x69BA 4
+D 0x69BE 0x69C2 colores_69BE  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 5 de la lista 0x69CA; lo leen p00:5495 (4 bytes)
+F 0x69BE 4
+D 0x69C2 0x69CA colores_69C2  8 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 6 de la lista 0x69CA; lo leen p00:5495 (8 bytes)
+F 0x69C2 8
+D 0x69CA 0x6A37 lista_69CA  18 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x69A4); lo leen p00:5495 (109 bytes)
+F 0x69CA 6
+D 0x6A37 0x6A5F dibujo_6A37  5 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 0 de la lista 0x69CA (p00:4FA3, tipo 0 en p00:4FDD); se solapan 2 bloques: (dibujo_6A4F 6A4F-6A5F); lo leen p00:5495 (40 bytes)
+F 0x6A37 8
+D 0x6A5F 0x6A7F dibujo_6A5F  4 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 2 de la lista 0x69CA (p00:4FA3, tipo 0 en p00:4FDD); se solapan 2 bloques: (dibujo_6A6F 6A6F-6A7F); lo leen p00:5495 (32 bytes)
+F 0x6A5F 8
+D 0x6A7F 0x6A97 dibujo_6A7F  3 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 4 de la lista 0x69CA (p00:4FA3, tipo 0 en p00:4FDD); se solapan 2 bloques: (dibujo_6A87 6A87-6A97); lo leen p00:5495 (24 bytes)
+F 0x6A7F 8
+D 0x6A97 0x6A9F dibujo_6A97  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 6 de la lista 0x69CA (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:5495 (8 bytes)
+F 0x6A97 8
+D 0x6A9F 0x6ABF dibujo_6A9F  2 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 8 de la lista 0x69CA (p00:4FA3, tipo 2 en p00:4FDD); se solapan 2 bloques: (dibujo_6AAF 6AAF-6ABF); lo leen p00:5495 (32 bytes)
+F 0x6A9F 16
+D 0x6ABF 0x6ACF dibujo_6ABF  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 10 de la lista 0x69CA (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:5495 (16 bytes)
+F 0x6ABF 16
+D 0x6ACF 0x6AFF dibujo_6ACF  3 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 12 de la lista 0x69CA (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:5495 (48 bytes)
+F 0x6ACF 16
+D 0x6AFF 0x6BAF dibujo_6AFF  11 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 14 de la lista 0x69CA (p00:4FA3, tipo 2 en p00:4FDD); se solapan 2 bloques: (dibujo_6B6F 6B6F-6BAF); lo leen p00:5495 (176 bytes)
+F 0x6AFF 16
+D 0x6BAF 0x6C87 dibujo_6BAF  9 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 16 de la lista 0x69CA (p00:4FA3, tipo 4 en p00:4FDD); lo leen p00:5495 (216 bytes)
+F 0x6BAF 24
+D 0x6C87 0x6CA5 paletas_6C87  15 punteros a los colores de cada paleta (p00:556D desde p00:4FB0), para la lista 0x6CC3; lo leen p00:54BC (30 bytes)
+F 0x6C87 w8
+D 0x6CA5 0x6CAD colores_6CA5  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0x6CC3; se solapan 4 bloques: (colores_6CA7 6CA7-6CAB) (colores_6CA9 6CA9-6CAD) (colores_6CAB 6CAB-6CAD); lo leen p00:54BC (8 bytes)
+F 0x6CA5 4
+D 0x6CAD 0x6CB1 colores_6CAD  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 4 de la lista 0x6CC3; se solapan 2 bloques: (colores_6CAF 6CAF-6CB1); lo leen p00:54BC (4 bytes)
+F 0x6CAD 4
+D 0x6CB1 0x6CB3 colores_6CB1  2 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 6 de la lista 0x6CC3; lo leen p00:54BC (2 bytes)
+F 0x6CB1 2
+D 0x6CB3 0x6CBB colores_6CB3  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 7 de la lista 0x6CC3; se solapan 4 bloques: (colores_6CB5 6CB5-6CB9) (colores_6CB7 6CB7-6CBB) (colores_6CB9 6CB9-6CBB); lo leen p00:54BC (8 bytes)
+F 0x6CB3 4
+D 0x6CBB 0x6CBF colores_6CBB  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 11 de la lista 0x6CC3; lo leen p00:54BC (4 bytes)
+F 0x6CBB 4
+D 0x6CBF 0x6CC1 colores_6CBF  2 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 13 de la lista 0x6CC3; lo leen p00:54BC (2 bytes)
+F 0x6CBF 2
+D 0x6CC1 0x6CC3 colores_6CC1  2 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 14 de la lista 0x6CC3; lo leen p00:54BC (2 bytes)
+F 0x6CC1 2
+D 0x6CC3 0x6D84 lista_6CC3  32 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x6C87); lo leen p00:54BC (193 bytes)
+F 0x6CC3 6
+D 0x6D84 0x6D8C dibujo_6D84  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 0 de la lista 0x6CC3 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54BC (8 bytes)
+F 0x6D84 8
+D 0x6D8C 0x6DC4 dibujo_6D8C  7 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 1 de la lista 0x6CC3 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54BC (56 bytes)
+F 0x6D8C 8
+D 0x6DC4 0x6DF4 dibujo_6DC4  6 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 2 de la lista 0x6CC3 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54BC (48 bytes)
+F 0x6DC4 8
+D 0x6DF4 0x6E1C dibujo_6DF4  5 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 3 de la lista 0x6CC3 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54BC (40 bytes)
+F 0x6DF4 8
+D 0x6E1C 0x6E2C dibujo_6E1C  2 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 4 de la lista 0x6CC3 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54BC (16 bytes)
+F 0x6E1C 8
+D 0x6E2C 0x6E3C dibujo_6E2C  2 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 5 de la lista 0x6CC3 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54BC (16 bytes)
+F 0x6E2C 8
+D 0x6E3C 0x6E9C dibujo_6E3C  12 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 6 de la lista 0x6CC3 (p00:4FA3, tipo 0 en p00:4FDD); se solapan 2 bloques: (dibujo_6E94 6E94-6E9C); lo leen p00:54BC (96 bytes)
+F 0x6E3C 8
+D 0x6E9C 0x6ECC dibujo_6E9C  6 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 8 de la lista 0x6CC3 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54BC (48 bytes)
+F 0x6E9C 8
+D 0x6ECC 0x6F34 dibujo_6ECC  13 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 10 de la lista 0x6CC3 (p00:4FA3, tipo 0 en p00:4FDD); se solapan 2 bloques: (dibujo_6EE4 6EE4-6F34); lo leen p00:54BC (104 bytes)
+F 0x6ECC 8
+D 0x6F34 0x6F3C dibujo_6F34  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 12 de la lista 0x6CC3 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54BC (8 bytes)
+F 0x6F34 8
+D 0x6F3C 0x6F54 dibujo_6F3C  3 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 14 de la lista 0x6CC3 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54BC (24 bytes)
+F 0x6F3C 8
+D 0x6F54 0x6F5C dibujo_6F54  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 15 de la lista 0x6CC3 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54BC (8 bytes)
+F 0x6F54 8
+D 0x6F5C 0x6F64 dibujo_6F5C  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 16 de la lista 0x6CC3 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54BC (8 bytes)
+F 0x6F5C 8
+D 0x6F64 0x7024 dibujo_6F64  12 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 17 de la lista 0x6CC3 (p00:4FA3, tipo 2 en p00:4FDD); se solapan 2 bloques: (dibujo_6FE4 6FE4-7024); lo leen p00:54BC (192 bytes)
+F 0x6F64 16
+D 0x7024 0x7034 dibujo_7024  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 19 de la lista 0x6CC3 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54BC (16 bytes)
+F 0x7024 16
+D 0x7034 0x7044 dibujo_7034  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 20 de la lista 0x6CC3 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54BC (16 bytes)
+F 0x7034 16
+D 0x7044 0x7194 dibujo_7044  7 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 22 de la lista 0x6CC3 (p00:4FA3, tipo 2 en p00:4FDD); se solapan 4 bloques: (dibujo_7094 7094-70E4) (dibujo_70B4 70B4-7194) (dibujo_7124 7124-7194); lo leen p00:54BC (336 bytes)
+F 0x7044 16
+D 0x7194 0x71B4 dibujo_7194  2 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 26 de la lista 0x6CC3 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54BC (32 bytes)
+F 0x7194 16
+D 0x71B4 0x7384 dibujo_71B4  29 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 28 de la lista 0x6CC3 (p00:4FA3, tipo 2 en p00:4FDD); se solapan 2 bloques: (dibujo_7214 7214-7384); lo leen p00:54BC (464 bytes)
+F 0x71B4 16
+D 0x7384 0x73C4 dibujo_7384  4 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 30 de la lista 0x6CC3 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54BC (64 bytes)
+F 0x7384 16
+D 0x73C4 0x73C8 paletas_73C4  2 punteros a los colores de cada paleta (p00:556D desde p00:4FB0), para la lista 0x73D6; lo leen p00:54C5 (4 bytes)
+F 0x73C4 w2
+D 0x73CA 0x73D6 colores_73CA  8 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0x73D6; se solapan 2 bloques: (colores_73CE 73CE-73D6); lo leen p00:54C5 (12 bytes)
+F 0x73CA 8
+D 0x73D6 0x73EF lista_73D6  4 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x73C4); lo leen p00:54C5 (25 bytes)
+F 0x73D6 6
+D 0x73EF 0x74C7 dibujo_73EF  9 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 0 de la lista 0x73D6 (p00:4FA3, tipo 4 en p00:4FDD); se solapan 2 bloques: (dibujo_741F 741F-74C7); lo leen p00:54C5 (216 bytes)
+F 0x73EF 24
+D 0x74C7 0x75B7 dibujo_74C7  10 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 2 de la lista 0x73D6 (p00:4FA3, tipo 4 en p00:4FDD); lo leen p00:54C5 (240 bytes)
+F 0x74C7 24
+D 0x75B7 0x75CF paletas_75B7  12 punteros a los colores de cada paleta (p00:556D desde p00:4FB0), para la lista 0x75EC; lo leen p00:54CE (24 bytes)
+F 0x75B7 w8
+D 0x75D1 0x75E0 colores_75D1  8 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0x75EC; se solapan 4 bloques: (colores_75D8 75D8-75DC) (colores_75DA 75DA-75DE) (colores_75DC 75DC-75E0); lo leen p00:54CE (15 bytes)
+F 0x75D1 8
+D 0x75E0 0x75EC colores_75E0  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 8 de la lista 0x75EC; se solapan 4 bloques: (colores_75E2 75E2-75E6) (colores_75E4 75E4-75EC) (colores_75E6 75E6-75EA); lo leen p00:54CE (12 bytes)
+F 0x75E0 4
+D 0x75EC 0x7659 lista_75EC  18 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x75B7); lo leen p00:54CE (109 bytes)
+F 0x75EC 6
+D 0x7659 0x7669 dibujo_7659  2 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 0 de la lista 0x75EC (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54CE (16 bytes)
+F 0x7659 8
+D 0x7669 0x7671 dibujo_7669  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 1 de la lista 0x75EC (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54CE (8 bytes)
+F 0x7669 8
+D 0x7671 0x7681 dibujo_7671  2 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 2 de la lista 0x75EC (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54CE (16 bytes)
+F 0x7671 8
+D 0x7681 0x7701 dibujo_7681  8 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 3 de la lista 0x75EC (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54CE (128 bytes)
+F 0x7681 16
+D 0x7701 0x7741 dibujo_7701  4 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 4 de la lista 0x75EC (p00:4FA3, tipo 2 en p00:4FDD); se solapan 2 bloques: (dibujo_7711 7711-7741); lo leen p00:54CE (64 bytes)
+F 0x7701 16
+D 0x7741 0x7761 dibujo_7741  2 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 6 de la lista 0x75EC (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54CE (32 bytes)
+F 0x7741 16
+D 0x7761 0x7771 dibujo_7761  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 8 de la lista 0x75EC (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54CE (16 bytes)
+F 0x7761 16
+D 0x7771 0x7781 dibujo_7771  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 10 de la lista 0x75EC (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54CE (16 bytes)
+F 0x7771 16
+D 0x7781 0x7791 dibujo_7781  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 12 de la lista 0x75EC (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54CE (16 bytes)
+F 0x7781 16
+D 0x7791 0x77D9 dibujo_7791  3 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 14 de la lista 0x75EC (p00:4FA3, tipo 4 en p00:4FDD); se solapan 2 bloques: (dibujo_77A9 77A9-77D9); lo leen p00:54CE (72 bytes)
+F 0x7791 24
+D 0x77D9 0x7881 dibujo_77D9  7 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 16 de la lista 0x75EC (p00:4FA3, tipo 4 en p00:4FDD); lo leen p00:54CE (168 bytes)
+F 0x77D9 24
+D 0x7881 0x7899 paletas_7881  12 punteros a los colores de cada paleta (p00:556D desde p00:4FB0), para la lista 0x78B3; lo leen p00:54D7 (24 bytes)
+F 0x7881 w8
+D 0x7899 0x78A1 colores_7899  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0x78B3; se solapan 4 bloques: (colores_789B 789B-789F) (colores_789D 789D-78A1) (colores_789F 789F-78A1); lo leen p00:54D7 (8 bytes)
+F 0x7899 4
+D 0x78A1 0x78A5 colores_78A1  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 4 de la lista 0x78B3; se solapan 2 bloques: (colores_78A3 78A3-78A5); lo leen p00:54D7 (4 bytes)
+F 0x78A1 4
+D 0x78A5 0x78A7 colores_78A5  2 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 6 de la lista 0x78B3; lo leen p00:54D7 (2 bytes)
+F 0x78A5 2
+D 0x78A7 0x78AF colores_78A7  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 7 de la lista 0x78B3; se solapan 3 bloques: (colores_78A9 78A9-78AD) (colores_78AB 78AB-78AF); lo leen p00:54D7 (8 bytes)
+F 0x78A7 4
+D 0x78AF 0x78B3 colores_78AF  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 11 de la lista 0x78B3; lo leen p00:54D7 (4 bytes)
+F 0x78AF 4
+D 0x78B3 0x7932 lista_78B3  21 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x7881); lo leen p00:54D7 (127 bytes)
+F 0x78B3 6
+D 0x7932 0x795A dibujo_7932  5 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 0 de la lista 0x78B3 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54D7 (40 bytes)
+F 0x7932 8
+D 0x795A 0x797A dibujo_795A  4 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 1 de la lista 0x78B3 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54D7 (32 bytes)
+F 0x795A 8
+D 0x797A 0x7992 dibujo_797A  3 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 2 de la lista 0x78B3 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54D7 (24 bytes)
+F 0x797A 8
+D 0x7992 0x79AA dibujo_7992  3 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 3 de la lista 0x78B3 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54D7 (24 bytes)
+F 0x7992 8
+D 0x79AA 0x79B2 dibujo_79AA  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 4 de la lista 0x78B3 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54D7 (8 bytes)
+F 0x79AA 8
+D 0x79B2 0x79BA dibujo_79B2  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 5 de la lista 0x78B3 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54D7 (8 bytes)
+F 0x79B2 8
+D 0x79BA 0x79C2 dibujo_79BA  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 6 de la lista 0x78B3 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54D7 (8 bytes)
+F 0x79BA 8
+D 0x79C2 0x79DA dibujo_79C2  3 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 7 de la lista 0x78B3 (p00:4FA3, tipo 0 en p00:4FDD); se solapan 2 bloques: (dibujo_79D2 79D2-79DA); lo leen p00:54D7 (24 bytes)
+F 0x79C2 8
+D 0x79DA 0x7A32 dibujo_79DA  11 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 9 de la lista 0x78B3 (p00:4FA3, tipo 0 en p00:4FDD); se solapan 2 bloques: (dibujo_7A2A 7A2A-7A32); lo leen p00:54D7 (88 bytes)
+F 0x79DA 8
+D 0x7A32 0x7A42 dibujo_7A32  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 11 de la lista 0x78B3 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54D7 (16 bytes)
+F 0x7A32 16
+D 0x7A42 0x7A52 dibujo_7A42  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 12 de la lista 0x78B3 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54D7 (16 bytes)
+F 0x7A42 16
+D 0x7A52 0x7A82 dibujo_7A52  3 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 13 de la lista 0x78B3 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54D7 (48 bytes)
+F 0x7A52 16
+D 0x7A82 0x7AB2 dibujo_7A82  3 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 14 de la lista 0x78B3 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54D7 (48 bytes)
+F 0x7A82 16
+D 0x7AB2 0x7CA2 dibujo_7AB2  31 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 15 de la lista 0x78B3 (p00:4FA3, tipo 2 en p00:4FDD); se solapan 2 bloques: (dibujo_7C72 7C72-7CA2); lo leen p00:54D7 (496 bytes)
+F 0x7AB2 16
+D 0x7CA2 0x7D62 dibujo_7CA2  12 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 17 de la lista 0x78B3 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54D7 (192 bytes)
+F 0x7CA2 16
+D 0x7D62 0x7DC2 dibujo_7D62  6 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 18 de la lista 0x78B3 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54D7 (96 bytes)
+F 0x7D62 16
+D 0x7DC2 0x7ED2 dibujo_7DC2  17 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 19 de la lista 0x78B3 (p00:4FA3, tipo 2 en p00:4FDD); se solapan 2 bloques: (dibujo_7EA2 7EA2-7ED2); lo leen p00:54D7 (272 bytes)
+F 0x7DC2 16
+D 0x7ED2 0x7EE0 paletas_7ED2  7 punteros a los colores de cada paleta (p00:556D desde p00:4FB0), para la lista 0x7EF1; lo leen p00:54E0 (14 bytes)
+F 0x7ED2 w7
+D 0x7EE0 0x7EF1 colores_7EE0  8 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0x7EF1; se solapan 5 bloques: (colores_7EE3 7EE3-7EEB) (colores_7EE5 7EE5-7EE9) (colores_7EE9 7EE9-7EF1) (colores_7EED 7EED-7EF1); lo leen p00:54E0 (17 bytes)
+F 0x7EE0 8
+D 0x7EF1 0x7F10 lista_7EF1  5 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x7ED2); lo leen p00:54E0 (31 bytes)
+F 0x7EF1 6
+D 0x7F10 0x7F20 dibujo_7F10  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 0 de la lista 0x7EF1 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54E0 (16 bytes)
+F 0x7F10 16
+D 0x7F20 0x7F30 dibujo_7F20  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 1 de la lista 0x7EF1 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54E0 (16 bytes)
+F 0x7F20 16
+D 0x7F30 0x8000 dibujo_7F30  16 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 2 de la lista 0x7EF1 (p00:4FA3, tipo 4 en p00:4FDD) (sigue en el banco 8, en 0x8000); lo leen p00:54E0 (208 bytes)
+F 0x7F30 24
+# --- fin de los bloques de bloques.py ---

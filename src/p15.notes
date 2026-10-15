@@ -1,0 +1,31 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xA441 0xA44D tabla_A441  6 destinos del despachador p00:4220 (call en p15:A43E, el indice en A): A470, A4F2, A55B, A57F, A5A3, 4C21; lo leen p15:A43E (12 bytes)
+F 0xA441 w6
+D 0xA52F 0xA532 copia_A52F  3 bytes que p00:4AB7 copia tal cual a la VRAM 0xF600; lo leen p15:A519 (3 bytes)
+F 0xA52F 16
+D 0xA5A9 0xA5AD tabla_A5A9  2 destinos del despachador p00:4220 (call en p15:A5A6, el indice en A): A5AD, A5CB; lo leen p15:A5A6 (4 bytes)
+F 0xA5A9 w2
+D 0xA6F0 0xA710 copia_A6F0  32 bytes que p00:4AB7 copia tal cual a la VRAM 0xF800; lo leen p15:A48F (32 bytes)
+F 0xA6F0 16
+D 0xA710 0xA72B texto_A710  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p13:6548, p15:A495 (27 bytes)
+D 0xA72B 0xA74F texto_A72B  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:A4E9, p15:A68E (36 bytes)
+D 0xA76A 0xA770 texto_A76A  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:A5D1 (6 bytes)
+D 0xAB46 0xAB4A tabla_AB46  2 destinos del despachador p00:4220 (call en p15:AB43, el indice en A): AB4A, AB66; lo leen p15:AB43 (4 bytes)
+F 0xAB46 w2
+D 0xB071 0xB07B texto_B071  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:AE5E (10 bytes)
+D 0xB07B 0xB081 texto_B07B  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:AE64 (6 bytes)
+D 0xB081 0xB089 texto_B081  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:AE6A (8 bytes)
+D 0xB089 0xB08F texto_B089  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:AE70 (6 bytes)
+D 0xB08F 0xB094 texto_B08F  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:AE76 (5 bytes)
+D 0xB094 0xB099 texto_B094  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:AE7C (5 bytes)
+D 0xB099 0xB09E texto_B099  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:AE82 (5 bytes)
+D 0xB09E 0xB0A6 texto_B09E  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:AE88 (8 bytes)
+D 0xB0A6 0xB0AC texto_B0A6  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:AE58 (6 bytes)
+D 0xBB8D 0xBB97 tabla_BB8D  5 destinos del despachador p00:4220 (call en p15:BB8A, el indice en A): BB97, BBBD, BBE4, BC22, BC64; lo leen p15:BB8A (10 bytes)
+F 0xBB8D w5
+D 0xBE24 0xBE27 texto_BE24  texto (p00:4EBA, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:BDC7 (3 bytes)
+D 0xBE42 0xBE45 texto_BE42  texto (p00:4EBA, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:BC6D (3 bytes)
+D 0xBE45 0xC000 relleno_ff  443 bytes a 0xFF hasta el final del banco: relleno; lo leen nadie (443 bytes)
+F 0xBE45 16
+# --- fin de los bloques de bloques.py ---

@@ -1,0 +1,78 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x8000 0x80B0 dibujo_7F30_cola  16 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 2 de la lista 0x7EF1 (p00:4FA3, tipo 4 en p00:4FDD) (sigue del banco 7); lo leen p00:54E0 (176 bytes)
+F 0x8000 24
+D 0x80B0 0x8128 dibujo_80B0  5 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 3 de la lista 0x7EF1 (p00:4FA3, tipo 4 en p00:4FDD); lo leen p00:54E0 (120 bytes)
+F 0x80B0 24
+D 0x8128 0x83E0 dibujo_8128  29 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 4 de la lista 0x7EF1 (p00:4FA3, tipo 4 en p00:4FDD); lo leen p00:54E0 (696 bytes)
+F 0x8128 24
+D 0x83E0 0x83F8 paletas_83E0  12 punteros a los colores de cada paleta (p00:556D desde p00:4FB0), para la lista 0x8412; lo leen p00:54A4 (24 bytes)
+F 0x83E0 w8
+D 0x83F8 0x8400 colores_83F8  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0x8412; se solapan 4 bloques: (colores_83FA 83FA-83FE) (colores_83FC 83FC-8400) (colores_83FE 83FE-8400); lo leen p00:54A4 (8 bytes)
+F 0x83F8 4
+D 0x8400 0x8404 colores_8400  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 4 de la lista 0x8412; se solapan 2 bloques: (colores_8402 8402-8404); lo leen p00:54A4 (4 bytes)
+F 0x8400 4
+D 0x8404 0x8406 colores_8404  2 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 6 de la lista 0x8412; lo leen p00:54A4 (2 bytes)
+F 0x8404 2
+D 0x8406 0x840E colores_8406  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 7 de la lista 0x8412; se solapan 3 bloques: (colores_8408 8408-840C) (colores_840A 840A-840E); lo leen p00:54A4 (8 bytes)
+F 0x8406 4
+D 0x840E 0x8412 colores_840E  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 11 de la lista 0x8412; lo leen p00:54A4 (4 bytes)
+F 0x840E 4
+D 0x8412 0x8491 lista_8412  21 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x83E0); lo leen p00:54A4 (127 bytes)
+F 0x8412 6
+D 0x8491 0x84B9 dibujo_8491  5 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 0 de la lista 0x8412 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54A4 (40 bytes)
+F 0x8491 8
+D 0x84B9 0x84D9 dibujo_84B9  4 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 1 de la lista 0x8412 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54A4 (32 bytes)
+F 0x84B9 8
+D 0x84D9 0x84F1 dibujo_84D9  3 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 2 de la lista 0x8412 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54A4 (24 bytes)
+F 0x84D9 8
+D 0x84F1 0x8509 dibujo_84F1  3 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 3 de la lista 0x8412 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54A4 (24 bytes)
+F 0x84F1 8
+D 0x8509 0x8511 dibujo_8509  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 4 de la lista 0x8412 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54A4 (8 bytes)
+F 0x8509 8
+D 0x8511 0x8521 dibujo_8511  2 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 5 de la lista 0x8412 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54A4 (16 bytes)
+F 0x8511 8
+D 0x8521 0x8529 dibujo_8521  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 6 de la lista 0x8412 (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:54A4 (8 bytes)
+F 0x8521 8
+D 0x8529 0x8549 dibujo_8529  4 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 7 de la lista 0x8412 (p00:4FA3, tipo 0 en p00:4FDD); se solapan 2 bloques: (dibujo_8541 8541-8549); lo leen p00:54A4 (32 bytes)
+F 0x8529 8
+D 0x8549 0x85B1 dibujo_8549  13 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 9 de la lista 0x8412 (p00:4FA3, tipo 0 en p00:4FDD); se solapan 2 bloques: (dibujo_85A9 85A9-85B1); lo leen p00:54A4 (104 bytes)
+F 0x8549 8
+D 0x85B1 0x8611 dibujo_85B1  6 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 11 de la lista 0x8412 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54A4 (96 bytes)
+F 0x85B1 16
+D 0x8611 0x8641 dibujo_8611  3 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 12 de la lista 0x8412 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54A4 (48 bytes)
+F 0x8611 16
+D 0x8641 0x8841 dibujo_8641  32 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 13 de la lista 0x8412 (p00:4FA3, tipo 2 en p00:4FDD); se solapan 2 bloques: (dibujo_8811 8811-8841); lo leen p00:54A4 (512 bytes)
+F 0x8641 16
+D 0x8841 0x8911 dibujo_8841  13 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 15 de la lista 0x8412 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54A4 (208 bytes)
+F 0x8841 16
+D 0x8911 0x89A1 dibujo_8911  9 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 16 de la lista 0x8412 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54A4 (144 bytes)
+F 0x8911 16
+D 0x89A1 0x89E1 dibujo_89A1  4 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 17 de la lista 0x8412 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54A4 (64 bytes)
+F 0x89A1 16
+D 0x89E1 0x89F1 dibujo_89E1  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 18 de la lista 0x8412 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54A4 (16 bytes)
+F 0x89E1 16
+D 0x89F1 0x8B21 dibujo_89F1  19 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 19 de la lista 0x8412 (p00:4FA3, tipo 2 en p00:4FDD); se solapan 2 bloques: (dibujo_8AF1 8AF1-8B21); lo leen p00:54A4 (304 bytes)
+F 0x89F1 16
+D 0x8B21 0x8B2F paletas_8B21  5 punteros a los colores de cada paleta (p00:556D desde p00:4FB0), para la lista 0x8B53; se solapan 2 bloques: (paletas_8B21 8B21-8B2F); lo leen p00:54F8, p00:54AD (14 bytes)
+F 0x8B21 w5
+D 0x8B2F 0x8B40 colores_8B2F  8 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0x8B40; se solapan 5 bloques: (colores_8B32 8B32-8B3A) (colores_8B34 8B34-8B38) (colores_8B38 8B38-8B40) (colores_8B3C 8B3C-8B40); lo leen p00:54AD, p00:54F8 (17 bytes)
+F 0x8B2F 8
+D 0x8B40 0x8B53 lista_8B40  3 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x8B21); lo leen p00:54AD (19 bytes)
+F 0x8B40 6
+D 0x8B53 0x8B60 lista_8B53  2 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x8B21); lo leen p00:54F8 (13 bytes)
+F 0x8B53 6
+D 0x8B60 0x8B70 dibujo_8B60  1 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 0 de la lista 0x8B40 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54AD (16 bytes)
+F 0x8B60 16
+D 0x8B70 0x8B90 dibujo_8B70  2 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 1 de la lista 0x8B40 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:54AD (32 bytes)
+F 0x8B70 16
+D 0x8B90 0x8C20 dibujo_8B90  6 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 2 de la lista 0x8B40 (p00:4FA3, tipo 4 en p00:4FDD); lo leen p00:54AD (144 bytes)
+F 0x8B90 24
+D 0x8C20 0x8FB0 dibujo_8C20  38 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 0 de la lista 0x8B53 (p00:4FA3, tipo 4 en p00:4FDD); lo leen p00:54F8 (912 bytes)
+F 0x8C20 24
+D 0x8FB0 0x9178 dibujo_8FB0  19 caracteres de 8x8 a 3 bits por punto (24 bytes cada uno), ficha 1 de la lista 0x8B53 (p00:4FA3, tipo 4 en p00:4FDD); lo leen p00:54F8 (456 bytes)
+F 0x8FB0 24
+D 0x9178 0x91CC rachas_ram_9178  rachas a la RAM 0xE800 (p00:5659); lo leen p00:559D (84 bytes)
+D 0x91CC 0x9220 rachas_ram_91CC  rachas a la RAM 0xE800 (p00:5659); lo leen p00:55BB (84 bytes)
+D 0x9220 0x9432 rachas_ram_9220  rachas a la RAM 0xE800 (p00:5659); lo leen p00:557F (530 bytes)
+# --- fin de los bloques de bloques.py ---

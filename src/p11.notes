@@ -1,0 +1,9 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x8719 0x8759 copia_8719  64 bytes que p00:4AB7 copia tal cual a la VRAM 0xFA00; lo leen p00:51D9 (64 bytes)
+F 0x8719 16
+D 0x8AD9 0x8FE3 rachas_8AD9  rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p00:5433 (1290 bytes)
+D 0x8FE3 0x9380 rachas_8FE3  rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p00:5474 (925 bytes)
+D 0x9380 0x93F4 rachas_9380  rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p00:53C1 (116 bytes)
+D 0x9FEA 0xA000 fuente_9FEA  caracteres de la fuente (p00:4EFC): 0xFF acaba, 0xFE [dy] baja de linea (sigue en el banco 12, en 0xA000); lo leen p00:5243 (22 bytes)
+# --- fin de los bloques de bloques.py ---

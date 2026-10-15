@@ -635,10 +635,13 @@ L_4491:
 	call L_4220		;4491
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x4494..0x44a8  (20 bytes)
-DATA_4494:
-	defb 0a8h,044h,0fah,044h,008h,045h,048h,045h,0d2h,045h,011h,046h,02ah,047h,0b8h,047h	; 4494  .D.D.EHE.E.F*G.G
-	defb 016h,04ah,02dh,04ah	; 44a4
+; DATOS tabla_4494: 10 destinos del despachador p00:4220 (call en p00:4491, el
+;   indice en A): 44A8, 44FA, 4508, 4548, 45D2, 4611, 472A, 47B8, 4A16, 4A2D;
+;   lo leen p00:4491 (20 bytes)
+;   0x4494..0x44a8  (20 bytes)
+DATA_tabla_4494:
+	defw 044a8h,044fah,04508h,04548h,045d2h,04611h,0472ah,047b8h	; 4494
+	defw 04a16h,04a2dh	; 44a4  -> L_4A16 L_4A2D
 
 ; ======================================================================
 ; CODIGO 0x44a8..0x4a42  (1434 bytes)
@@ -3611,9 +3614,11 @@ L_596F:
 	call L_4220		;5972
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x5975..0x597f  (10 bytes)
-DATA_5975:
-	defb 07fh,059h,07fh,059h,088h,059h,07fh,059h,07fh,059h	; 5975  .Y.Y.Y.Y.Y
+; DATOS tabla_5975: 5 destinos del despachador p00:4220 (call en p00:5972, el
+;   indice en A): 597F, 597F, 5988, 597F, 597F; lo leen p00:5972 (10 bytes)
+;   0x5975..0x597f  (10 bytes)
+DATA_tabla_5975:
+	defw 0597fh,0597fh,05988h,0597fh,0597fh	; 5975
 
 ; ======================================================================
 ; CODIGO 0x597f..0x5a85  (262 bytes)

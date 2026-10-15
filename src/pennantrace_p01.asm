@@ -1597,9 +1597,12 @@ L_6B1F:
 	call 04220h		;6b28
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6b2b..0x6b37  (12 bytes)
-DATA_6B2B:
-	defb 04ah,072h,076h,073h,043h,06bh,077h,06fh,077h,06fh,096h,06ch	; 6b2b  JrvsCkwowo.l
+; DATOS tabla_6B2B: 6 destinos del despachador p00:4220 (call en p01:6B28, el
+;   indice en A): 724A, 7376, 6B43, 6F77, 6F77, 6C96; lo leen p01:6B28 (12
+;   bytes)
+;   0x6b2b..0x6b37  (12 bytes)
+DATA_tabla_6B2B:
+	defw 0724ah,07376h,06b43h,06f77h,06f77h,06c96h	; 6b2b
 
 ; ======================================================================
 ; CODIGO 0x6b37..0x6d97  (608 bytes)
@@ -3128,9 +3131,11 @@ L_75D5:
 	call 04220h		;75db
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x75de..0x75e8  (10 bytes)
-DATA_75DE:
-	defb 0e8h,075h,0fdh,075h,02ch,076h,041h,076h,051h,076h	; 75de  .u.u,vAvQv
+; DATOS tabla_75DE: 5 destinos del despachador p00:4220 (call en p01:75DB, el
+;   indice en A): 75E8, 75FD, 762C, 7641, 7651; lo leen p01:75DB (10 bytes)
+;   0x75de..0x75e8  (10 bytes)
+DATA_tabla_75DE:
+	defw 075e8h,075fdh,0762ch,07641h,07651h	; 75de
 
 ; ======================================================================
 ; CODIGO 0x75e8..0x7766  (382 bytes)
@@ -3381,9 +3386,11 @@ L_777A:
 	call 04220h		;778b
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x778e..0x7796  (8 bytes)
-DATA_778E:
-	defb 096h,077h,0c6h,077h,044h,078h,051h,078h	; 778e  .w.wDxQx
+; DATOS tabla_778E: 4 destinos del despachador p00:4220 (call en p01:778B, el
+;   indice en A): 7796, 77C6, 7844, 7851; lo leen p01:778B (8 bytes)
+;   0x778e..0x7796  (8 bytes)
+DATA_tabla_778E:
+	defw 07796h,077c6h,07844h,07851h	; 778e  -> L_7796 L_77C6 L_7844 L_7851
 
 ; ======================================================================
 ; CODIGO 0x7796..0x7916  (384 bytes)
@@ -3618,9 +3625,12 @@ L_7910:
 	call 04220h		;7913
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7916..0x7922  (12 bytes)
-DATA_7916:
-	defb 03eh,079h,069h,079h,08ch,079h,0c1h,079h,071h,07ah,07fh,07ah	; 7916  >yiy.y.yqz.z
+; DATOS tabla_7916: 6 destinos del despachador p00:4220 (call en p01:7913, el
+;   indice en A): 793E, 7969, 798C, 79C1, 7A71, 7A7F; lo leen p01:7913 (12
+;   bytes)
+;   0x7916..0x7922  (12 bytes)
+DATA_tabla_7916:
+	defw 0793eh,07969h,0798ch,079c1h,07a71h,07a7fh	; 7916
 
 ; ======================================================================
 ; CODIGO 0x7922..0x7a6c  (330 bytes)
@@ -3991,10 +4001,13 @@ L_7B79:
 	call 04220h		;7b85
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7b88..0x7b9c  (20 bytes)
-DATA_7B88:
-	defb 0a1h,07bh,0c3h,07bh,0e7h,07bh,057h,07dh,080h,07dh,04dh,07fh,070h,07fh,0b8h,07fh	; 7b88  .{.{.{W}.}M.p...
-	defb 0ebh,07fh,021h,080h	; 7b98
+; DATOS tabla_7B88: 10 destinos del despachador p00:4220 (call en p01:7B85, el
+;   indice en A): 7BA1, 7BC3, 7BE7, 7D57, 7D80, 7F4D, 7F70, 7FB8, 7FEB, 8021;
+;   lo leen p01:7B85 (20 bytes)
+;   0x7b88..0x7b9c  (20 bytes)
+DATA_tabla_7B88:
+	defw 07ba1h,07bc3h,07be7h,07d57h,07d80h,07f4dh,07f70h,07fb8h	; 7b88
+	defw 07febh,08021h	; 7b98  -> L_7FEB 0x8021
 
 ; ======================================================================
 ; CODIGO 0x7b9c..0x7fff  (1123 bytes)

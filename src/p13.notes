@@ -1,0 +1,76 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x604D 0x606B tabla_604D  15 destinos del despachador p00:4220 (call en p13:604A, el indice en A): 60D8, 6148, 61B3, 6319, 6383, 63F4, 6487, 63BB, 6FFE, 64DF, 6606, 662A, 6650, 64DF, 6081; lo leen p13:604A (30 bytes)
+F 0x604D w8
+D 0x6115 0x6148 texto_6115  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; se solapan 4 bloques: (texto_6125 6125-6148) (texto_6130 6130-6148) (texto_613D 613D-6148); lo leen p13:6105, p13:615E, p13:6164, p13:616A, p13:6205 (51 bytes)
+D 0x6193 0x61B3 copia_6193  32 bytes que p00:4AB7 copia tal cual a la VRAM 0xF800; lo leen p13:6190 (32 bytes)
+F 0x6193 16
+D 0x61B9 0x61BD tabla_61B9  2 destinos del despachador p00:4220 (call en p13:61B6, el indice en A): 61BD, 6214; lo leen p13:61B6 (4 bytes)
+F 0x61B9 w2
+D 0x6291 0x6294 copia_6291  3 bytes que p00:4AB7 copia tal cual a la VRAM 0xF600; lo leen p13:627B (3 bytes)
+F 0x6291 16
+D 0x6294 0x62D7 texto_6294  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; se solapan 2 bloques: (texto_62D1 62D1-62D7); lo leen p13:620B, p13:64AD (67 bytes)
+D 0x631F 0x6323 tabla_631F  2 destinos del despachador p00:4220 (call en p13:631C, el indice en A): 6323, 633A; lo leen p13:631C (4 bytes)
+F 0x631F w2
+D 0x63C1 0x63C5 tabla_63C1  2 destinos del despachador p00:4220 (call en p13:63BE, el indice en A): 63C5, 63D4; lo leen p13:63BE (4 bytes)
+F 0x63C1 w2
+D 0x63FA 0x63FE tabla_63FA  2 destinos del despachador p00:4220 (call en p13:63F7, el indice en A): 63FE, 641A; lo leen p13:63F7 (4 bytes)
+F 0x63FA w2
+D 0x6412 0x641A texto_6412  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p13:6404 (8 bytes)
+D 0x648D 0x6491 tabla_648D  2 destinos del despachador p00:4220 (call en p13:648A, el indice en A): 6491, 64B4; lo leen p13:648A (4 bytes)
+F 0x648D w2
+D 0x6594 0x65BE texto_6594  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; se solapan 2 bloques: (texto_65B8 65B8-65BE); lo leen p13:658B, p13:6814, p13:667D (42 bytes)
+D 0x6656 0x665A tabla_6656  2 destinos del despachador p00:4220 (call en p13:6653, el indice en A): 665A, 6677; lo leen p13:6653 (4 bytes)
+F 0x6656 w2
+D 0x6C31 0x6C49 texto_6C31  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p13:6C18 (24 bytes)
+D 0x6CE6 0x6D0E texto_6CE6  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p13:6CA0 (40 bytes)
+D 0x6D14 0x6D1E tabla_6D14  5 destinos del despachador p00:4220 (call en p13:6D11, el indice en A): 6D1E, 6D41, 6D66, 6DAA, 6DEC; lo leen p13:6D11 (10 bytes)
+F 0x6D14 w5
+D 0x6DFD 0x6E07 tabla_6DFD  5 destinos del despachador p00:4220 (call en p13:6DFA, el indice en A): 6E07, 6E20, 6E32, 6E75, 6EA4; lo leen p13:6DFA (10 bytes)
+F 0x6DFD w5
+D 0x6F7F 0x6F89 tabla_6F7F  5 destinos del despachador p00:4220 (call en p13:6F7C, el indice en A): 6F89, 6F97, 6FBE, 6FE8, 6FF3; lo leen p13:6F7C (10 bytes)
+F 0x6F7F w5
+D 0x7004 0x700E tabla_7004  5 destinos del despachador p00:4220 (call en p13:7001, el indice en A): 700E, 7025, 704B, 707E, 7089; lo leen p13:7001 (10 bytes)
+F 0x7004 w5
+D 0x7B48 0x7B63 texto_7B48  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:A4F3 (27 bytes)
+D 0x7B63 0x7B94 texto_7B63  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:9D1E (49 bytes)
+D 0x7B94 0x7B99 texto_7B94  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:648E (5 bytes)
+D 0x7B99 0x7BBA texto_7B99  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:B703 (33 bytes)
+D 0x7BDD 0x7BEA texto_7BDD  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p00:48EC, p13:6D5E, p13:6DD3 (13 bytes)
+D 0x7C06 0x7C22 texto_7C06  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:BD41, p13:6D9C (28 bytes)
+D 0x7C22 0x7C33 texto_7C22  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:B9A7, p13:6D76, p13:6FB5 (17 bytes)
+D 0x7C79 0x7C8A texto_7C79  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p00:480C (17 bytes)
+D 0x7CA8 0x7CB9 texto_7CA8  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p00:4848 (17 bytes)
+D 0x7CB9 0x7CC8 texto_7CB9  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p00:4863 (15 bytes)
+D 0x7CD1 0x7CEF texto_7CD1  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p00:47EA (30 bytes)
+D 0x7CEF 0x7CFA texto_7CEF  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p13:632C (11 bytes)
+D 0x7CFA 0x7D09 texto_7CFA  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p13:6DE3, p13:6E8F (15 bytes)
+D 0x7D09 0x7D19 texto_7D09  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p13:7048 (16 bytes)
+D 0x7D19 0x7D35 texto_7D19  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p13:607E (28 bytes)
+D 0x7D35 0x7D41 texto_7D35  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:973A (12 bytes)
+D 0x7D41 0x7D4E texto_7D41  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p13:701D (13 bytes)
+D 0x7D4E 0x7D62 texto_7D4E  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:BC7F (20 bytes)
+D 0x7D62 0x7D7D texto_7D62  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:A4C1 (27 bytes)
+D 0x7D7D 0x7D8F texto_7D7D  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:8466 (18 bytes)
+D 0x7D8F 0x7DA9 texto_7D8F  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:6546 (26 bytes)
+D 0x7DD2 0x7DE1 texto_7DD2  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p00:4577, p01:655E, p00:457A (15 bytes)
+D 0x7DE1 0x7DF7 texto_7DE1  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:AA5D (22 bytes)
+D 0x7DF7 0x7DF9 texto_7DF7  texto (p00:4EB5, con 13-14-15 puesto por p00:439C): caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:65BB, p03:BD01, p15:AACC (2 bytes)
+D 0x7DF9 0x7E05 texto_7DF9  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:61AB (12 bytes)
+D 0x7E05 0x7E11 texto_7E05  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p02:8AB2 (12 bytes)
+D 0x7E1E 0x7E44 texto_7E1E  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:63F9 (38 bytes)
+D 0x7E44 0x7E49 texto_7E44  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:64F7 (5 bytes)
+D 0x7E4E 0x7E53 texto_7E4E  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:644E (5 bytes)
+D 0x7E53 0x7E5A texto_7E53  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:650B (7 bytes)
+D 0x7E5A 0x7E61 texto_7E5A  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:93FE (7 bytes)
+D 0x7E69 0x7E71 texto_7E69  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:7014, p02:8FDE, p03:B12D (8 bytes)
+D 0x7E71 0x7E78 texto_7E71  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:B104 (7 bytes)
+D 0x7E86 0x7EAB texto_7E86  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:A323 (37 bytes)
+D 0x7EAB 0x7EB6 texto_7EAB  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:6A21 (11 bytes)
+D 0x7EB6 0x7EBD texto_7EB6  texto (p00:4EB5, con 13-14-15 puesto por p00:439C): caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:A261 (7 bytes)
+D 0x7EBD 0x7EC6 texto_7EBD  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:64A2 (9 bytes)
+D 0x7EC6 0x7F55 texto_7EC6  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:BA8E (143 bytes)
+D 0x7F55 0x7F70 texto_7F55  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p02:9ECC (27 bytes)
+D 0x7F70 0x8000 relleno_ff  144 bytes a 0xFF hasta el final del banco: relleno; lo leen nadie (144 bytes)
+F 0x7F70 16
+# --- fin de los bloques de bloques.py ---

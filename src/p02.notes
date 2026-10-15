@@ -1,0 +1,15 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x8669 0x8671 tabla_8669  4 destinos del despachador p00:4220 (call en p02:8666, el indice en A): 8671, 867C, 86B4, 86C8; lo leen p02:8666 (8 bytes)
+F 0x8669 w4
+D 0x8BBE 0x8BC4 tabla_8BBE  3 destinos del despachador p00:4220 (call en p02:8BBB, el indice en A): 8BC4, 8EDC, 8F3C; lo leen p02:8BBB (6 bytes)
+F 0x8BBE w3
+D 0x9155 0x9163 tabla_9155  7 destinos del despachador p00:4220 (call en p02:9152, el indice en A): 9163, 9181, 91E4, 9228, 93A6, 93B3, 940A; lo leen p02:9152 (14 bytes)
+F 0x9155 w7
+D 0x95C0 0x95C8 tabla_95C0  4 destinos del despachador p00:4220 (call en p02:95BD, el indice en A): 95C8, 9625, 96A8, 9743; lo leen p02:95BD (8 bytes)
+F 0x95C0 w4
+D 0x97E5 0x97F1 tabla_97E5  6 destinos del despachador p00:4220 (call en p02:97E2, el indice en A): 97F1, 97F2, 9815, 9834, 9855, 97F1; lo leen p02:97E2 (12 bytes)
+F 0x97E5 w6
+D 0x9918 0x9920 tabla_9918  4 destinos del despachador p00:4220 (call en p02:9915, el indice en A): 9920, 9B9E, 9BA8, 9BA9; lo leen p02:9915 (8 bytes)
+F 0x9918 w4
+# --- fin de los bloques de bloques.py ---

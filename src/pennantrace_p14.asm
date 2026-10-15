@@ -669,10 +669,33 @@ L_8490:
 	jp 04eb5h		;8495
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8498..0x84af  (23 bytes)
-DATA_8498:
-	defb 012h,017h,021h,019h,0ffh,021h,020h,00fh,01bh,0ffh,020h,00fh,01bh,0ffh,03ah,006h	; 8498  ..!..! ... ...:.
-	defb 0deh,0e6h,013h,0c8h,0c3h,07dh,05dh	; 84a8
+; DATOS texto_8498: texto (p00:4EB5, con 13-14-15 puesto por p00:439C):
+;   caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio
+;   espacio; lo leen p14:847C (5 bytes)
+;   0x8498..0x849d  (5 bytes)
+DATA_texto_8498:
+	defb 012h,017h,021h,019h,0ffh	; 8498
+
+; ----------------------------------------------------------------------
+; DATOS texto_849D: texto (p00:4EB5, con 13-14-15 puesto por p00:439C):
+;   caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio
+;   espacio; lo leen p14:848C (5 bytes)
+;   0x849d..0x84a2  (5 bytes)
+DATA_texto_849D:
+	defb 021h,020h,00fh,01bh,0ffh	; 849d
+
+; ----------------------------------------------------------------------
+; DATOS texto_84A2: texto (p00:4EB5, con 13-14-15 puesto por p00:439C):
+;   caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio
+;   espacio; lo leen p14:8495 (4 bytes)
+;   0x84a2..0x84a6  (4 bytes)
+DATA_texto_84A2:
+	defb 020h,00fh,01bh,0ffh	; 84a2
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x84a6..0x84af  (9 bytes)
+DATA_84A6:
+	defb 03ah,006h,0deh,0e6h,013h,0c8h,0c3h,07dh,05dh	; 84a6  :......}]
 
 ; ======================================================================
 ; CODIGO 0x84af..0x84d4  (37 bytes)
@@ -745,19 +768,30 @@ L_8506:
 	ret			;8538
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8539..0x85e0  (167 bytes)
+; DATOS sin identificar  0x8539..0x8547  (14 bytes)
 DATA_8539:
-	defb 054h,085h,064h,085h,075h,085h,081h,085h,092h,085h,0a2h,085h,0b3h,085h,050h,08ch	; 8539  T.d.u.........P.
-	defb 012h,017h,021h,019h,000h,013h,020h,020h,01dh,020h,0ffh,048h,09ch,012h,017h,021h	; 8549  ..!...  . .H...!
-	defb 019h,000h,017h,01dh,000h,013h,020h,020h,01dh,020h,0ffh,048h,09ch,014h,017h,01ah	; 8559  ......  . .H....
-	defb 013h,000h,01ch,01dh,022h,000h,014h,01dh,023h,01ch,012h,0ffh,058h,09ch,012h,017h	; 8569  ...."...#...X...
-	defb 021h,019h,000h,014h,023h,01ah,01ah,0ffh,040h,09ch,012h,017h,021h,019h,000h,01ch	; 8579  !...#...@...!...
-	defb 01dh,022h,000h,020h,013h,00fh,012h,027h,0ffh,048h,09ch,025h,020h,017h,022h,013h	; 8589  .". ...'.H.% .".
-	defb 000h,01eh,020h,01dh,022h,013h,011h,022h,0ffh,048h,09ch,022h,01dh,01dh,000h,01bh	; 8599  .. ."..".H."....
-	defb 00fh,01ch,027h,000h,014h,017h,01ah,013h,021h,0ffh,048h,09ch,012h,00fh,022h,00fh	; 85a9  ..'.....!.H...".
-	defb 000h,022h,027h,01eh,013h,000h,013h,020h,020h,01dh,020h,0ffh,0c7h,085h,0cdh,068h	; 85b9  ."'....  . ....h
-	defb 083h,03ah,0aah,0d2h,026h,040h,0cdh,024h,000h,0cdh,094h,083h,03ah,0a9h,0d2h,032h	; 85c9  .:..&@.$....:..2
-	defb 09fh,0fdh,0edh,07bh,0a7h,0d2h,0c9h	; 85d9
+	defb 054h,085h,064h,085h,075h,085h,081h,085h,092h,085h,0a2h,085h,0b3h,085h	; 8539  T.d.u.........
+
+; ----------------------------------------------------------------------
+; DATOS texto_8547: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p14:8523 (13 bytes)
+;   0x8547..0x8554  (13 bytes)
+DATA_texto_8547:
+	defb 050h,08ch,012h,017h,021h,019h,000h,013h,020h,020h,01dh,020h,0ffh	; 8547  P...!...  . .
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x8554..0x85e0  (140 bytes)
+DATA_8554:
+	defb 048h,09ch,012h,017h,021h,019h,000h,017h,01dh,000h,013h,020h,020h,01dh,020h,0ffh	; 8554  H...!......  . .
+	defb 048h,09ch,014h,017h,01ah,013h,000h,01ch,01dh,022h,000h,014h,01dh,023h,01ch,012h	; 8564  H........"...#..
+	defb 0ffh,058h,09ch,012h,017h,021h,019h,000h,014h,023h,01ah,01ah,0ffh,040h,09ch,012h	; 8574  .X...!...#...@..
+	defb 017h,021h,019h,000h,01ch,01dh,022h,000h,020h,013h,00fh,012h,027h,0ffh,048h,09ch	; 8584  .!....". ...'.H.
+	defb 025h,020h,017h,022h,013h,000h,01eh,020h,01dh,022h,013h,011h,022h,0ffh,048h,09ch	; 8594  % ."... ."..".H.
+	defb 022h,01dh,01dh,000h,01bh,00fh,01ch,027h,000h,014h,017h,01ah,013h,021h,0ffh,048h	; 85a4  "......'.....!.H
+	defb 09ch,012h,00fh,022h,00fh,000h,022h,027h,01eh,013h,000h,013h,020h,020h,01dh,020h	; 85b4  ...".."'....  .
+	defb 0ffh,0c7h,085h,0cdh,068h,083h,03ah,0aah,0d2h,026h,040h,0cdh,024h,000h,0cdh,094h	; 85c4  ....h.:..&@.$...
+	defb 083h,03ah,0a9h,0d2h,032h,09fh,0fdh,0edh,07bh,0a7h,0d2h,0c9h	; 85d4  .:..2...{...
 
 ; ======================================================================
 ; CODIGO 0x85e0..0x86e8  (264 bytes)
@@ -899,9 +933,15 @@ L_8654:
 	ret			;86e7
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x86e8..0x8718  (48 bytes)
+; DATOS sin identificar  0x86e8..0x86f8  (16 bytes)
 DATA_86E8:
 	defb 0a4h,094h,010h,00dh,0ach,094h,010h,00dh,0b4h,094h,010h,00dh,0bch,094h,010h,00dh	; 86e8  ................
+
+; ----------------------------------------------------------------------
+; DATOS copia_86F8: 32 bytes que p00:4AB7 copia tal cual a la VRAM 0xF880; lo
+;   leen p14:86CC (32 bytes)
+;   0x86f8..0x8718  (32 bytes)
+DATA_copia_86F8:
 	defb 000h,000h,000h,000h,000h,000h,018h,018h,000h,000h,000h,000h,000h,000h,000h,000h	; 86f8  ................
 	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; 8708  ................
 
@@ -951,8 +991,10 @@ L_8740:
 	jp 04d66h		;874e
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8751..0x9348  (3063 bytes)
-DATA_8751:
+; DATOS copia_8751: 512 bytes que p00:4AB7 copia tal cual a la VRAM 0xF800; lo
+;   leen p00:5354 (512 bytes)
+;   0x8751..0x8951  (512 bytes)
+DATA_copia_8751:
 	defb 01fh,011h,011h,00bh,00bh,00bh,00bh,00bh,00bh,00bh,00bh,00bh,011h,011h,01fh,00fh	; 8751  ................
 	defb 0c0h,0c0h,0c0h,080h,080h,080h,080h,080h,080h,080h,080h,080h,0c0h,0c0h,0c0h,0c0h	; 8761  ................
 	defb 000h,00eh,00eh,005h,004h,004h,004h,004h,004h,004h,004h,004h,00eh,00eh,000h,00fh	; 8771  ................
@@ -985,6 +1027,12 @@ DATA_8751:
 	defb 0fch,01ch,01ch,0dch,0dch,0fch,0b0h,030h,0b0h,0fch,0dch,0dch,01ch,01ch,0fch,0fch	; 8921  .......0........
 	defb 000h,003h,003h,001h,001h,001h,001h,001h,001h,001h,001h,001h,003h,003h,000h,003h	; 8931  ................
 	defb 000h,0e0h,0e0h,020h,060h,03ch,040h,0c0h,070h,000h,060h,020h,0e0h,0e0h,000h,0fch	; 8941  ... `<@.p.` ....
+
+; ----------------------------------------------------------------------
+; DATOS copia_8951: 384 bytes que p00:4AB7 copia tal cual a la VRAM 0xFA00; lo
+;   leen p00:5342 (384 bytes)
+;   0x8951..0x8ad1  (384 bytes)
+DATA_copia_8951:
 	defb 03eh,027h,023h,013h,013h,013h,013h,017h,017h,013h,013h,011h,025h,025h,03fh,01fh	; 8951  >'#.........%%?.
 	defb 000h,000h,080h,080h,080h,080h,080h,000h,000h,080h,080h,0c0h,0c0h,0c0h,0c0h,0c0h	; 8961  ................
 	defb 000h,018h,01ch,00ch,00ch,00ch,00ch,00fh,008h,00ch,00ch,00eh,01ah,01ah,004h,01fh	; 8971  ................
@@ -1009,6 +1057,12 @@ DATA_8751:
 	defb 0f0h,070h,070h,0f0h,0e0h,0e0h,0e0h,0e0h,0e0h,0e0h,0e0h,0e0h,0e0h,0e0h,0e0h,0e0h	; 8aa1  .pp.............
 	defb 004h,019h,019h,009h,00dh,00dh,00dh,00bh,00bh,00bh,00dh,00dh,01dh,01dh,004h,01fh	; 8ab1  ................
 	defb 000h,080h,080h,070h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,0e0h	; 8ac1  ...p............
+
+; ----------------------------------------------------------------------
+; DATOS copia_8AD1: 1280 bytes que p00:4AB7 copia tal cual a la VRAM 0xF800;
+;   lo leen p00:5330 (1280 bytes)
+;   0x8ad1..0x8fd1  (1280 bytes)
+DATA_copia_8AD1:
 	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; 8ad1  ................
 	defb 000h,003h,007h,007h,01fh,03fh,007h,007h,00fh,007h,007h,003h,001h,001h,003h,002h	; 8ae1  .....?..........
 	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; 8af1  ................
@@ -1089,6 +1143,12 @@ DATA_8751:
 	defb 0feh,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,080h,0c0h,0c0h,0c0h,080h	; 8fa1  ................
 	defb 09fh,0ffh,0feh,0feh,0feh,0feh,0feh,0fch,0fch,0feh,03fh,01fh,00fh,007h,00fh,00fh	; 8fb1  ..........?.....
 	defb 0feh,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,080h,0c0h,0c0h,0c0h,080h	; 8fc1  ................
+
+; ----------------------------------------------------------------------
+; DATOS copia_8FD1: 256 bytes que p00:4AB7 copia tal cual a la VRAM 0xFF00; lo
+;   leen p00:531B (256 bytes)
+;   0x8fd1..0x90d1  (256 bytes)
+DATA_copia_8FD1:
 	defb 000h,000h,000h,000h,000h,000h,001h,003h,001h,000h,000h,000h,000h,000h,000h,000h	; 8fd1  ................
 	defb 000h,000h,000h,000h,000h,000h,000h,080h,000h,000h,000h,000h,000h,000h,000h,000h	; 8fe1  ................
 	defb 000h,000h,000h,000h,000h,000h,000h,000h,002h,001h,000h,000h,000h,000h,000h,000h	; 8ff1  ................
@@ -1105,46 +1165,119 @@ DATA_8751:
 	defb 000h,000h,000h,000h,080h,0f0h,0e0h,0e0h,0e0h,0c0h,080h,080h,040h,000h,000h,000h	; 90a1  ............@...
 	defb 000h,000h,000h,003h,00eh,00ah,014h,015h,019h,019h,00dh,00fh,003h,000h,000h,000h	; 90b1  ................
 	defb 000h,000h,000h,0c0h,070h,070h,098h,018h,018h,038h,070h,0f0h,0c0h,000h,000h,000h	; 90c1  ....pp...8p.....
-	defb 0d5h,090h,0d9h,090h,000h,00bh,00dh,00fh,000h,001h,006h,002h,000h,088h,008h,000h	; 90d1  ................
-	defb 091h,010h,020h,088h,001h,0c0h,092h,002h,024h,088h,006h,080h,091h,002h,000h,08ch	; 90e1  .. .....$.......
-	defb 008h,0e0h,091h,010h,020h,08ch,001h,0c0h,092h,002h,024h,08ch,006h,060h,092h,0ffh	; 90f1  .... .....$..`..
-	defb 002h,087h,07ah,087h,07ah,04eh,036h,04ch,034h,04ch,034h,04fh,030h,040h,03fh,0fch	; 9101  ..z.zN6L4L4O0@?.
-	defb 004h,00ch,0f4h,00ch,0f4h,09ch,06ch,098h,068h,098h,068h,098h,068h,018h,0e8h,007h	; 9111  ......l.h.h.h...
-	defb 000h,018h,007h,023h,01ch,027h,01bh,046h,03ah,046h,03ah,046h,03ah,046h,03ah,0e0h	; 9121  ...#.'.F:F:F:F:.
-	defb 060h,070h,090h,018h,0e8h,098h,068h,08ch,074h,08ch,074h,08ch,074h,08ch,074h,0fch	; 9131  `p....h.t.t.t.t.
-	defb 004h,086h,07ah,086h,07ah,043h,03dh,043h,03dh,041h,03eh,051h,02eh,050h,02fh,03fh	; 9141  ..z.zC=C=A>Q.P/?
-	defb 001h,043h,03dh,043h,03dh,087h,07bh,086h,07ah,006h,0fah,016h,0eah,016h,0eah,01fh	; 9151  .C=C=.{.z.......
-	defb 000h,010h,00fh,010h,00fh,009h,006h,009h,006h,009h,006h,009h,006h,008h,007h,0ffh	; 9161  ................
-	defb 001h,003h,0fdh,003h,0fdh,0f3h,00dh,0fbh,0f5h,0ffh,081h,0dfh,02fh,018h,0e8h,0ffh	; 9171  ............/...
-	defb 000h,080h,07fh,080h,07fh,04fh,030h,04fh,037h,04ch,034h,04fh,030h,040h,03fh,0e0h	; 9181  .....O0O7L4O0@?.
-	defb 020h,030h,0d0h,030h,0d0h,018h,0e8h,098h,068h,098h,068h,098h,068h,030h,0d0h,0ffh	; 9191   0.0....h.h.h0..
-	defb 002h,087h,07ah,087h,07ah,04eh,036h,04ch,034h,04ch,034h,04ch,034h,04ch,034h,0fch	; 91a1  ..z.zN6L4L4L4L4.
-	defb 004h,00ch,0f4h,00ch,0f4h,09ch,06ch,098h,068h,098h,068h,098h,068h,098h,068h,0fch	; 91b1  ......l.h.h.h.h.
-	defb 004h,086h,07ah,086h,07ah,043h,03dh,043h,03dh,041h,03eh,051h,02eh,050h,02fh,0fch	; 91c1  ..z.zC=C=A>Q.P/.
-	defb 004h,08ch,074h,08ch,074h,05ch,02ch,058h,028h,0d8h,0a8h,0d8h,0a8h,0d8h,028h,04fh	; 91d1  ..t.t\,X(.....(O
-	defb 030h,04fh,037h,04ch,034h,04ch,034h,087h,07ah,087h,07ah,0ffh,002h,07fh,07fh,098h	; 91e1  0O7L4L4.z.z.....
-	defb 068h,098h,068h,098h,068h,098h,068h,00ch,0f4h,00ch,0f4h,0fch,004h,0fch,0fch,046h	; 91f1  h.h.h.h........F
-	defb 03ah,046h,03ah,046h,03ah,066h,05ah,023h,01ch,038h,027h,01fh,018h,007h,007h,08ch	; 9201  :F:F:fZ#.8'.....
-	defb 074h,08ch,074h,08ch,074h,098h,068h,018h,0e8h,070h,090h,0e0h,060h,080h,080h,058h	; 9211  t.t.t.h..p..`..X
-	defb 027h,058h,027h,05ch,02bh,05ch,02bh,08eh,075h,08eh,075h,0ffh,006h,07dh,07dh,036h	; 9221  'X'\+\+.u.u..}}6
-	defb 0cah,036h,0cah,076h,0aah,076h,0aah,0e3h,05dh,0e3h,05dh,0bfh,081h,0bfh,0bfh,009h	; 9231  .6.v.v..].].....
-	defb 006h,009h,006h,009h,006h,009h,006h,010h,00fh,010h,00fh,01fh,000h,00fh,00fh,0d8h	; 9241  ................
-	defb 028h,0ffh,081h,0fbh,0f5h,0f3h,00dh,003h,0fdh,003h,0fdh,0ffh,001h,0ffh,0ffh,04fh	; 9251  (..............O
-	defb 030h,04fh,037h,04ch,034h,04ch,034h,086h,07ah,086h,07ah,0feh,002h,07eh,07eh,030h	; 9261  0O7L4L4.z.z..~~0
-	defb 0d0h,098h,068h,098h,068h,08ch,074h,08ch,074h,08ch,074h,07ch,004h,03ch,03ch,04ch	; 9271  ..h.h.t.t.t|.<<L
-	defb 034h,04ch,034h,04ch,034h,067h,058h,020h,01fh,038h,027h,01fh,018h,007h,007h,098h	; 9281  4L4L4gX .8'.....
-	defb 068h,098h,068h,098h,068h,030h,0d0h,030h,0d0h,0e0h,020h,0c0h,0c0h,000h,000h,058h	; 9291  h.h.h0.0.. ....X
-	defb 027h,058h,027h,05ch,02bh,05ch,02bh,08eh,075h,08eh,075h,0ffh,006h,07dh,07dh,0d8h	; 92a1  'X'\+\+.u.u..}}.
-	defb 028h,058h,0a8h,058h,0a8h,018h,0e8h,018h,0e8h,018h,0e8h,0f8h,008h,0f8h,0f8h,000h	; 92b1  (X.X............
-	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,0ffh,0ffh,000h,00fh,0ffh,0ffh,000h	; 92c1  ................
-	defb 00fh,0ffh,0ffh,000h,00fh,07fh,0ffh,000h,007h,077h,077h,000h,007h,077h,0f7h,000h	; 92d1  .........ww..w..
-	defb 000h,077h,077h,000h,008h,0f7h,077h,0ffh,0f0h,000h,000h,0ffh,0ffh,000h,000h,0ffh	; 92e1  .ww...w.........
-	defb 0ffh,000h,000h,0ffh,07fh,000h,000h,077h,077h,000h,000h,0f7h,077h,000h,000h,077h	; 92f1  .......ww...w..w
-	defb 070h,000h,000h,077h,0f8h,000h,000h,000h,088h,08fh,0ffh,000h,08fh,0f8h,08fh,000h	; 9301  p..w............
-	defb 0ffh,0f8h,08fh,000h,0f7h,07fh,0ffh,000h,007h,078h,088h,000h,0f8h,088h,000h,00fh	; 9311  .........x......
-	defb 0ffh,0ffh,000h,00fh,0ffh,0ffh,000h,0ffh,088h,080h,000h,088h,0ffh,080h,000h,08fh	; 9321  ................
-	defb 0ffh,0f0h,000h,0ffh,0f7h,0ffh,000h,08fh,0ffh,0ffh,000h,008h,0ffh,0f0h,000h,00fh	; 9331  ................
-	defb 0ffh,0ffh,000h,00fh,0ffh,0ffh,000h	; 9341
+
+; ----------------------------------------------------------------------
+; DATOS paletas_90D1: 2 punteros a los colores de cada paleta (p00:556D desde
+;   p00:4FB0), para la lista 0x90DB; lo leen p00:5324 (4 bytes)
+;   0x90d1..0x90d5  (4 bytes)
+DATA_paletas_90D1:
+	defw 090d5h,090d9h	; 90d1  -> DATA_colores_90D5 DATA_colores_90D9
+
+; ----------------------------------------------------------------------
+; DATOS colores_90D5: 4 colores (un nibble cada uno, ya en su sitio) que
+;   p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0x90DB; lo leen p00:5324
+;   (4 bytes)
+;   0x90d5..0x90d9  (4 bytes)
+DATA_colores_90D5:
+	defb 000h,00bh,00dh,00fh	; 90d5
+
+; ----------------------------------------------------------------------
+; DATOS colores_90D9: 2 colores (un nibble cada uno, ya en su sitio) que
+;   p00:4FC3 copia a 0xEC00: la paleta 1 de la lista 0x90DB; lo leen p00:5324
+;   (2 bytes)
+;   0x90d9..0x90db  (2 bytes)
+DATA_colores_90D9:
+	defb 000h,001h	; 90d9
+
+; ----------------------------------------------------------------------
+; DATOS lista_90DB: 6 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo
+;   hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x90D1);
+;   lo leen p00:5324 (37 bytes)
+;   0x90db..0x9100  (37 bytes)
+DATA_lista_90DB:
+	defb 006h,002h,000h,088h,008h,000h	; 90db
+	defb 091h,010h,020h,088h,001h,0c0h	; 90e1
+	defb 092h,002h,024h,088h,006h,080h	; 90e7
+	defb 091h,002h,000h,08ch,008h,0e0h	; 90ed
+	defb 091h,010h,020h,08ch,001h,0c0h	; 90f3
+	defb 092h,002h,024h,08ch,006h,060h	; 90f9
+	defb 092h	; 90ff
+
+; ----------------------------------------------------------------------
+; DATOS dibujo_9100: 8 caracteres de 8x8 a 2 bits por punto (16 bytes cada
+;   uno), ficha 0 de la lista 0x90DB (p00:4FA3, tipo 2 en p00:4FDD); lo leen
+;   p00:5324 (128 bytes)
+;   0x9100..0x9180  (128 bytes)
+DATA_dibujo_9100:
+	defb 0ffh,002h,087h,07ah,087h,07ah,04eh,036h,04ch,034h,04ch,034h,04fh,030h,040h,03fh	; 9100  ...z.zN6L4L4O0@?
+	defb 0fch,004h,00ch,0f4h,00ch,0f4h,09ch,06ch,098h,068h,098h,068h,098h,068h,018h,0e8h	; 9110  .......l.h.h.h..
+	defb 007h,000h,018h,007h,023h,01ch,027h,01bh,046h,03ah,046h,03ah,046h,03ah,046h,03ah	; 9120  ....#.'.F:F:F:F:
+	defb 0e0h,060h,070h,090h,018h,0e8h,098h,068h,08ch,074h,08ch,074h,08ch,074h,08ch,074h	; 9130  .`p....h.t.t.t.t
+	defb 0fch,004h,086h,07ah,086h,07ah,043h,03dh,043h,03dh,041h,03eh,051h,02eh,050h,02fh	; 9140  ...z.zC=C=A>Q.P/
+	defb 03fh,001h,043h,03dh,043h,03dh,087h,07bh,086h,07ah,006h,0fah,016h,0eah,016h,0eah	; 9150  ?.C=C=.{.z......
+	defb 01fh,000h,010h,00fh,010h,00fh,009h,006h,009h,006h,009h,006h,009h,006h,008h,007h	; 9160  ................
+	defb 0ffh,001h,003h,0fdh,003h,0fdh,0f3h,00dh,0fbh,0f5h,0ffh,081h,0dfh,02fh,018h,0e8h	; 9170  ............./..
+
+; ----------------------------------------------------------------------
+; DATOS dibujo_9180: 6 caracteres de 8x8 a 2 bits por punto (16 bytes cada
+;   uno), ficha 2 de la lista 0x90DB (p00:4FA3, tipo 2 en p00:4FDD); lo leen
+;   p00:5324 (96 bytes)
+;   0x9180..0x91e0  (96 bytes)
+DATA_dibujo_9180:
+	defb 0ffh,000h,080h,07fh,080h,07fh,04fh,030h,04fh,037h,04ch,034h,04fh,030h,040h,03fh	; 9180  ......O0O7L4O0@?
+	defb 0e0h,020h,030h,0d0h,030h,0d0h,018h,0e8h,098h,068h,098h,068h,098h,068h,030h,0d0h	; 9190  . 0.0....h.h.h0.
+	defb 0ffh,002h,087h,07ah,087h,07ah,04eh,036h,04ch,034h,04ch,034h,04ch,034h,04ch,034h	; 91a0  ...z.zN6L4L4L4L4
+	defb 0fch,004h,00ch,0f4h,00ch,0f4h,09ch,06ch,098h,068h,098h,068h,098h,068h,098h,068h	; 91b0  .......l.h.h.h.h
+	defb 0fch,004h,086h,07ah,086h,07ah,043h,03dh,043h,03dh,041h,03eh,051h,02eh,050h,02fh	; 91c0  ...z.zC=C=A>Q.P/
+	defb 0fch,004h,08ch,074h,08ch,074h,05ch,02ch,058h,028h,0d8h,0a8h,0d8h,0a8h,0d8h,028h	; 91d0  ...t.t\,X(.....(
+
+; ----------------------------------------------------------------------
+; DATOS dibujo_91E0: 8 caracteres de 8x8 a 2 bits por punto (16 bytes cada
+;   uno), ficha 3 de la lista 0x90DB (p00:4FA3, tipo 2 en p00:4FDD); lo leen
+;   p00:5324 (128 bytes)
+;   0x91e0..0x9260  (128 bytes)
+DATA_dibujo_91E0:
+	defb 04fh,030h,04fh,037h,04ch,034h,04ch,034h,087h,07ah,087h,07ah,0ffh,002h,07fh,07fh	; 91e0  O0O7L4L4.z.z....
+	defb 098h,068h,098h,068h,098h,068h,098h,068h,00ch,0f4h,00ch,0f4h,0fch,004h,0fch,0fch	; 91f0  .h.h.h.h........
+	defb 046h,03ah,046h,03ah,046h,03ah,066h,05ah,023h,01ch,038h,027h,01fh,018h,007h,007h	; 9200  F:F:F:fZ#.8'....
+	defb 08ch,074h,08ch,074h,08ch,074h,098h,068h,018h,0e8h,070h,090h,0e0h,060h,080h,080h	; 9210  .t.t.t.h..p..`..
+	defb 058h,027h,058h,027h,05ch,02bh,05ch,02bh,08eh,075h,08eh,075h,0ffh,006h,07dh,07dh	; 9220  X'X'\+\+.u.u..}}
+	defb 036h,0cah,036h,0cah,076h,0aah,076h,0aah,0e3h,05dh,0e3h,05dh,0bfh,081h,0bfh,0bfh	; 9230  6.6.v.v..].]....
+	defb 009h,006h,009h,006h,009h,006h,009h,006h,010h,00fh,010h,00fh,01fh,000h,00fh,00fh	; 9240  ................
+	defb 0d8h,028h,0ffh,081h,0fbh,0f5h,0f3h,00dh,003h,0fdh,003h,0fdh,0ffh,001h,0ffh,0ffh	; 9250  .(..............
+
+; ----------------------------------------------------------------------
+; DATOS dibujo_9260: 6 caracteres de 8x8 a 2 bits por punto (16 bytes cada
+;   uno), ficha 5 de la lista 0x90DB (p00:4FA3, tipo 2 en p00:4FDD); lo leen
+;   p00:5324 (96 bytes)
+;   0x9260..0x92c0  (96 bytes)
+DATA_dibujo_9260:
+	defb 04fh,030h,04fh,037h,04ch,034h,04ch,034h,086h,07ah,086h,07ah,0feh,002h,07eh,07eh	; 9260  O0O7L4L4.z.z..~~
+	defb 030h,0d0h,098h,068h,098h,068h,08ch,074h,08ch,074h,08ch,074h,07ch,004h,03ch,03ch	; 9270  0..h.h.t.t.t|.<<
+	defb 04ch,034h,04ch,034h,04ch,034h,067h,058h,020h,01fh,038h,027h,01fh,018h,007h,007h	; 9280  L4L4L4gX .8'....
+	defb 098h,068h,098h,068h,098h,068h,030h,0d0h,030h,0d0h,0e0h,020h,0c0h,0c0h,000h,000h	; 9290  .h.h.h0.0.. ....
+	defb 058h,027h,058h,027h,05ch,02bh,05ch,02bh,08eh,075h,08eh,075h,0ffh,006h,07dh,07dh	; 92a0  X'X'\+\+.u.u..}}
+	defb 0d8h,028h,058h,0a8h,058h,0a8h,018h,0e8h,018h,0e8h,018h,0e8h,0f8h,008h,0f8h,0f8h	; 92b0  .(X.X...........
+
+; ----------------------------------------------------------------------
+; DATOS dibujo_92C0: 1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno),
+;   ficha 1 de la lista 0x90DB (p00:4FA3, tipo 0 en p00:4FDD); lo leen
+;   p00:5324 (8 bytes)
+;   0x92c0..0x92c8  (8 bytes)
+DATA_dibujo_92C0:
+	defb 000h,000h,000h,000h,000h,000h,000h,000h	; 92c0  ........
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x92c8..0x9348  (128 bytes)
+DATA_92C8:
+	defb 000h,000h,0ffh,0ffh,000h,00fh,0ffh,0ffh,000h,00fh,0ffh,0ffh,000h,00fh,07fh,0ffh	; 92c8  ................
+	defb 000h,007h,077h,077h,000h,007h,077h,0f7h,000h,000h,077h,077h,000h,008h,0f7h,077h	; 92d8  ..ww..w...ww...w
+	defb 0ffh,0f0h,000h,000h,0ffh,0ffh,000h,000h,0ffh,0ffh,000h,000h,0ffh,07fh,000h,000h	; 92e8  ................
+	defb 077h,077h,000h,000h,0f7h,077h,000h,000h,077h,070h,000h,000h,077h,0f8h,000h,000h	; 92f8  ww...w..wp..w...
+	defb 000h,088h,08fh,0ffh,000h,08fh,0f8h,08fh,000h,0ffh,0f8h,08fh,000h,0f7h,07fh,0ffh	; 9308  ................
+	defb 000h,007h,078h,088h,000h,0f8h,088h,000h,00fh,0ffh,0ffh,000h,00fh,0ffh,0ffh,000h	; 9318  ..x.............
+	defb 0ffh,088h,080h,000h,088h,0ffh,080h,000h,08fh,0ffh,0f0h,000h,0ffh,0f7h,0ffh,000h	; 9328  ................
+	defb 08fh,0ffh,0ffh,000h,008h,0ffh,0f0h,000h,00fh,0ffh,0ffh,000h,00fh,0ffh,0ffh,000h	; 9338  ................
 
 ; ======================================================================
 ; CODIGO 0x9348..0x9701  (953 bytes)
@@ -1832,12 +1965,58 @@ L_97E3:
 	ret			;97f4
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x97f5..0x9834  (63 bytes)
-DATA_97F5:
-	defb 078h,034h,024h,021h,0ffh,024h,020h,01eh,01ah,00fh,027h,013h,020h,002h,0ffh,09ch	; 97f5  x4$!.$ ...'. ...
-	defb 020h,01eh,01ah,00fh,027h,013h,020h,003h,0ffh,0a8h,020h,011h,01eh,023h,0ffh,024h	; 9805   ...'. ... ..#.$
-	defb 020h,024h,017h,021h,017h,022h,01dh,020h,021h,0feh,09ch,020h,016h,01dh,01bh,013h	; 9815   $.!.". !.. ....
-	defb 0ffh,038h,020h,011h,01eh,023h,002h,0ffh,0a8h,020h,011h,01eh,023h,003h,0ffh	; 9825  .8 ..#... ..#..
+; DATOS texto_97F5: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p14:9776, p14:97AE, p14:97DC (5 bytes)
+;   0x97f5..0x97fa  (5 bytes)
+DATA_texto_97F5:
+	defb 078h,034h,024h,021h,0ffh	; 97f5
+
+; ----------------------------------------------------------------------
+; DATOS texto_97FA: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p14:9798 (10 bytes)
+;   0x97fa..0x9804  (10 bytes)
+DATA_texto_97FA:
+	defb 024h,020h,01eh,01ah,00fh,027h,013h,020h,002h,0ffh	; 97fa  $ ...'. ..
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0x9804..0x980e  (10 bytes)
+DATA_9804:
+	defb 09ch,020h,01eh,01ah,00fh,027h,013h,020h,003h,0ffh	; 9804  . ...'. ..
+
+; ----------------------------------------------------------------------
+; DATOS texto_980E: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p14:97A8 (6 bytes)
+;   0x980e..0x9814  (6 bytes)
+DATA_texto_980E:
+	defb 0a8h,020h,011h,01eh,023h,0ffh	; 980e
+
+; ----------------------------------------------------------------------
+; DATOS texto_9814: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p14:97D6 (18 bytes)
+;   0x9814..0x9826  (18 bytes)
+DATA_texto_9814:
+	defb 024h,020h,024h,017h,021h,017h,022h,01dh,020h,021h,0feh,09ch,020h,016h,01dh,01bh	; 9814  $ $.!.". !.. ...
+	defb 013h,0ffh	; 9824
+
+; ----------------------------------------------------------------------
+; DATOS texto_9826: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p14:977C (7 bytes)
+;   0x9826..0x982d  (7 bytes)
+DATA_texto_9826:
+	defb 038h,020h,011h,01eh,023h,002h,0ffh	; 9826
+
+; ----------------------------------------------------------------------
+; DATOS texto_982D: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p14:9782 (7 bytes)
+;   0x982d..0x9834  (7 bytes)
+DATA_texto_982D:
+	defb 0a8h,020h,011h,01eh,023h,003h,0ffh	; 982d
 
 ; ======================================================================
 ; CODIGO 0x9834..0x9868  (52 bytes)
@@ -1876,9 +2055,11 @@ L_9853:
 	call 04220h		;9865
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9868..0x986e  (6 bytes)
-DATA_9868:
-	defb 06eh,098h,0aah,098h,0a4h,099h	; 9868
+; DATOS tabla_9868: 3 destinos del despachador p00:4220 (call en p14:9865, el
+;   indice en A): 986E, 98AA, 99A4; lo leen p14:9865 (6 bytes)
+;   0x9868..0x986e  (6 bytes)
+DATA_tabla_9868:
+	defw 0986eh,098aah,099a4h	; 9868  -> L_986E L_98AA L_99A4
 
 ; ======================================================================
 ; CODIGO 0x986e..0x9a3e  (464 bytes)
@@ -2146,9 +2327,11 @@ L_9A26:
 	call 04220h		;9a3b
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9a3e..0x9a44  (6 bytes)
-DATA_9A3E:
-	defb 044h,09ah,04dh,09ah,0a4h,099h	; 9a3e
+; DATOS tabla_9A3E: 3 destinos del despachador p00:4220 (call en p14:9A3B, el
+;   indice en A): 9A44, 9A4D, 99A4; lo leen p14:9A3B (6 bytes)
+;   0x9a3e..0x9a44  (6 bytes)
+DATA_tabla_9A3E:
+	defw 09a44h,09a4dh,099a4h	; 9a3e  -> L_9A44 L_9A4D L_99A4
 
 ; ======================================================================
 ; CODIGO 0x9a44..0x9b4c  (264 bytes)
@@ -2702,9 +2885,12 @@ L_9E2F:
 	call 04220h		;9e35
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9e38..0x9e44  (12 bytes)
-DATA_9E38:
-	defb 044h,09eh,07ch,09eh,090h,09eh,0adh,09eh,063h,0a0h,0a0h,0a0h	; 9e38  D.|.....c...
+; DATOS tabla_9E38: 6 destinos del despachador p00:4220 (call en p14:9E35, el
+;   indice en A): 9E44, 9E7C, 9E90, 9EAD, A063, A0A0; lo leen p14:9E35 (12
+;   bytes)
+;   0x9e38..0x9e44  (12 bytes)
+DATA_tabla_9E38:
+	defw 09e44h,09e7ch,09e90h,09eadh,0a063h,0a0a0h	; 9e38
 
 ; ======================================================================
 ; CODIGO 0x9e44..0x9f1a  (214 bytes)
@@ -2876,11 +3062,15 @@ L_9F76:
 	call 04220h		;9f7c
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9f7f..0x9fa7  (40 bytes)
-DATA_9F7F:
-	defb 0a7h,09fh,0c7h,09fh,0a7h,09fh,0c7h,09fh,0a7h,09fh,0c7h,09fh,0a7h,09fh,0c7h,09fh	; 9f7f  ................
-	defb 0a7h,09fh,0c7h,09fh,0a7h,09fh,0c7h,09fh,0a7h,09fh,0ffh,09fh,00fh,0a0h,063h,0a0h	; 9f8f  ..............c.
-	defb 0a0h,0a0h,0e5h,0a0h,0f2h,0a0h,03dh,0a1h	; 9f9f  ......=.
+; DATOS tabla_9F7F: 20 destinos del despachador p00:4220 (call en p14:9F7C, el
+;   indice en A): 9FA7, 9FC7, 9FA7, 9FC7, 9FA7, 9FC7, 9FA7, 9FC7, 9FA7, 9FC7,
+;   9FA7, 9FC7, 9FA7, 9FFF, A00F, A063, A0A0, A0E5, A0F2, A13D; lo leen
+;   p14:9F7C (40 bytes)
+;   0x9f7f..0x9fa7  (40 bytes)
+DATA_tabla_9F7F:
+	defw 09fa7h,09fc7h,09fa7h,09fc7h,09fa7h,09fc7h,09fa7h,09fc7h	; 9f7f
+	defw 09fa7h,09fc7h,09fa7h,09fc7h,09fa7h,09fffh,0a00fh,0a063h	; 9f8f
+	defw 0a0a0h,0a0e5h,0a0f2h,0a13dh	; 9f9f
 
 ; ======================================================================
 ; CODIGO 0x9fa7..0x9fff  (88 bytes)

@@ -1,0 +1,37 @@
+# Semillas a mano: 'pNN 0xADDR b6000 b8000 bA000  # por que'.
+#
+# p06:B92F: los codigos 0xE0-0xFE de la partitura saltan por la tabla de
+# 0xB944 (HL = 0xB944 + 2 x (codigo & 0x1F); jp (hl) en p06:B943): 31
+# palabras, porque en 0xB982 ya empieza codigo. El sonido corre con los
+# bancos 4-5-6 (p00:41BC, p00:5806, p00:5CAC).
+p06 0xB982 4 5 6  # codigo 0xE0 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xB998 4 5 6  # codigo 0xE1 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xB982 4 5 6  # codigo 0xE2 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xB998 4 5 6  # codigo 0xE3 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xB9B5 4 5 6  # codigo 0xE4 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xB9DF 4 5 6  # codigo 0xE5 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xB9F3 4 5 6  # codigo 0xE6 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBA03 4 5 6  # codigo 0xE7 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBA15 4 5 6  # codigo 0xE8 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBA26 4 5 6  # codigo 0xE9 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBA2D 4 5 6  # codigo 0xEA de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBA34 4 5 6  # codigo 0xEB de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBA87 4 5 6  # codigo 0xEC de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBA91 4 5 6  # codigo 0xED de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBA98 4 5 6  # codigo 0xEE de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBAA3 4 5 6  # codigo 0xEF de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBAA9 4 5 6  # codigo 0xF0 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBAB3 4 5 6  # codigo 0xF1 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBACE 4 5 6  # codigo 0xF2 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBADD 4 5 6  # codigo 0xF3 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBAE3 4 5 6  # codigo 0xF4 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBAE9 4 5 6  # codigo 0xF5 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBAEF 4 5 6  # codigo 0xF6 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBAF9 4 5 6  # codigo 0xF7 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBB04 4 5 6  # codigo 0xF8 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBB1E 4 5 6  # codigo 0xF9 de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBB29 4 5 6  # codigo 0xFA de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBB31 4 5 6  # codigo 0xFB de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBB4B 4 5 6  # codigo 0xFC de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBB60 4 5 6  # codigo 0xFD de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+p06 0xBB63 4 5 6  # codigo 0xFE de la partitura: tabla 0xB944 (p06:B943 jp (hl))

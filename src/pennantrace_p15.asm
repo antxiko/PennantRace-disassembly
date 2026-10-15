@@ -520,10 +520,17 @@ L_A43B:
 	call 04220h		;a43e
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa441..0xa456  (21 bytes)
-DATA_A441:
-	defb 070h,0a4h,0f2h,0a4h,05bh,0a5h,07fh,0a5h,0a3h,0a5h,021h,04ch,0d7h,035h,023h,036h	; a441  p...[.....!L.5#6
-	defb 000h,0c9h,0cdh,056h,0a4h	; a451
+; DATOS tabla_A441: 6 destinos del despachador p00:4220 (call en p15:A43E, el
+;   indice en A): A470, A4F2, A55B, A57F, A5A3, 4C21; lo leen p15:A43E (12
+;   bytes)
+;   0xa441..0xa44d  (12 bytes)
+DATA_tabla_A441:
+	defw 0a470h,0a4f2h,0a55bh,0a57fh,0a5a3h,04c21h	; a441
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0xa44d..0xa456  (9 bytes)
+DATA_A44D:
+	defb 0d7h,035h,023h,036h,000h,0c9h,0cdh,056h,0a4h	; a44d  .5#6...V.
 
 ; ======================================================================
 ; CODIGO 0xa456..0xa52f  (217 bytes)
@@ -627,8 +634,10 @@ L_A503:
 	jp 04acah		;a52c
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa52f..0xa532  (3 bytes)
-DATA_A52F:
+; DATOS copia_A52F: 3 bytes que p00:4AB7 copia tal cual a la VRAM 0xF600; lo
+;   leen p15:A519 (3 bytes)
+;   0xa52f..0xa532  (3 bytes)
+DATA_copia_A52F:
 	defb 0e0h,000h,000h	; a52f
 
 ; ======================================================================
@@ -689,9 +698,11 @@ L_A5A3:
 	call 04220h		;a5a6
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa5a9..0xa5ad  (4 bytes)
-DATA_A5A9:
-	defb 0adh,0a5h,0cbh,0a5h	; a5a9
+; DATOS tabla_A5A9: 2 destinos del despachador p00:4220 (call en p15:A5A6, el
+;   indice en A): A5AD, A5CB; lo leen p15:A5A6 (4 bytes)
+;   0xa5a9..0xa5ad  (4 bytes)
+DATA_tabla_A5A9:
+	defw 0a5adh,0a5cbh	; a5a9  -> L_A5AD L_A5CB
 
 ; ======================================================================
 ; CODIGO 0xa5ad..0xa6be  (273 bytes)
@@ -841,22 +852,60 @@ L_A6B6:
 	jr L_A6AB		;a6bc
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa6be..0xa792  (212 bytes)
+; DATOS sin identificar  0xa6be..0xa6f0  (50 bytes)
 DATA_A6BE:
 	defb 0cch,0a6h,0d1h,0a6h,0dch,0a6h,0d6h,0a6h,0e2h,0a6h,0e9h,0a6h,0dch,0a6h,00ah,0c8h	; a6be  ................
 	defb 0a2h,0beh,0ffh,042h,0c8h,0a3h,0beh,0ffh,042h,0c8h,0b1h,0beh,0c3h,0ffh,072h,0c8h	; a6ce  ...B....B.....r.
 	defb 0b3h,0bch,0b2h,0ffh,00ah,0c8h,0b1h,0beh,0c3h,0a2h,0ffh,042h,0c8h,0b1h,0beh,0c3h	; a6de  ...........B....
-	defb 0a3h,0ffh,010h,018h,01ch,01eh,01eh,01ch,018h,010h,000h,000h,000h,000h,000h,000h	; a6ee  ................
-	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; a6fe  ................
-	defb 000h,000h,03ch,000h,022h,013h,00fh,01bh,000h,01ch,00fh,01bh,013h,000h,021h,013h	; a70e  ..<.".........!.
-	defb 01ah,013h,011h,022h,0feh,068h,054h,022h,013h,00fh,01bh,021h,0ffh,038h,020h,01eh	; a71e  ...".hT"...!.8 .
-	defb 01ah,00fh,027h,013h,020h,002h,0feh,038h,038h,01eh,01ah,00fh,027h,013h,020h,003h	; a72e  ..'. ..88...'. .
-	defb 0feh,00ah,0c8h,002h,01eh,0feh,042h,0c8h,003h,01eh,0feh,072h,0c8h,013h,01ch,012h	; a73e  ......B....r....
-	defb 0ffh,038h,020h,01eh,01ah,00fh,027h,013h,020h,002h,0feh,048h,038h,011h,01eh,023h	; a74e  .8 ...'. ..H8..#
-	defb 0feh,00ah,0c8h,002h,01eh,0feh,042h,0c8h,011h,01eh,023h,0feh,072h,0c8h,013h,01ch	; a75e  ......B...#.r...
-	defb 012h,0ffh,048h,020h,011h,01eh,023h,002h,0feh,048h,038h,011h,01eh,023h,003h,0feh	; a76e  ..H ..#..H8..#..
-	defb 00ah,0c8h,011h,01eh,023h,002h,0feh,042h,0c8h,011h,01eh,023h,003h,0feh,072h,0c8h	; a77e  ....#..B...#..r.
-	defb 013h,01ch,012h,0ffh	; a78e
+	defb 0a3h,0ffh	; a6ee
+
+; ----------------------------------------------------------------------
+; DATOS copia_A6F0: 32 bytes que p00:4AB7 copia tal cual a la VRAM 0xF800; lo
+;   leen p15:A48F (32 bytes)
+;   0xa6f0..0xa710  (32 bytes)
+DATA_copia_A6F0:
+	defb 010h,018h,01ch,01eh,01eh,01ch,018h,010h,000h,000h,000h,000h,000h,000h,000h,000h	; a6f0  ................
+	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; a700  ................
+
+; ----------------------------------------------------------------------
+; DATOS texto_A710: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p13:6548, p15:A495 (27 bytes)
+;   0xa710..0xa72b  (27 bytes)
+DATA_texto_A710:
+	defb 03ch,000h,022h,013h,00fh,01bh,000h,01ch,00fh,01bh,013h,000h,021h,013h,01ah,013h	; a710  <.".........!...
+	defb 011h,022h,0feh,068h,054h,022h,013h,00fh,01bh,021h,0ffh	; a720  .".hT"...!.
+
+; ----------------------------------------------------------------------
+; DATOS texto_A72B: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p15:A4E9, p15:A68E (36 bytes)
+;   0xa72b..0xa74f  (36 bytes)
+DATA_texto_A72B:
+	defb 038h,020h,01eh,01ah,00fh,027h,013h,020h,002h,0feh,038h,038h,01eh,01ah,00fh,027h	; a72b  8 ...'. ..88...'
+	defb 013h,020h,003h,0feh,00ah,0c8h,002h,01eh,0feh,042h,0c8h,003h,01eh,0feh,072h,0c8h	; a73b  . .......B....r.
+	defb 013h,01ch,012h,0ffh	; a74b
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0xa74f..0xa76a  (27 bytes)
+DATA_A74F:
+	defb 038h,020h,01eh,01ah,00fh,027h,013h,020h,002h,0feh,048h,038h,011h,01eh,023h,0feh	; a74f  8 ...'. ..H8..#.
+	defb 00ah,0c8h,002h,01eh,0feh,042h,0c8h,011h,01eh,023h,0feh	; a75f  .....B...#.
+
+; ----------------------------------------------------------------------
+; DATOS texto_A76A: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p15:A5D1 (6 bytes)
+;   0xa76a..0xa770  (6 bytes)
+DATA_texto_A76A:
+	defb 072h,0c8h,013h,01ch,012h,0ffh	; a76a
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0xa770..0xa792  (34 bytes)
+DATA_A770:
+	defb 048h,020h,011h,01eh,023h,002h,0feh,048h,038h,011h,01eh,023h,003h,0feh,00ah,0c8h	; a770  H ..#..H8..#....
+	defb 011h,01eh,023h,002h,0feh,042h,0c8h,011h,01eh,023h,003h,0feh,072h,0c8h,013h,01ch	; a780  ..#..B...#..r...
+	defb 012h,0ffh	; a790
 
 ; ======================================================================
 ; CODIGO 0xa792..0xab46  (948 bytes)
@@ -1398,9 +1447,11 @@ L_AB40:
 	call 04220h		;ab43
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xab46..0xab4a  (4 bytes)
-DATA_AB46:
-	defb 04ah,0abh,066h,0abh	; ab46
+; DATOS tabla_AB46: 2 destinos del despachador p00:4220 (call en p15:AB43, el
+;   indice en A): AB4A, AB66; lo leen p15:AB43 (4 bytes)
+;   0xab46..0xab4a  (4 bytes)
+DATA_tabla_AB46:
+	defw 0ab4ah,0ab66h	; ab46  -> L_AB4A L_AB66
 
 ; ======================================================================
 ; CODIGO 0xab4a..0xaba0  (86 bytes)
@@ -2151,12 +2202,76 @@ L_B068:
 	jp 05c34h		;b06e
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb071..0xb0ac  (59 bytes)
-DATA_B071:
-	defb 060h,008h,0a0h,000h,0a1h,000h,0a2h,000h,0a3h,0ffh,044h,060h,0a0h,0a1h,081h,0ffh	; b071  `.........D`....
-	defb 068h,050h,0a7h,000h,0a8h,000h,0a9h,0ffh,018h,060h,064h,00eh,06dh,0ffh,06ch,060h	; b081  hP.......`d.m.l`
-	defb 0a4h,081h,0ffh,08ch,060h,0a5h,081h,0ffh,0b0h,060h,0a4h,08fh,0ffh,0d0h,060h,06ch	; b091  ....`....`....`l
-	defb 00ch,00eh,06dh,0a6h,0ffh,0d8h,06ch,00eh,00eh,00eh,0ffh	; b0a1  ..m...l....
+; DATOS texto_B071: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p15:AE5E (10 bytes)
+;   0xb071..0xb07b  (10 bytes)
+DATA_texto_B071:
+	defb 060h,008h,0a0h,000h,0a1h,000h,0a2h,000h,0a3h,0ffh	; b071  `.........
+
+; ----------------------------------------------------------------------
+; DATOS texto_B07B: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p15:AE64 (6 bytes)
+;   0xb07b..0xb081  (6 bytes)
+DATA_texto_B07B:
+	defb 044h,060h,0a0h,0a1h,081h,0ffh	; b07b
+
+; ----------------------------------------------------------------------
+; DATOS texto_B081: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p15:AE6A (8 bytes)
+;   0xb081..0xb089  (8 bytes)
+DATA_texto_B081:
+	defb 068h,050h,0a7h,000h,0a8h,000h,0a9h,0ffh	; b081  hP......
+
+; ----------------------------------------------------------------------
+; DATOS texto_B089: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p15:AE70 (6 bytes)
+;   0xb089..0xb08f  (6 bytes)
+DATA_texto_B089:
+	defb 018h,060h,064h,00eh,06dh,0ffh	; b089
+
+; ----------------------------------------------------------------------
+; DATOS texto_B08F: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p15:AE76 (5 bytes)
+;   0xb08f..0xb094  (5 bytes)
+DATA_texto_B08F:
+	defb 06ch,060h,0a4h,081h,0ffh	; b08f
+
+; ----------------------------------------------------------------------
+; DATOS texto_B094: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p15:AE7C (5 bytes)
+;   0xb094..0xb099  (5 bytes)
+DATA_texto_B094:
+	defb 08ch,060h,0a5h,081h,0ffh	; b094
+
+; ----------------------------------------------------------------------
+; DATOS texto_B099: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p15:AE82 (5 bytes)
+;   0xb099..0xb09e  (5 bytes)
+DATA_texto_B099:
+	defb 0b0h,060h,0a4h,08fh,0ffh	; b099
+
+; ----------------------------------------------------------------------
+; DATOS texto_B09E: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p15:AE88 (8 bytes)
+;   0xb09e..0xb0a6  (8 bytes)
+DATA_texto_B09E:
+	defb 0d0h,060h,06ch,00ch,00eh,06dh,0a6h,0ffh	; b09e  .`l..m..
+
+; ----------------------------------------------------------------------
+; DATOS texto_B0A6: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p15:AE58 (6 bytes)
+;   0xb0a6..0xb0ac  (6 bytes)
+DATA_texto_B0A6:
+	defb 0d8h,06ch,00eh,00eh,00eh,0ffh	; b0a6
 
 ; ======================================================================
 ; CODIGO 0xb0ac..0xb20d  (353 bytes)
@@ -3659,9 +3774,11 @@ L_BB87:
 	call 04220h		;bb8a
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbb8d..0xbb97  (10 bytes)
-DATA_BB8D:
-	defb 097h,0bbh,0bdh,0bbh,0e4h,0bbh,022h,0bch,064h,0bch	; bb8d  ......".d.
+; DATOS tabla_BB8D: 5 destinos del despachador p00:4220 (call en p15:BB8A, el
+;   indice en A): BB97, BBBD, BBE4, BC22, BC64; lo leen p15:BB8A (10 bytes)
+;   0xbb8d..0xbb97  (10 bytes)
+DATA_tabla_BB8D:
+	defw 0bb97h,0bbbdh,0bbe4h,0bc22h,0bc64h	; bb8d
 
 ; ======================================================================
 ; CODIGO 0xbb97..0xbd13  (380 bytes)
@@ -3875,7 +3992,7 @@ L_BD0B:
 	ret			;bd12
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xbd13..0xc000  (749 bytes)
+; DATOS sin identificar  0xbd13..0xbe24  (273 bytes)
 DATA_BD13:
 	defb 002h,0e0h,002h,0c0h,002h,0a0h,002h,080h,002h,060h,002h,040h,001h,030h,000h,028h	; bd13  .........`.@.0.(
 	defb 000h,020h,000h,018h,000h,010h,000h,008h,000h,000h,003h,000h,003h,080h,039h,0bdh	; bd23  . ............9.
@@ -3894,33 +4011,60 @@ DATA_BD13:
 	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bdf3  ................
 	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; be03  ................
 	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; be13  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; be23  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; be33  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; be43  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; be53  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; be63  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; be73  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; be83  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; be93  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bea3  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; beb3  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bec3  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bed3  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bee3  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bef3  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf03  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf13  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf23  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf33  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf43  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf53  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf63  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf73  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf83  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf93  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bfa3  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bfb3  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bfc3  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bfd3  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bfe3  ................
-	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bff3  .............
+	defb 0ffh	; be23
+
+; ----------------------------------------------------------------------
+; DATOS texto_BE24: texto (p00:4EBA, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p03:BDC7 (3 bytes)
+;   0xbe24..0xbe27  (3 bytes)
+DATA_texto_BE24:
+	defb 0ffh,0ffh,0ffh	; be24
+
+; ----------------------------------------------------------------------
+; DATOS sin identificar  0xbe27..0xbe42  (27 bytes)
+DATA_BE27:
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; be27  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; be37  ...........
+
+; ----------------------------------------------------------------------
+; DATOS texto_BE42: texto (p00:4EBA, con 13-14-15 puesto por p00:439C): [x y]
+;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
+;   medio espacio; lo leen p03:BC6D (3 bytes)
+;   0xbe42..0xbe45  (3 bytes)
+DATA_texto_BE42:
+	defb 0ffh,0ffh,0ffh	; be42
+
+; ----------------------------------------------------------------------
+; DATOS relleno_ff: 443 bytes a 0xFF hasta el final del banco: relleno; lo
+;   leen nadie (443 bytes)
+;   0xbe45..0xc000  (443 bytes)
+DATA_relleno_ff:
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; be45  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; be55  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; be65  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; be75  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; be85  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; be95  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bea5  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; beb5  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bec5  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bed5  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bee5  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bef5  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf05  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf15  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf25  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf35  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf45  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf55  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf65  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf75  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf85  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bf95  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bfa5  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bfb5  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bfc5  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bfd5  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bfe5  ................
+	defb 0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh	; bff5  ...........

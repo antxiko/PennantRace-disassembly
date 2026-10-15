@@ -1,0 +1,49 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x8498 0x849D texto_8498  texto (p00:4EB5, con 13-14-15 puesto por p00:439C): caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:847C (5 bytes)
+D 0x849D 0x84A2 texto_849D  texto (p00:4EB5, con 13-14-15 puesto por p00:439C): caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:848C (5 bytes)
+D 0x84A2 0x84A6 texto_84A2  texto (p00:4EB5, con 13-14-15 puesto por p00:439C): caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:8495 (4 bytes)
+D 0x8547 0x8554 texto_8547  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:8523 (13 bytes)
+D 0x86F8 0x8718 copia_86F8  32 bytes que p00:4AB7 copia tal cual a la VRAM 0xF880; lo leen p14:86CC (32 bytes)
+F 0x86F8 16
+D 0x8751 0x8951 copia_8751  512 bytes que p00:4AB7 copia tal cual a la VRAM 0xF800; lo leen p00:5354 (512 bytes)
+F 0x8751 16
+D 0x8951 0x8AD1 copia_8951  384 bytes que p00:4AB7 copia tal cual a la VRAM 0xFA00; lo leen p00:5342 (384 bytes)
+F 0x8951 16
+D 0x8AD1 0x8FD1 copia_8AD1  1280 bytes que p00:4AB7 copia tal cual a la VRAM 0xF800; lo leen p00:5330 (1280 bytes)
+F 0x8AD1 16
+D 0x8FD1 0x90D1 copia_8FD1  256 bytes que p00:4AB7 copia tal cual a la VRAM 0xFF00; lo leen p00:531B (256 bytes)
+F 0x8FD1 16
+D 0x90D1 0x90D5 paletas_90D1  2 punteros a los colores de cada paleta (p00:556D desde p00:4FB0), para la lista 0x90DB; lo leen p00:5324 (4 bytes)
+F 0x90D1 w2
+D 0x90D5 0x90D9 colores_90D5  4 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0x90DB; lo leen p00:5324 (4 bytes)
+F 0x90D5 4
+D 0x90D9 0x90DB colores_90D9  2 colores (un nibble cada uno, ya en su sitio) que p00:4FC3 copia a 0xEC00: la paleta 1 de la lista 0x90DB; lo leen p00:5324 (2 bytes)
+F 0x90D9 2
+D 0x90DB 0x9100 lista_90DB  6 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x90D1); lo leen p00:5324 (37 bytes)
+F 0x90DB 6
+D 0x9100 0x9180 dibujo_9100  8 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 0 de la lista 0x90DB (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:5324 (128 bytes)
+F 0x9100 16
+D 0x9180 0x91E0 dibujo_9180  6 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 2 de la lista 0x90DB (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:5324 (96 bytes)
+F 0x9180 16
+D 0x91E0 0x9260 dibujo_91E0  8 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 3 de la lista 0x90DB (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:5324 (128 bytes)
+F 0x91E0 16
+D 0x9260 0x92C0 dibujo_9260  6 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 5 de la lista 0x90DB (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:5324 (96 bytes)
+F 0x9260 16
+D 0x92C0 0x92C8 dibujo_92C0  1 caracteres de 8x8 a 1 bit por punto (8 bytes cada uno), ficha 1 de la lista 0x90DB (p00:4FA3, tipo 0 en p00:4FDD); lo leen p00:5324 (8 bytes)
+F 0x92C0 8
+D 0x97F5 0x97FA texto_97F5  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:9776, p14:97AE, p14:97DC (5 bytes)
+D 0x97FA 0x9804 texto_97FA  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:9798 (10 bytes)
+D 0x980E 0x9814 texto_980E  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:97A8 (6 bytes)
+D 0x9814 0x9826 texto_9814  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:97D6 (18 bytes)
+D 0x9826 0x982D texto_9826  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:977C (7 bytes)
+D 0x982D 0x9834 texto_982D  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:9782 (7 bytes)
+D 0x9868 0x986E tabla_9868  3 destinos del despachador p00:4220 (call en p14:9865, el indice en A): 986E, 98AA, 99A4; lo leen p14:9865 (6 bytes)
+F 0x9868 w3
+D 0x9A3E 0x9A44 tabla_9A3E  3 destinos del despachador p00:4220 (call en p14:9A3B, el indice en A): 9A44, 9A4D, 99A4; lo leen p14:9A3B (6 bytes)
+F 0x9A3E w3
+D 0x9E38 0x9E44 tabla_9E38  6 destinos del despachador p00:4220 (call en p14:9E35, el indice en A): 9E44, 9E7C, 9E90, 9EAD, A063, A0A0; lo leen p14:9E35 (12 bytes)
+F 0x9E38 w6
+D 0x9F7F 0x9FA7 tabla_9F7F  20 destinos del despachador p00:4220 (call en p14:9F7C, el indice en A): 9FA7, 9FC7, 9FA7, 9FC7, 9FA7, 9FC7, 9FA7, 9FC7, 9FA7, 9FC7, 9FA7, 9FC7, 9FA7, 9FFF, A00F, A063, A0A0, A0E5, A0F2, A13D; lo leen p14:9F7C (40 bytes)
+F 0x9F7F w8
+# --- fin de los bloques de bloques.py ---

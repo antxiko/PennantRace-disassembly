@@ -1,0 +1,11 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xA52B 0xA539 tabla_A52B  7 destinos del despachador p00:4220 (call en p03:A528, el indice en A): A539, A57E, A597, A5F2, A68E, A7DB, A7EF; lo leen p03:A528 (14 bytes)
+F 0xA52B w7
+D 0xB69A 0xB6A6 tabla_B69A  6 destinos del despachador p00:4220 (call en p03:B697, el indice en A): BC22, B6A6, B967, B995, B9B2, B9BA; lo leen p03:B697 (12 bytes)
+F 0xB69A w6
+D 0xBC28 0xBC36 tabla_BC28  7 destinos del despachador p00:4220 (call en p03:BC25, el indice en A): BC36, BC8D, BCA0, BD04, BD56, BD7C, BD8E; lo leen p03:BC25 (14 bytes)
+F 0xBC28 w7
+D 0xBE62 0xC000 relleno_ff  414 bytes a 0xFF hasta el final del banco: relleno; lo leen nadie (414 bytes)
+F 0xBE62 16
+# --- fin de los bloques de bloques.py ---

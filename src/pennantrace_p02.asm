@@ -1006,9 +1006,11 @@ L_8663:
 	call 04220h		;8666
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8669..0x8671  (8 bytes)
-DATA_8669:
-	defb 071h,086h,07ch,086h,0b4h,086h,0c8h,086h	; 8669  q.|.....
+; DATOS tabla_8669: 4 destinos del despachador p00:4220 (call en p02:8666, el
+;   indice en A): 8671, 867C, 86B4, 86C8; lo leen p02:8666 (8 bytes)
+;   0x8669..0x8671  (8 bytes)
+DATA_tabla_8669:
+	defw 08671h,0867ch,086b4h,086c8h	; 8669  -> L_8671 L_867C L_86B4 L_86C8
 
 ; ======================================================================
 ; CODIGO 0x8671..0x876d  (252 bytes)
@@ -1759,9 +1761,11 @@ L_8BB8:
 	call 04220h		;8bbb
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x8bbe..0x8bc4  (6 bytes)
-DATA_8BBE:
-	defb 0c4h,08bh,0dch,08eh,03ch,08fh	; 8bbe
+; DATOS tabla_8BBE: 3 destinos del despachador p00:4220 (call en p02:8BBB, el
+;   indice en A): 8BC4, 8EDC, 8F3C; lo leen p02:8BBB (6 bytes)
+;   0x8bbe..0x8bc4  (6 bytes)
+DATA_tabla_8BBE:
+	defw 08bc4h,08edch,08f3ch	; 8bbe  -> L_8BC4 L_8EDC L_8F3C
 
 ; ======================================================================
 ; CODIGO 0x8bc4..0x908a  (1222 bytes)
@@ -2538,9 +2542,12 @@ L_9149:
 	call 04220h		;9152
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9155..0x9163  (14 bytes)
-DATA_9155:
-	defb 063h,091h,081h,091h,0e4h,091h,028h,092h,0a6h,093h,0b3h,093h,00ah,094h	; 9155  c.....(.......
+; DATOS tabla_9155: 7 destinos del despachador p00:4220 (call en p02:9152, el
+;   indice en A): 9163, 9181, 91E4, 9228, 93A6, 93B3, 940A; lo leen p02:9152
+;   (14 bytes)
+;   0x9155..0x9163  (14 bytes)
+DATA_tabla_9155:
+	defw 09163h,09181h,091e4h,09228h,093a6h,093b3h,0940ah	; 9155
 
 ; ======================================================================
 ; CODIGO 0x9163..0x93f0  (653 bytes)
@@ -3130,9 +3137,11 @@ L_95BA:
 	call 04220h		;95bd
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x95c0..0x95c8  (8 bytes)
-DATA_95C0:
-	defb 0c8h,095h,025h,096h,0a8h,096h,043h,097h	; 95c0  ..%...C.
+; DATOS tabla_95C0: 4 destinos del despachador p00:4220 (call en p02:95BD, el
+;   indice en A): 95C8, 9625, 96A8, 9743; lo leen p02:95BD (8 bytes)
+;   0x95c0..0x95c8  (8 bytes)
+DATA_tabla_95C0:
+	defw 095c8h,09625h,096a8h,09743h	; 95c0  -> L_95C8 L_9625 L_96A8 L_9743
 
 ; ======================================================================
 ; CODIGO 0x95c8..0x97e5  (541 bytes)
@@ -3492,9 +3501,12 @@ L_97DD:
 	call 04220h		;97e2
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x97e5..0x97f1  (12 bytes)
-DATA_97E5:
-	defb 0f1h,097h,0f2h,097h,015h,098h,034h,098h,055h,098h,0f1h,097h	; 97e5  ......4.U...
+; DATOS tabla_97E5: 6 destinos del despachador p00:4220 (call en p02:97E2, el
+;   indice en A): 97F1, 97F2, 9815, 9834, 9855, 97F1; lo leen p02:97E2 (12
+;   bytes)
+;   0x97e5..0x97f1  (12 bytes)
+DATA_tabla_97E5:
+	defw 097f1h,097f2h,09815h,09834h,09855h,097f1h	; 97e5
 
 ; ======================================================================
 ; CODIGO 0x97f1..0x98ca  (217 bytes)
@@ -3676,9 +3688,11 @@ L_9912:
 	call 04220h		;9915
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9918..0x9920  (8 bytes)
-DATA_9918:
-	defb 020h,099h,09eh,09bh,0a8h,09bh,0a9h,09bh	; 9918   .......
+; DATOS tabla_9918: 4 destinos del despachador p00:4220 (call en p02:9915, el
+;   indice en A): 9920, 9B9E, 9BA8, 9BA9; lo leen p02:9915 (8 bytes)
+;   0x9918..0x9920  (8 bytes)
+DATA_tabla_9918:
+	defw 09920h,09b9eh,09ba8h,09ba9h	; 9918  -> L_9920 L_9B9E L_9BA8 L_9BA9
 
 ; ======================================================================
 ; CODIGO 0x9920..0x9ea5  (1413 bytes)

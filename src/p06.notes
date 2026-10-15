@@ -1,0 +1,5 @@
+
+# --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xBFE5 0xC000 relleno_ff  27 bytes a 0xFF hasta el final del banco: relleno; lo leen nadie (27 bytes)
+F 0xBFE5 16
+# --- fin de los bloques de bloques.py ---
