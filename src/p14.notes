@@ -326,8 +326,10 @@ C 0x8723 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMM
 C 0x874E copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 C 0x9350 lee la x de la pelota y el byte siguiente (16 bits)
 C 0x9357 lee la y de la pelota (vertical) y el byte siguiente (16 bits)
+C 0x93BD guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 C 0x93C4 guarda lo que acaba la jugada: 1 home run, 2 jugada anulada
 C 0x93D9 texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
+C 0x93E5 guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 C 0x93EF guarda la jugada anulada (foul)
 C 0x93F8 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x93FE texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto

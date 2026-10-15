@@ -1346,7 +1346,7 @@ L_93B1:
 	and 002h		;93b8
 	jr nz,L_93E4		;93ba
 	xor a			;93bc
-	ld (0eff4h),a		;93bd
+	ld (0eff4h),a		;93bd   ; guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 	ld (0ed39h),a		;93c0
 	inc a			;93c3
 	ld (0e33bh),a		;93c4   ; guarda lo que acaba la jugada: 1 home run, 2 jugada anulada
@@ -1369,7 +1369,7 @@ L_93DC:
 	ret z			;93e3
 L_93E4:
 	xor a			;93e4   ; foul: decidido y jugada anulada...
-	ld (0eff4h),a		;93e5
+	ld (0eff4h),a		;93e5   ; guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 	ld (0ed39h),a		;93e8
 	inc a			;93eb
 	ld (0eddfh),a		;93ec

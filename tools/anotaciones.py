@@ -115,7 +115,18 @@ RUTINAS = {
     (6, 0xB193): ("motor_pide", "empieza el sonido A: copia su cabecera (0x600A + 2 x A) y prepara cada canal"),
     (6, 0xB41E): ("motor_cuadro", "el sonido de un cuadro: avanza cada canal y escribe el PSG y el SCC"),
     (6, 0xB51E): ("lee_partitura", "lee la partitura del canal IX: 0xFF acaba, 0xD0-0xFE son ordenes y lo de abajo notas"),
-    (6, 0xB92F): ("orden_de_partitura", "la orden A de la partitura: 0xD0-0xDF octava y volumen (p06:BB99), 0xE0-0xFE por la tabla 0xB944"),
+    (6, 0xB305): ("canal_ocupa", "el canal IX toma el sonido si su prioridad (A) no es menor que la que tiene"),
+    (6, 0xB405): ("canal_nuevo", "pone a 0 el vibrato y el desplazamiento del canal IX"),
+    (6, 0xB4E9): ("canal_cuadro", "el cuadro del canal IX, si suena"),
+    (6, 0xB6AF): ("nota_empieza", "la nota empieza: periodo, envolvente desde el principio y volumen"),
+    (6, 0xB700): ("nota_sigue", "la nota que sigue sonando: frase, vibrato y envolvente"),
+    (6, 0xB7B5): ("envolvente", "el volumen del cuadro segun la envolvente del canal IX (en E)"),
+    (6, 0xB8EE): ("calla_canal", "calla el canal IX"),
+    (6, 0xBBB8): ("al_psg_y_scc", "lo de este cuadro, al PSG y al SCC"),
+    (6, 0xBC93): ("mezclador", "el mezclador del PSG (registro 7) = A, guardado en 0xEFDA"),
+    (6, 0xBECC): ("escribe_scc", "el byte (HL) al registro DE del SCC"),
+    (6, 0xBF2F): ("forma_de_onda", "32 bytes de HL a la forma de onda DE del SCC"),
+    (6, 0xB92F): ("orden_de_partitura", "la orden A de la partitura: 0xD0-0xD5 octava, 0xDE prioridad (p06:BB99), 0xE0-0xFE por la tabla 0xB944"),
 }
 
 RAM = {
@@ -135,6 +146,28 @@ RAM = {
     0xEC00: ("los colores de la paleta del dibujo en curso", "p00:4FC0"),
     0xED46: ("el reparto guardado por p00:439C (3 bytes)", "p00:43D9"),
     0xEE00: ("las fichas de los 8 canales de sonido (0x2D bytes cada una)", "p06:B226"),
+    0xEFC2: ("las marcas del motor: bit 0 bajada (0x81/0x82), 1 pausa, 3 bajada parada, 4 subida (0x83)", "p06:B331"),
+    0xEFC3: ("el sonido que empieza", "p06:B200"),
+    0xEFD6: ("los cuadros de cada paso de la bajada", "p06:B348"),
+    0xEFD7: ("los pasos de la bajada", "p06:B348"),
+    0xEFD8: ("la cuenta de cuadros de la bajada", "p06:B852"),
+    0xEFD9: ("lo que se rebaja el volumen", "p06:B8B2"),
+    0xEFDA: ("el mezclador del PSG (registro 7)", "p06:BC93"),
+    0xEFDB: ("el bit del canal que se esta atendiendo", "p06:B46E"),
+    0xEFDC: ("el periodo de ruido del canal 3", "p06:B9C3"),
+    0xEFDD: ("el periodo de ruido de los canales 1 y 2", "p06:B9D1"),
+    0xEFDE: ("las marcas del ruido y la envolvente del PSG", "p06:BC1B"),
+    0xEFDF: ("la forma de la envolvente del PSG", "p06:B9E6"),
+    0xEFE0: ("el periodo de la envolvente del PSG, bajo", "p06:BA06"),
+    0xEFE1: ("el periodo de la envolvente del PSG, alto", "p06:B9F6"),
+    0xEFE2: ("los registros del SCC que cambiaron (16 bits)", "p06:BCBD"),
+    0xEFE4: ("la copia de los periodos del SCC (0x9880-0x9889)", "p06:BCBD"),
+    0xEFEE: ("la copia de los volumenes del SCC", "p06:BCC1"),
+    0xEFF3: ("los canales del SCC que suenan", "p06:BE00"),
+    0xEFF4: ("el tono libre del canal 4 (bit 0 baja, bit 7 empieza)", "p06:BF4F"),
+    0xEFF5: ("el cuadro par o impar del tono libre", "p06:BF63"),
+    0xEFF6: ("el periodo del tono libre", "p06:BF6C"),
+    0xEFF9: ("el 0xFDA2 del ultimo cuadro", "p06:B427"),
     0xEFC4: ("la cabecera del sonido que empieza (18 bytes)", "p06:B211"),
     0xEFFA: ("si no es 0, el motor rechaza los sonidos 0x32-0x3C", "p06:B194"),
     0xEFFC: ("el ultimo sonido pedido", "p04:6003"),
@@ -176,7 +209,7 @@ RAM.update({
     0xED99: ("la espera antes de la siguiente musica", "p00:5E80"),
     0xED9A: ("la siguiente musica", "p00:5E80"),
     0xE33D: ("la musica que suena en el partido", "p00:5DE6"),
-    0xEF3B: ("lo que dice el motor que suena", "p00:5DE0"),
+    0xEF3B: ("la ficha del canal 8 (su primer byte: el sonido que toca)", "p06:B2F7, p00:5DE0"),
     0xE231: ("las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)", "p00:5B0D, p01:61E2"),
     0xE1F6: ("la formacion del campo (0-6)", "p00:5868"),
     0xE1FE: ("el lado por el que batea (0 si IX+6 de su ficha es 0x20, si no 1): elige las tablas del otro lado", "p02:8919"),
@@ -272,4 +305,40 @@ CAMPOS_JUGADOR = {
 CARGAS_JUGADOR = (0xE211, 0xE231, 0xE271, 0xE281)
 IX_JUGADOR_POR_DEFECTO = {1: ((0x6AEA, 0x75D5), (0x78F2, 0x7B79)), 2: ((0x8BB8, 0x8FFF),)}
 
-FICHAS = ((CARGAS_JUGADOR, IX_JUGADOR_POR_DEFECTO, CAMPOS_JUGADOR),)
+# Las 8 fichas de canal del motor de sonido: 0x2D bytes desde 0xEE00 (3 del
+# PSG y 5 del SCC, p06:B226). Cada campo sale de la orden que lo escribe
+# (la tabla p06:B944).
+CAMPOS_CANAL = {
+    0x00: "el sonido que toca el canal (0 calla)",
+    0x01: "la prioridad del sonido",
+    0x02: "el puntero de la partitura (bajo)",
+    0x03: "el puntero de la partitura (alto)",
+    0x04: "lo que le queda a la nota",
+    0x05: "la cuenta del bucle de la orden 0xFB",
+    0x06: "la cuenta del bucle de la orden 0xFC",
+    0x07: "la vuelta de la orden 0xF9 (bajo)",
+    0x08: "la vuelta de la orden 0xF9 (alto)",
+    0x09: "el modo de las notas (orden 0xFE)",
+    0x0D: "las marcas de las ordenes 0xE0-0xE3",
+    0x0E: "las marcas del canal",
+    0x0F: "las marcas de la envolvente",
+    0x13: "el valor de la orden 0xE0",
+    0x14: "el valor de la orden 0xE9",
+    0x15: "el valor de la orden 0xEA",
+    0x16: "la octava (ordenes 0xD0-0xD5)",
+    0x1A: "el valor de la orden 0xF2",
+    0x1B: "el valor alto de la orden 0xF1",
+    0x1C: "el valor bajo de la orden 0xF1",
+    0x25: "el valor de la orden 0xED",
+    0x26: "el valor de la orden 0xEE",
+    0x27: "la envolvente de la orden 0xF8 (bajo)",
+    0x28: "la envolvente de la orden 0xF8 (alto)",
+    0x29: "el valor de la orden 0xF7",
+    0x2A: "las marcas guardadas (orden 0xFE)",
+    0x2B: "las marcas de la envolvente guardadas",
+}
+CARGAS_CANAL = tuple(0xEE00 + 0x2D * k for k in range(8))
+IX_CANAL_POR_DEFECTO = {6: ((0xB41E, 0xBB99),)}
+
+FICHAS = ((CARGAS_JUGADOR, IX_JUGADOR_POR_DEFECTO, CAMPOS_JUGADOR),
+          (CARGAS_CANAL, IX_CANAL_POR_DEFECTO, CAMPOS_CANAL))

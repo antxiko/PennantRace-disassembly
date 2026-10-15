@@ -790,12 +790,14 @@ C 0x9793 de_mas_a: DE = DE + A
 C 0x97E2 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x98B3 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x9915 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x995A guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 C 0x995D lee lo que acaba la jugada: 1 home run, 2 jugada anulada
 C 0x9960 apunta a la jugada anulada (foul)
 C 0x9966 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9976 guarda la ficha de 16 bytes de la pelota
 C 0x99B0 apunta a la ficha de 16 bytes de la pelota
 C 0x9A0D sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x9A1D guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 C 0x9A55 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9A85 lee la y de la pelota (vertical)
 C 0x9A9E lee la y de la pelota (vertical) y el byte siguiente (16 bits)
@@ -828,6 +830,7 @@ C 0x9CFF guarda el mando del bateador o los corredores
 C 0x9D02 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0x9D14 guarda la y de la pelota (vertical) y el byte siguiente (16 bits)
 C 0x9D24 guarda la x de la pelota y el byte siguiente (16 bits)
+C 0x9D45 guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 C 0x9D56 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x9DBC sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9DCC hl_mas_a: HL = HL + A

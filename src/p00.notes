@@ -976,6 +976,7 @@ C 0x44CF bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x44D5 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x44DF sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x44E8 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x44EC guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 C 0x4502 guarda el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
 C 0x450A bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x4510 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
@@ -1083,6 +1084,7 @@ C 0x4A34 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vue
 C 0x4A3C guarda el estado del juego (indice del despachador principal)
 C 0x4A73 guarda las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0x4A87 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x4A8B guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 C 0x4A8E guarda el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
 C 0x4AB8 vram_para_escribir: pone la direccion HL de la VRAM (17 bits, R#14) para escribir
 C 0x4ACC vram_para_escribir: pone la direccion HL de la VRAM (17 bits, R#14) para escribir

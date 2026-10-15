@@ -569,6 +569,7 @@ C 0xAD87 lee la y, byte alto
 C 0xAD99 lee la x (horizontal)
 C 0xAD9C lee la x, byte alto
 C 0xADBB lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0xADC8 guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 C 0xADD4 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xADE8 lee la jugada anulada (foul)
 C 0xAE09 lee las marcas

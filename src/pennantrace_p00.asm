@@ -677,7 +677,7 @@ L_44E6:
 	ld a,001h		;44e6   ; paso 3: calla todo (sonido 1)...
 	call sonido		;44e8   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	xor a			;44eb
-	ld (0eff4h),a		;44ec
+	ld (0eff4h),a		;44ec   ; guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 	call borra_pantalla		;44ef   ; ...borra la pantalla, carga la fuente (p00:5991: 161 caracteres a la VRAM 0) y p15:B670
 	call L_5991		;44f2
 	call 0b670h		;44f5
@@ -1402,7 +1402,7 @@ L_4A83:
 	ld a,001h		;4a85
 	call sonido		;4a87   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	xor a			;4a8a
-	ld (0eff4h),a		;4a8b
+	ld (0eff4h),a		;4a8b   ; guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 	ld (0e190h),a		;4a8e   ; guarda el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
 	ld (0e332h),a		;4a91
 	jp 0651ch		;4a94   ; p01:651C

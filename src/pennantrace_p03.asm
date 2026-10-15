@@ -1980,7 +1980,7 @@ L_ADC3:
 	ld a,(ix+000h)		;adc3   ; 0xE33C = 1, 0xED2A = 1, el sonido 6 y 0xEDDF = 1
 	pop bc			;adc6
 	xor a			;adc7
-	ld (0eff4h),a		;adc8
+	ld (0eff4h),a		;adc8   ; guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 	inc a			;adcb
 	ld (0e33ch),a		;adcc
 	ld (0ed2ah),a		;adcf

@@ -3760,7 +3760,7 @@ L_9931:
 	ret nz			;9958
 L_9959:
 	xor a			;9959   ; bota: el sonido 0x0B (si la jugada sigue)...
-	ld (0eff4h),a		;995a
+	ld (0eff4h),a		;995a   ; guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 	ld a,(0e33bh)		;995d   ; lee lo que acaba la jugada: 1 home run, 2 jugada anulada
 	ld hl,0eddeh		;9960   ; apunta a la jugada anulada (foul)
 	or (hl)			;9963
@@ -3873,7 +3873,7 @@ L_9A16:
 	or a			;9a19
 	ret z			;9a1a
 	ld a,002h		;9a1b
-	ld (0eff4h),a		;9a1d
+	ld (0eff4h),a		;9a1d   ; guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 	ret			;9a20
 L_9A21:
 	ld a,(0e33ch)		;9a21   ; cogida? la espera de 0xED7B...
@@ -4313,7 +4313,7 @@ L_9CE6:
 	cp 002h		;9d40
 	ret c			;9d42
 	ld a,081h		;9d43
-	ld (0eff4h),a		;9d45
+	ld (0eff4h),a		;9d45   ; guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 	ret			;9d48
 L_9D49:
 	ld a,(0e304h)		;9d49   ; el lanzador abridor: acabado (0xE304 = 1), la espera de 0xE302 y 0xE1D1 = 1
