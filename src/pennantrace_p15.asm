@@ -22,14 +22,14 @@ DATA_partida_A000:
 
 
 L_A002:
-	ld a,(0e140h)		;a002
+	ld a,(0e140h)		;a002   ; paso: hasta que el sprite de 0xE140 baje de 0x40; luego 16 cuadros
 	cp 040h		;a005
 	ret nc			;a007
 	ld a,010h		;a008
 	ld (0de04h),a		;a00a   ; guarda la cuenta atras del estado
 	jr $-19		;a00d
 L_A00F:
-	ld hl,0de04h		;a00f   ; apunta a la cuenta atras del estado
+	ld hl,0de04h		;a00f   ; paso: los datos de 0xDD80 (el campeon): nombre, resultados y el texto de 0xA307...
 	dec (hl)			;a012
 	ret nz			;a013
 	xor a			;a014
@@ -55,7 +55,7 @@ L_A00F:
 	call L_A1CC		;a044
 	ld hl,0a307h		;a047
 	call L_A22D		;a04a
-	ld hl,00040h		;a04d
+	ld hl,00040h		;a04d   ; ...sube el cuadro (p15:A171), 0xE365 y 0xE370 = 0x90
 	ld de,008d4h		;a050
 	ld a,001h		;a053
 	call L_A171		;a055
@@ -64,7 +64,7 @@ L_A00F:
 	ld (0e370h),a		;a05d
 	jp L_A28B		;a060
 L_A063:
-	ld hl,0de04h		;a063   ; apunta a la cuenta atras del estado
+	ld hl,0de04h		;a063   ; paso: 96 cuadros subiendo la pantalla (R#23) cada dos...
 	inc (hl)			;a066
 	ld a,(hl)			;a067
 	cp 060h		;a068
@@ -77,11 +77,11 @@ L_A063:
 	ld b,a			;a074
 	jp 00047h		;a075   ; BIOS WRTVDP - Writes data in the VDP-register
 L_A078:
-	xor a			;a078
+	xor a			;a078   ; ...y al siguiente
 	ld (0dd86h),a		;a079
 	jp 09ffah		;a07c
 L_A07F:
-	ld b,a			;a07f
+	ld b,a			;a07f   ; cada 8 vueltas, una linea mas del cuadro (YMMM)
 	ld hl,0dd86h		;a080
 	inc (hl)			;a083
 	ld a,(hl)			;a084
@@ -103,7 +103,7 @@ L_A07F:
 	pop af			;a09e
 	ret			;a09f
 L_A0A0:
-	ld hl,0dd86h		;a0a0
+	ld hl,0dd86h		;a0a0   ; paso: 0x92 vueltas bajando el cuadro...
 	inc (hl)			;a0a3
 	ld a,(hl)			;a0a4
 	cp 092h		;a0a5
@@ -123,7 +123,7 @@ L_A0A0:
 	ld a,001h		;a0ba
 	jp L_A171		;a0bc
 L_A0BF:
-	ld a,(0dd9dh)		;a0bf
+	ld a,(0dd9dh)		;a0bf   ; ...con un solo equipo de jugador se acaba (0xED2F = 1)...
 	dec a			;a0c2
 	jr z,L_A0CB		;a0c3
 L_A0C5:
@@ -131,7 +131,7 @@ L_A0C5:
 	ld (0ed2fh),a		;a0c7
 	ret			;a0ca
 L_A0CB:
-	ld hl,0dd8ah		;a0cb
+	ld hl,0dd8ah		;a0cb   ; ...si no, el siguiente de la lista de 0xDD80 (0xFF acaba) y 144 cuadros
 	inc (hl)			;a0ce
 	ld e,(hl)			;a0cf
 	ld d,000h		;a0d0
@@ -145,7 +145,7 @@ L_A0CB:
 	ld (0de04h),a		;a0df   ; guarda la cuenta atras del estado
 	jp 09ffah		;a0e2
 L_A0E5:
-	ld hl,0de04h		;a0e5   ; apunta a la cuenta atras del estado
+	ld hl,0de04h		;a0e5   ; paso: la espera
 	dec (hl)			;a0e8
 	ret nz			;a0e9
 	xor a			;a0ea
@@ -153,7 +153,7 @@ L_A0E5:
 	ld (0dd86h),a		;a0ec
 	jp 09ffah		;a0ef
 L_A0F2:
-	ld a,(0de03h)		;a0f2   ; lee el contador de cuadros del juego (sube uno por cuadro)
+	ld a,(0de03h)		;a0f2   ; paso: cada 4 cuadros una linea, hasta 0x60...
 	and 003h		;a0f5
 	ret nz			;a0f7
 	ld hl,0dd86h		;a0f8
@@ -173,7 +173,7 @@ L_A0F2:
 	ld a,001h		;a10e
 	jp L_A171		;a110
 L_A113:
-	call 09ffah		;a113
+	call 09ffah		;a113   ; ...luego los rotulos de 0xA133 y el nombre
 	xor a			;a116
 	ld (0dd86h),a		;a117
 	call 040e1h		;a11a
@@ -200,7 +200,7 @@ DATA_resto_A133:
 
 
 L_A13D:
-	ld hl,0dd86h		;a13d
+	ld hl,0dd86h		;a13d   ; paso: el cuadro baja de dos en dos hasta 0x8B; despues el siguiente equipo
 	inc (hl)			;a140
 	ld a,(hl)			;a141
 	and a			;a142
@@ -230,7 +230,7 @@ L_A169:
 	ld (0ecefh),a		;a16b
 	jp L_A0CB		;a16e
 L_A171:
-	ex af,af'			;a171
+	ex af,af'			;a171   ; orden YMMM (0xE0) del VDP: mueve en vertical la franja de x = L, de la y = H a D, E de alto
 	call 04c67h		;a172   ; espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
 	ld a,(00007h)		;a175
 	inc a			;a178
@@ -273,12 +273,12 @@ L_A1A6:
 	ei			;a1b1
 	ret			;a1b2
 L_A1B3:
-	ld de,0e041h		;a1b3
+	ld de,0e041h		;a1b3   ; 0xE040-0xE0FF a cero
 	ld hl,0e040h		;a1b6
 	ld bc,000bfh		;a1b9
 	jr L_A1C7		;a1bc
 L_A1BE:
-	ld de,0df01h		;a1be
+	ld de,0df01h		;a1be   ; 0xDF00-0xE0FF a cero (los colores de sprite)
 	ld hl,0df00h		;a1c1   ; apunta a los colores de sprite (16 bytes por sprite) antes de la VRAM 0xF400
 	ld bc,001ffh		;a1c4
 L_A1C7:
@@ -286,7 +286,7 @@ L_A1C7:
 	ldir		;a1c9
 	ret			;a1cb
 L_A1CC:
-	ld c,000h		;a1cc
+	ld c,000h		;a1cc   ; un numero de 3 cifras BCD con los ceros de delante en blanco...
 	ld a,(hl)			;a1ce
 	call L_A1E7		;a1cf
 	ld c,000h		;a1d2
@@ -305,7 +305,7 @@ L_A1DB:
 	ld c,0ffh		;a1e4
 	ld a,(hl)			;a1e6
 L_A1E7:
-	and 00fh		;a1e7
+	and 00fh		;a1e7   ; ...una cifra (1-10, o 0 en blanco) con p15:A259 y 8 a la derecha
 	jr z,L_A1ED		;a1e9
 	ld c,0ffh		;a1eb
 L_A1ED:
@@ -317,7 +317,7 @@ L_A1ED:
 	ld d,a			;a1f6
 	ret			;a1f7
 L_A1F8:
-	ld c,0ffh		;a1f8
+	ld c,0ffh		;a1f8   ; tres cifras BCD sin quitar ceros
 	ld a,(hl)			;a1fa
 	call L_A1E7		;a1fb
 	inc hl			;a1fe
@@ -332,7 +332,7 @@ L_A1F8:
 	ld a,(hl)			;a20b
 	jr L_A1E7		;a20c
 L_A20E:
-	ld de,00040h		;a20e
+	ld de,00040h		;a20e   ; una fila de caracteres 0 (en blanco) desde (0x40, 0)
 	ld bc,00001h		;a211
 L_A214:
 	push bc			;a214
@@ -351,7 +351,7 @@ L_A214:
 L_A22C:
 	inc hl			;a22c
 L_A22D:
-	ld d,(hl)			;a22d
+	ld d,(hl)			;a22d   ; un texto con [x y] y caracteres de la fuente 0x38 hasta 0xFF (0xFE trae otra posicion)
 	inc hl			;a22e
 	ld e,(hl)			;a22f
 L_A230:
@@ -365,7 +365,7 @@ L_A230:
 	call 04f6fh		;a23c   ; siguiente_columna: D += 8; si da la vuelta, E += 8
 	jr L_A230		;a23f
 L_A241:
-	ld b,00ah		;a241
+	ld b,00ah		;a241   ; 10 letras en ASCII (el '$' acaba)
 L_A243:
 	call 09834h		;a243
 	push af			;a246
@@ -381,7 +381,7 @@ L_A24E:
 	djnz L_A243		;a256
 	ret			;a258
 L_A259:
-	push bc			;a259
+	push bc			;a259   ; un caracter de la fuente 0x38 de la pagina 1 a la 1 (A' = 5)
 	push hl			;a25a
 	push de			;a25b
 	call 04f5eh		;a25c
@@ -393,7 +393,7 @@ L_A259:
 	pop bc			;a269
 	ret			;a26a
 L_A26B:
-	ld hl,(0ecf0h)		;a26b
+	ld hl,(0ecf0h)		;a26b   ; la caida de 4 sprites: la y (0xECF0) mas la velocidad (0xECF2), que crece
 	ld de,(0ecf2h)		;a26e
 	add hl,de			;a272
 	ld (0ecf0h),hl		;a273
@@ -407,11 +407,11 @@ L_A26B:
 	ld (0ecf2h),hl		;a287
 	ret			;a28a
 L_A28B:
-	ld hl,(0dd88h)		;a28b
+	ld hl,(0dd88h)		;a28b   ; el porcentaje de victorias: las victorias...
 	ld a,(hl)			;a28e
 	call L_AD75		;a28f
 	call L_ADD0		;a292
-	ld hl,0e365h		;a295
+	ld hl,0e365h		;a295   ; ...entre los partidos (0xE365)...
 	ld e,(hl)			;a298
 	ld d,000h		;a299
 	ld l,a			;a29b
@@ -427,7 +427,7 @@ L_A28B:
 	ld a,l			;a2af
 	or a			;a2b0
 	jr z,L_A2EE		;a2b1
-	ld b,004h		;a2b3
+	ld b,004h		;a2b3   ; ...tres cifras de la division larga...
 L_A2B5:
 	ld c,0ffh		;a2b5
 	and a			;a2b7
@@ -446,7 +446,7 @@ L_A2B8:
 	inc hl			;a2c8
 	exx			;a2c9
 L_A2CA:
-	push de			;a2ca
+	push de			;a2ca   ; ...el resto x 10 cada vez...
 	add hl,hl			;a2cb
 	ld d,h			;a2cc
 	ld e,l			;a2cd
@@ -457,7 +457,7 @@ L_A2CA:
 	djnz L_A2B5		;a2d2
 	jr L_A2E0		;a2d4
 L_A2D6:
-	ld a,004h		;a2d6
+	ld a,004h		;a2d6   ; ...exacta: la cifra que toca...
 	cp b			;a2d8
 	jr z,L_A2FA		;a2d9
 	inc c			;a2db
@@ -466,7 +466,7 @@ L_A2D6:
 	ld (hl),a			;a2de
 	exx			;a2df
 L_A2E0:
-	ld hl,0e361h		;a2e0
+	ld hl,0e361h		;a2e0   ; ...las dos primeras juntas en BCD...
 	ld a,(hl)			;a2e3
 	rla			;a2e4
 	rla			;a2e5
@@ -478,13 +478,13 @@ L_A2E0:
 	dec hl			;a2ec
 	ld (hl),a			;a2ed
 L_A2EE:
-	ld hl,0e360h		;a2ee
+	ld hl,0e360h		;a2ee   ; ...y se pinta en (0xBC, 0xE370)
 	ld a,(0e370h)		;a2f1
 	ld e,a			;a2f4
 	ld d,0bch		;a2f5
 	jp L_A1F8		;a2f7
 L_A2FA:
-	ld a,(0e370h)		;a2fa
+	ld a,(0e370h)		;a2fa   ; todas: un 1 (1.000) en 0xB0
 	ld e,a			;a2fd
 	ld d,0b0h		;a2fe
 	ld a,002h		;a300
@@ -526,7 +526,7 @@ DATA_resto_A307:
 
 
 L_A43B:
-	ld a,(0d74ch)		;a43b   ; lee el despachador de los menus (y 0xD74D)
+	ld a,(0d74ch)		;a43b   ; segun el despachador de los menus (0xD74C)
 	call 04220h		;a43e   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
@@ -542,32 +542,32 @@ DATA_tabla_A441:
 
 
 L_A44B:
-	ld hl,0d74ch		;a44b   ; apunta a el despachador de los menus (y 0xD74D)
+	ld hl,0d74ch		;a44b   ; el paso anterior de los menus
 	dec (hl)			;a44e
 	inc hl			;a44f
 	ld (hl),000h		;a450
 	ret			;a452
 L_A453:
-	call L_A456		;a453
+	call L_A456		;a453   ; dos pasos mas...
 L_A456:
-	ld hl,0d74ch		;a456   ; apunta a el despachador de los menus (y 0xD74D)
+	ld hl,0d74ch		;a456   ; ...el siguiente, con el subpaso a 0
 	inc (hl)			;a459
 	inc hl			;a45a
 	ld (hl),000h		;a45b
 	ret			;a45d
 L_A45E:
-	ld hl,0d74dh		;a45e
+	ld hl,0d74dh		;a45e   ; el subpaso siguiente
 	inc (hl)			;a461
 	ret			;a462
 L_A463:
-	ld a,(0d759h)		;a463   ; lee la opcion del menu de PENNANT
+	ld a,(0d759h)		;a463   ; el paso de la opcion (0xD759 + 2)
 	add a,002h		;a466
 	ld (0d74ch),a		;a468   ; guarda el despachador de los menus (y 0xD74D)
 	xor a			;a46b
 	ld (0d74dh),a		;a46c
 	ret			;a46f
 L_A470:
-	call 04b9fh		;a470   ; borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
+	call 04b9fh		;a470   ; la eleccion de equipos para jugar: pantalla borrada, menus a cero...
 	xor a			;a473
 	ld hl,0d74ch		;a474   ; apunta a el despachador de los menus (y 0xD74D)
 	ld de,0d74dh		;a477
@@ -576,13 +576,13 @@ L_A470:
 	ldir		;a47e
 	ld (0da6bh),a		;a480
 	ld (0d759h),a		;a483   ; guarda la opcion del menu de PENNANT
-	ld de,0f800h		;a486
+	ld de,0f800h		;a486   ; ...la flecha (32 bytes de 0xA6F0), el texto de 0xA710...
 	ld hl,0a6f0h		;a489
 	ld bc,00020h		;a48c
 	call 04ab7h		;a48f   ; copia_a_vram: copia BC bytes de HL a la VRAM DE
 	ld hl,0a710h		;a492
 	call 04ea6h		;a495   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-	ld hl,00050h		;a498
+	ld hl,00050h		;a498   ; ...lineas y marcos...
 	ld c,00dh		;a49b
 	ld b,000h		;a49d
 	call 04c91h		;a49f   ; linea: orden LINE (0x70) del VDP desde HL
@@ -606,7 +606,7 @@ L_A470:
 	ld c,00dh		;a4ce
 	ld b,00ch		;a4d0
 	call 04cc7h		;a4d2   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
-	ld a,(0de02h)		;a4d5   ; lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
+	ld a,(0de02h)		;a4d5   ; ...el titulo: el ordenador solo (0xA770), dos jugadores (0xA72B) o uno (0xA74F)...
 	bit 3,a		;a4d8
 	ld hl,0a770h		;a4da
 	jr nz,L_A4E9		;a4dd
@@ -616,19 +616,19 @@ L_A470:
 	ld hl,0a72bh		;a4e6
 L_A4E9:
 	call 04ea6h		;a4e9   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-	call L_A67A		;a4ec
+	call L_A67A		;a4ec   ; ...la opcion y al paso siguiente
 	jp L_A456		;a4ef
 L_A4F2:
-	call L_A4FD		;a4f2
+	call L_A4FD		;a4f2   ; los nombres y al paso siguiente
 	jp L_A456		;a4f5
 L_A4F8:
 	call L_A532		;a4f8
 	jr L_A503		;a4fb
 L_A4FD:
-	call L_A532		;a4fd
+	call L_A532		;a4fd   ; los equipos de serie (p15:A532) y la lista (p13:6A0D)...
 	call 06a0dh		;a500
 L_A503:
-	ld hl,0da6ch		;a503
+	ld hl,0da6ch		;a503   ; ...los dos elegidos en blanco y el cursor
 	ld (hl),020h		;a506
 	ld de,0da6dh		;a508
 	ld bc,00015h		;a50b
@@ -658,7 +658,7 @@ DATA_copia_A52F:
 
 
 L_A532:
-	ld hl,062d7h		;a532
+	ld hl,062d7h		;a532   ; los 6 nombres de serie a 0xDAAE (y 0x24 al final), 6 en la lista, p14:81FC, el sonido 0x2E y ninguno elegido
 	ld de,0daaeh		;a535   ; apunta a los nombres de los equipos (11 letras cada uno)
 	ld bc,00042h		;a538
 	ldir		;a53b
@@ -676,7 +676,7 @@ L_A532:
 	ldir		;a558
 	ret			;a55a
 L_A55B:
-	call L_A663		;a55b
+	call L_A663		;a55b   ; opcion 0: el visitante con el boton...
 	ld a,(0d759h)		;a55e   ; lee la opcion del menu de PENNANT
 	or a			;a561
 	jp nz,L_A463		;a562
@@ -685,13 +685,13 @@ L_A55B:
 	ld a,(0de06h)		;a56b   ; lee los botones recien pulsados del mando 1 / cursores
 	and 010h		;a56e
 	ret z			;a570
-	ld hl,0d70ah		;a571   ; apunta a los 6 equipos elegidos (0xFF libre)
+	ld hl,0d70ah		;a571   ; ...en 0xD70A
 	ld e,000h		;a574
 	call L_A5DA		;a576
 	call L_A603		;a579
 	jp 06922h		;a57c
 L_A57F:
-	call L_A663		;a57f
+	call L_A663		;a57f   ; opcion 1: el local, en 0xD70B
 	ld a,(0d759h)		;a582   ; lee la opcion del menu de PENNANT
 	dec a			;a585
 	jp nz,L_A463		;a586
@@ -706,7 +706,7 @@ L_A57F:
 	call L_A603		;a59d
 	jp 06922h		;a5a0
 L_A5A3:
-	ld a,(0d74dh)		;a5a3
+	ld a,(0d74dh)		;a5a3   ; el subpaso de 0xD74D
 	call 04220h		;a5a6   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
@@ -722,7 +722,7 @@ DATA_tabla_A5A9:
 
 
 L_A5AD:
-	call L_A663		;a5ad
+	call L_A663		;a5ad   ; opcion 2: con el boton y los dos elegidos, al subpaso siguiente
 	ld a,(0d759h)		;a5b0   ; lee la opcion del menu de PENNANT
 	sub 002h		;a5b3
 	jp nz,L_A463		;a5b5
@@ -739,20 +739,20 @@ L_A5AD:
 	jp nz,L_A45E		;a5c7
 	ret			;a5ca
 L_A5CB:
-	call L_A630		;a5cb
+	call L_A630		;a5cb   ; copia los dos nombres (p15:A630), el texto de 0xA76A y 0xE1D1 = 1
 	ld hl,0a76ah		;a5ce
 	call 04ea6h		;a5d1   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,001h		;a5d4
 	ld (0e1d1h),a		;a5d6   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ret			;a5d9
 L_A5DA:
-	ld a,(0d74fh)		;a5da   ; lee la fila del cursor de las listas
+	ld a,(0d74fh)		;a5da   ; el equipo de la fila: no el mismo que el otro...
 	ld bc,(0d70ah)		;a5dd   ; lee los 6 equipos elegidos (0xFF libre) y el byte siguiente (16 bits)
 	cp b			;a5e1
 	ret z			;a5e2
 	cp c			;a5e3
 	ret z			;a5e4
-	ld (hl),a			;a5e5
+	ld (hl),a			;a5e5   ; ...su nombre (11 letras) a 0xDA6C + 11 x E y el sonido 0x27
 	ld a,e			;a5e6
 	call 06afdh		;a5e7
 	ld bc,0da6ch		;a5ea
@@ -767,7 +767,7 @@ L_A5DA:
 	ld a,027h		;a5fe
 	jp 057ffh		;a600   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_A603:
-	ld hl,0da6ch		;a603
+	ld hl,0da6ch		;a603   ; los dos nombres elegidos (o espacios) en (0x20, 0x80) y (0x38, 0x80)
 	ld de,08020h		;a606
 	ld a,(0d70ah)		;a609   ; lee los 6 equipos elegidos (0xFF libre)
 	inc a			;a60c
@@ -787,7 +787,7 @@ L_A624:
 	call 06a0dh		;a62a
 	jp L_A463		;a62d
 L_A630:
-	ld hl,0d680h		;a630
+	ld hl,0d680h		;a630   ; 0xD680 a cero y los nombres a 0xD680 (visitante) y 0xD740 (local)
 	ld de,0d681h		;a633
 	ld (hl),000h		;a636
 	ld bc,0000ah		;a638
@@ -801,7 +801,7 @@ L_A630:
 	ldir		;a64e
 	ret			;a650
 L_A651:
-	ld b,00ah		;a651
+	ld b,00ah		;a651   ; 10 letras ASCII en la fuente
 L_A653:
 	push bc			;a653
 	call 09834h		;a654
@@ -814,11 +814,11 @@ L_A653:
 	djnz L_A653		;a660
 	ret			;a662
 L_A663:
-	ld a,(0de06h)		;a663   ; lee los botones recien pulsados del mando 1 / cursores
+	ld a,(0de06h)		;a663   ; con el boton 2...
 	and 020h		;a666
 	ret z			;a668
 L_A669:
-	ld a,(0d759h)		;a669   ; lee la opcion del menu de PENNANT
+	ld a,(0d759h)		;a669   ; ...la opcion siguiente (0-2), el sonido 0x26...
 	inc a			;a66c
 	cp 003h		;a66d
 	jr nz,L_A672		;a66f
@@ -828,7 +828,7 @@ L_A672:
 	ld a,026h		;a675
 	call 057ffh		;a677   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_A67A:
-	ld a,(0de02h)		;a67a   ; lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
+	ld a,(0de02h)		;a67a   ; ...el titulo y el texto de la opcion (tabla 0xA6BE, o 0xA6C6 con el ordenador solo)
 	bit 3,a		;a67d
 	ld hl,0a770h		;a67f
 	jr nz,L_A68E		;a682
@@ -934,7 +934,7 @@ DATA_resto_A770:
 
 
 L_A792:
-	xor a			;a792
+	xor a			;a792   ; el campeon de PENNANT: la lista de 0xDD80 a 0xFF...
 	ld (0dd9dh),a		;a793
 	dec a			;a796
 	ld hl,0dd80h		;a797
@@ -942,7 +942,7 @@ L_A792:
 	ld (hl),a			;a79d
 	ld bc,00006h		;a79e
 	ldir		;a7a1
-	call 06b5bh		;a7a3
+	call 06b5bh		;a7a3   ; ...los partidos de cada uno: (equipos - 1) x 0xD6DE...
 	dec b			;a7a6
 	ld a,(0d6deh)		;a7a7
 	ld c,a			;a7aa
@@ -951,7 +951,7 @@ L_A7AC:
 	add a,c			;a7ac
 	djnz L_A7AC		;a7ad
 	ld (0e360h),a		;a7af
-	ld a,(0d6e1h)		;a7b2   ; lee el numero de jugadores de PENNANT (1-6)
+	ld a,(0d6e1h)		;a7b2   ; ...con varios jugadores, si alguno no ha acabado los suyos, aun no...
 	dec a			;a7b5
 	jr z,L_A7E2		;a7b6
 	ld hl,0d6e3h		;a7b8
@@ -975,20 +975,20 @@ L_A7C4:
 	djnz L_A7BE		;a7d4
 	jp L_A864		;a7d6
 L_A7D9:
-	pop bc			;a7d9
+	pop bc			;a7d9   ; ...p15:A81E (puede alcanzarle alguien?)
 	pop hl			;a7da
 	call L_A81E		;a7db
 	ret nc			;a7de
 	jp L_A864		;a7df
 L_A7E2:
-	ld a,(0e360h)		;a7e2
+	ld a,(0e360h)		;a7e2   ; con uno: cuando la jornada (0xD6DC) llega al final...
 	ld hl,0d6dch		;a7e5   ; apunta a el equipo del jugador en PENNANT (bit 0)
 	cp (hl)			;a7e8
 	jr z,L_A7EF		;a7e9
 	call L_A81E		;a7eb
 	ret nc			;a7ee
 L_A7EF:
-	ld hl,0e195h		;a7ef
+	ld hl,0e195h		;a7ef   ; ...su equipo contra la clasificacion de 0xD730...
 	ld a,(0d6dch)		;a7f2   ; lee el equipo del jugador en PENNANT (bit 0)
 	rra			;a7f5
 	jr c,L_A7FB		;a7f6
@@ -1012,13 +1012,13 @@ L_A802:
 	djnz L_A802		;a80f
 	jr L_A864		;a811
 L_A813:
-	ld a,002h		;a813
+	ld a,002h		;a813   ; ...empate en cabeza: 0xDD9D = 2 (desempate) y el rival a 0xDD80
 	ld (0dd9dh),a		;a815
 	ld de,0dd80h		;a818
 	ldi		;a81b
 	ret			;a81d
 L_A81E:
-	call 06b5bh		;a81e
+	call 06b5bh		;a81e   ; puede alcanzar alguien al primero? las victorias de cada uno (p15:ADD0)...
 	ld a,b			;a821
 	ld hl,0d730h		;a822
 	ld de,0e340h		;a825   ; apunta a variable de paso (cada rutina la usa a su manera)
@@ -1035,7 +1035,7 @@ L_A82B:
 	call L_ADD0		;a837
 	add a,e			;a83a
 	ld b,a			;a83b
-	ld a,(0e360h)		;a83c
+	ld a,(0e360h)		;a83c   ; ...y los partidos que le quedan...
 	sub b			;a83f
 	push af			;a840
 	ld a,e			;a841
@@ -1057,7 +1057,7 @@ L_A82B:
 	ld de,0e351h		;a856
 	inc hl			;a859
 L_A85A:
-	ld a,(de)			;a85a
+	ld a,(de)			;a85a   ; ...si alguno con todas las que le quedan no llega, se acaba (no carry)
 	add a,(hl)			;a85b
 	cp c			;a85c
 	ret nc			;a85d
@@ -1067,7 +1067,7 @@ L_A85A:
 	scf			;a862
 	ret			;a863
 L_A864:
-	ld a,001h		;a864
+	ld a,001h		;a864   ; se acaba: 0xDD9D = 1 y los primeros empatados a la lista 0xDD80
 	ld (0dd9dh),a		;a866
 	ld hl,0d730h		;a869
 	ld a,(hl)			;a86c
@@ -1115,11 +1115,11 @@ L_A8A4:
 	djnz L_A8A4		;a8a9
 	ret			;a8ab
 L_A8AC:
-	ld hl,0d392h		;a8ac
+	ld hl,0d392h		;a8ac   ; las medias del equipo de TEAM EDIT: las dos cifras de cada uno (12 de campo)...
 	ld de,0e1b4h		;a8af
 	ld bc,00c0ch		;a8b2
 	call L_A9C9		;a8b5
-	ld hl,0e1ech		;a8b8
+	ld hl,0e1ech		;a8b8   ; ...ordenadas (p15:BA2D) y la media (p15:AA23) en 0xE1EE...
 	ld de,0e1b4h		;a8bb
 	ld b,00ch		;a8be
 	call L_BA2D		;a8c0
@@ -1128,7 +1128,7 @@ L_A8AC:
 	ld bc,03500h		;a8c7
 	call L_AA23		;a8ca
 	ld (0e1eeh),de		;a8cd
-	ld hl,0d395h		;a8d1
+	ld hl,0d395h		;a8d1   ; ...la segunda columna (0xE1EA) y la tercera (0xE1E6)...
 	ld de,0e1cch		;a8d4
 	ld bc,00c0dh		;a8d7
 	call L_A9E5		;a8da
@@ -1150,7 +1150,7 @@ L_A8AC:
 	ld bc,00600h		;a905
 	call L_AA23		;a908
 	ld (0e1e6h),de		;a90b
-	ld hl,0d43bh		;a90f
+	ld hl,0d43bh		;a90f   ; ...las de los 4 lanzadores (0xE1FA, 0xE206, 0xE218)...
 	ld de,0e1f0h		;a912
 	ld bc,00411h		;a915
 	call L_A9C9		;a918
@@ -1186,15 +1186,15 @@ L_A8AC:
 	ld hl,0e216h		;a96b
 	ld bc,00200h		;a96e
 	call L_AA23		;a971
-	ld (0e218h),de		;a974   ; guarda la x de la pelota y el byte siguiente (16 bits)
-	ld hl,0d443h		;a978
-	ld de,0e21ah		;a97b   ; apunta a la velocidad x de la pelota
+	ld (0e218h),de		;a974
+	ld hl,0d443h		;a978   ; ...tres valores de los lanzadores con p15:AA31...
+	ld de,0e21ah		;a97b
 	call L_A9FC		;a97e
 	ld hl,0e21eh		;a981
 	call L_AA31		;a984
 	ld (0e21fh),a		;a987
 	ld hl,0d444h		;a98a
-	ld de,0e220h		;a98d   ; apunta a el defensor que tiene la pelota (1-9; 0 nadie)
+	ld de,0e220h		;a98d
 	call L_A9FC		;a990
 	ld hl,0e224h		;a993
 	call L_AA31		;a996
@@ -1204,8 +1204,8 @@ L_A8AC:
 	call L_A9FC		;a9a2
 	ld hl,0e22ah		;a9a5
 	call L_AA31		;a9a8
-	ld (0e22bh),a		;a9ab   ; guarda el defensor que va a por la pelota (desplazamiento de 16 en 16)
-	call L_B76A		;a9ae
+	ld (0e22bh),a		;a9ab
+	call L_B76A		;a9ae   ; ...y los pinta todos
 	call L_B7F6		;a9b1
 	call L_B6FE		;a9b4
 	call L_B8D1		;a9b7
@@ -1215,7 +1215,7 @@ L_A8AC:
 	call L_B9C0		;a9c3
 	jp L_B84B		;a9c6
 L_A9C9:
-	push bc			;a9c9
+	push bc			;a9c9   ; C columnas de dos cifras (decenas y unidades) a BCD menos uno, B filas de C bytes
 	inc de			;a9ca
 	ld a,(hl)			;a9cb
 	inc hl			;a9cc
@@ -1241,7 +1241,7 @@ L_A9C9:
 	djnz L_A9C9		;a9e2
 	ret			;a9e4
 L_A9E5:
-	push de			;a9e5
+	push de			;a9e5   ; lo mismo con una sola columna
 L_A9E6:
 	push bc			;a9e6
 	ld a,(hl)			;a9e7
@@ -1263,7 +1263,7 @@ L_A9E6:
 	pop de			;a9fa
 	ret			;a9fb
 L_A9FC:
-	push de			;a9fc
+	push de			;a9fc   ; 4 valores de los lanzadores (cada 19 bytes) menos uno y su suma
 	ld b,004h		;a9fd
 L_A9FF:
 	push bc			;a9ff
@@ -1281,7 +1281,7 @@ L_A9FF:
 	ex de,hl			;aa11
 	ret			;aa12
 L_AA13:
-	ld hl,00000h		;aa13
+	ld hl,00000h		;aa13   ; HL = la suma BCD de B bytes de DE
 L_AA16:
 	ld a,(de)			;aa16
 	inc de			;aa17
@@ -1295,7 +1295,7 @@ L_AA16:
 	djnz L_AA16		;aa20
 	ret			;aa22
 L_AA23:
-	ld (hl),e			;aa23
+	ld (hl),e			;aa23   ; guarda la suma y DE = BC - la suma (BCD)
 	inc hl			;aa24
 	ld (hl),d			;aa25
 	ld a,c			;aa26
@@ -1310,7 +1310,7 @@ L_AA23:
 	ld e,a			;aa2f
 	ret			;aa30
 L_AA31:
-	ld bc,00025h		;aa31
+	ld bc,00025h		;aa31   ; guarda la suma y A = 0x25 - la suma (BCD)
 	ld (hl),e			;aa34
 	inc hl			;aa35
 	ld (hl),d			;aa36
@@ -1319,12 +1319,12 @@ L_AA31:
 	daa			;aa39
 	ret			;aa3a
 L_AA3B:
-	ld a,(0dd92h)		;aa3b
+	ld a,(0dd92h)		;aa3b   ; MEDIA SELECT: segun el paso (0xDD92)...
 	dec a			;aa3e
 	jr z,L_AA81		;aa3f
 	dec a			;aa41
 	jp z,L_AAD6		;aa42
-	ld de,02870h		;aa45
+	ld de,02870h		;aa45   ; ...paso 0: borra 6 filas, dos caracteres, el texto de p13:7DE1 y la flecha
 	ld b,006h		;aa48
 	call L_AA69		;aa4a
 	ld de,078c0h		;aa4d
@@ -1338,11 +1338,11 @@ L_AA3B:
 	xor a			;aa60
 	call L_AABC		;aa61
 L_AA64:
-	ld hl,0dd92h		;aa64
+	ld hl,0dd92h		;aa64   ; al paso siguiente
 	inc (hl)			;aa67
 	ret			;aa68
 L_AA69:
-	push de			;aa69
+	push de			;aa69   ; B filas de 10 caracteres en blanco, de 16 en 16
 	push bc			;aa6a
 	ld b,00ah		;aa6b
 L_AA6D:
@@ -1360,7 +1360,7 @@ L_AA6D:
 	djnz L_AA69		;aa7e
 	ret			;aa80
 L_AA81:
-	call L_AAAB		;aa81
+	call L_AAAB		;aa81   ; paso 1: la flecha; con el boton 1, el soporte (0xDD8F = 0xDD93 + 1)...
 	ld a,(0de06h)		;aa84   ; lee los botones recien pulsados del mando 1 / cursores
 	and 010h		;aa87
 	ret z			;aa89
@@ -1369,7 +1369,7 @@ L_AA81:
 	ld (0dd8fh),a		;aa8e   ; guarda el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 	dec a			;aa91
 	xor 001h		;aa92
-	ld de,02890h		;aa94
+	ld de,02890h		;aa94   ; ...borra la otra opcion y 32 cuadros
 	rla			;aa97
 	rla			;aa98
 	rla			;aa99
@@ -1383,7 +1383,7 @@ L_AA81:
 	ld (hl),020h		;aaa7
 	jr L_AA64		;aaa9
 L_AAAB:
-	call L_AACF		;aaab
+	call L_AACF		;aaab   ; la flecha: arriba o abajo cambian 0xDD93...
 	ld hl,0dd93h		;aaae
 	ld a,(0de06h)		;aab1   ; lee los botones recien pulsados del mando 1 / cursores
 	and 003h		;aab4
@@ -1392,7 +1392,7 @@ L_AAAB:
 	xor 001h		;aab9
 	ld (hl),a			;aabb
 L_AABC:
-	ld c,0ffh		;aabc
+	ld c,0ffh		;aabc   ; ...y se pinta en su fila (y = 16 n + 0x90)
 L_AABE:
 	rla			;aabe
 	rla			;aabf
@@ -1405,18 +1405,18 @@ L_AABE:
 	ld hl,07df7h		;aac9
 	jp 04eb5h		;aacc   ; texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
 L_AACF:
-	ld a,(0dd93h)		;aacf
+	ld a,(0dd93h)		;aacf   ; borra la flecha
 	ld c,000h		;aad2
 	jr L_AABE		;aad4
 L_AAD6:
-	ld hl,0de04h		;aad6   ; apunta a la cuenta atras del estado
+	ld hl,0de04h		;aad6   ; paso 2: la espera y 0xDD91 = 1
 	dec (hl)			;aad9
 	ret nz			;aada
 	ld a,001h		;aadb
 	ld (0dd91h),a		;aadd
 	ret			;aae0
 L_AAE1:
-	ld a,(0dd92h)		;aae1
+	ld a,(0dd92h)		;aae1   ; SI / NO: el primer cuadro, el cursor; luego...
 	dec a			;aae4
 	jr z,L_AAF2		;aae5
 	call 06187h		;aae7
@@ -1425,7 +1425,7 @@ L_AAE1:
 	inc (hl)			;aaf0
 	ret			;aaf1
 L_AAF2:
-	call L_AB01		;aaf2
+	call L_AB01		;aaf2   ; ...con el boton 1, 0xDD91 = 1
 	ld a,(0de06h)		;aaf5   ; lee los botones recien pulsados del mando 1 / cursores
 	and 010h		;aaf8
 	ret z			;aafa
@@ -1433,7 +1433,7 @@ L_AAF2:
 	ld (0dd91h),a		;aafd
 	ret			;ab00
 L_AB01:
-	ld a,(0de06h)		;ab01   ; lee los botones recien pulsados del mando 1 / cursores
+	ld a,(0de06h)		;ab01   ; arriba o abajo cambian SI / NO y el cursor se mueve
 	and 003h		;ab04
 	jr z,L_AB10		;ab06
 	ld a,(0dd93h)		;ab08
@@ -1449,13 +1449,13 @@ L_AB10:
 	add a,d			;ab19
 	jp 069e0h		;ab1a
 L_AB1D:
-	ld hl,0e190h		;ab1d   ; apunta a el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
+	ld hl,0e190h		;ab1d   ; la demostracion: todo el partido a cero, los equipos...
 	ld de,0e191h		;ab20
 	ld bc,00c54h		;ab23
 	ld (hl),000h		;ab26
 	ldir		;ab28
 	call L_AB73		;ab2a
-	ld hl,00708h		;ab2d
+	ld hl,00708h		;ab2d   ; ...0x708 cuadros (0xDE0B), al paso 0, 0xE1A0 = 1 y el sonido 0x2D
 	ld (0de0bh),hl		;ab30
 	xor a			;ab33
 	ld (0ecefh),a		;ab34
@@ -1464,7 +1464,7 @@ L_AB1D:
 	ld a,02dh		;ab3b
 	jp 057ffh		;ab3d   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_AB40:
-	ld a,(0ecefh)		;ab40
+	ld a,(0ecefh)		;ab40   ; el paso de 0xECEF
 	call 04220h		;ab43   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
@@ -1480,7 +1480,7 @@ DATA_tabla_AB46:
 
 
 L_AB4A:
-	call 04081h		;ab4a
+	call 04081h		;ab4a   ; paso 0: el partido (p00:4081) hasta acabar la cuenta; luego p00:4078 y 120 cuadros
 	ld hl,(0de0bh)		;ab4d
 	dec hl			;ab50
 	ld (0de0bh),hl		;ab51
@@ -1495,7 +1495,7 @@ L_AB4A:
 	inc (hl)			;ab64
 	ret			;ab65
 L_AB66:
-	call 04081h		;ab66
+	call 04081h		;ab66   ; paso 1: el partido 120 cuadros mas y 0xE1A0 = 0
 	ld hl,0de0bh		;ab69
 	dec (hl)			;ab6c
 	ret nz			;ab6d
@@ -1503,17 +1503,17 @@ L_AB66:
 	ld (0e1a0h),a		;ab6f   ; guarda el modo elegido en el menu (no 0: elegido)
 	ret			;ab72
 L_AB73:
-	call 0408ah		;ab73
+	call 0408ah		;ab73   ; los preparativos: p00:408A, p00:4093, dos equipos (p15:ABB0)...
 	call 04093h		;ab76
 	call L_ABB0		;ab79
-	call L_AB89		;ab7c
+	call L_AB89		;ab7c   ; ...los ordenes de bateo de 0xABA0, el paso 0 y el ordenador solo (0xDE02 = 8)
 	xor a			;ab7f
 	ld (0e1a1h),a		;ab80   ; guarda el paso de la jugada (y de TEAM EDIT)
 	ld a,008h		;ab83
 	ld (0de02h),a		;ab85   ; guarda las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 	ret			;ab88
 L_AB89:
-	ld hl,0aba0h		;ab89
+	ld hl,0aba0h		;ab89   ; el mismo orden de 16 bytes de 0xABA0 a los dos equipos
 	ld de,0ec50h		;ab8c   ; apunta a el orden de bateo del visitante (9 numeros de jugador)
 	ld bc,00010h		;ab8f
 	ldir		;ab92
@@ -1537,7 +1537,7 @@ DATA_resto_ABA0:
 
 
 L_ABB0:
-	ld hl,0edffh		;abb0
+	ld hl,0edffh		;abb0   ; dos equipos de la tabla 0xABE1, una pareja distinta cada vez (0xEDFF)...
 	inc (hl)			;abb3
 	ld a,(hl)			;abb4
 	and 00fh		;abb5
@@ -1550,13 +1550,13 @@ L_ABB0:
 	inc de			;abc3
 	ld a,(hl)			;abc4
 	ld (de),a			;abc5
-	ld a,(0d70ah)		;abc6   ; lee los 6 equipos elegidos (0xFF libre)
+	ld a,(0d70ah)		;abc6   ; ...con sus fichas de 255 bytes de p13:731F
 	ld de,0d380h		;abc9   ; apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 	call L_ABD5		;abcc
 	ld a,(0d70bh)		;abcf
 	ld de,0d47fh		;abd2   ; apunta a la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 L_ABD5:
-	ld hl,0731fh		;abd5
+	ld hl,0731fh		;abd5   ; la ficha del equipo A (la tabla p13:731F) a DE
 	call 0556dh		;abd8   ; palabra_a: HL = la palabra A de la tabla HL
 	ld bc,000ffh		;abdb
 	ldir		;abde
@@ -1579,7 +1579,7 @@ DATA_resto_ABE1:
 
 
 L_AC1A:
-	ld hl,0d6dch		;ac1a   ; apunta a el equipo del jugador en PENNANT (bit 0)
+	ld hl,0d6dch		;ac1a   ; la jornada siguiente de PENNANT (0xD6DC): los partidos, el rival...
 	inc (hl)			;ac1d
 	call L_AC81		;ac1e
 	ld a,(0d6e1h)		;ac21   ; lee el numero de jugadores de PENNANT (1-6)
@@ -1589,13 +1589,13 @@ L_AC1A:
 	call L_AD2A		;ac2b
 	jp L_ADFA		;ac2e
 L_AC31:
-	ld hl,0d710h		;ac31
+	ld hl,0d710h		;ac31   ; con un jugador, los otros dos partidos de la jornada se echan a suertes: las carreras al azar (p15:AC7A)...
 	call L_AC7A		;ac34
 	push hl			;ac37
 	ld hl,0d712h		;ac38
 	call L_AC7A		;ac3b
 	pop hl			;ac3e
-	cp (hl)			;ac3f
+	cp (hl)			;ac3f   ; ...sin empates: si salen iguales, uno mas a uno de los dos al azar
 	jr nz,L_AC4C		;ac40
 	ld a,r		;ac42
 	and 001h		;ac44
@@ -1619,7 +1619,7 @@ L_AC4C:
 L_AC66:
 	inc (hl)			;ac66
 L_AC67:
-	ld hl,0d710h		;ac67
+	ld hl,0d710h		;ac67   ; las 4 a BCD
 	ld b,004h		;ac6a
 L_AC6C:
 	push bc			;ac6c
@@ -1633,12 +1633,12 @@ L_AC6C:
 	djnz L_AC6C		;ac77
 	ret			;ac79
 L_AC7A:
-	call L_AD8A		;ac7a
+	call L_AD8A		;ac7a   ; un numero al azar de 0 a 15 (p15:AD8A)
 	and 00fh		;ac7d
 	ld (hl),a			;ac7f
 	ret			;ac80
 L_AC81:
-	ld a,(0d6e1h)		;ac81   ; lee el numero de jugadores de PENNANT (1-6)
+	ld a,(0d6e1h)		;ac81   ; los partidos jugados de cada pareja: con un jugador, los dos de las suertes...
 	dec a			;ac84
 	jr nz,L_ACBB		;ac85
 	ld d,000h		;ac87
@@ -1672,7 +1672,7 @@ L_AC81:
 	ld h,b			;acb7
 	call L_ACD2		;acb8
 L_ACBB:
-	ld d,000h		;acbb
+	ld d,000h		;acbb   ; ...y el del jugador (0xE195 contra 0xE197)
 	ld a,(0e195h)		;acbd
 	dec a			;acc0
 	ld e,a			;acc1
@@ -1687,14 +1687,14 @@ L_ACBB:
 	ld l,(hl)			;acd0
 	ld h,b			;acd1
 L_ACD2:
-	push hl			;acd2
+	push hl			;acd2   ; uno mas en la tabla de partidos para los dos (los dos sentidos)
 	call L_ACDA		;acd3
 	pop hl			;acd6
 	ld a,l			;acd7
 	ld l,h			;acd8
 	ld h,a			;acd9
 L_ACDA:
-	push hl			;acda
+	push hl			;acda   ; la casilla de A contra B en 0xD6E3 (6 x 6)
 	ld a,l			;acdb
 	call 065fbh		;acdc
 	ld l,c			;acdf
@@ -1716,7 +1716,7 @@ L_ACDA:
 	inc (hl)			;acf5
 	ret			;acf6
 L_ACF7:
-	ld a,(0d6e1h)		;acf7   ; lee el numero de jugadores de PENNANT (1-6)
+	ld a,(0d6e1h)		;acf7   ; las victorias: con un jugador, los dos partidos de las suertes...
 	dec a			;acfa
 	jr nz,L_AD09		;acfb
 	ld hl,0d710h		;acfd
@@ -1724,9 +1724,9 @@ L_ACF7:
 	ld hl,0d714h		;ad03
 	call L_AD0C		;ad06
 L_AD09:
-	ld hl,0e194h		;ad09   ; apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
+	ld hl,0e194h		;ad09   ; ...y el del jugador (las carreras de 0xE194 y 0xE196)
 L_AD0C:
-	ld a,(hl)			;ad0c
+	ld a,(hl)			;ad0c   ; el que mas carreras tiene: una victoria; el otro, una derrota
 	inc hl			;ad0d
 	ld b,(hl)			;ad0e
 	inc hl			;ad0f
@@ -1750,7 +1750,7 @@ L_AD1A:
 	inc hl			;ad27
 	jr L_AD98		;ad28
 L_AD2A:
-	ld hl,0d68bh		;ad2a
+	ld hl,0d68bh		;ad2a   ; la clasificacion: numero y victorias de cada equipo a 0xD730...
 	ld de,0d730h		;ad2d
 	call 06b5bh		;ad30
 	ld c,001h		;ad33
@@ -1767,7 +1767,7 @@ L_AD35:
 	pop bc			;ad43
 	inc c			;ad44
 	djnz L_AD35		;ad45
-	call 06b5bh		;ad47
+	call 06b5bh		;ad47   ; ...ordenada por victorias (burbuja)
 	dec b			;ad4a
 	ld de,0d731h		;ad4b
 L_AD4E:
@@ -1798,18 +1798,18 @@ L_AD67:
 	djnz L_AD4E		;ad6c
 	ret			;ad6e
 L_AD6F:
-	ld c,(hl)			;ad6f
+	ld c,(hl)			;ad6f   ; cambia (HL) con (DE)
 	ld a,(de)			;ad70
 	ld (hl),a			;ad71
 	ld a,c			;ad72
 	ld (de),a			;ad73
 	ret			;ad74
 L_AD75:
-	call L_AD7D		;ad75
+	call L_AD7D		;ad75   ; HL = las victorias de la ficha del equipo A (+11)
 	ld a,00bh		;ad78
 	jp 04216h		;ad7a   ; hl_mas_a: HL = HL + A
 L_AD7D:
-	dec a			;ad7d
+	dec a			;ad7d   ; HL = la ficha de 15 bytes del equipo A en 0xD680
 	ld hl,0d680h		;ad7e
 	ld b,a			;ad81
 	add a,a			;ad82
@@ -1819,7 +1819,7 @@ L_AD7D:
 	sub b			;ad86
 	jp 04216h		;ad87   ; hl_mas_a: HL = HL + A
 L_AD8A:
-	ld a,r		;ad8a
+	ld a,r		;ad8a   ; al azar: 0xD6E0 += R x 3
 	ld c,a			;ad8c
 	add a,a			;ad8d
 	add a,c			;ad8e
@@ -1829,7 +1829,7 @@ L_AD8A:
 	ld (0d6e0h),a		;ad94
 	ret			;ad97
 L_AD98:
-	ld d,h			;ad98
+	ld d,h			;ad98   ; uno mas (BCD de 4 cifras en HL)
 	ld e,l			;ad99
 	inc de			;ad9a
 	ld a,(de)			;ad9b
@@ -1841,7 +1841,7 @@ L_ADA2:
 	ld (de),a			;ada2
 	ret			;ada3
 L_ADA4:
-	ld hl,0e37ah		;ada4
+	ld hl,0e37ah		;ada4   ; A a BCD: las centenas en 0xE379, el resto en 0xE37A
 	ld (hl),000h		;ada7
 	dec hl			;ada9
 	ld (hl),000h		;adaa
@@ -1872,7 +1872,7 @@ L_ADC3:
 	dec hl			;adce
 	ret			;adcf
 L_ADD0:
-	inc hl			;add0
+	inc hl			;add0   ; A = el BCD de 3 cifras de HL en binario
 	ld a,(hl)			;add1
 	push af			;add2
 	sub a			;add3
@@ -1897,7 +1897,7 @@ L_ADD0:
 	add a,064h		;ade8
 	ret			;adea
 L_ADEB:
-	ld b,00ah		;adeb
+	ld b,00ah		;adeb   ; 10 letras ASCII
 L_ADED:
 	call 09834h		;aded
 	inc hl			;adf0
@@ -1906,7 +1906,7 @@ L_ADED:
 	djnz L_ADED		;adf7
 	ret			;adf9
 L_ADFA:
-	call 04b9fh		;adfa   ; borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
+	call 04b9fh		;adfa   ; la clasificacion en pantalla: borrada, rotulos...
 	ld a,00eh		;adfd
 	ld de,0781ch		;adff
 	call 04f1ch		;ae02   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
@@ -1920,7 +1920,7 @@ L_ADFA:
 	ld de,07834h		;ae15
 	call 04f1ch		;ae18   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 L_AE1B:
-	ld de,0046ch		;ae1b
+	ld de,0046ch		;ae1b   ; ...los numeros de puesto...
 	call 06b5bh		;ae1e
 	ld c,002h		;ae21
 L_AE23:
@@ -1935,7 +1935,7 @@ L_AE23:
 	pop bc			;ae2e
 	inc c			;ae2f
 	djnz L_AE23		;ae30
-	ld de,0e878h		;ae32
+	ld de,0e878h		;ae32   ; ...victorias, derrotas y porcentajes en columnas...
 	call 06b5bh		;ae35
 	dec b			;ae38
 	ld a,090h		;ae39
@@ -1949,7 +1949,7 @@ L_AE23:
 	call 06b5bh		;ae4d
 	ld a,090h		;ae50
 	call L_AE9E		;ae52
-	ld hl,0b0a6h		;ae55
+	ld hl,0b0a6h		;ae55   ; ...los titulos de las columnas...
 	call 04ea6h		;ae58   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld hl,0b071h		;ae5b
 	call 04ea6h		;ae5e   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
@@ -1967,7 +1967,7 @@ L_AE23:
 	call 04ea6h		;ae82   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld hl,0b09eh		;ae85
 	call 04ea6h		;ae88   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-	call L_AEAE		;ae8b
+	call L_AEAE		;ae8b   ; ...y los partidos del jugador
 	ld a,(0d6e1h)		;ae8e   ; lee el numero de jugadores de PENNANT (1-6)
 	dec a			;ae91
 	jp nz,L_AF2C		;ae92
@@ -1975,7 +1975,7 @@ L_AE23:
 	call L_AEFE		;ae98
 	jp L_AF2C		;ae9b
 L_AE9E:
-	push af			;ae9e
+	push af			;ae9e   ; B caracteres A en columna, de 12 en 12
 	push bc			;ae9f
 	push de			;aea0
 	call 04f1ch		;aea1   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
@@ -1988,7 +1988,7 @@ L_AE9E:
 	djnz L_AE9E		;aeab
 	ret			;aead
 L_AEAE:
-	ld a,(0e195h)		;aeae
+	ld a,(0e195h)		;aeae   ; el partido del jugador: los dos nombres y sus carreras
 	ld de,0081ch		;aeb1
 	call L_AF26		;aeb4
 	ld hl,0e194h		;aeb7   ; apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
@@ -2003,7 +2003,7 @@ L_AEAE:
 	ld b,001h		;aed1
 	jp 05bf1h		;aed3   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 L_AED6:
-	ld a,(0d711h)		;aed6
+	ld a,(0d711h)		;aed6   ; el primer partido de las suertes
 	ld de,00828h		;aed9
 	call L_AF26		;aedc
 	ld hl,0d710h		;aedf
@@ -2018,7 +2018,7 @@ L_AED6:
 	ld b,001h		;aef9
 	jp 05bf1h		;aefb   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 L_AEFE:
-	ld a,(0d715h)		;aefe
+	ld a,(0d715h)		;aefe   ; el segundo
 	ld de,00834h		;af01
 	call L_AF26		;af04
 	ld hl,0d714h		;af07
@@ -2033,10 +2033,10 @@ L_AEFE:
 	ld b,001h		;af21
 	jp 05bf1h		;af23   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 L_AF26:
-	call L_AD7D		;af26
+	call L_AD7D		;af26   ; el nombre del equipo A (10 letras)
 	jp L_ADEB		;af29
 L_AF2C:
-	ld hl,0d730h		;af2c
+	ld hl,0d730h		;af2c   ; la tabla: las victorias del primero (para la diferencia) y la primera fila 0x6C...
 	ld a,(hl)			;af2f
 	call L_AD75		;af30
 	call L_ADD0		;af33
@@ -2047,7 +2047,7 @@ L_AF2C:
 	ld hl,0d72eh		;af41
 	ld (0e373h),hl		;af44
 L_AF47:
-	ld hl,(0e373h)		;af47
+	ld hl,(0e373h)		;af47   ; ...por cada equipo de la clasificacion: partidos, victorias y derrotas, porcentaje, diferencia y nombre...
 	inc hl			;af4a
 	inc hl			;af4b
 	ld (0e373h),hl		;af4c
@@ -2058,13 +2058,13 @@ L_AF47:
 	call L_B034		;af59
 	call L_AF6B		;af5c
 	pop bc			;af5f
-	ld a,(0e372h)		;af60
+	ld a,(0e372h)		;af60   ; ...12 mas abajo
 	add a,00ch		;af63
 	ld (0e372h),a		;af65
 	djnz L_AF47		;af68
 	ret			;af6a
 L_AF6B:
-	ld hl,(0e373h)		;af6b
+	ld hl,(0e373h)		;af6b   ; el nombre del equipo de la fila (6 letras) en x = 0x10
 	ld a,(hl)			;af6e
 	call L_AD7D		;af6f
 	ld a,(0e372h)		;af72
@@ -2073,7 +2073,7 @@ L_AF6B:
 	ld b,006h		;af78
 	jp L_ADED		;af7a
 L_AF7D:
-	ld e,(hl)			;af7d
+	ld e,(hl)			;af7d   ; los partidos jugados: la suma de su fila de 0xD6E3 en x = 0x44
 	dec e			;af7e
 	ld d,000h		;af7f
 	ld hl,0d70ah		;af81   ; apunta a los 6 equipos elegidos (0xFF libre)
@@ -2101,7 +2101,7 @@ L_AF99:
 	ld d,044h		;afa3
 	jp L_B061		;afa5
 L_AFA8:
-	ld hl,(0e373h)		;afa8
+	ld hl,(0e373h)		;afa8   ; las victorias (x = 0x64) y las derrotas (x = 0x84)
 	ld a,(hl)			;afab
 	call L_AD75		;afac
 	push hl			;afaf
@@ -2113,7 +2113,7 @@ L_AFA8:
 	ld d,084h		;afb8
 	jp L_B061		;afba
 L_AFBD:
-	ld hl,(0e373h)		;afbd
+	ld hl,(0e373h)		;afbd   ; el porcentaje: victorias entre partidos, tres cifras (como p15:A28B)...
 	ld a,(hl)			;afc0
 	call L_AD75		;afc1
 	call L_ADD0		;afc4
@@ -2184,18 +2184,18 @@ L_B012:
 	dec hl			;b01e
 	ld (hl),a			;b01f
 L_B020:
-	ld hl,0e360h		;b020
+	ld hl,0e360h		;b020   ; ...en x = 0xB0
 	ld d,0b0h		;b023
 	jr L_B068		;b025
 L_B027:
-	ld a,(0e372h)		;b027
+	ld a,(0e372h)		;b027   ; todas ganadas: un 1 en 0xA4
 	ld e,a			;b02a
 	ld d,0a4h		;b02b
 	ld a,002h		;b02d
 	call 04f1ch		;b02f   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	jr L_B020		;b032
 L_B034:
-	ld hl,00000h		;b034
+	ld hl,00000h		;b034   ; la diferencia con el primero (en el primero no se pinta)
 	ld (0e377h),hl		;b037
 	ld hl,(0e373h)		;b03a
 	ld a,(hl)			;b03d
@@ -2219,11 +2219,11 @@ L_B053:
 	cp 06ch		;b05e
 	ret z			;b060
 L_B061:
-	ld a,(0e372h)		;b061
+	ld a,(0e372h)		;b061   ; tres cifras en la fila 0xE372
 	ld e,a			;b064
 	jp 05c56h		;b065
 L_B068:
-	ld a,(0e372h)		;b068
+	ld a,(0e372h)		;b068   ; B cifras con ceros
 	ld e,a			;b06b
 	ld b,003h		;b06c
 	jp 05c34h		;b06e
@@ -2306,25 +2306,25 @@ DATA_texto_B0A6:
 
 
 L_B0AC:
-	call L_B0B4		;b0ac
+	call L_B0B4		;b0ac   ; el letrero de SAFE / OUT de la base (p15:B0B4) y 0xED0D a 0
 	xor a			;b0af
 	ld (0ed0dh),a		;b0b0
 	ret			;b0b3
 L_B0B4:
-	ld a,(0e33bh)		;b0b4   ; lee lo que acaba la jugada: 1 home run, 2 jugada anulada
+	ld a,(0e33bh)		;b0b4   ; con 0xED0D (la base y el bit 7: fuera) y sin home run...
 	or a			;b0b7
 	ret nz			;b0b8
 	ld a,(0ed0dh)		;b0b9
 	or a			;b0bc
 	ret z			;b0bd
-	ld a,(0e1a6h)		;b0be
+	ld a,(0e1a6h)		;b0be   ; ...su sitio segun la zona del campo...
 	or a			;b0c1
 	jr z,L_B0DE		;b0c2
 	dec a			;b0c4
 	jr z,L_B0E3		;b0c5
 	ld de,02830h		;b0c7
 L_B0CA:
-	call L_B140		;b0ca
+	call L_B140		;b0ca   ; ...borra el sitio (p15:B140) y pinta SAFE (1) u OUT (0)...
 L_B0CD:
 	ld a,(0ed0dh)		;b0cd
 	bit 7,a		;b0d0
@@ -2339,14 +2339,14 @@ L_B0DE:
 	ld de,0c830h		;b0de
 	jr L_B0CA		;b0e1
 L_B0E3:
-	ld de,00830h		;b0e3
+	ld de,00830h		;b0e3   ; ...en la zona 1, segun donde esta la pelota...
 	ld a,(0e218h)		;b0e6   ; lee la x de la pelota
 	cp 0c0h		;b0e9
 	jr nc,L_B0CA		;b0eb
 	ld de,0e830h		;b0ed
 	cp 080h		;b0f0
 	jr nc,L_B0CA		;b0f2
-	ld hl,(0e213h)		;b0f4   ; lee la y de la pelota (vertical) y el byte siguiente (16 bits)
+	ld hl,(0e213h)		;b0f4   ; ...en la caja: borra dos franjas (p15:B121)...
 	ld bc,0feb0h		;b0f7
 	add hl,bc			;b0fa
 	jr nc,L_B0D9		;b0fb
@@ -2360,14 +2360,14 @@ L_B0E3:
 	ld bc,0fe70h		;b10e
 	add hl,bc			;b111
 	jr c,L_B0CD		;b112
-	ld a,(0ed0dh)		;b114
+	ld a,(0ed0dh)		;b114   ; ...y en casa SAFE (3) u OUT (2)
 	bit 7,a		;b117
 	ld a,002h		;b119
 	jr nz,L_B14E		;b11b
 	ld a,003h		;b11d
 	jr L_B14E		;b11f
 L_B121:
-	ld de,068f8h		;b121
+	ld de,068f8h		;b121   ; borra dos franjas de 16 x 8 en (0xF8, 0x68) y (0x00, 0x68) con el color 0x55
 	push de			;b124
 	push de			;b125
 	ex de,hl			;b126
@@ -2378,15 +2378,15 @@ L_B121:
 	pop de			;b130
 	ret			;b131
 L_B132:
-	ld a,055h		;b132
+	ld a,055h		;b132   ; un rectangulo de color 0x55, 16 x 8
 	ld bc,01008h		;b134
 	ld d,000h		;b137
 	jp 04d2ah		;b139   ; rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 L_B13C:
-	ld a,044h		;b13c
+	ld a,044h		;b13c   ; un rectangulo de 16 x 16 de color 0x44...
 	jr L_B142		;b13e
 L_B140:
-	ld a,055h		;b140
+	ld a,055h		;b140   ; ...o 0x55
 L_B142:
 	push de			;b142
 	ex de,hl			;b143
@@ -2396,13 +2396,13 @@ L_B142:
 	pop de			;b14c
 	ret			;b14d
 L_B14E:
-	add a,a			;b14e
+	add a,a			;b14e   ; el letrero A de la tabla 0xB20D (4 caracteres en 2 x 2)
 	add a,a			;b14f
 	ld hl,0b20dh		;b150
 	call 04216h		;b153   ; hl_mas_a: HL = HL + A
 	jr L_B1C1		;b156
 L_B158:
-	ld a,(0e33bh)		;b158   ; lee lo que acaba la jugada: 1 home run, 2 jugada anulada
+	ld a,(0e33bh)		;b158   ; el letrero de FAIR / FOUL: una vez (0xED2A) al decidirse (bit 0 de 0xEDDF)...
 	or a			;b15b
 	ret nz			;b15c
 	ld a,(0ed08h)		;b15d
@@ -2416,9 +2416,9 @@ L_B158:
 	rra			;b16b
 	ret nc			;b16c
 	ld (hl),001h		;b16d
-	call L_B1D8		;b16f
+	call L_B1D8		;b16f   ; ...si la pelota cae en la zona de las lineas (p15:B1D8)...
 	ret nc			;b172
-	ld hl,(0e1a2h)		;b173   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+	ld hl,(0e1a2h)		;b173   ; ...y se ve en pantalla: segun la zona, FAIR (5 o 6) o FOUL (7)
 	ld de,0ffa0h		;b176
 	add hl,de			;b179
 	ret nc			;b17a
@@ -2443,7 +2443,7 @@ L_B193:
 	ld a,007h		;b19e
 	jr L_B14E		;b1a0
 L_B1A2:
-	ld hl,(0e213h)		;b1a2   ; lee la y de la pelota (vertical) y el byte siguiente (16 bits)
+	ld hl,(0e213h)		;b1a2   ; en la zona 1, junto a la caja: FOUL (7) o 4
 	ld de,0feb0h		;b1a5
 	add hl,de			;b1a8
 	ret nc			;b1a9
@@ -2459,14 +2459,14 @@ L_B1A2:
 	ld a,004h		;b1bd
 	jr L_B14E		;b1bf
 L_B1C1:
-	push de			;b1c1
+	push de			;b1c1   ; dos filas de dos caracteres...
 	call L_B1CA		;b1c2
 	pop de			;b1c5
 	ld a,e			;b1c6
 	add a,008h		;b1c7
 	ld e,a			;b1c9
 L_B1CA:
-	ld a,(hl)			;b1ca
+	ld a,(hl)			;b1ca   ; ...cada uno con p15:B22D
 	inc hl			;b1cb
 	call L_B22D		;b1cc
 	ld a,d			;b1cf
@@ -2476,7 +2476,7 @@ L_B1CA:
 	inc hl			;b1d4
 	jp L_B22D		;b1d5
 L_B1D8:
-	ld de,(0e221h)		;b1d8
+	ld de,(0e221h)		;b1d8   ; la pelota cerca de una linea de foul: y + 3x/4 contra 0x280...
 	ld bc,(0e223h)		;b1dc
 	ld a,b			;b1e0
 	or a			;b1e1
@@ -2493,7 +2493,7 @@ L_B1EC:
 	add hl,de			;b1f3
 	ret			;b1f4
 L_B1F5:
-	call L_B201		;b1f5
+	call L_B201		;b1f5   ; ...o y - 3x/4 contra 0xA0
 	ex de,hl			;b1f8
 	or a			;b1f9
 	sbc hl,de		;b1fa
@@ -2501,7 +2501,7 @@ L_B1F5:
 	add hl,de			;b1ff
 	ret			;b200
 L_B201:
-	srl b		;b201
+	srl b		;b201   ; HL = 3/4 de BC
 	rr c		;b203
 	push bc			;b205
 	srl b		;b206
@@ -2525,7 +2525,7 @@ DATA_resto_B20D:
 
 
 L_B22D:
-	push bc			;b22d
+	push bc			;b22d   ; un caracter de la fuente de la fila 0x68 con TIMP (copia sin el color 0)
 	push hl			;b22e
 	push de			;b22f
 	call 04f5ah		;b230
@@ -2557,7 +2557,7 @@ DATA_copia16_B24F:
 
 
 L_B25F:
-	xor a			;b25f
+	xor a			;b25f   ; la jugada nueva: todas las marcas de la defensa a cero...
 	ld (0ed9dh),a		;b260
 	ld (0ece6h),a		;b263   ; guarda el paso de la defensa del ordenador
 	ld (0ed82h),a		;b266
@@ -2570,31 +2570,31 @@ L_B25F:
 	ld (0ed7bh),a		;b27b
 	ld (0edd3h),a		;b27e
 	ld (0e1b8h),a		;b281
-	ld hl,0e271h		;b284   ; apunta a las 9 fichas de 16 bytes de los defensores
+	ld hl,0e271h		;b284   ; ...las 9 fichas de defensor a cero...
 	ld de,0e272h		;b287
 	ld bc,0008fh		;b28a
 	ld (hl),000h		;b28d
 	ldir		;b28f
-	ld hl,0e23ch		;b291
+	ld hl,0e23ch		;b291   ; ...los corredores sin el bit 4
 	ld de,00010h		;b294
 	ld b,004h		;b297
 L_B299:
 	res 4,(hl)		;b299
 	add hl,de			;b29b
 	djnz L_B299		;b29c
-	ld hl,0e27dh		;b29e
+	ld hl,0e27dh		;b29e   ; el dibujo 0x68 a los 9 defensores
 	ld de,00010h		;b2a1
 	ld b,009h		;b2a4
 L_B2A6:
 	ld (hl),068h		;b2a6
 	add hl,de			;b2a8
 	djnz L_B2A6		;b2a9
-	ld a,0f8h		;b2ab
+	ld a,0f8h		;b2ab   ; el receptor con el dibujo 0xF8 y, con robo, p15:B623
 	ld (0e2edh),a		;b2ad
 	ld a,(0ecebh)		;b2b0
 	or a			;b2b3
 	call nz,L_B623		;b2b4
-	ld hl,0e271h		;b2b7   ; apunta a las 9 fichas de 16 bytes de los defensores
+	ld hl,0e271h		;b2b7   ; los 9 defensores en su puesto: numero, y y x de la tabla 0xB5ED
 	ld de,0b5edh		;b2ba
 	ld b,009h		;b2bd
 L_B2BF:
@@ -2622,7 +2622,7 @@ L_B2BF:
 	ld a,008h		;b2d4
 	call 04216h		;b2d6   ; hl_mas_a: HL = HL + A
 	djnz L_B2BF		;b2d9
-	ld a,(0ed3fh)		;b2db
+	ld a,(0ed3fh)		;b2db   ; sin robo ni lanzada: los puestos de cobertura (p15:B53B, p15:B308)
 	or a			;b2de
 	jr nz,L_B2F9		;b2df
 	ld a,(0ecebh)		;b2e1
@@ -2632,7 +2632,7 @@ L_B2BF:
 	call L_B308		;b2ea
 	ret			;b2ed
 L_B2EE:
-	ld a,(0edddh)		;b2ee
+	ld a,(0edddh)		;b2ee   ; con robo y 0xEDDD, p15:B623; si no, p15:B611
 	or a			;b2f1
 	jr z,L_B2F9		;b2f2
 	call L_B623		;b2f4
@@ -2640,12 +2640,12 @@ L_B2EE:
 L_B2F9:
 	call L_B611		;b2f9
 L_B2FC:
-	call L_B4C6		;b2fc
+	call L_B4C6		;b2fc   ; y las coberturas del robo
 	call L_B367		;b2ff
 	call L_B480		;b302
 	jp L_B3CB		;b305
 L_B308:
-	ld de,(0e215h)		;b308   ; lee la velocidad y de la pelota y el byte siguiente (16 bits)
+	ld de,(0e215h)		;b308   ; segun la pelota: hacia el bateador (vy < 0)...
 	ld hl,(0e21ah)		;b30c   ; lee la velocidad x de la pelota y el byte siguiente (16 bits)
 	ld a,d			;b30f
 	rla			;b310
@@ -2654,13 +2654,13 @@ L_B308:
 	call L_B3EA		;b316
 	jr L_B329		;b319
 L_B31B:
-	ld a,007h		;b31b
+	ld a,007h		;b31b   ; ...o hacia fuera: el tipo 7 y las coberturas de fuera
 	ld (0ed9dh),a		;b31d
 	call L_B45D		;b320
 	call L_B480		;b323
 	call L_B4C6		;b326
 L_B329:
-	ld hl,0ed9dh		;b329
+	ld hl,0ed9dh		;b329   ; el tipo de golpe (0xED9D) segun el signo de 0xE21B
 	ld a,(0e21bh)		;b32c
 	rla			;b32f
 	ld a,001h		;b330
@@ -2669,7 +2669,7 @@ L_B329:
 	or (hl)			;b336
 	ld (hl),a			;b337
 L_B338:
-	ld hl,00104h		;b338
+	ld hl,00104h		;b338   ; el defensor 0xE2A1 (2.a base) corre a cubrir (0x104, 0x11C): su velocidad con p00:40D2...
 	ld (0e2a3h),hl		;b33b
 	ld hl,0011ch		;b33e
 	ld (0e2a8h),hl		;b341
@@ -2679,7 +2679,7 @@ L_B338:
 	call 040d2h		;b34c
 	ld (0e2a5h),hl		;b34f
 	ld (0e2aah),de		;b352
-	ld a,016h		;b356
+	ld a,016h		;b356   ; ...estado 0x16, IX+13 = 0x31 y destino (0xFF, 0x37)
 	ld (0e2a1h),a		;b358
 	ld a,031h		;b35b
 	ld (0e2aeh),a		;b35d
@@ -2687,7 +2687,7 @@ L_B338:
 	ld (0e2afh),hl		;b363
 	ret			;b366
 L_B367:
-	ld hl,00104h		;b367
+	ld hl,00104h		;b367   ; lo mismo hacia (0x104, 0x128)
 	ld (0e2a3h),hl		;b36a
 	ld hl,00128h		;b36d
 	ld (0e2a8h),hl		;b370
@@ -2705,7 +2705,7 @@ L_B367:
 	ld (0e2afh),hl		;b392
 	ret			;b395
 L_B396:
-	bit 2,(hl)		;b396
+	bit 2,(hl)		;b396   ; el defensor 0xE2C1 cubre (0x104, 0x164)
 	jr nz,L_B39C		;b398
 	or (hl)			;b39a
 	ld (hl),a			;b39b
@@ -2728,7 +2728,7 @@ L_B39C:
 	ld (0e2cfh),hl		;b3c7
 	ret			;b3ca
 L_B3CB:
-	ld hl,00188h		;b3cb
+	ld hl,00188h		;b3cb   ; el lanzador (0xE2E1) a (0x188, 0x137) con el estado 0x22
 	ld (0e2e3h),hl		;b3ce
 	ld hl,00137h		;b3d1
 	ld (0e2e8h),hl		;b3d4
@@ -2741,7 +2741,7 @@ L_B3CB:
 	ld (0e2edh),a		;b3e6
 	ret			;b3e9
 L_B3EA:
-	ld de,078b8h		;b3ea
+	ld de,078b8h		;b3ea   ; el receptor (0xE2E1) sale hacia (0x78, 0xA4), 0xE2EC = 1 y 16 cuadros (0xEC48)
 	ld hl,078a4h		;b3ed
 	ld a,020h		;b3f0
 	call 040d2h		;b3f2
@@ -2759,7 +2759,7 @@ L_B3EA:
 	ld (0ec48h),a		;b413
 	ret			;b416
 L_B417:
-	ld hl,0ec60h		;b417
+	ld hl,0ec60h		;b417   ; el de 0xE2F1 a la casa
 	ld de,07860h		;b41a
 	ld a,020h		;b41d
 	call 040d2h		;b41f
@@ -2773,7 +2773,7 @@ L_B417:
 	ld (0e2ffh),hl		;b436
 	ret			;b439
 L_B43A:
-	ld hl,00460h		;b43a
+	ld hl,00460h		;b43a   ; el de 0xE2F1 a (0x460, ...)
 	ld de,07860h		;b43d
 	ld a,020h		;b440
 	call 040d2h		;b442
@@ -2787,7 +2787,7 @@ L_B43A:
 	ld (0e2ffh),hl		;b459
 	ret			;b45c
 L_B45D:
-	ld hl,078a4h		;b45d
+	ld hl,078a4h		;b45d   ; el de 0xE2F1 a (0xA4, 0x78)
 	ld de,07860h		;b460
 	ld a,020h		;b463
 	call 040d2h		;b465
@@ -2801,7 +2801,7 @@ L_B45D:
 	ld (0e2ffh),hl		;b47c
 	ret			;b47f
 L_B480:
-	ld hl,00460h		;b480
+	ld hl,00460h		;b480   ; el de 0xE2B1 cubre la 1.a
 	ld de,00438h		;b483
 	ld a,020h		;b486
 	call 040d2h		;b488
@@ -2815,7 +2815,7 @@ L_B480:
 	ld (0e2bfh),hl		;b49f
 	ret			;b4a2
 L_B4A3:
-	ld hl,00460h		;b4a3
+	ld hl,00460h		;b4a3   ; el de 0xE2A1 cubre (0x460, 0x30)
 	ld de,04030h		;b4a6
 	ld a,020h		;b4a9
 	call 040d2h		;b4ab
@@ -2829,7 +2829,7 @@ L_B4A3:
 	ld (0e2afh),hl		;b4c2
 	ret			;b4c5
 L_B4C6:
-	ld hl,0ec60h		;b4c6
+	ld hl,0ec60h		;b4c6   ; el de 0xE2D1 cubre la 3.a
 	ld de,06838h		;b4c9
 	ld a,020h		;b4cc
 	call 040d2h		;b4ce
@@ -2843,7 +2843,7 @@ L_B4C6:
 	ld (0e2dfh),hl		;b4e5
 	ret			;b4e8
 L_B4E9:
-	ld hl,0ec60h		;b4e9
+	ld hl,0ec60h		;b4e9   ; el de 0xE2C1 cubre (0x30, 0xC0)
 	ld de,0c030h		;b4ec
 	ld a,020h		;b4ef
 	call 040d2h		;b4f1
@@ -2857,7 +2857,7 @@ L_B4E9:
 	ld (0e2cfh),hl		;b508
 	ret			;b50b
 L_B50C:
-	ld hl,0ec60h		;b50c
+	ld hl,0ec60h		;b50c   ; el de 0xE2C1 va de (0x128, 0x190) hacia (0x48, 0xD0)
 	ld de,0d048h		;b50f
 	ld a,020h		;b512
 	call 040d2h		;b514
@@ -2875,7 +2875,7 @@ L_B50C:
 	ld (0e2cfh),hl		;b537
 	ret			;b53a
 L_B53B:
-	ld a,(0ed7ch)		;b53b
+	ld a,(0ed7ch)		;b53b   ; las coberturas: un toque, o una bola corta y lenta...
 	or a			;b53e
 	jr nz,L_B564		;b53f
 	ld hl,(0e215h)		;b541   ; lee la velocidad y de la pelota y el byte siguiente (16 bits)
@@ -2896,11 +2896,11 @@ L_B53B:
 	cp 080h		;b55b
 	ret nc			;b55d
 L_B55E:
-	ld a,(0e227h)		;b55e
+	ld a,(0e227h)		;b55e   ; ...o un golpe flojo (tipo < 2): las del toque
 	cp 002h		;b561
 	ret nc			;b563
 L_B564:
-	pop hl			;b564
+	pop hl			;b564   ; el toque: segun el lado (0xE21B), tipo 5 o 6 y sus coberturas
 	ld hl,0ed9dh		;b565
 	ld a,(0e21bh)		;b568
 	rla			;b56b
@@ -2919,7 +2919,7 @@ L_B57E:
 	call L_B4A3		;b585
 	jp L_B3EA		;b588
 L_B58B:
-	call L_B5E5		;b58b
+	call L_B5E5		;b58b   ; hacia el bateador: segun la direccion, tipo 4, 2 o 1 y sus coberturas
 	ld a,h			;b58e
 	rla			;b58f
 	jr nc,L_B5B1		;b590
@@ -2954,7 +2954,7 @@ L_B5C4:
 	call L_B417		;b5c7
 	jp L_B480		;b5ca
 L_B5CD:
-	ld hl,0e27eh		;b5cd
+	ld hl,0e27eh		;b5cd   ; carry si ningun defensor esta en el estado C
 	ld de,00010h		;b5d0
 L_B5D3:
 	ld a,(hl)			;b5d3
@@ -2966,7 +2966,7 @@ L_B5D3:
 	scf			;b5db
 	ret			;b5dc
 L_B5DD:
-	ld a,l			;b5dd
+	ld a,l			;b5dd   ; HL = -HL
 	cpl			;b5de
 	ld l,a			;b5df
 	ld a,h			;b5e0
@@ -2975,7 +2975,7 @@ L_B5DD:
 	inc hl			;b5e3
 	ret			;b5e4
 L_B5E5:
-	ld a,e			;b5e5
+	ld a,e			;b5e5   ; DE = -DE
 	cpl			;b5e6
 	ld e,a			;b5e7
 	ld a,d			;b5e8
@@ -3000,7 +3000,7 @@ DATA_resto_B5ED:
 
 
 L_B611:
-	ld a,001h		;b611
+	ld a,001h		;b611   ; la pelota en manos del lanzador (1): en (0x48, 0x38)
 	ld (0e2fch),a		;b613
 	ld (0e2f1h),a		;b616
 	ld (0e220h),a		;b619   ; guarda el defensor que tiene la pelota (1-9; 0 nadie)
@@ -3008,7 +3008,7 @@ L_B611:
 	ld a,001h		;b61f
 	jr L_B656		;b621
 L_B623:
-	ld a,(0e337h)		;b623
+	ld a,(0e337h)		;b623   ; tras un robo: el lanzador o, si ya lanzo, el receptor (2) con la pelota
 	or a			;b626
 	jr nz,L_B643		;b627
 	ld a,(0edddh)		;b629
@@ -3032,7 +3032,7 @@ L_B643:
 	ld de,03898h		;b651
 	ld a,002h		;b654
 L_B656:
-	ld (0e220h),a		;b656   ; guarda el defensor que tiene la pelota (1-9; 0 nadie)
+	ld (0e220h),a		;b656   ; la pelota en la mano: su y y su x (con el byte alto a 1)...
 	ld hl,0e212h		;b659
 	ld (hl),000h		;b65c
 	inc hl			;b65e
@@ -3047,14 +3047,14 @@ L_B656:
 	ld (hl),d			;b669
 	inc hl			;b66a
 	ld (hl),001h		;b66b
-	ld a,001h		;b66d
+	ld a,001h		;b66d   ; ...cogida (0xE33C), estado 3...
 	ld (0e33ch),a		;b66f
 	ld a,003h		;b672
 	ld (0e211h),a		;b674   ; guarda la ficha de 16 bytes de la pelota
 	xor a			;b677
 	ld (0e302h),a		;b678
 	ld (0ed39h),a		;b67b
-	ld hl,0e2adh		;b67e
+	ld hl,0e2adh		;b67e   ; ...y los 6 de detras con el dibujo 0x68
 	ld de,00010h		;b681
 	ld b,006h		;b684
 L_B686:
@@ -3077,7 +3077,7 @@ DATA_texto_suelto_B68C:
 
 
 L_B693:
-	ld a,(0e1a2h)		;b693   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+	ld a,(0e1a2h)		;b693   ; TEAM EDIT, las cifras: la fila (0xE1A2) y la columna (0xE1A3)...
 	cp 00dh		;b696
 	ld a,(0e1a3h)		;b698
 	jp nc,L_B801		;b69b
@@ -3085,7 +3085,7 @@ L_B693:
 	jr c,L_B70B		;b6a0
 	cp 00ch		;b6a2
 	jp c,L_B79B		;b6a4
-	ld a,(0e1a2h)		;b6a7   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+	ld a,(0e1a2h)		;b6a7   ; ...de un jugador de campo: la cifra en el nibble que toca...
 	dec a			;b6aa
 	ld hl,0e1d8h		;b6ab
 	call 04216h		;b6ae   ; hl_mas_a: HL = HL + A
@@ -3119,7 +3119,7 @@ L_B6C9:
 	ld c,(hl)			;b6d6
 	ld (hl),a			;b6d7
 L_B6D8:
-	push hl			;b6d8
+	push hl			;b6d8   ; ...los puntos usados no pueden pasar de 600: si pasa, se deshace
 	ld de,0e1d8h		;b6d9
 	ld b,00ch		;b6dc
 	call L_AA13		;b6de
@@ -3142,19 +3142,19 @@ L_B6D8:
 	ld (hl),c			;b6f6
 	ret			;b6f7
 L_B6F8:
-	ld d,e			;b6f8
+	ld d,e			;b6f8   ; ...los que quedan, en 0xE1E6
 	ld e,a			;b6f9
 	ld (0e1e6h),de		;b6fa
 L_B6FE:
-	ld hl,0e1e6h		;b6fe
+	ld hl,0e1e6h		;b6fe   ; los puntos que quedan, 3 cifras en (0x8B, 0xCC)
 	ld de,0cc8bh		;b701
 	ld b,003h		;b704
 	jp 05c34h		;b706
 L_B709:
-	scf			;b709
+	scf			;b709   ; carry: no vale
 	ret			;b70a
 L_B70B:
-	ld a,(0e1a2h)		;b70b   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+	ld a,(0e1a2h)		;b70b   ; el promedio de bateo de un jugador (dos cifras BCD de 0xE1B4 + 2n)...
 	dec a			;b70e
 	add a,a			;b70f
 	ld hl,0e1b4h		;b710
@@ -3165,12 +3165,12 @@ L_B70B:
 	ld a,(0e1a3h)		;b71b
 	sub 007h		;b71e
 	ld d,a			;b720
-	call L_BA0A		;b721
+	call L_BA0A		;b721   ; ...la cifra nueva (p15:BA0A)...
 	ld b,a			;b724
 	ld a,d			;b725
 	or a			;b726
 	jr nz,L_B73E		;b727
-	ld a,b			;b729
+	ld a,b			;b729   ; ...la de las decenas de 1 a 3, y si es 1 la otra al menos 0x50...
 	cp 004h		;b72a
 	jr nc,L_B709		;b72c
 	or a			;b72e
@@ -3195,7 +3195,7 @@ L_B73E:
 	cp 050h		;b748
 	jr c,L_B709		;b74a
 L_B74C:
-	ld a,b			;b74c
+	ld a,b			;b74c   ; ...se guarda y la suma de los 12 no puede pasar de 0x350
 	ld c,(hl)			;b74d
 	push bc			;b74e
 	ld (hl),a			;b74f
@@ -3210,25 +3210,25 @@ L_B74C:
 	jr c,L_B796		;b765
 	ld (0e1eeh),hl		;b767
 L_B76A:
-	ld hl,0e1eeh		;b76a
+	ld hl,0e1eeh		;b76a   ; los puntos de bateo que quedan, 2 cifras en (0x8B, 0x80)
 	ld de,0808bh		;b76d
 	ld b,002h		;b770
 	jp 05c34h		;b772
 L_B775:
-	ld (hl),050h		;b775
+	ld (hl),050h		;b775   ; el minimo 0x50 con el aviso de 0xB8DF
 	push hl			;b777
 	push de			;b778
 	ld hl,0b8dfh		;b779
 	ld d,090h		;b77c
 	jr L_B787		;b77e
 L_B780:
-	push hl			;b780
+	push hl			;b780   ; el aviso de 0xB8DC
 	push de			;b781
 	ld hl,0b8dch		;b782
 	ld d,07ch		;b785
 L_B787:
 	push bc			;b787
-	ld a,(0e100h)		;b788   ; lee los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
+	ld a,(0e100h)		;b788
 	inc a			;b78b
 	ld e,a			;b78c
 	ld c,0ffh		;b78d
@@ -3238,11 +3238,11 @@ L_B787:
 	pop hl			;b794
 	ret			;b795
 L_B796:
-	ld hl,(0e22dh)		;b796
+	ld hl,(0e22dh)		;b796   ; no cabe: se deshace
 	ld (hl),c			;b799
 	ret			;b79a
 L_B79B:
-	ld a,(0e1a2h)		;b79b   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+	ld a,(0e1a2h)		;b79b   ; la velocidad o la defensa de un jugador (nibbles de 0xE1CC)...
 	dec a			;b79e
 	ld hl,0e1cch		;b79f
 	call 04216h		;b7a2   ; hl_mas_a: HL = HL + A
@@ -3262,7 +3262,7 @@ L_B79B:
 	ld (hl),a			;b7ba
 	jr L_B7D0		;b7bb
 L_B7BD:
-	ld a,006h		;b7bd
+	ld a,006h		;b7bd   ; ...la de la izquierda hasta 6...
 	cp b			;b7bf
 	ret c			;b7c0
 	ld a,(hl)			;b7c1
@@ -3279,7 +3279,7 @@ L_B7BD:
 	ld c,(hl)			;b7ce
 	ld (hl),a			;b7cf
 L_B7D0:
-	push hl			;b7d0
+	push hl			;b7d0   ; ...la suma de los 12 no puede pasar de 200
 	ld de,0e1cch		;b7d1
 	ld b,00ch		;b7d4
 	call L_AA13		;b7d6
@@ -3306,12 +3306,12 @@ L_B7F0:
 	ld e,a			;b7f1
 	ld (0e1eah),de		;b7f2
 L_B7F6:
-	ld hl,0e1eah		;b7f6
+	ld hl,0e1eah		;b7f6   ; lo que queda, 3 cifras en (0x8B, 0xA8)
 	ld de,0a88bh		;b7f9
 	ld b,003h		;b7fc
 	jp 05c34h		;b7fe
 L_B801:
-	cp 00bh		;b801
+	cp 00bh		;b801   ; los lanzadores: segun la columna, velocidad, aguante, curvas o el estilo...
 	jr c,L_B856		;b803
 	cp 00eh		;b805
 	jp c,L_B8E2		;b807
@@ -3320,7 +3320,7 @@ L_B801:
 	jp z,L_B9CB		;b80f
 	cp 011h		;b812
 	jp z,L_B98C		;b814
-	ld a,(0e1a2h)		;b817   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+	ld a,(0e1a2h)		;b817   ; ...las curvas: la suma de las tres no puede pasar de 0x25...
 	sub 00dh		;b81a
 	ld e,a			;b81c
 	ld d,000h		;b81d
@@ -3354,14 +3354,14 @@ L_B832:
 	ld (hl),c			;b846
 	ret			;b847
 L_B848:
-	ld (0e22bh),a		;b848   ; guarda el defensor que va a por la pelota (desplazamiento de 16 en 16)
+	ld (0e22bh),a		;b848   ; ...lo que queda en 0xE22B
 L_B84B:
-	ld hl,0e22bh		;b84b   ; apunta a el defensor que va a por la pelota (desplazamiento de 16 en 16)
+	ld hl,0e22bh		;b84b   ; lo que queda de curvas, 1 cifra en (0xC7, 0xE8)
 	ld de,0e8c7h		;b84e
 	ld b,001h		;b851
 	jp 05bf1h		;b853   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 L_B856:
-	ld a,(0e1a2h)		;b856   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+	ld a,(0e1a2h)		;b856   ; la velocidad de un lanzador (dos cifras de 0xE1F0 + 2n)...
 	sub 00dh		;b859
 	add a,a			;b85b
 	ld e,a			;b85c
@@ -3398,7 +3398,7 @@ L_B856:
 	ret c			;b88a
 	jr L_B8B0		;b88b
 L_B88D:
-	ld a,b			;b88d
+	ld a,b			;b88d   ; ...las decenas hasta 1 y el tope 0x59 (o 0xE1FB)...
 	ld c,a			;b88e
 	ld a,001h		;b88f
 	cp c			;b891
@@ -3426,7 +3426,7 @@ L_B8A9:
 L_B8AF:
 	inc hl			;b8af
 L_B8B0:
-	ld a,c			;b8b0
+	ld a,c			;b8b0   ; ...y la suma de los 4 no puede pasar de 0x540
 	ld c,(hl)			;b8b1
 	push hl			;b8b2
 	push bc			;b8b3
@@ -3447,7 +3447,7 @@ L_B8B0:
 L_B8CE:
 	ld (0e1fah),hl		;b8ce
 L_B8D1:
-	ld hl,0e1fah		;b8d1
+	ld hl,0e1fah		;b8d1   ; lo que queda, 3 cifras en (0xC7, 0x74)
 	ld de,074c7h		;b8d4
 	ld b,003h		;b8d7
 	jp 05c34h		;b8d9
@@ -3466,7 +3466,7 @@ DATA_resto_B8DC:
 
 
 L_B8E2:
-	ld a,(0e1a2h)		;b8e2   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+	ld a,(0e1a2h)		;b8e2   ; el aguante de un lanzador (0xE1FC + 2n)
 	sub 00dh		;b8e5
 	add a,a			;b8e7
 	ld e,a			;b8e8
@@ -3482,7 +3482,7 @@ L_B8E2:
 	ld c,(hl)			;b8fc
 	push bc			;b8fd
 	push hl			;b8fe
-	ld (hl),a			;b8ff
+	ld (hl),a			;b8ff   ; ...la suma de los 4 no puede pasar de 0x990
 	ld de,0e1fch		;b900
 	ld hl,0e204h		;b903
 	ld b,004h		;b906
@@ -3498,12 +3498,12 @@ L_B8E2:
 L_B918:
 	ld (0e206h),hl		;b918
 L_B91B:
-	ld hl,0e206h		;b91b
+	ld hl,0e206h		;b91b   ; lo que queda, 3 cifras en (0xC7, 0x90)
 	ld de,090c7h		;b91e
 	ld b,003h		;b921
 	jp 05c34h		;b923
 L_B926:
-	ld a,(0e1a2h)		;b926   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+	ld a,(0e1a2h)		;b926   ; dos cifras de un lanzador en nibbles (0xE20E + n)...
 	sub 00dh		;b929
 	ld e,a			;b92b
 	ld d,000h		;b92c
@@ -3539,7 +3539,7 @@ L_B94A:
 	ld c,(hl)			;b957
 	ld (hl),a			;b958
 L_B959:
-	push hl			;b959
+	push hl			;b959   ; ...la suma de los 4 no puede pasar de 200
 	ld de,0e20eh		;b95a
 	ld b,004h		;b95d
 	call L_AA13		;b95f
@@ -3566,18 +3566,18 @@ L_B959:
 L_B97C:
 	ld h,l			;b97c
 	ld l,a			;b97d
-	ld (0e218h),hl		;b97e   ; guarda la x de la pelota y el byte siguiente (16 bits)
+	ld (0e218h),hl		;b97e
 L_B981:
-	ld hl,0e218h		;b981   ; apunta a la x de la pelota
+	ld hl,0e218h		;b981   ; lo que queda, 3 cifras en (0xC7, 0xAC)
 	ld de,0acc7h		;b984
 	ld b,003h		;b987
 	jp 05c34h		;b989
 L_B98C:
-	ld a,(0e1a2h)		;b98c   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+	ld a,(0e1a2h)		;b98c   ; una curva de un lanzador (0xE220 + n): la suma de las 3 no puede pasar de 0x25
 	sub 00dh		;b98f
 	ld e,a			;b991
 	ld d,000h		;b992
-	ld hl,0e220h		;b994   ; apunta a el defensor que tiene la pelota (1-9; 0 nadie)
+	ld hl,0e220h		;b994
 	add hl,de			;b997
 	ld a,(0e1afh)		;b998
 	dec a			;b99b
@@ -3585,7 +3585,7 @@ L_B98C:
 	push bc			;b99d
 	push hl			;b99e
 	ld (hl),a			;b99f
-	ld hl,0e220h		;b9a0   ; apunta a el defensor que tiene la pelota (1-9; 0 nadie)
+	ld hl,0e220h		;b9a0
 	ld b,003h		;b9a3
 	ld a,(hl)			;b9a5
 	inc hl			;b9a6
@@ -3609,16 +3609,16 @@ L_B9A7:
 L_B9BD:
 	ld (0e225h),a		;b9bd
 L_B9C0:
-	ld hl,0e225h		;b9c0
+	ld hl,0e225h		;b9c0   ; lo que queda, 1 cifra en (0xC7, 0xD8)
 	ld de,0d8c7h		;b9c3
 	ld b,001h		;b9c6
 	jp 05bf1h		;b9c8   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 L_B9CB:
-	ld a,(0e1a2h)		;b9cb   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+	ld a,(0e1a2h)		;b9cb   ; la otra curva (0xE21A + n): igual
 	sub 00dh		;b9ce
 	ld e,a			;b9d0
 	ld d,000h		;b9d1
-	ld hl,0e21ah		;b9d3   ; apunta a la velocidad x de la pelota
+	ld hl,0e21ah		;b9d3
 	add hl,de			;b9d6
 	ld a,(0e1afh)		;b9d7
 	dec a			;b9da
@@ -3626,7 +3626,7 @@ L_B9CB:
 	ld (hl),a			;b9dc
 	push bc			;b9dd
 	push hl			;b9de
-	ld hl,0e21ah		;b9df   ; apunta a la velocidad x de la pelota
+	ld hl,0e21ah		;b9df
 	ld b,003h		;b9e2
 	ld a,(hl)			;b9e4
 	inc hl			;b9e5
@@ -3650,12 +3650,12 @@ L_B9E6:
 L_B9FC:
 	ld (0e21fh),a		;b9fc
 L_B9FF:
-	ld hl,0e21fh		;b9ff
+	ld hl,0e21fh		;b9ff   ; lo que queda, 1 cifra en (0xC7, 0xC8)
 	ld de,0c8c7h		;ba02
 	ld b,001h		;ba05
 	jp 05bf1h		;ba07   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 L_BA0A:
-	jr z,L_BA19		;ba0a
+	jr z,L_BA19		;ba0a   ; la cifra B en el sitio D: 0 la segunda, 1 el nibble alto, 2 el bajo
 	dec a			;ba0c
 	jr z,L_BA1F		;ba0d
 	ld a,(hl)			;ba0f
@@ -3686,7 +3686,7 @@ L_BA1F:
 	or c			;ba2b
 	ret			;ba2c
 L_BA2D:
-	push hl			;ba2d
+	push hl			;ba2d   ; la suma BCD de B palabras de DE, guardada en HL
 	ld hl,00000h		;ba2e
 L_BA31:
 	ld a,(de)			;ba31
@@ -3708,7 +3708,7 @@ L_BA31:
 	ld (de),a			;ba42
 	ret			;ba43
 L_BA44:
-	ld a,c			;ba44
+	ld a,c			;ba44   ; HL = BC - HL (BCD); carry si pasa
 	sub l			;ba45
 	daa			;ba46
 	ld l,a			;ba47
@@ -3722,7 +3722,7 @@ L_BA44:
 	ld l,a			;ba50
 	ret			;ba51
 L_BA52:
-	push hl			;ba52
+	push hl			;ba52   ; guarda el trozo de pantalla del recuadro en la pagina 1 y pinta el recuadro
 	ld hl,05230h		;ba53
 	ld de,04040h		;ba56
 	ld bc,05835h		;ba59
@@ -3732,19 +3732,19 @@ L_BA52:
 	pop hl			;ba64
 	ret			;ba65
 L_BA66:
-	call L_BA82		;ba66
+	call L_BA82		;ba66   ; el recuadro: borrado y un marco
 	ld hl,05230h		;ba69
 	ld de,05835h		;ba6c
 	ld c,00dh		;ba6f
 	jp 04cfeh		;ba71   ; marco: un marco de lineas: HL la esquina, DE el tamano
 L_BA74:
-	ld de,05230h		;ba74
+	ld de,05230h		;ba74   ; devuelve el trozo de pantalla
 	ld hl,04040h		;ba77
 	ld bc,05835h		;ba7a
 	ld a,001h		;ba7d
 	jp 04d66h		;ba7f   ; copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 L_BA82:
-	ld hl,05230h		;ba82
+	ld hl,05230h		;ba82   ; borra el recuadro
 	ld bc,05835h		;ba85
 	xor a			;ba88
 	ld d,000h		;ba89
@@ -3800,19 +3800,19 @@ DATA_dibujo_BAF8:
 
 
 L_BB48:
-	ld de,08808h		;bb48
+	ld de,08808h		;bb48   ; el reloj de juego en (0x08, 0x88): horas, minutos...
 	ld hl,0ed4ch		;bb4b   ; apunta a el reloj de juego: minutos, cifra baja
 	call L_BB64		;bb4e
 	ld d,082h		;bb51
 	call L_BB64		;bb53
-	ld d,07ch		;bb56
+	ld d,07ch		;bb56   ; ...los dos puntos (0xDA)...
 	ld a,0dah		;bb58
 	call 04f3ah		;bb5a
 	ld d,076h		;bb5d
 	call L_BB64		;bb5f
 	ld d,070h		;bb62
 L_BB64:
-	push hl			;bb64
+	push hl			;bb64   ; una cifra del reloj (0 en blanco con 0xD9) con la tabla 0xBB7D
 	ld a,(hl)			;bb65
 	or a			;bb66
 	jr z,L_BB76		;bb67
@@ -3843,7 +3843,7 @@ DATA_resto_BB7D:
 
 
 L_BB87:
-	ld a,(0ecefh)		;bb87
+	ld a,(0ecefh)		;bb87   ; la presentacion: el paso de 0xECEF
 	call 04220h		;bb8a   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
@@ -3859,7 +3859,7 @@ DATA_tabla_BB8D:
 
 
 L_BB97:
-	call 04b9fh		;bb97   ; borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
+	call 04b9fh		;bb97   ; paso 0: pantalla borrada, un rectangulo, los dibujos de la presentacion (p00:541B, p00:52E1)...
 	call 05c7dh		;bb9a   ; esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 	ld hl,02870h		;bb9d
 	ld bc,0d048h		;bba0
@@ -3871,11 +3871,11 @@ L_BB97:
 	xor a			;bbaf
 	ld (0e1d1h),a		;bbb0   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ld (0e1a2h),a		;bbb3   ; guarda el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
-	ld a,020h		;bbb6
+	ld a,020h		;bbb6   ; ...32 cuadros
 	ld (0de04h),a		;bbb8   ; guarda la cuenta atras del estado
 	jr L_BC1D		;bbbb
 L_BBBD:
-	ld hl,0de04h		;bbbd   ; apunta a la cuenta atras del estado
+	ld hl,0de04h		;bbbd   ; paso 1: la espera; luego la pelota que vuela (9 bytes de 0xBD99), corta la musica y el sonido 0x28
 	dec (hl)			;bbc0
 	ret nz			;bbc1
 	ld de,0ecf0h		;bbc2
@@ -3892,7 +3892,7 @@ L_BBBD:
 	ld (0de04h),a		;bbdf   ; guarda la cuenta atras del estado
 	jr L_BC1D		;bbe2
 L_BBE4:
-	call 05c73h		;bbe4
+	call 05c73h		;bbe4   ; paso 2: la pelota se acerca (cambia de tamano cada 8 cuadros)...
 	call L_BCAD		;bbe7
 	call 040dbh		;bbea
 	call L_BC72		;bbed
@@ -3905,7 +3905,7 @@ L_BBE4:
 	ld hl,0ecf8h		;bbfd
 	dec (hl)			;bc00
 	ret nz			;bc01
-	call 05c7dh		;bc02   ; esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
+	call 05c7dh		;bc02   ; ...al acabar, el campo (p00:5421) y el siguiente vuelo (0xBDA2)
 	call 04235h		;bc05
 	xor a			;bc08
 	ld (0ed09h),a		;bc09   ; guarda la peticion de copiar sprites a la VRAM (1 colores, 2 todo)
@@ -3920,7 +3920,7 @@ L_BC1D:
 	inc (hl)			;bc20
 	ret			;bc21
 L_BC22:
-	call 05c73h		;bc22
+	call 05c73h		;bc22   ; paso 3: la pelota cruza la pantalla dejando el rotulo detras (copias de la pagina 1)...
 	call L_BCAD		;bc25
 	call 040dbh		;bc28
 	call L_BC72		;bc2b
@@ -3942,7 +3942,7 @@ L_BC22:
 	ld c,048h		;bc4a
 	ld a,001h		;bc4c
 	call 04d66h		;bc4e   ; copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
-	ld a,(0ecf5h)		;bc51
+	ld a,(0ecf5h)		;bc51   ; ...hasta 0xE9: sprites fuera y 16 cuadros
 	cp 0e9h		;bc54
 	ret c			;bc56
 	call 05c7dh		;bc57   ; esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
@@ -3951,7 +3951,7 @@ L_BC22:
 	ld (0de04h),a		;bc5f   ; guarda la cuenta atras del estado
 	jr L_BC1D		;bc62
 L_BC64:
-	ld hl,0de04h		;bc64   ; apunta a la cuenta atras del estado
+	ld hl,0de04h		;bc64   ; paso 4: la espera, p00:5DBB y 0xE1D1 = 1
 	dec (hl)			;bc67
 	ret nz			;bc68
 	call 05dbbh		;bc69
@@ -3959,7 +3959,7 @@ L_BC64:
 	ld (0e1d1h),a		;bc6e   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ret			;bc71
 L_BC72:
-	ld hl,(0ecf0h)		;bc72
+	ld hl,(0ecf0h)		;bc72   ; la posicion de la pelota mas su velocidad (y y x)
 	ld de,(0ecf2h)		;bc75
 	add hl,de			;bc79
 	ld (0ecf0h),hl		;bc7a
@@ -3969,7 +3969,7 @@ L_BC72:
 	ld (0ecf4h),hl		;bc85
 	ret			;bc88
 L_BC89:
-	ld hl,(0ecf2h)		;bc89
+	ld hl,(0ecf2h)		;bc89   ; la velocidad baja (frena)
 	ld de,0fffbh		;bc8c
 	add hl,de			;bc8f
 	ld (0ecf2h),hl		;bc90
@@ -3979,7 +3979,7 @@ L_BC89:
 	ld (0ecf6h),hl		;bc9a
 	ret			;bc9d
 L_BC9E:
-	ld a,(0de03h)		;bc9e   ; lee el contador de cuadros del juego (sube uno por cuadro)
+	ld a,(0de03h)		;bc9e   ; cada 8 cuadros cambia de tamano (0xECF8)
 	and 007h		;bca1
 	ret nz			;bca3
 	ld a,(0ecf8h)		;bca4
@@ -3987,7 +3987,7 @@ L_BC9E:
 	ld (0ecf8h),a		;bca9
 	ret			;bcac
 L_BCAD:
-	ld a,(0ecf8h)		;bcad
+	ld a,(0ecf8h)		;bcad   ; los sprites de la pelota: la forma del tamano 0xECF8 (0xBD13, 0xBD31)...
 	dec a			;bcb0
 	add a,a			;bcb1
 	ld hl,0bd13h		;bcb2
@@ -4006,7 +4006,7 @@ L_BCAD:
 	inc hl			;bcc7
 	ld de,0e100h		;bcc8   ; apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 L_BCCB:
-	push bc			;bccb
+	push bc			;bccb   ; ...cada pieza en su sitio, con color 13 o 0x1E (0 si sale por abajo)
 	ld a,(0ecf1h)		;bccc
 	add a,(hl)			;bccf
 	inc hl			;bcd0

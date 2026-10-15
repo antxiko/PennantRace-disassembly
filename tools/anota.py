@@ -42,6 +42,12 @@ from paginas import ORG                                    # noqa: E402
 from anotaciones import (BANCOS, CAMBIOS_DE_BANCO, FICHAS,  # noqa: E402
                          RAM, RAM16, RUTINAS, trio)
 try:
+    # tramos (banco, desde, hasta) en los que la RAM tiene otro uso y sus
+    # nombres no valen
+    from anotaciones import RAM_PRESTADA                       # noqa: E402
+except ImportError:
+    RAM_PRESTADA = ()
+try:
     # el mapper de cada juego: registro -> ventana que cambia
     from anotaciones import REGISTROS_MAPPER                  # noqa: E402
 except ImportError:
@@ -207,7 +213,9 @@ def comentario(b, filas, k, fichas, ventanas=None, medido=None):
     m = re.match(r"ld \(0([0-9a-f]{4})h\),a$", t)
     if m and int(m.group(1), 16) in REGISTROS_MAPPER:
         return "el mapper: pone en %s el banco de A" % REGISTROS_MAPPER[int(m.group(1), 16)]
-    # RAM
+    # RAM (salvo en los tramos donde el juego la usa para otra cosa)
+    if any(bb == b and i <= a < f for bb, i, f in RAM_PRESTADA):
+        return None
     m16 = re.match(r"ld (?:(hl|de|bc|ix|iy|sp),\(0([c-f][0-9a-f]{3})h\)|\(0([c-f][0-9a-f]{3})h\),(hl|de|bc|ix|iy))$", t)
     if m16:
         v = int(m16.group(2) or m16.group(3), 16)

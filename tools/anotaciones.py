@@ -241,6 +241,12 @@ RAM.update({
 
 RAM16 = {}
 
+# Tramos en los que el juego usa la RAM del partido para otra cosa: alli sus
+# nombres no valen. p15:A8AC-AA40 calcula las medias del equipo de TEAM EDIT
+# en 0xE1B4-0xE22B (donde en el partido estan la pelota y los demas), y
+# p15:B693-BA8E reparte los puntos de los jugadores en esa misma RAM.
+RAM_PRESTADA = ((15, 0xA8AC, 0xAA40), (15, 0xB693, 0xBA8E))
+
 # Las fichas de 16 bytes de los que se mueven por el campo: la pelota
 # (0xE211), los 4 corredores (0xE231) y los 9 de campo (0xE271, p01:6ACF).
 # La y es la vertical (p01:7561 la pone como Y del sprite restando el
