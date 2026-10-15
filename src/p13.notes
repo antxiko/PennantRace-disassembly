@@ -2,222 +2,730 @@
 
 # --- A MANO: comentarios escritos leyendo el codigo ---
 C 0x6000 PENNANT y los menus: en el paso 8 con soporte (0xDD8E), la lectura (p13:6FFE)...
+C 0x6003 en otro paso, la tabla de pasos
+C 0x600A sin disco ni Game Master 2, p13:6041
+C 0x600E lee la partida (p13:6FFE)
 C 0x6011 ...hasta que 0xD2B1 diga como fue...
+C 0x6016 mal (2): al menu (p13:6086)
 C 0x6019 ...leida: 0xE1D1 = 0...
+C 0x6020 en RAM: p13:6041
 C 0x6022 ...el modo guardado, los 6 nombres de equipo (p13:62D7) a 0xDAAE y 0x24 al final...
+C 0x602B los 6 nombres de serie (66 bytes)...
+C 0x6033 ...y un '$' al final de la lista
 C 0x6036 ...0xD2B2 = 6, p14:81FC y a seguir (p13:64DF)
 C 0x6041 con 0xDD90, a seguir
+C 0x6044 sin 0xDD90, al menu (p13:606B)
 C 0x604A el paso del despachador 0xD74C
+C 0x604D la tabla de pasos de los menus de PENNANT
 C 0x606B el aviso: paso 14, 128 cuadros, p15:BA82 y el texto de p13:7D19
+C 0x6071 el subpaso a 0
+C 0x6076 128 cuadros
+C 0x607B el texto de 0x7D19
 C 0x6081 la espera...
+C 0x6084 hasta 0, nada
 C 0x6086 ...y vuelta al menu: estado 0, 32 cuadros
 C 0x6096 el paso anterior
+C 0x6099 el subpaso a 0
 C 0x609E tres pasos mas...
 C 0x60A1 ...dos...
 C 0x60A4 ...uno...
 C 0x60A7 ...el paso siguiente con el subpaso a 0
+C 0x60AB el subpaso...
+C 0x60AC ...a 0
 C 0x60AF el subpaso siguiente
 C 0x60B4 p13:6BFB y el paso de la opcion (0xD759 + 3)
 C 0x60B9 p13:6B93 y lo mismo
+C 0x60BE la opcion + 3...
+C 0x60C6 ...con el subpaso a 0
 C 0x60CB el paso 0xD759 + 10
+C 0x60D4 el subpaso a 0
 C 0x60D8 el principio: borra la pantalla y los pasos...
+C 0x60DB 0xD74C-0xD75B a 0 (16 bytes)
+C 0x60E8 0xDA6B y la opcion a 0
 C 0x60EE ...sin partida guardada ni leida, directo (C = 1)...
+C 0x60FA la eleccion es 1
 C 0x6102 ...si no, el texto de 0x6115 y las marcas de 0xDD91-0xDD93 a cero
+C 0x6108 0xDD91, 0xDD92 y 0xDD93 a 0
+C 0x6115 los textos de la eleccion ([x y], letras y 0xFF)
 C 0x6148 la eleccion de p15:AAE1 con DE = 0x6050, hasta 0xDD91...
+C 0x614E sin acabar (0xDD91), nada
+C 0x6153 C = SI / NO (0xDD93)
 C 0x6157 ...0xD750 = la eleccion, borra los tres textos...
+C 0x615B los tres textos borrados (color 0)
 C 0x616D ...sprites fuera y la flecha (p13:6187)...
 C 0x6173 ...con eleccion, al paso siguiente; si no, 0xD2B0 = 0 y cinco pasos mas
-C 0x6187 32 bytes de dibujos de sprite (0x6193) a la VRAM 0xF800
+C 0x617A NO: 0xD2B0 = 0 y tres pasos mas
+C 0x6187 a los dibujos 0x00-0x03 de los sprites
+C 0x6193 los 32 bytes del dibujo de la flecha
+C 0x61A3 datos sin lector a la vista
 C 0x61B3 el subpaso de 0xD74D
+C 0x61B6 la tabla de subpasos (p13:61B9)
 C 0x61BD la pantalla de PENNANT: 0xD6E1 = 1, lineas y marcos...
+C 0x61C2 una linea en la y 0x50, color 0x0D
+C 0x61CC un marco desde (0xC6, 0x08) de 0xF2 x 0x0C
+C 0x61D7 cuatro lineas verticales de 12 en la y 0xC6: x 0x3E, 0x76, 0xA6 y 0xCC
 C 0x61FF la fuente, los textos de 0x613D y 0x6294 y el cuadro de 0x6C9D
+C 0x6202 el texto de 0x613D borrado y el de 0x6294
+C 0x620E la opcion (p13:6C9D)
 C 0x6214 una temporada nueva: los 6 nombres de equipo a 0xDAAE...
+C 0x621D 66 bytes
+C 0x6221 el '$' del final de la lista
 C 0x6222 ...0xD2B2 = 6, p14:81FC, el sonido 0x2E...
+C 0x6227 el directorio (p14:81FC)
+C 0x622A el sonido 0x2E
 C 0x622F ...la jornada 1 de 1 (0xD753)...
-C 0x6235 ...0xDD80-0xDD85 a 0xFF, 0xD6E3-0xD706 a cero, los equipos de 0xD70A a 0xFF...
+C 0x6235 0xDD80-0xDD85 a 0xFF: sin campeon
+C 0x6242 0xD6E3-0xD706 a 0: la tabla de partidos
+C 0x6252 0xD70A-0xD70F a 0xFF: ningun equipo elegido
 C 0x625C ...la tabla (p13:6A0D) y 0xDA6C-0xDAAD en blanco
+C 0x6262 0xDA6C-0xDAAD en blanco (0x42 espacios)
 C 0x6272 el cursor: 3 bytes de atributo (0x6291) a la VRAM 0xF600...
+C 0x6278 al sprite 0 (0xF600)
 C 0x627E ...el siguiente fuera (0xD8)...
 C 0x6286 ...y el color 7 a sus 16 lineas
+C 0x6291 los atributos del cursor (y, x y dibujo)
+C 0x6294 los textos de la pantalla de PENNANT
+C 0x62D7 los nombres de los 6 equipos de serie (11 letras ASCII cada uno)
+C 0x6303 datos sin lector a la vista
 C 0x6319 el subpaso de 0xD74D
+C 0x631C la tabla de subpasos (p13:631F)
 C 0x6323 el cuadro de la jornada, el texto de p13:7CEF y el numero de jugadores (p13:6B50)
+C 0x6326 el recuadro (p13:6B66)
+C 0x632F el numero (p13:6B50)
+C 0x6335 8 cuadros
 C 0x633A elegir el numero de jugadores (0xD6E1, 1-6): con otra opcion, a ella...
+C 0x633D el boton 2 (p13:6C81)
+C 0x6344 si la opcion no es esta, a la suya
 C 0x6347 ...izquierda o derecha, cada 8 cuadros si se mantiene...
+C 0x634C recien pulsada: en seguida
+C 0x6351 mantenida: cada 8 cuadros
 C 0x6359 ...la derecha: uno menos (de 1 a 6)...
+C 0x635E bit 0 (izquierda)
+C 0x6364 la derecha: uno menos; de 1 pasa a 6
 C 0x636C ...la izquierda: uno mas (de 6 a 1)...
+C 0x6370 uno mas; de 6 pasa a 1
 C 0x6377 ...lo pinta y el sonido 0x26
+C 0x637B el cuadro de la jornada
 C 0x6383 elegir equipo: con otra opcion, a ella...
+C 0x6389 si la opcion no es la 1, a la suya
 C 0x638D ...la flecha y la tabla...
+C 0x6393 si ya estan todos elegidos (0xDA6B), el boton 2
 C 0x639D ...con el boton, el equipo elegido (p13:6AB5)
+C 0x63A2 sin boton, nada
+C 0x63A6 y se marca en la lista (p13:6B17)
+C 0x63AF todos: p13:63B5
+C 0x63B2 si no, la opcion siguiente
+C 0x63BE la tabla de subpasos (p13:63C1)
 C 0x63C5 sin cursor y 0xD758 = 0
+C 0x63C8 el sprite 0 fuera (y = 0xE0)
 C 0x63D4 la opcion 4: el cursor de la lista (p13:6BDC, p13:6C49) y con el boton se elige
+C 0x63DC si la opcion no es la 4, a la suya
+C 0x63DF el cursor (p13:6BDC y p13:6C49)
+C 0x63EA sin boton, nada
+C 0x63EB el elegido (p13:6C6E) se marca
+C 0x63F7 la tabla de subpasos (p13:63FA)
 C 0x63FE el cuadro de los partidos: el texto de 0x6412 y el numero (p13:6462)
+C 0x6401 el texto de 0x6412
+C 0x6407 el numero (p13:6462)
+C 0x640A 8 cuadros
+C 0x6412 el texto de los partidos
 C 0x641A elegir el numero de partidos (0xD753, 1-26): con otra opcion, a ella...
+C 0x641D el boton 2
+C 0x6425 si la opcion no es la 2, a la suya
+C 0x642D recien pulsada: en seguida
+C 0x6434 mantenida: cada 8 cuadros
 C 0x643A ...cada 8 cuadros: abajo uno menos (de 1 a 26)...
+C 0x643F bit 0 (abajo?) segun el bit que sale: uno menos o uno mas
+C 0x6445 de 1 pasa a 26
 C 0x644E ...arriba uno mas (de 26 a 1)...
+C 0x6452 de 26 pasa a 1
 C 0x6454 ...en BCD en 0xD754 y el sonido 0x26
+C 0x6457 en 0xD753...
+C 0x6459 ...y en BCD en 0xD754
 C 0x6462 el numero de partidos (BCD de 0xD754) en (0x70, 0x98)
+C 0x6465 en (0x98, 0x70), una cifra BCD de dos digitos
 C 0x646D A en BCD (decenas x 16 + unidades)
+C 0x6472 C = las decenas: restar 10 mientras quepa
+C 0x6479 la ultima resta sobraba
+C 0x647C las decenas a la mitad alta...
+C 0x6484 ...mas las unidades
+C 0x648A la tabla de subpasos (p13:648D)
 C 0x6491 la opcion 3: con el boton y todos los equipos elegidos, el texto de p13:62D1
+C 0x6499 si la opcion no es la 3, a la suya
+C 0x64A1 sin boton, nada
+C 0x64A8 si no estan todos los equipos, nada
+C 0x64AA el texto de 0x62D1
 C 0x64B4 empezar: p13:6BA1, copia los equipos de 0xD70A a 0xD72A...
+C 0x64B7 los 6 elegidos a 0xD72A
 C 0x64C2 ...dos jugadores (bit 5 de 0xDE02) salvo con 1: entonces solo uno...
+C 0x64CD con uno solo, sin dos jugadores
 C 0x64CF ...0xE1D1 = 1 y 0xD6DC = 0
 C 0x64D9 con mas, al paso 13
 C 0x64DF la siguiente jornada: con un jugador, 0xE1D1 = 1 y fuera
+C 0x64E2 con varios jugadores, p13:64EF
 C 0x64EF los pasos a cero, el paso 9...
+C 0x64F3 0xD74C-0xD75B a 0
+C 0x64FC 0xDA6B y la opcion a 0
+C 0x6502 el paso 9
 C 0x6507 ...guarda los equipos de 0xD70A en 0xE340 y los pone a 0xFF...
+C 0x6510 6 bytes a 0xE340
+C 0x6518 0xD70A-0xD70F a 0xFF
 C 0x651F ...0xD718-0xD729 a 0xFF...
+C 0x6525 0xD718-0xD729 a 0xFF (18 bytes)
 C 0x652C ...quien juega con quien (p13:65BE)...
 C 0x6532 ...los numeros 2, 3... en columna...
+C 0x6534 en (0x6C, 0x4C), de 12 en 12
 C 0x6542 ...la flecha, el texto de p13:A710 y la tabla de la jornada...
+C 0x654B una linea en la y 0x50
+C 0x6555 un marco
+C 0x6560 cuatro lineas verticales en la y 0xC6: x 0x4E, 0x7E, 0xAE y 0xDE
 C 0x6588 ...el texto de 0x6594, p13:6811 y el cursor
+C 0x658E la opcion (p13:6811)
+C 0x6591 y el cursor
+C 0x6594 los textos de la pantalla de la jornada
 C 0x65BE los emparejamientos: para cada equipo (0xE340) a 0xD718...
+C 0x65C1 a 0xD718, uno por equipo
+C 0x65C8 C = el equipo
 C 0x65CA ...su fila de la tabla de 0xD6E3 (6 bytes)...
+C 0x65D5 HL = 0xD6E3 + 6 x su indice
+C 0x65DC E = el rival que se mira
 C 0x65DE ...si ya ha jugado con todos los demas (0xD6DE - 1 veces)...
-C 0x65EE ...se queda; si no, 0xFF (libre)
+C 0x65E2 con todos los partidos jugados contra ese (0xD6DE - 1)...
+C 0x65E5 ...o si es el mismo, sigue mirando
+C 0x65E7 si queda alguno por jugar, libre
+C 0x65EE todos jugados: el equipo se queda
+C 0x65F6 0xFF: libre
 C 0x65FB C = el indice del equipo A en 0xD72A
+C 0x6600 busca A en la lista; C cuenta
 C 0x6606 la jornada, opcion 0: el visitante: con el boton...
+C 0x660D si la opcion no es la 0, a la suya
+C 0x6610 el cursor (p13:6846)
+C 0x6614 la lista con los que le quedan (p13:68A8)
+C 0x661C sin boton, nada
 C 0x661D ...el elegido (p13:66C4) y los dos nombres
+C 0x6624 la lista otra vez
 C 0x662A opcion 1: el local (p13:66F6)
+C 0x6631 si la opcion no es la 1, a la suya
+C 0x6639 la lista del local
+C 0x6641 sin boton, nada
+C 0x6653 la tabla de subpasos (p13:6656)
 C 0x665A opcion 2: con el boton y los dos elegidos, al subpaso siguiente
+C 0x6662 si la opcion no es la 2, a la suya
+C 0x666A sin boton, nada
+C 0x666F sin visitante (0xFF), nada
+C 0x6673 sin local, nada
 C 0x6677 el orden de la jornada (p13:6761), el texto de 0x65B8 y 0xE1D1 = 1
+C 0x667A el texto de 0x65B8
+C 0x6680 0xE1D1 = 1: hecho
 C 0x6686 B' = el equipo de la fila del cursor (0xD72A + 0xD74F)
+C 0x668C el equipo de la fila en 0xD72A
+C 0x6691 en B'
 C 0x6695 los rivales que le quedan: su fila de 0xD6E3...
+C 0x6698 HL = 0xD6E3 + 6 x el indice
+C 0x66A4 los 6
 C 0x66A6 ...los que ya ha jugado bastante (0xD6DE - 1) van a 0xFF...
+C 0x66AA si ya ha jugado bastante con ese, 0xFF
 C 0x66B5 ...los demas con su numero
+C 0x66B6 el equipo 6 - B de 0xD72A
 C 0x66C4 el visitante elegido: no el mismo que el local...
+C 0x66CB el que ya es visitante o local, no
 C 0x66CF ...y que le quede ese rival...
+C 0x66D0 la lista de rivales: 0xD718 o, con local, 0xD724
+C 0x66DF si esta en la lista (ya no puede jugar con el), no
 C 0x66E4 ...0xD70A = el, sus rivales a 0xD71E y su nombre a 0xDA6C
+C 0x66E7 el visitante
+C 0x66E8 sus rivales a 0xD71E
+C 0x66EE el nombre a 0xDA6C
 C 0x66F6 el local: lo mismo con 0xD70B, 0xD724 y 0xDA77
+C 0x66FD el que ya es visitante o local, no
+C 0x6702 la lista: 0xD718 o, con visitante, 0xD71E
+C 0x6711 si esta en la lista, no
+C 0x6719 el local
+C 0x671A sus rivales a 0xD724
+C 0x6720 el nombre a 0xDA77
 C 0x6726 el nombre de 11 letras de 0xDAAE + 11 x n y el sonido 0x27
+C 0x672C 0xDAAE + 11 x el equipo
+C 0x672D 11 letras
+C 0x6732 el sonido 0x27
 C 0x6737 los dos nombres (o espacios) en la pantalla y las marcas
+C 0x673D el visitante en (0x20, 0x80); sin el, el blanco de 0x6AAB
+C 0x6749 el local en (0x38, 0x80)
+C 0x675B la fila siguiente y la opcion siguiente
 C 0x6761 el orden de la jornada: los dos que juegan primero...
-C 0x676E ...los demas detras en 0xD70C...
+C 0x6764 con dos equipos, solo recolocar
+C 0x676E los de 0xE340 que no son ni el visitante...
+C 0x6774 ...ni el local...
+C 0x677D ...van detras, desde 0xD70C
 C 0x6783 ...y se recoloca 0xE340 y las fichas de 15 bytes de 0xD680 a la vez
+C 0x6786 cada puesto de 0xD70A contra el de 0xE340
+C 0x678D C' = el puesto
+C 0x6793 si coincide, sigue
+C 0x6798 si no, C = cuanto mas adelante esta...
+C 0x67A1 ...y se cambian los dos equipos y sus fichas
+C 0x67AE todos
 C 0x67B0 el nombre del local a 0xD740
 C 0x67BC cambia dos equipos de 0xE340
+C 0x67BD B = C' + B': el otro puesto
+C 0x67C6 HL = 0xE340 + B
+C 0x67CA DE = 0xE340 + C
+C 0x67CD los cambia
 C 0x67D5 cambia sus fichas de 15 bytes en 0xD680
+C 0x67D8 HL = la ficha B (15 x B + 0xD680)
+C 0x67E3 la ficha C
+C 0x67EB 15 bytes
+C 0x67EE los cambia
+C 0x67EF un byte de cada ficha...
+C 0x67F2 ...cambiados
+C 0x67F6 los 15
 C 0x67FA con el boton 2, la opcion siguiente (0xD759, de 0 a 2)...
+C 0x67FF sin el boton 2, nada
+C 0x6804 despues de la 2, la 0
 C 0x6809 ...el sonido 0x26...
 C 0x6811 ...y su texto (la tabla 0x6828)
+C 0x6814 el texto comun de 0x6594
+C 0x681D la palabra de la opcion...
+C 0x6824 ...es su texto
+C 0x6828 los textos de las 3 opciones (punteros y textos)
 C 0x6846 la fila del cursor (0xD74F) con arriba y abajo, sin pasar de los equipos (p13:6B5B)
+C 0x684B con el boton 1, nada
+C 0x6853 arriba: p13:6868
+C 0x6856 abajo: si no esta en la ultima fila, una mas
+C 0x6861 el sonido 0x26
+C 0x6868 si no esta en la primera, una menos
+C 0x6870 el sonido 0x26
 C 0x6874 la fila siguiente (da la vuelta)
+C 0x687E despues de la ultima, la primera
 C 0x6882 el cursor en su fila: los 2 bytes de 0x689C a la VRAM 0xF600
+C 0x6888 la entrada de 2 bytes de 0x689C
+C 0x6892 la y al atributo del sprite 0...
+C 0x6899 ...y la x
+C 0x689C la y y la x del cursor en cada fila (6 entradas)
 C 0x68A8 la lista de equipos con los que ya no puede jugar en otro color: los del local...
-C 0x68B9 ...o los del visitante
+C 0x68A9 A = 1: los del visitante
+C 0x68AB la lista del visitante: 0xD718, o 0xD724 si ya hay local
+C 0x68B9 la del local: 0xD718, o 0xD71E si ya hay visitante
 C 0x68C5 cada equipo de 0xD72A: su nombre (0xDAAE + 11 n)...
+C 0x68C8 desde (0x6C, 0x5C)
+C 0x68D2 el equipo C de 0xD72A
+C 0x68D9 su nombre: 0xDAAE + 11 x el equipo
+C 0x68E2 se pinta (p13:68EF)
+C 0x68E8 12 mas abajo
 C 0x68EF ...en el color 4 (+0xA0) si esta elegido o no le quedan partidos...
+C 0x68F0 el color 4 (+0xA0) para los elegidos
+C 0x68F5 el visitante
+C 0x68F9 o el local
+C 0x68FC o los de la lista de rivales
+C 0x6901 si esta, en el color 4
+C 0x6907 si no, el color normal
+C 0x690C 10 letras
 C 0x690E ...10 letras (p14:9834 da la letra, 0 en blanco)
+C 0x6915 + el color (0 sigue en blanco)
+C 0x6919 la x 8 mas
 C 0x6922 la siguiente fila de jugador (0xD2B2 filas), da la vuelta
+C 0x6928 en la ultima fila...
+C 0x692C ...la ventana y el cursor a 0
 C 0x6938 el cursor de la lista de jugadores: 0xD2B2 filas (o 0xD2B2 - 6)...
+C 0x693B 0xE360 = todas las filas
+C 0x6943 sin los 6 de serie
 C 0x6948 ...arriba y abajo de 2 en 2, izquierda y derecha cambian de columna...
+C 0x694D con el boton 1, nada
+C 0x6955 bit 0 (arriba): dos filas menos
+C 0x6958 bit 1 (abajo): dos mas
+C 0x695B bit 2 (izquierda): una menos si esta en la derecha
+C 0x695E bit 3 (derecha): una mas si esta en la izquierda
+C 0x6964 y si no es la ultima
+C 0x696C el sonido 0x26
+C 0x6978 el sonido 0x26
+C 0x697F abajo: si quedan dos filas mas
+C 0x698A dos mas
+C 0x6993 arriba: si no baja de 0
+C 0x699C dos menos
 C 0x69A3 ...la ventana de 16 filas (0xD751) sigue al cursor...
+C 0x69A9 el cursor por encima de la ventana: la ventana sube dos
+C 0x69B9 por debajo (16 filas): baja dos
 C 0x69C3 ...y el cursor en su sitio (la tabla 0x69ED; 0x30 menos en TEAM EDIT)
+C 0x69C9 la fila dentro de la ventana...
+C 0x69CA ...su entrada de 2 bytes de 0x69ED
+C 0x69D1 en TEAM EDIT (modo 3), 0x30 mas arriba
+C 0x69DC la y...
+C 0x69DF ...y la x
+C 0x69E3 al atributo del sprite 0
+C 0x69ED la y y la x del cursor en cada fila de la ventana (16 entradas)
 C 0x6A0D la lista de jugadores: desde 0xDAAE (los nombres de equipo)...
 C 0x6A13 ...o desde 0xDAF0 (los de la partida)
 C 0x6A17 desde la fila de la ventana (0xD751), 11 bytes cada uno...
+C 0x6A1A 0xD752 = la fila que se pinta
+C 0x6A1D el nombre de esa fila: 11 x n + BC
 C 0x6A22 ...en (0x60, 0x28), o en 0x30 en TEAM EDIT...
+C 0x6A2C en TEAM EDIT, y 0x30
 C 0x6A2E ...8 filas de dos columnas (la segunda 0x68 a la derecha)...
+C 0x6A33 la izquierda
+C 0x6A37 si es el final (0x24), acaba
 C 0x6A38 ...0x24 acaba la lista
+C 0x6A3C la derecha, 0x68 mas alla
+C 0x6A49 12 mas abajo
+C 0x6A4E 8 filas
 C 0x6A51 una columna vacia: espacios
+C 0x6A55 el blanco de 0x6AAB
 C 0x6A5E un nombre: en el color 4 si esta entre los elegidos de 0xD70A...
+C 0x6A61 0xE342 = 0: no elegido
+C 0x6A6A con nombres grabados, se miran 6 - ...
+C 0x6A75 si la fila esta entre los elegidos, 0xE342 = 1
 C 0x6A86 ...10 letras (p14:9834)...
-C 0x6AA2 ...y la fila siguiente
+C 0x6A8B 0: espacio, se pinta tal cual
+C 0x6A95 elegido: el color 4
+C 0x6A9A la x 8 mas
+C 0x6AA2 salta la marca del final (11.a)
+C 0x6AA3 la fila siguiente
+C 0x6AAB 10 espacios y la marca
 C 0x6AB5 elegir el equipo de la fila: si ya esta elegido nada...
+C 0x6ABF si ya esta elegido, nada
 C 0x6AC6 ...el primer hueco de 0xD70A...
+C 0x6ACC el primer hueco libre (0xFF)
+C 0x6AD4 ninguno, nada
 C 0x6AD5 ...lo ocupa, copia el nombre a 0xDA6C + 11 n y uno mas en 0xDA6B
+C 0x6AD7 el sitio del nombre: 0xDA6C + 11 x el hueco
+C 0x6AE2 el nombre de la fila
+C 0x6AE5 uno mas elegido (0xDA6B)
 C 0x6AEC el nombre de 11 letras de 0xDAAE + 11 x A y el sonido 0x27
+C 0x6AF0 0xDAAE + 11 x A
+C 0x6AF3 11 letras
+C 0x6AF8 el sonido 0x27
 C 0x6AFD HL = A x 11
+C 0x6B00 BC = A
+C 0x6B02 x 3...
+C 0x6B04 ...x 12...
+C 0x6B07 ...- A
 C 0x6B0A HL = A x 15
+C 0x6B0D BC = A
+C 0x6B0F x 16...
+C 0x6B14 ...- A
 C 0x6B17 los 6 equipos elegidos (o espacios) en columna desde (0x10, 0x58)
+C 0x6B1E desde (0x10, 0x58)
+C 0x6B26 el equipo del hueco...
+C 0x6B2B ...0xFF: el blanco de 0x6AAB
+C 0x6B31 10 letras
+C 0x6B3A la x 8 mas
+C 0x6B43 el nombre siguiente (11 bytes)
+C 0x6B48 10 mas abajo
 C 0x6B50 el numero de jugadores (0xD6E1) en (0x98, 0x78)
+C 0x6B55 en (0x98, 0x78), una cifra
 C 0x6B5B B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
+C 0x6B62 con uno solo, 6
 C 0x6B66 el cursor fuera y un recuadro guardando lo de detras...
+C 0x6B69 el sprite 0 fuera (y = 0xE0)
 C 0x6B6E ...(0x30 x 0xB0 en (0x80, 0x24))
+C 0x6B71 se guarda en la pagina 1 (a 4: la misma posicion en otra pagina)
+C 0x6B7C se borra a color 0
+C 0x6B88 y un marco de color 0x0D de 0x2E x 0xAE
 C 0x6B93 devuelve lo de detras del recuadro
+C 0x6B96 0x30 x 0xB0 de la pagina 1 a la 0
 C 0x6BA1 una temporada nueva: el marcador de 0x6BD8...
+C 0x6BA4 los 4 bytes de 0x6BD8 al marcador (0xE194)
 C 0x6BAC ...0xD680-0xD6D9 a cero, 0xD6DE = los partidos...
+C 0x6BAF 0x5A bytes a cero
+C 0x6BBC los partidos de cada pareja a 0xD6DE
 C 0x6BBF ...y la ficha de 15 bytes de cada equipo con su nombre (11 letras)
+C 0x6BC8 el nombre (11 letras) y 4 bytes mas en cada ficha
+C 0x6BD8 el marcador de una temporada nueva (4 bytes)
 C 0x6BDC elegir la fila (0xD758) con arriba y abajo
+C 0x6BDF con el boton 1, nada
+C 0x6BE6 0xD758: la fila
+C 0x6BEC arriba: una menos
+C 0x6BEF abajo: una mas hasta la ultima
 C 0x6BFB con menos de 6 jugadores, borra a los que sobran (p13:6C71) y repinta
+C 0x6C00 con 6, no hay nada que borrar
+C 0x6C04 los huecos de B a 5...
+C 0x6C0B ...se borran (p13:6C71)
+C 0x6C12 y los nombres se pintan otra vez
 C 0x6C15 el texto de 0x6C31 y los numeros 2, 3... de cada fila
+C 0x6C1C desde (0x10, 0x48)
+C 0x6C24 el caracter del numero
+C 0x6C28 10 mas abajo
+C 0x6C31 el texto de la lista de jugadores
 C 0x6C49 la flecha de la fila 0xD758 (x = 0x48, y de 0x6C68)...
+C 0x6C4C la y de la fila (tabla 0x6C68)
 C 0x6C55 ...parpadea con el bit 2 del reloj
+C 0x6C58 el caracter n + 2 (el numero de la fila)...
+C 0x6C5C ...o 0 (en blanco) cuando el bit 2 del reloj esta a 0
+C 0x6C68 la y de las 6 filas
 C 0x6C6E borra el equipo de la fila 0xD758...
 C 0x6C71 ...(0xFF en 0xD70A + n) y uno menos en 0xDA6B
+C 0x6C77 si ya estaba libre, nada
+C 0x6C7A libre (0xFF)...
+C 0x6C7F ...y uno menos elegido
 C 0x6C81 con el boton 1, la opcion siguiente...
 C 0x6C85 ...o con el boton 2
+C 0x6C8B sin el boton, nada
 C 0x6C8C la opcion siguiente (0xD759, de 0 a 4) y el sonido 0x26
+C 0x6C92 despues de la 4, la 0
+C 0x6C98 el sonido 0x26
 C 0x6C9D el texto de 0x6CE6 y el de la opcion (tabla 0x6CB4)
+C 0x6CA6 la palabra de la opcion en 0x6CB4...
+C 0x6CB0 ...es su texto
+C 0x6CB4 los textos de las 5 opciones (punteros y textos)
 C 0x6D0E MEDIA SELECT: el paso de 0xD2B0
+C 0x6D11 la tabla de pasos (p13:6D14)
 C 0x6D1E paso 0: sin el soporte 3, 0xDD8F = el soporte y a grabar...
+C 0x6D23 los dos: p13:6D31
+C 0x6D28 0xD2B1 a 0
+C 0x6D2C dos pasos mas
 C 0x6D31 ...con el 3, p14:845B y la pregunta SI / NO (p00:5D7D)
+C 0x6D35 0xD2B1 a 0
+C 0x6D38 0xDD0C = 1 y SI / NO
 C 0x6D41 paso 1: el boton 1 elige (0xDD8F = 0xDD0C + 1)
+C 0x6D44 sin boton, nada
+C 0x6D47 sin el boton 1: cambia SI / NO
+C 0x6D4C el soporte = la eleccion + 1
 C 0x6D53 calla, p15:BA66 y el texto de p13:7BDD
 C 0x6D61 al paso siguiente
 C 0x6D66 paso 2: p14:814B; si no fue bien, el aviso de p13:7C22 y 128 cuadros
+C 0x6D69 mal: p13:6D88
+C 0x6D70 bien: el recuadro y el texto de 0x7C22
+C 0x6D79 128 cuadros
+C 0x6D7E 0xD2B1 = 1
+C 0x6D83 dos pasos mas
 C 0x6D88 bien: el texto de exito
 C 0x6D8D el texto segun el soporte (p13:7BEA o 0x7C06) y SI / NO
+C 0x6D93 el disco: 0x7BEA; el Game Master 2: 0x7C06
+C 0x6D9F 0xD2B1 a 0
+C 0x6DA3 0xDD0C = 1 y SI / NO
 C 0x6DAA paso: con el boton 1, segun la eleccion...
+C 0x6DAF sin boton, nada
+C 0x6DB0 sin el boton 1, cambia SI / NO
+C 0x6DB8 con el disco, se quita el recuadro
+C 0x6DBF SI: p13:6DD6 y al paso siguiente
 C 0x6DC7 ...NO: al paso 2 con el texto de 0x7BDD
 C 0x6DD6 el texto de p13:7CFA y 64 cuadros
+C 0x6DD9 con el disco, se quita el recuadro
+C 0x6DE6 64 cuadros
 C 0x6DEC la espera y 0xD2B1 = 1
+C 0x6DEF hasta 0, nada
 C 0x6DF7 el paso de 0xD2B0
+C 0x6DFA la tabla de pasos (p13:6DFD)
 C 0x6E07 paso 0 de la grabacion: si alguno de los dos equipos es uno editado (0x41), calla
+C 0x6E0B un equipo editado ('A' en la 11.a letra) en el visitante...
+C 0x6E12 ...o en el local
+C 0x6E19 calla (el sonido 1)
 C 0x6E20 paso: graba (p14:8000); si fue bien, el texto y dos pasos
+C 0x6E26 mal: p13:6E6C
+C 0x6E2A bien: el texto y dos pasos mas
 C 0x6E32 paso: lee (p14:8054); si fue mal, 0xD2B1 = 1...
+C 0x6E38 mal: 128 cuadros
+C 0x6E3C bien: 0xD2B1 = 1
 C 0x6E41 ...en PENNANT con el jugador en el local, cambia las dos fichas de equipo
+C 0x6E44 sin PENNANT, nada mas
+C 0x6E49 dos jugadores, nada mas
+C 0x6E4E con el jugador de visitante, nada mas
+C 0x6E4F de local: se cambian las dos fichas
 C 0x6E58 cambia 255 bytes de 0xD380 con 0xD47F
+C 0x6E59 un byte de cada una...
+C 0x6E5B ...cambiados
+C 0x6E61 los 255
 C 0x6E67 128 cuadros de espera
 C 0x6E70 al paso siguiente
 C 0x6E75 la pregunta: SI, el texto de p13:7CFA y 64 cuadros; NO, al paso de 0xE340
+C 0x6E7A sin boton, nada
+C 0x6E7B sin el boton 1, cambia SI / NO
+C 0x6E83 NO: p13:6E99
+C 0x6E89 SI: el recuadro y el texto de 0x7CFA
+C 0x6E92 64 cuadros
+C 0x6E9D el paso guardado en 0xE340
 C 0x6EA4 la espera y 0xD2B1 = 2
+C 0x6EA7 hasta 0, nada
 C 0x6EAF la ficha del visitante (0xD380) por el nombre de 0xD680...
 C 0x6EB7 ...o la del local (0xD47F) por el de 0xD740
 C 0x6EBD busca el nombre entre los 6 de serie (0xDAAE, 11 letras cada uno)...
+C 0x6EC1 C = el numero del equipo de serie
+C 0x6EC4 el primero (0xDAAE)
+C 0x6EC9 las 11 letras iguales: es este
+C 0x6ED7 el segundo (0xDAB9)
+C 0x6EDD letra a letra
+C 0x6EDE distinta: el siguiente
+C 0x6EE5 igual: este (C = 1)
+C 0x6EEA el tercero (0xDAC4)
+C 0x6EF0 letra a letra
+C 0x6EF1 distinta: el siguiente
+C 0x6EF8 igual: C = 2
+C 0x6EFD el cuarto (0xDACF)
+C 0x6F03 letra a letra
+C 0x6F04 distinta: el siguiente
+C 0x6F0B igual: C = 3
+C 0x6F10 el quinto (0xDADA)
+C 0x6F16 letra a letra
+C 0x6F17 distinta: el siguiente
+C 0x6F1E igual: C = 4
+C 0x6F23 el sexto (0xDAE5)
+C 0x6F2A ninguno: los editados
 C 0x6F31 ...y copia su ficha de 255 bytes de la tabla 0x731F
+C 0x6F35 la palabra C de la tabla p13:731F: su ficha
+C 0x6F3D a la ficha del visitante o del local
+C 0x6F41 255 bytes
 C 0x6F47 si no, entre los dos editados (0xDAF0, 0xDAFB)...
+C 0x6F4C el primero de los editados (0xDAF0)
+C 0x6F50 letra a letra
+C 0x6F51 distinta: el segundo
+C 0x6F58 igual: C = 0
+C 0x6F5B el segundo (0xDAFB)
+C 0x6F63 ninguno: nada
 C 0x6F68 ...su ficha de 0xD780 + 256 x n
+C 0x6F6B 0xD780 + 256 x C
+C 0x6F73 255 bytes
 C 0x6F79 leer: el paso de 0xD2B0
+C 0x6F7C la tabla de pasos (p13:6F7F)
 C 0x6F89 paso 0: 0xD2B1 = 0, calla y al paso siguiente
+C 0x6F8D calla (el sonido 1)
 C 0x6F97 paso: lee (p14:80F4); bien, el texto; mal, el aviso de p13:7C22 y 160 cuadros
+C 0x6F9D mal: p13:6FA6
+C 0x6FA1 bien: el texto y al siguiente
+C 0x6FAA el paso 4
+C 0x6FAF el recuadro y el texto de 0x7C22
+C 0x6FB8 160 cuadros
 C 0x6FBE la pregunta: SI repite, NO vuelve
+C 0x6FC3 sin boton, nada
+C 0x6FC4 sin el boton 1, cambia SI / NO
+C 0x6FCD NO: p13:6FDC
+C 0x6FCF SI: otra vez desde el paso 4
+C 0x6FDF con el disco, se quita el recuadro
+C 0x6FE3 al paso 0
 C 0x6FE8 la espera y 0xD2B1 = 2
+C 0x6FEC hasta 0, nada
 C 0x6FF3 la espera y 0xD2B1 = 1
+C 0x6FF7 hasta 0, nada
 C 0x6FFE la lectura en el paso 8: el paso de 0xD2B0
+C 0x7001 la tabla de pasos (p13:7004)
 C 0x700E paso 0: calla, el recuadro y el texto de p13:7D41
+C 0x7012 calla (el sonido 1)
+C 0x701A el texto de 0x7D41
 C 0x7025 paso: lee (p14:80A8); bien, el texto; mal, el aviso de p13:7D09 y 128 cuadros
+C 0x702D mal: p13:7034
+C 0x702F bien: el texto y al siguiente
+C 0x7034 128 cuadros
+C 0x703D el paso 3
+C 0x7045 el texto de 0x7D09
 C 0x704B la pregunta: SI vuelve a intentar, NO vuelve
+C 0x7050 sin boton, nada
+C 0x7051 sin el boton 1, cambia SI / NO
+C 0x705A NO: p13:7072
+C 0x705C SI: calla, 128 cuadros y el paso 4
+C 0x7075 con el disco, se quita el recuadro
+C 0x7079 al paso 0
 C 0x707E la espera y 0xD2B1 = 1
+C 0x7082 hasta 0, nada
 C 0x7089 la espera, los menus a cero y 0xD2B1 = 2
+C 0x708D hasta 0, nada
+C 0x708E el despachador y el subpaso a 0
 C 0x709A busca el Game Master 2: los 4 slots (y sus subslots si estan expandidos)...
+C 0x70A2 el slot n (EXPTBL 0xFCC1 + n)
+C 0x70A3 con el bit 7, es expandido: los 4 subslots
+C 0x70A7 si no, el slot tal cual
+C 0x70B2 carry: encontrado
+C 0x70B5 los 4 slots
 C 0x70B7 ...si no esta, 0xDD0E = 0xFF
 C 0x70BD los 4 subslots del slot C
+C 0x70BF el slot con la marca de expandido
+C 0x70C3 cada subslot
+C 0x70C8 el subslot siguiente (+4)
 C 0x70CD carry si el slot A lleva 'YZ' en 0x4010-0x4011 (RDSLT): el Game Master 2
+C 0x70D0 0x4010 del slot
+C 0x70D6 'Y'
+C 0x70DA 0x4011
+C 0x70E3 'Z'
+C 0x70EA esta: carry
+C 0x70EF no esta: sin carry
 C 0x70F1 grabar el equipo en el Game Master 2: H.KEYI fuera mientras tanto...
+C 0x70F7 H.KEYI en ret
 C 0x70FC ...su directorio (p13:727A); con 0x22 equipos o mas, no cabe...
-C 0x7107 ...la ficha de grabacion con el nombre de 0xD380 (p13:71D4)...
+C 0x7102 con 0x22 nombres o mas no cabe: mal
+C 0x7107 los 4 bytes de 0x7164
+C 0x710D la ficha de grabacion (p13:71D4)
 C 0x7110 ...p14:839E y le llama con C = 0x0A (p13:721D)
+C 0x7113 graba (C = 0x0A)
+C 0x7116 H.KEYI como estaba
 C 0x711D grabar la partida (PENAN): la ficha de 0xD280 con 'PENAN' y la cola de 0x7219
+C 0x7125 H.KEYI en ret
+C 0x712B el nombre 'PENAN' de 0x713E y los 4 bytes de 0x7219
+C 0x7134 graba
+C 0x713A H.KEYI como estaba
+C 0x713E el nombre de la partida en el Game Master 2 ('PENAN')
 C 0x7143 leer el equipo de 0xD680 (C = 0x0B)
+C 0x714E los 4 bytes de 0x7164 y el nombre de 0xD680
+C 0x715A lee (C = 0x0B)
+C 0x7164 los 4 bytes de la ficha de un equipo
 C 0x7168 leer el de 0xD740
+C 0x7173 los 4 bytes de 0x7189 y el nombre de 0xD740
+C 0x717F lee
+C 0x7189 los 4 bytes de la ficha del otro equipo
 C 0x718D leer la partida PENAN; si no fue mal, 0xD2B1 = 1
+C 0x7198 los 4 bytes de 0x7219 y 'PENAN'
+C 0x71A4 lee
+C 0x71AB si no fue mal, bien (1)
+C 0x71B1 H.KEYI como estaba
 C 0x71B8 la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot propio (0xD2AA)
+C 0x71BD 5 letras
+C 0x71C3 8 ceros
+C 0x71CA los 4 bytes de BC
+C 0x71CF el slot propio (0xD2AA)
 C 0x71D4 la ficha con el nombre del equipo sin los ceros de delante (5 letras)
+C 0x71DD 0xD280-0xD285 a 0
+C 0x71EA cuenta los ceros de delante del nombre (hasta 11)
+C 0x71ED un cero...
+C 0x71F2 ...uno mas
+C 0x71F3 hasta 11
+C 0x71F6 se copian 5 letras...
+C 0x71F8 ...o las 11 - ceros si son menos
+C 0x7204 8 ceros desde 0xD285
+C 0x720F los 4 bytes de BC
+C 0x7214 y el slot propio
+C 0x7219 los 4 bytes de la ficha de la partida
 C 0x721D graba: el Game Master 2 en la pagina 2 (ENASLT)...
+C 0x7221 B = 1
+C 0x7226 en la pagina 2 (0x8000)
+C 0x7228 ENASLT: el Game Master 2 en la pagina 2
 C 0x722B ...su banco 4 en 0x8000...
+C 0x722D su banco 4 en 0x8000
 C 0x7230 ...y `call 0x8000` con C = 0x0A y DE = la ficha...
+C 0x7236 la rutina del Game Master 2 (en su slot)
 C 0x7239 ...el cartucho propio otra vez en la pagina 2...
+C 0x723A el cartucho propio (0xD2AA) otra vez en la pagina 2
 C 0x7243 ...A distinto de 0: mal (0xD2B1 = 2); si no, 0xD2B1 = 1
+C 0x7246 bien: 0xD2B1 = 1
 C 0x724C lee: igual con C = 0x0B
+C 0x7250 el Game Master 2 en la pagina 2
+C 0x725A su banco 4
+C 0x725D C = 0x0B: leer
+C 0x7263 la rutina del Game Master 2
+C 0x726A el cartucho propio otra vez
+C 0x7271 A distinto de 0: mal
+C 0x7274 mal: 0xD2B1 = 2
 C 0x727A el directorio del Game Master 2: H.TIMI fuera, p14:843F...
+C 0x7286 el FCB de busqueda (p14:843F)
 C 0x7289 ...0xD2B3-0xD37E a cero y la lista en 0xD2B3...
+C 0x728F 0xCD bytes a 0
+C 0x7296 el DMA en 0xD2B3 (+0x0D del FCB)
 C 0x72A6 ...le llama con C = 5...
+C 0x72A9 el Game Master 2 en la pagina 2
+C 0x72AE su banco 4
+C 0x72B3 C = 5: el directorio
+C 0x72B9 la rutina del Game Master 2
+C 0x72C0 el cartucho propio otra vez
+C 0x72C9 H.TIMI como estaba
 C 0x72CD ...y cuenta los equipos de la lista (de 8 en 8 bytes)
+C 0x72D5 cada entrada de 8 bytes: 0 acaba
+C 0x72DB +6 y +7 de la entrada...
+C 0x72E5 ...los de un equipo (0xFF y 0)
+C 0x72EA si no, la entrada siguiente
 C 0x72F1 uno mas: su nombre (5 letras, p14:8423) en la lista...
-C 0x7303 ...5 espacios y 0x41 (editado)...
+C 0x72F7 su sitio en la lista
+C 0x72FB 5 letras
+C 0x7303 el resto con espacios
+C 0x7308 y la marca 'A' de editado
 C 0x730A ...hasta 0x22 equipos
+C 0x730F 0x22 o mas: se acaba
+C 0x7311 la entrada siguiente (5 + 3)
 C 0x7316 0x24 acaba la lista
+C 0x7319 el sitio de despues del ultimo
+C 0x731F las 6 fichas de equipo de serie: 6 punteros a 255 bytes
 # --- fin de lo escrito a mano ---
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x604D 0x606B tabla_604D  15 destinos del despachador p00:4220 (call en p13:604A, el indice en A): 60D8, 6148, 61B3, 6319, 6383, 63F4, 6487, 63BB, 6FFE, 64DF, 6606, 662A, 6650, 64DF, 6081; lo leen p13:604A (30 bytes)
@@ -371,7 +879,6 @@ L 0x71B8 ficha_d280 la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de 
 C 0x6007 lee los soportes que hay: bit 0 el disco, bit 1 el Game Master 2
 C 0x601C lee el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 C 0x6025 guarda las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
-C 0x602B apunta a los nombres de los equipos (11 letras cada uno)
 C 0x6038 guarda cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 C 0x6073 apunta a la espera de los avisos
 C 0x6078 borra_recuadro: borra el recuadro
@@ -381,7 +888,6 @@ C 0x608A guarda el estado del juego (indice del despachador principal)
 C 0x608D guarda el paso dentro del estado
 C 0x6092 guarda la cuenta atras del estado
 C 0x60BA quita_recuadro: devuelve lo de detras del recuadro
-C 0x60BE lee la opcion del menu de PENNANT
 C 0x60C3 guarda el despachador de los menus (y 0xD74D)
 C 0x60D0 guarda el despachador de los menus (y 0xD74D)
 C 0x60DC apunta a el despachador de los menus (y 0xD74D)
@@ -395,7 +901,6 @@ C 0x616A texto_c0: como texto, con C = 0
 C 0x6177 paso_siguiente_13: el paso siguiente con el subpaso a 0
 C 0x617B guarda el paso de MEDIA SELECT y de la grabacion
 C 0x6190 copia_a_vram: copia BC bytes de HL a la VRAM DE
-C 0x61B6 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x61C9 linea: orden LINE (0x70) del VDP desde HL
 C 0x61D4 marco: un marco de lineas: HL la esquina, DE el tamano
 C 0x61DE linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
@@ -413,7 +918,6 @@ C 0x624F apunta a los 6 equipos elegidos (0xFF libre)
 C 0x626F paso_siguiente_13: el paso siguiente con el subpaso a 0
 C 0x627B copia_a_vram: copia BC bytes de HL a la VRAM DE
 C 0x6283 byte_a_vram: escribe A en la VRAM HL
-C 0x631C despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x632C texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6332 apunta a la espera de los avisos
 C 0x6337 subpaso_siguiente: el subpaso siguiente (0xD74D + 1)
@@ -424,18 +928,14 @@ C 0x6361 apunta a el numero de jugadores de PENNANT (1-6)
 C 0x6380 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x6386 lee la opcion del menu de PENNANT
 C 0x6390 lista_de_jugadores: la lista de jugadores desde 0xDAAE
-C 0x6393 cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 C 0x63A9 cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 C 0x63B8 lista_de_jugadores: la lista de jugadores desde 0xDAAE
-C 0x63BE despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x63CA byte_a_vram: escribe A en la VRAM HL
 C 0x63D1 subpaso_siguiente: el subpaso siguiente (0xD74D + 1)
 C 0x63D7 lee la opcion del menu de PENNANT
 C 0x63E5 lee los botones recien pulsados del mando 1 / cursores
 C 0x63F1 lista_de_jugadores: la lista de jugadores desde 0xDAAE
-C 0x63F7 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x6404 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0x640A apunta a la espera de los avisos
 C 0x640F subpaso_siguiente: el subpaso siguiente (0xD74D + 1)
 C 0x6420 lee la opcion del menu de PENNANT
 C 0x6428 lee los botones recien pulsados del mando 1 / cursores
@@ -444,7 +944,6 @@ C 0x6435 apunta a la espera de los avisos
 C 0x6440 lee los partidos de cada pareja en PENNANT (1-26)
 C 0x645F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x646A numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
-C 0x648A despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x6494 lee la opcion del menu de PENNANT
 C 0x649C lee los botones recien pulsados del mando 1 / cursores
 C 0x64A2 cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
@@ -455,7 +954,6 @@ C 0x64C7 lee el numero de jugadores de PENNANT (1-6)
 C 0x64D1 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x64D5 guarda el equipo del jugador en PENNANT (bit 0)
 C 0x64DB guarda el despachador de los menus (y 0xD74D)
-C 0x64E2 lee el numero de jugadores de PENNANT (1-6)
 C 0x64EB guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x64F0 apunta a el despachador de los menus (y 0xD74D)
 C 0x64FF guarda la opcion del menu de PENNANT
@@ -478,7 +976,6 @@ C 0x6609 lee la opcion del menu de PENNANT
 C 0x6617 lee los botones recien pulsados del mando 1 / cursores
 C 0x662D lee la opcion del menu de PENNANT
 C 0x663C lee los botones recien pulsados del mando 1 / cursores
-C 0x6653 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x665D lee la opcion del menu de PENNANT
 C 0x6665 lee los botones recien pulsados del mando 1 / cursores
 C 0x666B lee los 6 equipos elegidos (0xFF libre) y el byte siguiente (16 bits)
@@ -491,18 +988,13 @@ C 0x66F9 lee los 6 equipos elegidos (0xFF libre) y el byte siguiente (16 bits)
 C 0x6705 lee los 6 equipos elegidos (0xFF libre)
 C 0x6729 apunta a los nombres de los equipos (11 letras cada uno)
 C 0x6734 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0x673D lee los 6 equipos elegidos (0xFF libre)
 C 0x6746 diez_letras_2: 10 letras ASCII en la fuente
 C 0x6758 diez_letras_2: 10 letras ASCII en la fuente
 C 0x676B apunta a variable de paso (cada rutina la usa a su manera)
-C 0x6786 apunta a variable de paso (cada rutina la usa a su manera)
 C 0x6789 cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 C 0x67C1 apunta a variable de paso (cada rutina la usa a su manera)
-C 0x67C6 hl_mas_a: HL = HL + A
-C 0x67CA de_mas_a: DE = DE + A
 C 0x6800 lee la opcion del menu de PENNANT
 C 0x680E sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0x6814 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6817 lee la opcion del menu de PENNANT
 C 0x681E hl_mas_a: HL = HL + A
 C 0x6825 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
@@ -514,11 +1006,8 @@ C 0x686F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vue
 C 0x6877 lee la fila del cursor de las listas
 C 0x687F guarda la fila del cursor de las listas
 C 0x6889 hl_mas_a: HL = HL + A
-C 0x6892 byte_a_vram: escribe A en la VRAM HL
-C 0x6899 byte_a_vram: escribe A en la VRAM HL
 C 0x68BC lee los 6 equipos elegidos (0xFF libre)
 C 0x68CB cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
-C 0x68D9 por_once: HL = A x 11
 C 0x68DC apunta a los nombres de los equipos (11 letras cada uno)
 C 0x68F2 apunta a los 6 equipos elegidos (0xFF libre)
 C 0x690F letra_ascii: una letra ASCII a la fuente
@@ -536,19 +1025,15 @@ C 0x69A6 lee la fila del cursor de las listas
 C 0x69B6 apunta a la fila del cursor de las listas
 C 0x69CE hl_mas_a: HL = HL + A
 C 0x69D3 lee el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
-C 0x69E3 byte_a_vram: escribe A en la VRAM HL
 C 0x69EA byte_a_vram: escribe A en la VRAM HL
-C 0x6A1D por_once: HL = A x 11
 C 0x6A25 lee el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
 C 0x6A65 apunta a los 6 equipos elegidos (0xFF libre)
-C 0x6A6A lee cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 C 0x6A81 lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x6A87 letra_ascii: una letra ASCII a la fuente
 C 0x6A97 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x6AB8 apunta a los 6 equipos elegidos (0xFF libre)
 C 0x6ABB lee la fila del cursor de las listas
 C 0x6AC7 apunta a los 6 equipos elegidos (0xFF libre)
-C 0x6AD7 por_once: HL = A x 11
 C 0x6ADF lee la fila del cursor de las listas
 C 0x6AEF apunta a los nombres de los equipos (11 letras cada uno)
 C 0x6AFA sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -560,15 +1045,12 @@ C 0x6B79 copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x,
 C 0x6B85 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0x6B90 marco: un marco de lineas: HL la esquina, DE el tamano
 C 0x6B9E copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
-C 0x6BA4 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 C 0x6BB9 lee los partidos de cada pareja en PENNANT (1-26)
 C 0x6BC5 cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 C 0x6BE2 cuantos_equipos: B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
 C 0x6BE9 lee los botones recien pulsados del mando 1 / cursores
 C 0x6C18 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0x6C24 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x6C4F hl_mas_a: HL = HL + A
-C 0x6C5C lee el contador de cuadros del juego (sube uno por cuadro)
 C 0x6C65 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x6C74 hl_mas_a: HL = HL + A
 C 0x6C87 lee los botones recien pulsados del mando 1 / cursores
@@ -578,18 +1060,14 @@ C 0x6CA0 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos
 C 0x6CA3 lee la opcion del menu de PENNANT
 C 0x6CAA hl_mas_a: HL = HL + A
 C 0x6CB1 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0x6D11 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x6D25 guarda el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 C 0x6D29 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
-C 0x6D35 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x6D3C si_no_13: con los bancos 1-2-3, cambia SI / NO (p03:BCDE); vuelve a 13-14-15
 C 0x6D49 si_no_13: con los bancos 1-2-3, cambia SI / NO (p03:BCDE); vuelve a 13-14-15
 C 0x6D50 guarda el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 C 0x6D55 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x6D58 recuadro_15: el recuadro: borrado y un marco
 C 0x6D5E texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0x6D69 lee como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
-C 0x6D70 recuadro_15: el recuadro: borrado y un marco
 C 0x6D76 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6D7B guarda la espera de los avisos
 C 0x6D80 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
@@ -608,38 +1086,30 @@ C 0x6DDD recuadro_15: el recuadro: borrado y un marco
 C 0x6DE3 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6DE8 guarda la espera de los avisos
 C 0x6DF3 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
-C 0x6DFA despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x6E08 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x6E1B sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x6E23 lee como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x6E35 lee como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x6E3E guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x6E4A lee el equipo del jugador en PENNANT (bit 0)
-C 0x6E4F apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 C 0x6E52 apunta a la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 C 0x6E69 guarda la espera de los avisos
 C 0x6E6D guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x6E7D si_no_13: con los bancos 1-2-3, cambia SI / NO (p03:BCDE); vuelve a 13-14-15
 C 0x6E80 quita_recuadro: devuelve lo de detras del recuadro
-C 0x6E89 recuadro_15: el recuadro: borrado y un marco
 C 0x6E8F texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6E94 guarda la espera de los avisos
 C 0x6E9A guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
-C 0x6E9D lee variable de paso (cada rutina la usa a su manera)
 C 0x6EA0 guarda el paso de MEDIA SELECT y de la grabacion
 C 0x6EAB guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
-C 0x6EC4 apunta a los nombres de los equipos (11 letras cada uno)
 C 0x6F36 hl_mas_a: HL = HL + A
-C 0x6F3D lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x6F6F lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
-C 0x6F7C despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x6F8A guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x6F8F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x6F92 apunta a el paso de MEDIA SELECT y de la grabacion
 C 0x6F9A lee como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x6FA7 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x6FAC guarda el paso de MEDIA SELECT y de la grabacion
-C 0x6FAF recuadro_15: el recuadro: borrado y un marco
 C 0x6FB5 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6FBA guarda la espera de los avisos
 C 0x6FC6 si_no_13: con los bancos 1-2-3, cambia SI / NO (p03:BCDE); vuelve a 13-14-15
@@ -650,7 +1120,6 @@ C 0x6FE0 quita_recuadro: devuelve lo de detras del recuadro
 C 0x6FE4 guarda el paso de MEDIA SELECT y de la grabacion
 C 0x6FEF guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x6FFA guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
-C 0x7001 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x700F guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x7014 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x7017 recuadro_15: el recuadro: borrado y un marco
@@ -681,14 +1150,11 @@ C 0x70F4 guarda el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el 
 C 0x70F9 guarda el gancho H.KEYI de la BIOS
 C 0x70FF lee cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 C 0x710A apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
-C 0x7116 lee el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
 C 0x7119 guarda el gancho H.KEYI de la BIOS
 C 0x7120 guarda el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
-C 0x7125 guarda el gancho H.KEYI de la BIOS
 C 0x712E apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 C 0x7131 ficha_d280: la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot
 C 0x7137 lee el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
-C 0x713A guarda el gancho H.KEYI de la BIOS
 C 0x7146 guarda el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
 C 0x714B guarda el gancho H.KEYI de la BIOS
 C 0x7154 apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
@@ -706,7 +1172,6 @@ C 0x7195 guarda el gancho H.KEYI de la BIOS
 C 0x719E apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 C 0x71A1 ficha_d280: la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot
 C 0x71A7 apunta a como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
-C 0x71B1 lee el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
 C 0x71B4 guarda el gancho H.KEYI de la BIOS
 C 0x71B9 guarda el FCB en uso (puntero) y el byte siguiente (16 bits)
 C 0x71D5 apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
@@ -714,7 +1179,6 @@ C 0x71D8 guarda el FCB en uso (puntero) y el byte siguiente (16 bits)
 C 0x7223 lee el slot del Game Master 2 (0xFF si no esta)
 C 0x7232 lee el FCB en uso (puntero) y el byte siguiente (16 bits)
 C 0x7248 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
-C 0x7250 lee el slot del Game Master 2 (0xFF si no esta)
 C 0x725F lee el FCB en uso (puntero) y el byte siguiente (16 bits)
 C 0x7276 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x727B lee el gancho H.TIMI de la BIOS (0xC3 = jp a la interrupcion del juego, 0xC9 = ret)
@@ -724,9 +1188,6 @@ C 0x729F apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13
 C 0x72A2 guarda el FCB en uso (puntero) y el byte siguiente (16 bits)
 C 0x72B5 lee el FCB en uso (puntero) y el byte siguiente (16 bits)
 C 0x72C6 lee el primer byte de H.TIMI (o H.KEYI) guardado mientras se usa el disco
-C 0x72C9 guarda el gancho H.TIMI de la BIOS (0xC3 = jp a la interrupcion del juego, 0xC9 = ret)
 C 0x72CF guarda cuantos nombres hay en la lista de equipos (los 6 de serie y los grabados)
 C 0x72EC de_mas_a: DE = DE + A
-C 0x72F7 nombre_en_daae: HL = 0xDAAE + A x 11
-C 0x7319 nombre_en_daae: HL = 0xDAAE + A x 11
 # --- fin de las anotaciones de anota.py ---
