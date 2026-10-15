@@ -3723,7 +3723,7 @@ L_B967:
 	ret			;b985
 L_B986:
 	xor a			;b986   ; ...si no, 0xD2B0 y 0xDD0C a cero y al paso siguiente
-	ld (0d2b0h),a		;b987
+	ld (0d2b0h),a		;b987   ; guarda el paso de MEDIA SELECT y de la grabacion
 	ld (0dd0ch),a		;b98a
 	call L_BCE5		;b98d
 L_B990:
@@ -3732,7 +3732,7 @@ L_B990:
 	ret			;b994
 L_B995:
 	call 05832h		;b995   ; paso: p13:6D0E (MEDIA SELECT) hasta 0xD2B1...
-	ld a,(0d2b1h)		;b998
+	ld a,(0d2b1h)		;b998   ; lee como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 	or a			;b99b
 	ret z			;b99c
 	sub 002h		;b99d
@@ -3742,7 +3742,7 @@ L_B995:
 	call 04ea6h		;b9a7   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 L_B9AA:
 	ld a,0b4h		;b9aa   ; 180 cuadros y al paso siguiente
-	ld (0d2e1h),a		;b9ac
+	ld (0d2e1h),a		;b9ac   ; guarda la espera de los avisos
 	jp L_B990		;b9af
 L_B9B2:
 	ld hl,0d2e1h		;b9b2   ; la espera y al menu
@@ -4029,7 +4029,7 @@ L_BC36:
 	jp nz,L_BDB9		;bc45
 	ld a,020h		;bc48   ; ...segun el soporte (0xDD8E): 3, el texto de 0xBE42; 0 sin 0xDDE0, el aviso de p13:7D4E
 	ld (0d481h),a		;bc4a
-	ld a,(0dd8eh)		;bc4d
+	ld a,(0dd8eh)		;bc4d   ; lee los soportes que hay: bit 0 el disco, bit 1 el Game Master 2
 	cp 003h		;bc50
 	jr z,L_BC67		;bc52
 	or a			;bc54
@@ -4055,7 +4055,7 @@ L_BC79:
 	ld hl,07d4eh		;bc7c
 	call 04ea6h		;bc7f   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,040h		;bc82
-	ld (0d2e1h),a		;bc84
+	ld (0d2e1h),a		;bc84   ; guarda la espera de los avisos
 	ld a,005h		;bc87
 	ld (0d47fh),a		;bc89   ; guarda la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 	ret			;bc8c
@@ -4067,7 +4067,7 @@ L_BC8D:
 	jr z,L_BCDE		;bc95
 	ld a,(0dd0ch)		;bc97
 	inc a			;bc9a
-	ld (0dd8fh),a		;bc9b
+	ld (0dd8fh),a		;bc9b   ; guarda el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 	jr L_BCD9		;bc9e
 L_BCA0:
 	ld hl,0d481h		;bca0   ; paso: la espera de 0xD481, despues lee (p00:5D86) y copia 6 bytes de 0xD482 a 0xD70A...
@@ -4075,12 +4075,12 @@ L_BCA0:
 	ret nz			;bca4
 	call L_BDF4		;bca5
 	xor a			;bca8
-	ld (0d74fh),a		;bca9
+	ld (0d74fh),a		;bca9   ; guarda la fila del cursor de las listas
 	ld (0d751h),a		;bcac
 	ld (0d752h),a		;bcaf
 	call 05d86h		;bcb2
 	ld hl,0d482h		;bcb5
-	ld de,0d70ah		;bcb8
+	ld de,0d70ah		;bcb8   ; apunta a los 6 equipos elegidos (0xFF libre)
 	ld bc,00006h		;bcbb
 	ldir		;bcbe
 	call L_BE0D		;bcc0   ; ...p00:5D62 y, con 0xD2B2 = 6, 0xEDE7 = 2
@@ -4125,8 +4125,8 @@ L_BD04:
 	call 05d3eh		;bd0b
 	jp 05d47h		;bd0e
 L_BD11:
-	ld a,(0d74fh)		;bd11
-	ld (0d70ah),a		;bd14
+	ld a,(0d74fh)		;bd11   ; lee la fila del cursor de las listas
+	ld (0d70ah),a		;bd14   ; guarda los 6 equipos elegidos (0xFF libre)
 	call 05d47h		;bd17
 	ld hl,0d70ah		;bd1a   ; ...0xD70A + 6, p00:5D50 y, si 0xDD8F = 1, calla
 	ld a,006h		;bd1d
@@ -4134,7 +4134,7 @@ L_BD11:
 	ld (hl),a			;bd20
 	ld de,0d680h		;bd21
 	call 05d50h		;bd24
-	ld a,(0dd8fh)		;bd27
+	ld a,(0dd8fh)		;bd27   ; lee el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 	dec a			;bd2a
 	ld a,001h		;bd2b
 	call z,057ffh		;bd2d   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -4142,7 +4142,7 @@ L_BD11:
 L_BD32:
 	call L_BDD4		;bd32   ; el texto segun 0xDD8F (p13:7BEA o 0x7C06), SI / NO a cero y al paso 6
 	ld hl,07beah		;bd35
-	ld a,(0dd8fh)		;bd38
+	ld a,(0dd8fh)		;bd38   ; lee el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 	dec a			;bd3b
 	jr z,L_BD41		;bd3c
 	ld hl,07c06h		;bd3e
@@ -4154,11 +4154,11 @@ L_BD41:
 	ld a,006h		;bd4b
 	ld (0d47fh),a		;bd4d   ; guarda la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 	ld a,030h		;bd50
-	ld (0d2e1h),a		;bd52
+	ld (0d2e1h),a		;bd52   ; guarda la espera de los avisos
 	ret			;bd55
 L_BD56:
 	call 05d59h		;bd56   ; graba (p00:5D59): con 0xD2B1 = 2 se acaba con 0xEDE7 = 4...
-	ld a,(0d2b1h)		;bd59
+	ld a,(0d2b1h)		;bd59   ; lee como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 	cp 002h		;bd5c
 	jr z,L_BD6E		;bd5e
 	call L_BE0D		;bd60   ; ...si no, la pantalla de TEAM EDIT otra vez

@@ -225,6 +225,18 @@ RAM.update({
     0xED1A: ("los eliminados por strikes del local (BCD)", "p03:A694"),
     0xEDDE: ("la jugada anulada (foul)", "p03:A748, p02:92BF"),
     0xE1D1: ("la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)", "p00:44D8, p03:A592"),
+    0xDD8E: ("los soportes que hay: bit 0 el disco, bit 1 el Game Master 2", "p14:84C6"),
+    0xDD8F: ("el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2", "p14:84D0, p14:814B"),
+    0xDD0E: ("el slot del Game Master 2 (0xFF si no esta)", "p13:70CD, p13:70B7"),
+    0xD2B1: ("como acabo el paso: 1 bien, 2 mal (o vuelta al menu)", "p13:7243, p14:852F"),
+    0xD2B0: ("el paso de MEDIA SELECT y de la grabacion", "p13:6D0E"),
+    0xD2E1: ("la espera de los avisos", "p13:6081"),
+    0xD6E1: ("el numero de jugadores de PENNANT (1-6)", "p13:633A"),
+    0xD753: ("los partidos de cada pareja en PENNANT (1-26)", "p13:641A"),
+    0xD759: ("la opcion del menu de PENNANT", "p13:6800"),
+    0xD74F: ("la fila del cursor de las listas", "p13:6846"),
+    0xD70A: ("los 6 equipos elegidos (0xFF libre)", "p13:6AB5"),
+    0xDAAE: ("los nombres de los equipos (11 letras cada uno)", "p13:6028, p14:8423"),
 })
 
 RAM16 = {}

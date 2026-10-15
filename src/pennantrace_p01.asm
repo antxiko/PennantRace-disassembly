@@ -738,7 +738,7 @@ L_6543:
 	jp 04ea6h		;655e   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 L_6561:
 	ld e,005h		;6561   ; la eleccion del modo: 5 opciones, o 6 con 0xDD8E = 3
-	ld a,(0dd8eh)		;6563
+	ld a,(0dd8eh)		;6563   ; lee los soportes que hay: bit 0 el disco, bit 1 el Game Master 2
 	cp 003h		;6566
 	jr nz,L_656B		;6568
 	inc e			;656a

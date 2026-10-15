@@ -649,7 +649,10 @@ C 0xB7DA apunta a el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fi
 C 0xB812 apunta a el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 C 0xB8AF hl_mas_a: HL = HL + A
 C 0xB982 guarda el paso de la jugada (y de TEAM EDIT)
+C 0xB987 guarda el paso de MEDIA SELECT y de la grabacion
+C 0xB998 lee como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0xB9A7 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xB9AC guarda la espera de los avisos
 C 0xB9D4 guarda el paso de la jugada (y de TEAM EDIT)
 C 0xB9E7 guarda el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 C 0xB9EA esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
@@ -667,13 +670,24 @@ C 0xBBFA de_mas_a: DE = DE + A
 C 0xBC13 hl_mas_a: HL = HL + A
 C 0xBC1F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xBC25 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xBC4D lee los soportes que hay: bit 0 el disco, bit 1 el Game Master 2
 C 0xBC7F texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xBC84 guarda la espera de los avisos
 C 0xBC89 guarda la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
+C 0xBC9B guarda el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
+C 0xBCA9 guarda la fila del cursor de las listas
+C 0xBCB8 apunta a los 6 equipos elegidos (0xFF libre)
 C 0xBCED rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0xBD01 texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
+C 0xBD11 lee la fila del cursor de las listas
+C 0xBD14 guarda los 6 equipos elegidos (0xFF libre)
+C 0xBD27 lee el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 C 0xBD2D sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0xBD38 lee el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 C 0xBD41 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xBD4D guarda la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
+C 0xBD52 guarda la espera de los avisos
+C 0xBD59 lee como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0xBD78 guarda la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 C 0xBD86 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xBD89 apunta a el paso de la jugada (y de TEAM EDIT)

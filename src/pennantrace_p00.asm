@@ -136,11 +136,11 @@ arranque:		; la puesta en marcha (desde H.STKE): pila en 0xD280, RAM a cero, ban
 	ld sp,0d280h		;4105   ; la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 	ld hl,084d4h		;4108   ; 0xF323 (DISKVE, el gestor de errores de disco) = 0x84D4
 	ld (0f323h),hl		;410b
-	ld hl,0e280h		;410e   ; copia 0x1100 bytes de 0xE280 a 0xC000...
+	ld hl,0e280h		;410e   ; guarda la zona del disco (0xE280-0xF37F) en 0xC000: el juego usa esa RAM y p14:8334 la devuelve para el BDOS...
 	ld bc,01100h		;4111
 	ld de,0c000h		;4114
 	ldir		;4117   ; ...de una vez
-	ld hl,0f100h		;4119   ; y 0x280 bytes de 0xF100 a 0xD780
+	ld hl,0f100h		;4119   ; ...y 0xF100-0xF37F en 0xD780
 	ld de,0d780h		;411c
 	ld bc,00280h		;411f
 	ldir		;4122
@@ -849,7 +849,7 @@ L_463A:
 	call 09ea9h		;463f
 	jp L_4543		;4642
 L_4645:
-	ld a,(0d2b1h)		;4645
+	ld a,(0d2b1h)		;4645   ; lee como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 	dec a			;4648
 	jr nz,L_4622		;4649
 	jr L_463A		;464b
@@ -968,8 +968,8 @@ L_471B:
 	ld a,03ch		;471b   ; 60 cuadros, 0xD2B0 y 0xD2B1 a cero y al paso siguiente
 	ld (0de04h),a		;471d   ; guarda la cuenta atras del estado
 	xor a			;4720
-	ld (0d2b0h),a		;4721
-	ld (0d2b1h),a		;4724
+	ld (0d2b0h),a		;4721   ; guarda el paso de MEDIA SELECT y de la grabacion
+	ld (0d2b1h),a		;4724   ; guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 	jp L_4543		;4727
 L_472A:
 	djnz L_4737		;472a   ; p14:9853 o p14:9A26 segun el paso...
@@ -1106,7 +1106,7 @@ L_4818:
 	or a			;4839
 	jr nz,L_4860		;483a
 	ld hl,07c8ah		;483c   ; si no, el de 0x7C8A, o el de 0x7CA8 sin 0xDD8E
-	ld a,(0dd8eh)		;483f
+	ld a,(0dd8eh)		;483f   ; lee los soportes que hay: bit 0 el disco, bit 1 el Game Master 2
 	or a			;4842
 	jr nz,L_4848		;4843
 	ld hl,07ca8h		;4845
@@ -1184,7 +1184,7 @@ L_48E6:
 	ld hl,07bddh		;48e9
 	call texto		;48ec   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	xor a			;48ef
-	ld (0d2b0h),a		;48f0
+	ld (0d2b0h),a		;48f0   ; guarda el paso de MEDIA SELECT y de la grabacion
 	call L_4543		;48f3
 	ld a,001h		;48f6   ; calla todo (sonido 1)
 	jp sonido		;48f8   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -1193,7 +1193,7 @@ L_48FB:
 	call bancos_13_14_15		;48fd   ; bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 	call 06f79h		;4900
 	call bancos_1_2_3		;4903   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
-	ld a,(0d2b1h)		;4906
+	ld a,(0d2b1h)		;4906   ; lee como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 	or a			;4909
 	ret z			;490a
 	jp L_451D		;490b
@@ -3091,7 +3091,7 @@ L_550E:
 	ld a,(0e195h)		;5542
 L_5545:
 	dec a			;5545
-	ld hl,0d70ah		;5546
+	ld hl,0d70ah		;5546   ; apunta a los 6 equipos elegidos (0xFF libre)
 	call hl_mas_a		;5549   ; hl_mas_a: HL = HL + A
 L_554C:
 	ld a,(hl)			;554c   ; su color en la tabla p09:BFDE

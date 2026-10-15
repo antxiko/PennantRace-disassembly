@@ -89,9 +89,11 @@ C 0xA43B lee el despachador de los menus (y 0xD74D)
 C 0xA43E despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0xA44B apunta a el despachador de los menus (y 0xD74D)
 C 0xA456 apunta a el despachador de los menus (y 0xD74D)
+C 0xA463 lee la opcion del menu de PENNANT
 C 0xA468 guarda el despachador de los menus (y 0xD74D)
 C 0xA470 borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
 C 0xA474 apunta a el despachador de los menus (y 0xD74D)
+C 0xA483 guarda la opcion del menu de PENNANT
 C 0xA48F copia_a_vram: copia BC bytes de HL a la VRAM DE
 C 0xA495 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xA49F linea: orden LINE (0x70) del VDP desde HL
@@ -104,23 +106,40 @@ C 0xA4D5 lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (
 C 0xA4E9 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xA519 copia_a_vram: copia BC bytes de HL a la VRAM DE
 C 0xA521 byte_a_vram: escribe A en la VRAM HL
+C 0xA535 apunta a los nombres de los equipos (11 letras cada uno)
 C 0xA54A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0xA54D apunta a los 6 equipos elegidos (0xFF libre)
+C 0xA55E lee la opcion del menu de PENNANT
 C 0xA56B lee los botones recien pulsados del mando 1 / cursores
+C 0xA571 apunta a los 6 equipos elegidos (0xFF libre)
+C 0xA582 lee la opcion del menu de PENNANT
 C 0xA58F lee los botones recien pulsados del mando 1 / cursores
 C 0xA5A6 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xA5B0 lee la opcion del menu de PENNANT
 C 0xA5B8 lee los botones recien pulsados del mando 1 / cursores
+C 0xA5BE lee los 6 equipos elegidos (0xFF libre) y el byte siguiente (16 bits)
 C 0xA5D1 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xA5D6 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
+C 0xA5DA lee la fila del cursor de las listas
+C 0xA5DD lee los 6 equipos elegidos (0xFF libre) y el byte siguiente (16 bits)
+C 0xA5EF lee la fila del cursor de las listas
+C 0xA5F5 apunta a los nombres de los equipos (11 letras cada uno)
 C 0xA600 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0xA609 lee los 6 equipos elegidos (0xFF libre)
 C 0xA657 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0xA663 lee los botones recien pulsados del mando 1 / cursores
+C 0xA669 lee la opcion del menu de PENNANT
+C 0xA672 guarda la opcion del menu de PENNANT
 C 0xA677 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xA67A lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0xA68E texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xA691 lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
+C 0xA698 lee la opcion del menu de PENNANT
 C 0xA69F apunta a las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0xA6AC hl_mas_a: HL = HL + A
 C 0xA6B3 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xA6B6 lee la opcion del menu de PENNANT
+C 0xA7B2 lee el numero de jugadores de PENNANT (1-6)
 C 0xA7E5 apunta a el equipo del jugador en PENNANT (bit 0)
 C 0xA7F2 lee el equipo del jugador en PENNANT (bit 0)
 C 0xA825 apunta a variable de paso (cada rutina la usa a su manera)
@@ -135,6 +154,7 @@ C 0xAA5D texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos
 C 0xAA6F caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0xAA72 siguiente_columna: D += 8; si da la vuelta, E += 8
 C 0xAA84 lee los botones recien pulsados del mando 1 / cursores
+C 0xAA8E guarda el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 C 0xAAA4 apunta a la cuenta atras del estado
 C 0xAAB1 lee los botones recien pulsados del mando 1 / cursores
 C 0xAACC texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
@@ -150,11 +170,22 @@ C 0xAB80 guarda el paso de la jugada (y de TEAM EDIT)
 C 0xAB85 guarda las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0xAB8C apunta a el orden de bateo del visitante (9 numeros de jugador)
 C 0xAB97 apunta a el orden de bateo del local (9 numeros de jugador)
+C 0xABB7 apunta a los 6 equipos elegidos (0xFF libre)
 C 0xABBD hl_mas_a: HL = HL + A
+C 0xABC6 lee los 6 equipos elegidos (0xFF libre)
 C 0xABC9 apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 C 0xABD2 apunta a la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 C 0xABD8 palabra_a: HL = la palabra A de la tabla HL
 C 0xAC1A apunta a el equipo del jugador en PENNANT (bit 0)
+C 0xAC21 lee el numero de jugadores de PENNANT (1-6)
+C 0xAC81 lee el numero de jugadores de PENNANT (1-6)
+C 0xAC8E apunta a los 6 equipos elegidos (0xFF libre)
+C 0xAC98 apunta a los 6 equipos elegidos (0xFF libre)
+C 0xACA8 apunta a los 6 equipos elegidos (0xFF libre)
+C 0xACB2 apunta a los 6 equipos elegidos (0xFF libre)
+C 0xACC2 apunta a los 6 equipos elegidos (0xFF libre)
+C 0xACCC apunta a los 6 equipos elegidos (0xFF libre)
+C 0xACF7 lee el numero de jugadores de PENNANT (1-6)
 C 0xAD09 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 C 0xAD40 hl_mas_a: HL = HL + A
 C 0xAD7A hl_mas_a: HL = HL + A
@@ -163,6 +194,7 @@ C 0xADF1 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMM
 C 0xADF4 siguiente_columna: D += 8; si da la vuelta, E += 8
 C 0xADFA borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
 C 0xAE02 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0xAE05 lee el numero de jugadores de PENNANT (1-6)
 C 0xAE10 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0xAE18 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0xAE26 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
@@ -175,6 +207,7 @@ C 0xAE76 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos
 C 0xAE7C texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xAE82 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xAE88 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xAE8E lee el numero de jugadores de PENNANT (1-6)
 C 0xAEA1 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0xAEB7 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 C 0xAEBF numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
@@ -184,6 +217,7 @@ C 0xAEE7 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0xAEFB numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0xAF0F numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0xAF23 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
+C 0xAF81 apunta a los 6 equipos elegidos (0xFF libre)
 C 0xB02F caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0xB0B4 lee lo que acaba la jugada: 1 home run, 2 jugada anulada
 C 0xB0E6 lee la x de la pelota

@@ -2,9 +2,9 @@
 
 # --- A MANO: comentarios escritos leyendo el codigo ---
 C 0x4108 0xF323 (DISKVE, el gestor de errores de disco) = 0x84D4
-C 0x410E copia 0x1100 bytes de 0xE280 a 0xC000...
+C 0x410E guarda la zona del disco (0xE280-0xF37F) en 0xC000: el juego usa esa RAM y p14:8334 la devuelve para el BDOS...
 C 0x4117 ...de una vez
-C 0x4119 y 0x280 bytes de 0xF100 a 0xD780
+C 0x4119 ...y 0xF100-0xF37F en 0xD780
 C 0x4124 guarda el gancho H.TIMI de la BIOS (5 bytes) en 0xD2AB...
 C 0x412F ...y lo deja en `ret` mientras arranca
 C 0x4134 el cartucho tambien en 0x8000-0xBFFF (p00:43EC: ENASLT con H = 0x80)
@@ -1002,6 +1002,7 @@ C 0x460B guarda la cuenta atras del estado
 C 0x4613 apunta a la cuenta atras del estado
 C 0x4628 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x463C sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x4645 lee como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x4652 lee la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x4662 lee la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x4679 apunta a los bateadores del visitante (BCD; uno mas por turno, p01:6316)
@@ -1013,6 +1014,8 @@ C 0x4706 lee la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A
 C 0x4712 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x4718 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x471D guarda la cuenta atras del estado
+C 0x4721 guarda el paso de MEDIA SELECT y de la grabacion
+C 0x4724 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x472C bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x4732 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x4739 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
@@ -1032,6 +1035,7 @@ C 0x4814 guarda el paso dentro del estado
 C 0x481A lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0x482A bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x4833 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x483F lee los soportes que hay: bit 0 el disco, bit 1 el Game Master 2
 C 0x4848 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x485A pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
 C 0x4863 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
@@ -1045,9 +1049,11 @@ C 0x48A5 guarda el estado del juego (indice del despachador principal)
 C 0x48AA sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x48BE bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x48EC texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x48F0 guarda el paso de MEDIA SELECT y de la grabacion
 C 0x48F8 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x48FD bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x4903 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4906 lee como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x4910 lee los botones pulsados del mando 1 / cursores
 C 0x4917 lee los botones pulsados (segundo mando)
 C 0x4927 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -1228,6 +1234,7 @@ C 0x5514 pon_paleta: fichas de 3 bytes [color][rojo-azul][verde] hasta 0xFF, con
 C 0x5520 hl_mas_a: HL = HL + A
 C 0x5528 pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
 C 0x552E lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
+C 0x5546 apunta a los 6 equipos elegidos (0xFF libre)
 C 0x5549 hl_mas_a: HL = HL + A
 C 0x5553 hl_mas_a: HL = HL + A
 C 0x555B pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A

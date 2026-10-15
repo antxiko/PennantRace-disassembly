@@ -360,19 +360,26 @@ F 0x7E61 16
 # --- fin de los bloques de bloques.py ---
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+C 0x6007 lee los soportes que hay: bit 0 el disco, bit 1 el Game Master 2
+C 0x601C lee el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 C 0x6025 guarda las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
+C 0x602B apunta a los nombres de los equipos (11 letras cada uno)
+C 0x6073 apunta a la espera de los avisos
 C 0x607E texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6087 guarda el despachador de los menus (y 0xD74D)
 C 0x608A guarda el estado del juego (indice del despachador principal)
 C 0x608D guarda el paso dentro del estado
 C 0x6092 guarda la cuenta atras del estado
+C 0x60BE lee la opcion del menu de PENNANT
 C 0x60C3 guarda el despachador de los menus (y 0xD74D)
 C 0x60D0 guarda el despachador de los menus (y 0xD74D)
 C 0x60DC apunta a el despachador de los menus (y 0xD74D)
+C 0x60EB guarda la opcion del menu de PENNANT
 C 0x6105 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x615E texto_c0: como texto, con C = 0
 C 0x6164 texto_c0: como texto, con C = 0
 C 0x616A texto_c0: como texto, con C = 0
+C 0x617B guarda el paso de MEDIA SELECT y de la grabacion
 C 0x6190 copia_a_vram: copia BC bytes de HL a la VRAM DE
 C 0x61B6 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x61C9 linea: orden LINE (0x70) del VDP desde HL
@@ -383,31 +390,51 @@ C 0x61F2 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
 C 0x61FC linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
 C 0x6205 texto_c0: como texto, con C = 0
 C 0x620B texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6217 apunta a los nombres de los equipos (11 letras cada uno)
 C 0x622C sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x6232 guarda los partidos de cada pareja en PENNANT (1-26) y el byte siguiente (16 bits)
+C 0x624F apunta a los 6 equipos elegidos (0xFF libre)
 C 0x627B copia_a_vram: copia BC bytes de HL a la VRAM DE
 C 0x6283 byte_a_vram: escribe A en la VRAM HL
 C 0x631C despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x632C texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6332 apunta a la espera de los avisos
+C 0x6340 lee la opcion del menu de PENNANT
 C 0x634E lee los botones pulsados del mando 1 / cursores
+C 0x6354 apunta a la espera de los avisos
+C 0x6361 apunta a el numero de jugadores de PENNANT (1-6)
 C 0x6380 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x6386 lee la opcion del menu de PENNANT
 C 0x63BE despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x63CA byte_a_vram: escribe A en la VRAM HL
+C 0x63D7 lee la opcion del menu de PENNANT
 C 0x63E5 lee los botones recien pulsados del mando 1 / cursores
 C 0x63F7 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x6404 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x640A apunta a la espera de los avisos
+C 0x6420 lee la opcion del menu de PENNANT
 C 0x6428 lee los botones recien pulsados del mando 1 / cursores
 C 0x642F lee los botones pulsados del mando 1 / cursores
+C 0x6435 apunta a la espera de los avisos
+C 0x6440 lee los partidos de cada pareja en PENNANT (1-26)
 C 0x645F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x646A numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0x648A despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x6494 lee la opcion del menu de PENNANT
 C 0x649C lee los botones recien pulsados del mando 1 / cursores
 C 0x64AD texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x64BA apunta a los 6 equipos elegidos (0xFF libre)
+C 0x64C7 lee el numero de jugadores de PENNANT (1-6)
 C 0x64D1 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x64D5 guarda el equipo del jugador en PENNANT (bit 0)
 C 0x64DB guarda el despachador de los menus (y 0xD74D)
+C 0x64E2 lee el numero de jugadores de PENNANT (1-6)
 C 0x64EB guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x64F0 apunta a el despachador de los menus (y 0xD74D)
+C 0x64FF guarda la opcion del menu de PENNANT
 C 0x6504 guarda el despachador de los menus (y 0xD74D)
+C 0x650A apunta a los 6 equipos elegidos (0xFF libre)
+C 0x6515 apunta a los 6 equipos elegidos (0xFF libre)
 C 0x6538 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x6548 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6552 linea: orden LINE (0x70) del VDP desde HL
@@ -417,42 +444,69 @@ C 0x6571 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
 C 0x657B linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
 C 0x6585 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
 C 0x658B texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6609 lee la opcion del menu de PENNANT
 C 0x6617 lee los botones recien pulsados del mando 1 / cursores
+C 0x662D lee la opcion del menu de PENNANT
 C 0x663C lee los botones recien pulsados del mando 1 / cursores
 C 0x6653 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x665D lee la opcion del menu de PENNANT
 C 0x6665 lee los botones recien pulsados del mando 1 / cursores
+C 0x666B lee los 6 equipos elegidos (0xFF libre) y el byte siguiente (16 bits)
 C 0x667D texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6682 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x66BC hl_mas_a: HL = HL + A
+C 0x66C7 lee los 6 equipos elegidos (0xFF libre) y el byte siguiente (16 bits)
+C 0x66F9 lee los 6 equipos elegidos (0xFF libre) y el byte siguiente (16 bits)
+C 0x6705 lee los 6 equipos elegidos (0xFF libre)
+C 0x6729 apunta a los nombres de los equipos (11 letras cada uno)
 C 0x6734 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x673D lee los 6 equipos elegidos (0xFF libre)
 C 0x676B apunta a variable de paso (cada rutina la usa a su manera)
 C 0x6786 apunta a variable de paso (cada rutina la usa a su manera)
 C 0x67C1 apunta a variable de paso (cada rutina la usa a su manera)
 C 0x67C6 hl_mas_a: HL = HL + A
 C 0x67CA de_mas_a: DE = DE + A
+C 0x6800 lee la opcion del menu de PENNANT
 C 0x680E sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x6814 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6817 lee la opcion del menu de PENNANT
 C 0x681E hl_mas_a: HL = HL + A
 C 0x6825 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x684C apunta a la fila del cursor de las listas
 C 0x684F lee los botones recien pulsados del mando 1 / cursores
 C 0x6863 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x686F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x6877 lee la fila del cursor de las listas
+C 0x687F guarda la fila del cursor de las listas
 C 0x6889 hl_mas_a: HL = HL + A
 C 0x6892 byte_a_vram: escribe A en la VRAM HL
 C 0x6899 byte_a_vram: escribe A en la VRAM HL
+C 0x68BC lee los 6 equipos elegidos (0xFF libre)
+C 0x68DC apunta a los nombres de los equipos (11 letras cada uno)
+C 0x68F2 apunta a los 6 equipos elegidos (0xFF libre)
 C 0x6916 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0x6930 guarda la fila del cursor de las listas
+C 0x694E apunta a la fila del cursor de las listas
 C 0x6951 lee los botones recien pulsados del mando 1 / cursores
 C 0x696E sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x697A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x698E sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x69A0 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x69A6 lee la fila del cursor de las listas
+C 0x69B6 apunta a la fila del cursor de las listas
 C 0x69CE hl_mas_a: HL = HL + A
 C 0x69D3 lee el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
 C 0x69E3 byte_a_vram: escribe A en la VRAM HL
 C 0x69EA byte_a_vram: escribe A en la VRAM HL
 C 0x6A25 lee el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
+C 0x6A65 apunta a los 6 equipos elegidos (0xFF libre)
 C 0x6A81 lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x6A97 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0x6AB8 apunta a los 6 equipos elegidos (0xFF libre)
+C 0x6ABB lee la fila del cursor de las listas
+C 0x6AC7 apunta a los 6 equipos elegidos (0xFF libre)
+C 0x6ADF lee la fila del cursor de las listas
+C 0x6AEF apunta a los nombres de los equipos (11 letras cada uno)
 C 0x6AFA sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x6B37 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x6B58 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
@@ -462,6 +516,7 @@ C 0x6B85 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC
 C 0x6B90 marco: un marco de lineas: HL la esquina, DE el tamano
 C 0x6B9E copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 C 0x6BA4 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
+C 0x6BB9 lee los partidos de cada pareja en PENNANT (1-26)
 C 0x6BE9 lee los botones recien pulsados del mando 1 / cursores
 C 0x6C18 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6C24 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
@@ -470,42 +525,103 @@ C 0x6C5C lee el contador de cuadros del juego (sube uno por cuadro)
 C 0x6C65 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x6C74 hl_mas_a: HL = HL + A
 C 0x6C87 lee los botones recien pulsados del mando 1 / cursores
+C 0x6C95 guarda la opcion del menu de PENNANT
 C 0x6C9A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x6CA0 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6CA3 lee la opcion del menu de PENNANT
 C 0x6CAA hl_mas_a: HL = HL + A
 C 0x6CB1 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6D11 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x6D25 guarda el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
+C 0x6D29 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x6D35 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x6D50 guarda el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 C 0x6D55 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x6D5E texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6D69 lee como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x6D76 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6D7B guarda la espera de los avisos
+C 0x6D80 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x6D90 lee el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 C 0x6D9C texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6DA0 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x6DB5 lee el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
+C 0x6DC8 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x6DCD guarda el paso de MEDIA SELECT y de la grabacion
 C 0x6DD3 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6DE3 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6DE8 guarda la espera de los avisos
+C 0x6DF3 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x6DFA despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x6E08 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x6E1B sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x6E23 lee como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x6E35 lee como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x6E3E guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x6E4A lee el equipo del jugador en PENNANT (bit 0)
 C 0x6E4F apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 C 0x6E52 apunta a la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
+C 0x6E69 guarda la espera de los avisos
+C 0x6E6D guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x6E8F texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6E94 guarda la espera de los avisos
+C 0x6E9A guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x6E9D lee variable de paso (cada rutina la usa a su manera)
+C 0x6EA0 guarda el paso de MEDIA SELECT y de la grabacion
+C 0x6EAB guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x6EC4 apunta a los nombres de los equipos (11 letras cada uno)
 C 0x6F36 hl_mas_a: HL = HL + A
 C 0x6F3D lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x6F6F lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x6F7C despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x6F8A guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x6F8F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x6F92 apunta a el paso de MEDIA SELECT y de la grabacion
+C 0x6F9A lee como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x6FA7 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x6FAC guarda el paso de MEDIA SELECT y de la grabacion
 C 0x6FB5 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6FBA guarda la espera de los avisos
+C 0x6FD0 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x6FD8 guarda el paso de MEDIA SELECT y de la grabacion
+C 0x6FDC lee el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
+C 0x6FE4 guarda el paso de MEDIA SELECT y de la grabacion
+C 0x6FEF guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x6FFA guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x7001 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x700F guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x7014 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x701D texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x7020 apunta a el paso de MEDIA SELECT y de la grabacion
+C 0x7028 lee como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x7036 guarda la espera de los avisos
+C 0x703A guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x703F guarda el paso de MEDIA SELECT y de la grabacion
 C 0x7048 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x705E sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x7062 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x7067 guarda la espera de los avisos
+C 0x706C guarda el paso de MEDIA SELECT y de la grabacion
+C 0x7072 lee el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
+C 0x707A guarda el paso de MEDIA SELECT y de la grabacion
+C 0x7085 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x7091 guarda el despachador de los menus (y 0xD74D) y el byte siguiente (16 bits)
+C 0x7096 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x70B9 guarda el slot del Game Master 2 (0xFF si no esta)
+C 0x70DD lee el slot del Game Master 2 (0xFF si no esta)
+C 0x70E7 lee el slot del Game Master 2 (0xFF si no esta)
+C 0x70EC lee el slot del Game Master 2 (0xFF si no esta)
 C 0x710A apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 C 0x712E apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 C 0x7154 apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 C 0x7179 apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 C 0x719E apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x71A7 apunta a como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x71D5 apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x7223 lee el slot del Game Master 2 (0xFF si no esta)
+C 0x7248 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
+C 0x7250 lee el slot del Game Master 2 (0xFF si no esta)
+C 0x7276 guarda como acabo el paso: 1 bien, 2 mal (o vuelta al menu)
 C 0x729F apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 C 0x72EC de_mas_a: DE = DE + A
 # --- fin de las anotaciones de anota.py ---

@@ -717,6 +717,7 @@ C 0x654C texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos
 C 0x654F texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6552 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x655E texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6563 lee los soportes que hay: bit 0 el disco, bit 1 el Game Master 2
 C 0x65BB texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
 C 0x65BE arranca_sonido: el arranque del motor de sonido (p04:6000) con los bancos 4-5-6
 C 0x65E5 apaga_sprites: R#8 con el bit 1 (SPD) a 1: no se pintan sprites

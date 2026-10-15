@@ -560,7 +560,7 @@ L_A45E:
 	inc (hl)			;a461
 	ret			;a462
 L_A463:
-	ld a,(0d759h)		;a463
+	ld a,(0d759h)		;a463   ; lee la opcion del menu de PENNANT
 	add a,002h		;a466
 	ld (0d74ch),a		;a468   ; guarda el despachador de los menus (y 0xD74D)
 	xor a			;a46b
@@ -575,7 +575,7 @@ L_A470:
 	ld bc,0000fh		;a47b
 	ldir		;a47e
 	ld (0da6bh),a		;a480
-	ld (0d759h),a		;a483
+	ld (0d759h),a		;a483   ; guarda la opcion del menu de PENNANT
 	ld de,0f800h		;a486
 	ld hl,0a6f0h		;a489
 	ld bc,00020h		;a48c
@@ -659,7 +659,7 @@ DATA_copia_A52F:
 
 L_A532:
 	ld hl,062d7h		;a532
-	ld de,0daaeh		;a535
+	ld de,0daaeh		;a535   ; apunta a los nombres de los equipos (11 letras cada uno)
 	ld bc,00042h		;a538
 	ldir		;a53b
 	ld a,024h		;a53d
@@ -669,7 +669,7 @@ L_A532:
 	call 081fch		;a545
 	ld a,02eh		;a548
 	call 057ffh		;a54a   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-	ld hl,0d70ah		;a54d
+	ld hl,0d70ah		;a54d   ; apunta a los 6 equipos elegidos (0xFF libre)
 	ld de,0d70bh		;a550
 	ld (hl),0ffh		;a553
 	ld bc,00005h		;a555
@@ -677,7 +677,7 @@ L_A532:
 	ret			;a55a
 L_A55B:
 	call L_A663		;a55b
-	ld a,(0d759h)		;a55e
+	ld a,(0d759h)		;a55e   ; lee la opcion del menu de PENNANT
 	or a			;a561
 	jp nz,L_A463		;a562
 	call 06938h		;a565
@@ -685,14 +685,14 @@ L_A55B:
 	ld a,(0de06h)		;a56b   ; lee los botones recien pulsados del mando 1 / cursores
 	and 010h		;a56e
 	ret z			;a570
-	ld hl,0d70ah		;a571
+	ld hl,0d70ah		;a571   ; apunta a los 6 equipos elegidos (0xFF libre)
 	ld e,000h		;a574
 	call L_A5DA		;a576
 	call L_A603		;a579
 	jp 06922h		;a57c
 L_A57F:
 	call L_A663		;a57f
-	ld a,(0d759h)		;a582
+	ld a,(0d759h)		;a582   ; lee la opcion del menu de PENNANT
 	dec a			;a585
 	jp nz,L_A463		;a586
 	call 06938h		;a589
@@ -723,13 +723,13 @@ DATA_tabla_A5A9:
 
 L_A5AD:
 	call L_A663		;a5ad
-	ld a,(0d759h)		;a5b0
+	ld a,(0d759h)		;a5b0   ; lee la opcion del menu de PENNANT
 	sub 002h		;a5b3
 	jp nz,L_A463		;a5b5
 	ld a,(0de06h)		;a5b8   ; lee los botones recien pulsados del mando 1 / cursores
 	and 010h		;a5bb
 	ret z			;a5bd
-	ld hl,(0d70ah)		;a5be
+	ld hl,(0d70ah)		;a5be   ; lee los 6 equipos elegidos (0xFF libre) y el byte siguiente (16 bits)
 	ld a,h			;a5c1
 	inc a			;a5c2
 	ret z			;a5c3
@@ -746,8 +746,8 @@ L_A5CB:
 	ld (0e1d1h),a		;a5d6   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ret			;a5d9
 L_A5DA:
-	ld a,(0d74fh)		;a5da
-	ld bc,(0d70ah)		;a5dd
+	ld a,(0d74fh)		;a5da   ; lee la fila del cursor de las listas
+	ld bc,(0d70ah)		;a5dd   ; lee los 6 equipos elegidos (0xFF libre) y el byte siguiente (16 bits)
 	cp b			;a5e1
 	ret z			;a5e2
 	cp c			;a5e3
@@ -758,9 +758,9 @@ L_A5DA:
 	ld bc,0da6ch		;a5ea
 	add hl,bc			;a5ed
 	ex de,hl			;a5ee
-	ld a,(0d74fh)		;a5ef
+	ld a,(0d74fh)		;a5ef   ; lee la fila del cursor de las listas
 	call 06afdh		;a5f2
-	ld bc,0daaeh		;a5f5
+	ld bc,0daaeh		;a5f5   ; apunta a los nombres de los equipos (11 letras cada uno)
 	add hl,bc			;a5f8
 	ld bc,0000bh		;a5f9
 	ldir		;a5fc
@@ -769,7 +769,7 @@ L_A5DA:
 L_A603:
 	ld hl,0da6ch		;a603
 	ld de,08020h		;a606
-	ld a,(0d70ah)		;a609
+	ld a,(0d70ah)		;a609   ; lee los 6 equipos elegidos (0xFF libre)
 	inc a			;a60c
 	jr nz,L_A612		;a60d
 	ld hl,06aabh		;a60f
@@ -818,13 +818,13 @@ L_A663:
 	and 020h		;a666
 	ret z			;a668
 L_A669:
-	ld a,(0d759h)		;a669
+	ld a,(0d759h)		;a669   ; lee la opcion del menu de PENNANT
 	inc a			;a66c
 	cp 003h		;a66d
 	jr nz,L_A672		;a66f
 	xor a			;a671
 L_A672:
-	ld (0d759h),a		;a672
+	ld (0d759h),a		;a672   ; guarda la opcion del menu de PENNANT
 	ld a,026h		;a675
 	call 057ffh		;a677   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_A67A:
@@ -841,7 +841,7 @@ L_A68E:
 	ld a,(0de02h)		;a691   ; lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 	bit 3,a		;a694
 	jr nz,L_A6B6		;a696
-	ld a,(0d759h)		;a698
+	ld a,(0d759h)		;a698   ; lee la opcion del menu de PENNANT
 	cp 001h		;a69b
 	jr nz,L_A6A8		;a69d
 	ld hl,0de02h		;a69f   ; apunta a las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
@@ -859,7 +859,7 @@ L_A6AB:
 	ex de,hl			;a6b2
 	jp 04ea6h		;a6b3   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 L_A6B6:
-	ld a,(0d759h)		;a6b6
+	ld a,(0d759h)		;a6b6   ; lee la opcion del menu de PENNANT
 	ld hl,0a6c6h		;a6b9
 	jr L_A6AB		;a6bc
 
@@ -951,7 +951,7 @@ L_A7AC:
 	add a,c			;a7ac
 	djnz L_A7AC		;a7ad
 	ld (0e360h),a		;a7af
-	ld a,(0d6e1h)		;a7b2
+	ld a,(0d6e1h)		;a7b2   ; lee el numero de jugadores de PENNANT (1-6)
 	dec a			;a7b5
 	jr z,L_A7E2		;a7b6
 	ld hl,0d6e3h		;a7b8
@@ -1366,7 +1366,7 @@ L_AA81:
 	ret z			;aa89
 	ld a,(0dd93h)		;aa8a
 	inc a			;aa8d
-	ld (0dd8fh),a		;aa8e
+	ld (0dd8fh),a		;aa8e   ; guarda el soporte elegido: 0 la RAM, 1 el disco, 2 el Game Master 2
 	dec a			;aa91
 	xor 001h		;aa92
 	ld de,02890h		;aa94
@@ -1541,7 +1541,7 @@ L_ABB0:
 	inc (hl)			;abb3
 	ld a,(hl)			;abb4
 	and 00fh		;abb5
-	ld de,0d70ah		;abb7
+	ld de,0d70ah		;abb7   ; apunta a los 6 equipos elegidos (0xFF libre)
 	ld hl,0abe1h		;abba
 	call 04216h		;abbd   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;abc0
@@ -1550,7 +1550,7 @@ L_ABB0:
 	inc de			;abc3
 	ld a,(hl)			;abc4
 	ld (de),a			;abc5
-	ld a,(0d70ah)		;abc6
+	ld a,(0d70ah)		;abc6   ; lee los 6 equipos elegidos (0xFF libre)
 	ld de,0d380h		;abc9   ; apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 	call L_ABD5		;abcc
 	ld a,(0d70bh)		;abcf
@@ -1582,7 +1582,7 @@ L_AC1A:
 	ld hl,0d6dch		;ac1a   ; apunta a el equipo del jugador en PENNANT (bit 0)
 	inc (hl)			;ac1d
 	call L_AC81		;ac1e
-	ld a,(0d6e1h)		;ac21
+	ld a,(0d6e1h)		;ac21   ; lee el numero de jugadores de PENNANT (1-6)
 	dec a			;ac24
 	call z,L_AC31		;ac25
 	call L_ACF7		;ac28
@@ -1638,20 +1638,20 @@ L_AC7A:
 	ld (hl),a			;ac7f
 	ret			;ac80
 L_AC81:
-	ld a,(0d6e1h)		;ac81
+	ld a,(0d6e1h)		;ac81   ; lee el numero de jugadores de PENNANT (1-6)
 	dec a			;ac84
 	jr nz,L_ACBB		;ac85
 	ld d,000h		;ac87
 	ld a,(0d711h)		;ac89
 	dec a			;ac8c
 	ld e,a			;ac8d
-	ld hl,0d70ah		;ac8e
+	ld hl,0d70ah		;ac8e   ; apunta a los 6 equipos elegidos (0xFF libre)
 	add hl,de			;ac91
 	ld b,(hl)			;ac92
 	ld a,(0d713h)		;ac93
 	dec a			;ac96
 	ld e,a			;ac97
-	ld hl,0d70ah		;ac98
+	ld hl,0d70ah		;ac98   ; apunta a los 6 equipos elegidos (0xFF libre)
 	add hl,de			;ac9b
 	ld l,(hl)			;ac9c
 	ld h,b			;ac9d
@@ -1660,13 +1660,13 @@ L_AC81:
 	ld a,(0d715h)		;aca3
 	dec a			;aca6
 	ld e,a			;aca7
-	ld hl,0d70ah		;aca8
+	ld hl,0d70ah		;aca8   ; apunta a los 6 equipos elegidos (0xFF libre)
 	add hl,de			;acab
 	ld b,(hl)			;acac
 	ld a,(0d717h)		;acad
 	dec a			;acb0
 	ld e,a			;acb1
-	ld hl,0d70ah		;acb2
+	ld hl,0d70ah		;acb2   ; apunta a los 6 equipos elegidos (0xFF libre)
 	add hl,de			;acb5
 	ld l,(hl)			;acb6
 	ld h,b			;acb7
@@ -1676,13 +1676,13 @@ L_ACBB:
 	ld a,(0e195h)		;acbd
 	dec a			;acc0
 	ld e,a			;acc1
-	ld hl,0d70ah		;acc2
+	ld hl,0d70ah		;acc2   ; apunta a los 6 equipos elegidos (0xFF libre)
 	add hl,de			;acc5
 	ld b,(hl)			;acc6
 	ld a,(0e197h)		;acc7
 	dec a			;acca
 	ld e,a			;accb
-	ld hl,0d70ah		;accc
+	ld hl,0d70ah		;accc   ; apunta a los 6 equipos elegidos (0xFF libre)
 	add hl,de			;accf
 	ld l,(hl)			;acd0
 	ld h,b			;acd1
@@ -1716,7 +1716,7 @@ L_ACDA:
 	inc (hl)			;acf5
 	ret			;acf6
 L_ACF7:
-	ld a,(0d6e1h)		;acf7
+	ld a,(0d6e1h)		;acf7   ; lee el numero de jugadores de PENNANT (1-6)
 	dec a			;acfa
 	jr nz,L_AD09		;acfb
 	ld hl,0d710h		;acfd
@@ -1910,7 +1910,7 @@ L_ADFA:
 	ld a,00eh		;adfd
 	ld de,0781ch		;adff
 	call 04f1ch		;ae02   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
-	ld a,(0d6e1h)		;ae05
+	ld a,(0d6e1h)		;ae05   ; lee el numero de jugadores de PENNANT (1-6)
 	dec a			;ae08
 	jr nz,L_AE1B		;ae09
 	ld a,00eh		;ae0b
@@ -1968,7 +1968,7 @@ L_AE23:
 	ld hl,0b09eh		;ae85
 	call 04ea6h		;ae88   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	call L_AEAE		;ae8b
-	ld a,(0d6e1h)		;ae8e
+	ld a,(0d6e1h)		;ae8e   ; lee el numero de jugadores de PENNANT (1-6)
 	dec a			;ae91
 	jp nz,L_AF2C		;ae92
 	call L_AED6		;ae95
@@ -2076,7 +2076,7 @@ L_AF7D:
 	ld e,(hl)			;af7d
 	dec e			;af7e
 	ld d,000h		;af7f
-	ld hl,0d70ah		;af81
+	ld hl,0d70ah		;af81   ; apunta a los 6 equipos elegidos (0xFF libre)
 	add hl,de			;af84
 	ld a,(hl)			;af85
 	call 065fbh		;af86
