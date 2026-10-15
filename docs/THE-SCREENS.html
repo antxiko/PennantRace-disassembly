@@ -100,7 +100,7 @@ audio{display:block;width:100%;max-width:640px;margin:.75rem 0 1.5rem}
 <p><img src="imagenes/menu.png" alt="The mode menu"></p>
 <p><code>p01:651C</code>: the finished intro, the title copied from page 1 to (0x1C, 0x08), the five texts in a row at <code>p13:7D8F</code> and the marker, character 0x9A, on the row of the chosen mode (<code>p01:65AF</code>). With a disk drive and a Game Master 2 a sixth one appears, MEDIA SELECT. <b>Checked: 0 bytes different.</b></p>
 <h2 id="the-menus">The menus</h2>
-<p>The screens before and after a game. What changes from one session to another (the chosen teams, the option, the results) and the palette of that moment come from the RAM of an openMSX dump (<code>tools/estados_menus.json</code>); everything else from the code: <code>tools/menus.py</code> repeats its routines and <code>tools/coteja_menus.py</code> compares. <b>All seven checked: 0 bytes different</b> on the visible page.</p>
+<p>The screens before and after a game. What changes from one session to another (the chosen teams, the option, the results) and the palette of that moment come from the RAM of an openMSX dump (<code>tools/estados_menus.json</code>); everything else from the code: <code>tools/menus.py</code> repeats its routines and <code>tools/coteja_menus.py</code> compares. <b>All eight checked: 0 bytes different</b> on the visible page.</p>
 <p><img src="imagenes/menu_equipos.png" alt="TEAM NAME SELECT"></p>
 <p>Choosing the teams (<code>p15:A470</code>): the title by mode, the two-column team list (<code>p13:6A0D</code>), with the chosen ones in colour 4, and the option bar (<code>p15:A67A</code>).</p>
 <p><img src="imagenes/menu_lanzadores.png" alt="The starting pitchers"></p>
@@ -115,6 +115,8 @@ audio{display:block;width:100%;max-width:640px;margin:.75rem 0 1.5rem}
 <p>In PENNANT the pitchers screen carries the round (第 2 回戦, <code>p14:971A</code>) and VISITORS / HOME.</p>
 <p><img src="imagenes/menu_clasificacion.png" alt="Results and standings"></p>
 <p>The round&#x27;s results and the standings (<code>p15:ADFA</code>): the player&#x27;s game, the other two drawn by lot, and the table with games, wins, losses, percentage (a four-step long division, <code>p15:AFBD</code>) and games behind the leader (<code>p15:B034</code>).</p>
+<p><img src="imagenes/menu_cambio.png" alt="MEMBER CHANGE"></p>
+<p>The visitors&#x27; substitution screen (<code>p14:9BCC</code>), opened from the pause: the 17 on their list (batting order, bench and pitchers, with their gaps) and the mark on the batter.</p>
 <h2 id="the-field">The field</h2>
 <p><img src="imagenes/campo_1.png" alt="The centre zone"></p>
 <p>The field has three zones: the centre and the two sides. Each one is 256 × 512 pixels and is a map of 16 × 8 tiles of 4 × 4 characters (<code>p08:9432</code>); the tiles come from <code>p08:95B8</code> (and from <code>p08:9A58</code> in the last two strips of the list). The screen shows part of the zone at a time. <b>Checked: centre zone, the 256 lines that were in the VRAM, identical in two dumps;</b> in another three, 8 to 22 lines differ: the signs and strips the game was drawing at that moment.</p>
@@ -125,6 +127,8 @@ audio{display:block;width:100%;max-width:640px;margin:.75rem 0 1.5rem}
 <h2 id="the-pitch">The pitch</h2>
 <p><img src="imagenes/lanceo.png" alt="The pitching screen"></p>
 <p>The pitching screen, seen from behind home plate (<code>p01:6352</code>): the background in runs from <code>p08:9220</code>, two frames and the text at <code>p13:7E1E</code> (S B O, the 回 of the inning, HR and 打率). With no game going, the boxes and figures are empty. <b>Checked: 818 of 864 blocks identical</b>; the rest is the little bases window and the figures of the game being played.</p>
+<p><img src="imagenes/lanceo_bases.png" alt="The bases windows"></p>
+<p>With runners on, the screen carries two little windows with first and third base (<code>p03:AD46</code>): 8 × 12 characters from row 0xA8 of the sheet, from the runs at <code>p08:9178</code> and <code>p08:91CC</code>; the runner waiting in each is a sprite (<code>p02:988A</code>). <b>Checked: identical byte for byte</b> in the dumps of a WATCH game.</p>
 <p><img src="imagenes/letreros.png" alt="The signs"></p>
 <p>The signs are drawn on it as picture lists, in blue or red (the palettes at <code>p00:51B2</code>), each with a twin for a batter on the other side: PLAY BALL! when a half inning starts (<code>p13:7925</code>), LUCKY 7 in the seventh (<code>p11:96EE</code>), PLAY! (<code>p13:BA9B</code>), BALL! (<code>p11:9401</code>), STRIKE! (<code>p11:94BB</code>) and OUT! (<code>p11:95A8</code>). <b>All six checked</b>, identical byte for byte in the dumps where they appear; LUCKY 7 by setting the seventh inning in RAM (0xE19B = 0x0C) before the game starts.</p>
 <h2 id="the-players">The players</h2>

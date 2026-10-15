@@ -79,7 +79,7 @@ RUTINAS = {
     (3, 0xA1F6): ("orden_valido", "el orden DE vale? sin huecos y un solo lanzador; carry si no"),
     (3, 0xA218): ("jugador_del_puesto", "el jugador del puesto A del orden BC, en su fila"),
     (3, 0xA220): ("jugador_a", "el jugador A en su fila (0 en blanco, 1-12 de campo, 13 o mas lanzador)"),
-    (3, 0xA264): ("ficha_de_lanzador", "HL += A x 11 + 0xA8: la ficha del lanzador A"),
+    (3, 0xA264): ("ficha_de_lanzador", "HL += A x 19 + 0xA8: la ficha del lanzador A (19 bytes)"),
     (3, 0xA27A): ("fila_en_blanco", "una fila en blanco: 0x68 x 8 de color 0 en DE"),
     (3, 0xA284): ("borra_nombre", "el sitio de un nombre en blanco: 0x30 x 8 de color 0"),
     (3, 0xA298): ("flecha_de_fila", "la flecha en la fila elegida: el visitante (D = 0) o el local"),

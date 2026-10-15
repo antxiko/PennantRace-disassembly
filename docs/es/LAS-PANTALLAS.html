@@ -100,7 +100,7 @@ audio{display:block;width:100%;max-width:640px;margin:.75rem 0 1.5rem}
 <p><img src="../imagenes/menu.png" alt="El menú de modos"></p>
 <p><code>p01:651C</code>: la presentación terminada, el rótulo copiado de la página 1 a (0x1C, 0x08), los cinco textos seguidos de <code>p13:7D8F</code> y el marcador, el carácter 0x9A, en la fila del modo elegido (<code>p01:65AF</code>). Con disco y Game Master 2 sale un sexto, MEDIA SELECT. <b>Cotejado: 0 bytes distintos.</b></p>
 <h2 id="los-menus">Los menús</h2>
-<p>Las pantallas de antes y después del partido. Lo que cambia de una partida a otra (los equipos elegidos, la opción, los resultados) y la paleta de ese momento salen de la RAM de un volcado de openMSX (<code>tools/estados_menus.json</code>); todo lo demás, del código: <code>tools/menus.py</code> repite sus rutinas y <code>tools/coteja_menus.py</code> compara. <b>Cotejadas las siete: 0 bytes distintos</b> en la página que se ve.</p>
+<p>Las pantallas de antes y después del partido. Lo que cambia de una partida a otra (los equipos elegidos, la opción, los resultados) y la paleta de ese momento salen de la RAM de un volcado de openMSX (<code>tools/estados_menus.json</code>); todo lo demás, del código: <code>tools/menus.py</code> repite sus rutinas y <code>tools/coteja_menus.py</code> compara. <b>Cotejadas las ocho: 0 bytes distintos</b> en la página que se ve.</p>
 <p><img src="../imagenes/menu_equipos.png" alt="TEAM NAME SELECT"></p>
 <p>La elección de equipos (<code>p15:A470</code>): el título según el modo, la lista de equipos de dos columnas (<code>p13:6A0D</code>), con los elegidos en el color 4, y la barra de opciones (<code>p15:A67A</code>).</p>
 <p><img src="../imagenes/menu_lanzadores.png" alt="Los lanzadores iniciales"></p>
@@ -115,6 +115,8 @@ audio{display:block;width:100%;max-width:640px;margin:.75rem 0 1.5rem}
 <p>En PENNANT, la pantalla de los lanzadores lleva la jornada (第 2 回戦, <code>p14:971A</code>) y VISITORS / HOME.</p>
 <p><img src="../imagenes/menu_clasificacion.png" alt="Los resultados y la clasificación"></p>
 <p>Los resultados de la jornada y la clasificación (<code>p15:ADFA</code>): el partido del jugador, los otros dos echados a suertes, y la tabla con partidos, victorias, derrotas, porcentaje (una división larga de cuatro vueltas, <code>p15:AFBD</code>) y diferencia con el primero (<code>p15:B034</code>).</p>
+<p><img src="../imagenes/menu_cambio.png" alt="MEMBER CHANGE"></p>
+<p>El cambio de jugadores del visitante (<code>p14:9BCC</code>), que se abre desde la pausa: los 17 de su lista (el orden de bateo, los suplentes y los lanzadores, con sus huecos) y la marca en el que batea.</p>
 <h2 id="el-campo">El campo</h2>
 <p><img src="../imagenes/campo_1.png" alt="La zona del centro"></p>
 <p>El campo tiene tres zonas: el centro y los dos lados. Cada una mide 256 × 512 puntos y es un mapa de 16 × 8 mosaicos de 4 × 4 caracteres (<code>p08:9432</code>); los mosaicos salen de <code>p08:95B8</code> (y de <code>p08:9A58</code> en las dos últimas tiras de la lista). La pantalla enseña cada vez una parte de la zona. <b>Cotejado: zona del centro, las 256 líneas que había en la VRAM, iguales en dos volcados;</b> en otros tres difieren de 8 a 22 líneas, que son los letreros y las tiras que el juego estaba pintando en ese momento.</p>
@@ -125,6 +127,8 @@ audio{display:block;width:100%;max-width:640px;margin:.75rem 0 1.5rem}
 <h2 id="el-lanzamiento">El lanzamiento</h2>
 <p><img src="../imagenes/lanceo.png" alt="La pantalla del lanzamiento"></p>
 <p>La pantalla del lanzamiento, vista desde detrás de la casa (<code>p01:6352</code>): el fondo en rachas de <code>p08:9220</code>, dos marcos y el texto de <code>p13:7E1E</code> (S B O, el 回 de la entrada, HR y 打率). Sin partido, las casillas y las cifras quedan vacías. <b>Cotejado: 818 de 864 bloques iguales</b>; lo demás es la ventanita de las bases y las cifras del partido que se estaba jugando.</p>
+<p><img src="../imagenes/lanceo_bases.png" alt="Las ventanitas de las bases"></p>
+<p>Con corredores, la pantalla lleva dos ventanitas con la primera y la tercera base (<code>p03:AD46</code>): 8 × 12 caracteres de la fila 0xA8 de la hoja, de las rachas de <code>p08:9178</code> y <code>p08:91CC</code>; el corredor que espera en cada una es un sprite (<code>p02:988A</code>). <b>Cotejadas: iguales byte a byte</b> en los volcados de un partido en WATCH.</p>
 <p><img src="../imagenes/letreros.png" alt="Los letreros"></p>
 <p>Los letreros se pintan sobre ella como listas de dibujos, en azul o en rojo (las paletas de <code>p00:51B2</code>), cada uno con su pareja para el bateador del otro lado: PLAY BALL! al empezar la media entrada (<code>p13:7925</code>), LUCKY 7 en la séptima (<code>p11:96EE</code>), PLAY! (<code>p13:BA9B</code>), BALL! (<code>p11:9401</code>), STRIKE! (<code>p11:94BB</code>) y OUT! (<code>p11:95A8</code>). <b>Cotejados los seis</b>, iguales byte a byte en los volcados donde salen; LUCKY 7, poniendo la séptima entrada en la RAM (0xE19B = 0x0C) antes de empezar el partido.</p>
 <h2 id="los-jugadores">Los jugadores</h2>

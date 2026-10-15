@@ -210,6 +210,17 @@ LETREROS = [
 ]
 
 
+def ventanitas():
+    """La pantalla del lanzamiento con las dos ventanitas de las bases
+    (p03:AD46): la de 1.a, las rachas de p08:9178 en 8 x 12 caracteres de la
+    fila 0xA8 en (0xB8, 0x08) (p00:5591), y la de 3.a, las de p08:91CC en
+    (0x08, 0x08) (p00:55AF). Sus marcadores son sprites (p02:988A)."""
+    v = marcador()
+    v.bloque(rachas_a_ram(7, 0x9178), 0xB8, 0x08, 8, 12, 0xA8)
+    v.bloque(rachas_a_ram(7, 0x91CC), 0x08, 0x08, 8, 12, 0xA8)
+    return v
+
+
 def letreros(salida, escala=3):
     """Los letreros sobre la pantalla del lanzamiento, cada uno recortado."""
     from PIL import Image
@@ -291,6 +302,7 @@ def main(argv):
         menu(0).png(os.path.join(salida, "menu.png"), pagina=0, alto=212, escala=2)
         logo_konami().png(os.path.join(salida, "logo_konami.png"), pagina=0, alto=212, escala=2)
         letreros(salida)
+        ventanitas().png(os.path.join(salida, "lanceo_bases.png"), pagina=0, alto=212, escala=2)
         print("web")
     if que in ("campo", "todas"):
         for z in range(3):

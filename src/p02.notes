@@ -1767,11 +1767,11 @@ C 0x9D2A guarda la altura de la pelota y el byte siguiente (16 bits)
 C 0x9D45 guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 C 0x9D56 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x9DBC sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0x9DD7 ficha_de_lanzador: HL += A x 11 + 0xA8: la ficha del lanzador A
+C 0x9DD7 ficha_de_lanzador: HL += A x 19 + 0xA8: la ficha del lanzador A (19 bytes)
 C 0x9DF4 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9E04 colores_de_sprites: los colores de los 32 sprites: compara el indice (4.o byte) de cada atributo y descomprime los que cambian (p09:BC05)
 C 0x9E4A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0x9E65 ficha_de_lanzador: HL += A x 11 + 0xA8: la ficha del lanzador A
+C 0x9E65 ficha_de_lanzador: HL += A x 19 + 0xA8: la ficha del lanzador A (19 bytes)
 C 0x9E82 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9EAC esconde_sprites: escribe 0xD8 (Y = 216: no se pinta ninguno) en la VRAM 0xF600, el primer atributo de sprite
 C 0x9EAF kanji_de_los_datos: los 17 kanji de p09:B942 en la casilla (0xF8, 0x18) de la hoja: los codigos 0x7F-0x8F

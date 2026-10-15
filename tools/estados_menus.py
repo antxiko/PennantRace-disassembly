@@ -16,7 +16,7 @@ JSON = os.path.join(AQUI, "estados_menus.json")
 # lo que leen las pantallas: las fichas de los dos equipos, las de PENNANT,
 # las listas de equipos y de nombres, el modo, el marcador y los lanzadores
 TROZOS = [(0xD380, 0xD580), (0xD680, 0xD760), (0xDA6B, 0xDB00), (0xDE00, 0xDE10),
-          (0xE190, 0xE1A0), (0xEC50, 0xEC70)]
+          (0xE190, 0xE1A0), (0xEC4F, 0xEC70)]
 
 # la pantalla, el volcado de donde sale su estado y la imagen de la web
 PANTALLAS = [
@@ -27,6 +27,7 @@ PANTALLAS = [
     ("liga", "menus3", "39", "menu_liga.png"),
     ("lanzadores_iniciales", "menus5", "79", "menu_jornada.png"),
     ("clasificacion", "menus5", "73", "menu_clasificacion.png"),
+    ("member_change", "member2", "47", "menu_cambio.png"),
 ]
 
 

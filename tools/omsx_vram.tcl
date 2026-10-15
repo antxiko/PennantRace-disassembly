@@ -40,12 +40,14 @@ proc vuelca {etiqueta} {
     close $h
     screenshot [file join $::SALIDA "ver-$etiqueta.png"]
 }
-# VRAM_TECLAS "t:fila:mascara ...": a los t segundos se pulsa esa tecla de la
-# matriz del MSX (fila 8: 0x01 espacio, 0x10 izquierda, 0x20 arriba, 0x40
-# abajo, 0x80 derecha; fila 7: 0x80 RETURN) durante 0.15 s
+# VRAM_TECLAS "t:fila:mascara[:segundos] ...": a los t segundos se pulsa esa
+# tecla de la matriz del MSX (fila 8: 0x01 espacio, 0x10 izquierda, 0x20 arriba,
+# 0x40 abajo, 0x80 derecha; fila 7: 0x80 RETURN; fila 6: 0x20 F1) durante 0.15 s
+# o lo que se diga
 foreach k [opcion VRAM_TECLAS {}] {
-    lassign [split $k :] t f m
-    after time $t "keymatrixdown $f $m; after time 0.15 {keymatrixup $f $m}"
+    lassign [split $k :] t f m d
+    if {$d eq ""} { set d 0.15 }
+    after time $t "keymatrixdown $f $m; after time $d {keymatrixup $f $m}"
 }
 # VRAM_POKES "t:direccion:valor ...": a los t segundos se escribe ese byte de la
 # RAM (para llegar antes a una pantalla: p. ej. 0xED87 = 1 acaba el partido)

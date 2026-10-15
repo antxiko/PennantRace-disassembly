@@ -141,8 +141,16 @@ def _jugadores_de_campo(v, ram, d, x, y, n=12):
 def _lanzador_en_fila(v, ram, d, idx, x, y):
     """p03:A242: el lanzador idx (13 o mas) de la ficha d: su nombre en el
     color 4 (p03:A439, con el sitio borrado), el caracter 0x90 y el texto de
-    p13:7EB6 (.150 y 0 HR) 4 mas alla."""
-    f = d + 11 * (idx - 13) + 0xA8
+    p13:7EB6 (.150 y 0 HR) 4 mas alla; de la y 0xA7 para abajo (la lista de
+    lanzadores), su nombre y su 防御率 (p03:A3B4)."""
+    f = d + 19 * (idx - 13) + 0xA8                    # p03:A264: fichas de 19 bytes
+    if y >= 0xA7:                                       # p03:A275 -> p03:A3B4
+        v.rellena(x, y, 0x30, 8, 0)
+        letras_estrechas(v, ram[f:f + 6], x, y)
+        v.caracter(0x90, x + 0x3C, y)
+        caracteres(v, ram[f + 11:f + 12], x + 0x34, y)
+        caracteres(v, ram[f + 12:f + 14], x + 0x40, y)
+        return
     v.rellena(x, y, 0x30, 8, 0)
     letras_estrechas(v, ram[f:f + 6], x, y, color4=True)
     v.caracter(0x90, x + 0x34, y)
@@ -447,6 +455,42 @@ def web(carpeta, escala=2):
         print(png)
 
 
+
+# ------------------------------------------------------------------ MEMBER CHANGE
+
+def jugador_a(v, ram, d, a, x, y):
+    """p03:A220: el jugador a de la ficha d en (x, y): 0 la fila en blanco
+    (0x68 x 8); 1-12 uno de campo (p03:A3EC); 13 o mas un lanzador."""
+    if a == 0:
+        v.rellena(x, y, 0x68, 8, 0)
+    elif a < 13:
+        v.rellena(x, y, 0x30, 8, 0)
+        _jugadores_de_campo(v, ram, d + 14 * (a - 1), x, y, n=1)
+    else:
+        _lanzador_en_fila(v, ram, d, a, x, y)
+
+
+def member_change(ram):
+    """El cambio de jugadores del visitante (p14:9BCC): la pantalla
+    (p14:9CF6: el color 4 = 0x7003 y el texto de p13:7B63), el nombre del
+    equipo en (0x60, 0x00), los numeros 1-9 en (0x48, 0x28) (p03:A452), los
+    17 de su lista de 0xEC50 desde (0x50, 0x28) con huecos de 16 tras el 9.o
+    y de 24 tras el 13.o (p03:A220), y la marca 0x9A en el que batea (0xEC4F,
+    la y de p14:9BBB, x 0x3C)."""
+    from vram import byte
+    v = base()
+    v.pon_color(4, 0x70, 0x03)
+    v.texto(13, 0x7B63)
+    caracteres(v, ram[0xD380:0xD38A], 0x60, 0x00)
+    for k in range(9):
+        v.caracter(2 + k, 0x48, 0x28 + 8 * k)
+    y = 0x28
+    for k in range(17):
+        jugador_a(v, ram, 0xD38B, ram[0xEC50 + k], 0x50, y)
+        y += 0x10 if k == 8 else 0x18 if k == 12 else 8
+    v.caracter(0x9A, 0x3C, byte(13, 0x9BBB + ram[0xEC4F]))
+    return v
+
+
 if __name__ == "__main__":
     web(sys.argv[1] if len(sys.argv) > 1 else "docs/imagenes")
-

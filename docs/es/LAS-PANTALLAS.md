@@ -63,7 +63,7 @@ Las pantallas de antes y después del partido. Lo que cambia de una partida a
 otra (los equipos elegidos, la opción, los resultados) y la paleta de ese
 momento salen de la RAM de un volcado de openMSX (`tools/estados_menus.json`);
 todo lo demás, del código: `tools/menus.py` repite sus rutinas y
-`tools/coteja_menus.py` compara. **Cotejadas las siete: 0 bytes distintos** en
+`tools/coteja_menus.py` compara. **Cotejadas las ocho: 0 bytes distintos** en
 la página que se ve.
 
 ![TEAM NAME SELECT](../imagenes/menu_equipos.png)
@@ -107,6 +107,12 @@ jugador, los otros dos echados a suertes, y la tabla con partidos, victorias,
 derrotas, porcentaje (una división larga de cuatro vueltas, `p15:AFBD`) y
 diferencia con el primero (`p15:B034`).
 
+![MEMBER CHANGE](../imagenes/menu_cambio.png)
+
+El cambio de jugadores del visitante (`p14:9BCC`), que se abre desde la pausa:
+los 17 de su lista (el orden de bateo, los suplentes y los lanzadores, con sus
+huecos) y la marca en el que batea.
+
 ## El campo
 
 ![La zona del centro](../imagenes/campo_1.png)
@@ -140,6 +146,14 @@ fondo en rachas de `p08:9220`, dos marcos y el texto de `p13:7E1E` (S B O, el
 回 de la entrada, HR y 打率). Sin partido, las casillas y las cifras quedan
 vacías. **Cotejado: 818 de 864 bloques iguales**; lo demás es la ventanita de
 las bases y las cifras del partido que se estaba jugando.
+
+![Las ventanitas de las bases](../imagenes/lanceo_bases.png)
+
+Con corredores, la pantalla lleva dos ventanitas con la primera y la tercera
+base (`p03:AD46`): 8 × 12 caracteres de la fila 0xA8 de la hoja, de las rachas
+de `p08:9178` y `p08:91CC`; el corredor que espera en cada una es un sprite
+(`p02:988A`). **Cotejadas: iguales byte a byte** en los volcados de un
+partido en WATCH.
 
 ![Los letreros](../imagenes/letreros.png)
 

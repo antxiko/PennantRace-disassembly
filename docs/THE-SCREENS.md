@@ -63,7 +63,7 @@ The screens before and after a game. What changes from one session to
 another (the chosen teams, the option, the results) and the palette of that
 moment come from the RAM of an openMSX dump (`tools/estados_menus.json`);
 everything else from the code: `tools/menus.py` repeats its routines and
-`tools/coteja_menus.py` compares. **All seven checked: 0 bytes different** on
+`tools/coteja_menus.py` compares. **All eight checked: 0 bytes different** on
 the visible page.
 
 ![TEAM NAME SELECT](imagenes/menu_equipos.png)
@@ -105,6 +105,12 @@ other two drawn by lot, and the table with games, wins, losses, percentage (a
 four-step long division, `p15:AFBD`) and games behind the leader
 (`p15:B034`).
 
+![MEMBER CHANGE](imagenes/menu_cambio.png)
+
+The visitors' substitution screen (`p14:9BCC`), opened from the pause: the 17
+on their list (batting order, bench and pitchers, with their gaps) and the
+mark on the batter.
+
 ## The field
 
 ![The centre zone](imagenes/campo_1.png)
@@ -137,6 +143,14 @@ in runs from `p08:9220`, two frames and the text at `p13:7E1E` (S B O, the 回
 of the inning, HR and 打率). With no game going, the boxes and figures are
 empty. **Checked: 818 of 864 blocks identical**; the rest is the little bases
 window and the figures of the game being played.
+
+![The bases windows](imagenes/lanceo_bases.png)
+
+With runners on, the screen carries two little windows with first and third
+base (`p03:AD46`): 8 × 12 characters from row 0xA8 of the sheet, from the runs
+at `p08:9178` and `p08:91CC`; the runner waiting in each is a sprite
+(`p02:988A`). **Checked: identical byte for byte** in the dumps of a WATCH
+game.
 
 ![The signs](imagenes/letreros.png)
 

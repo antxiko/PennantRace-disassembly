@@ -4394,7 +4394,7 @@ L_9DBF:
 	ld (hl),000h		;9dcf
 	ld a,(0e30dh)		;9dd1
 	ld hl,0d38bh		;9dd4   ; ...su nombre (p03:A264) y la marca (p03:A43C)...
-	call 0a264h		;9dd7   ; ficha_de_lanzador: HL += A x 11 + 0xA8: la ficha del lanzador A
+	call 0a264h		;9dd7   ; ficha_de_lanzador: HL += A x 19 + 0xA8: la ficha del lanzador A (19 bytes)
 	ld a,(0e30dh)		;9dda
 	ld de,09ea5h		;9ddd
 	call 0421bh		;9de0   ; la fila de la tabla 0x9EA5
@@ -4474,7 +4474,7 @@ L_9E4D:
 	ld (hl),000h		;9e5d
 	ld a,(0e30eh)		;9e5f
 	ld hl,0d48ah		;9e62   ; ...su nombre y la marca...
-	call 0a264h		;9e65   ; ficha_de_lanzador: HL += A x 11 + 0xA8: la ficha del lanzador A
+	call 0a264h		;9e65   ; ficha_de_lanzador: HL += A x 19 + 0xA8: la ficha del lanzador A (19 bytes)
 	ld a,(0e30eh)		;9e68
 	ld de,09ea5h		;9e6b
 	call 0421bh		;9e6e   ; la fila de la tabla 0x9EA5

@@ -366,9 +366,9 @@ L_A242:
 	ld hl,07eb6h		;a25c   ; el texto de 0x7EB6
 	ld c,0ffh		;a25f
 	jp 04eb5h		;a261   ; texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
-ficha_de_lanzador:		; HL += A x 11 + 0xA8: la ficha del lanzador A
-	ld b,a			;a264   ; HL += (A x 11) + 0xA8 (las fichas de lanzador) y B = 6 letras
-	add a,a			;a265   ; A x 11
+ficha_de_lanzador:		; HL += A x 19 + 0xA8: la ficha del lanzador A (19 bytes)
+	ld b,a			;a264   ; HL += (A x 19) + 0xA8 (las fichas de lanzador, de 19 bytes) y B = 6 letras
+	add a,a			;a265   ; A x 19 (2A, 16A, + A + 2A)
 	ld c,a			;a266
 	add a,a			;a267
 	add a,a			;a268
