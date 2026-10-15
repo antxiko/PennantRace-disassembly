@@ -22,6 +22,14 @@ D 0xB094 0xB099 texto_B094  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): 
 D 0xB099 0xB09E texto_B099  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:AE82 (5 bytes)
 D 0xB09E 0xB0A6 texto_B09E  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:AE88 (8 bytes)
 D 0xB0A6 0xB0AC texto_B0A6  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:AE58 (6 bytes)
+D 0xBA8E 0xBA9B lista_BA8E  2 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x51B2); lo leen p00:5174 (13 bytes)
+F 0xBA8E 6
+D 0xBA9B 0xBAA8 lista_BA9B  2 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x51B2); lo leen p00:5174 (13 bytes)
+F 0xBA9B 6
+D 0xBAA8 0xBAF8 dibujo_BAA8  5 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 0 de la lista 0xBA9B (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:5174 (80 bytes)
+F 0xBAA8 16
+D 0xBAF8 0xBB48 dibujo_BAF8  5 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 1 de la lista 0xBA9B (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:5174 (80 bytes)
+F 0xBAF8 16
 D 0xBB8D 0xBB97 tabla_BB8D  5 destinos del despachador p00:4220 (call en p15:BB8A, el indice en A): BB97, BBBD, BBE4, BC22, BC64; lo leen p15:BB8A (10 bytes)
 F 0xBB8D w5
 D 0xBE24 0xBE27 texto_BE24  texto (p00:4EBA, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:BDC7 (3 bytes)

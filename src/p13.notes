@@ -32,6 +32,14 @@ D 0x6F7F 0x6F89 tabla_6F7F  5 destinos del despachador p00:4220 (call en p13:6F7
 F 0x6F7F w5
 D 0x7004 0x700E tabla_7004  5 destinos del despachador p00:4220 (call en p13:7001, el indice en A): 700E, 7025, 704B, 707E, 7089; lo leen p13:7001 (10 bytes)
 F 0x7004 w5
+D 0x7925 0x7938 lista_7925  3 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x51B2); lo leen p00:5174 (19 bytes)
+F 0x7925 6
+D 0x7938 0x79E8 dibujo_7938  11 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 0 de la lista 0x7925 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:5174 (176 bytes)
+F 0x7938 16
+D 0x79E8 0x7A98 dibujo_79E8  11 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 1 de la lista 0x7925 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:5174 (176 bytes)
+F 0x79E8 16
+D 0x7A98 0x7B48 dibujo_7A98  11 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 2 de la lista 0x7925 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:5174 (176 bytes)
+F 0x7A98 16
 D 0x7B48 0x7B63 texto_7B48  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:A4F3 (27 bytes)
 D 0x7B63 0x7B94 texto_7B63  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:9D1E (49 bytes)
 D 0x7B94 0x7B99 texto_7B94  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:648E (5 bytes)

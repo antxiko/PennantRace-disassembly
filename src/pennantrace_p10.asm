@@ -10,13 +10,67 @@
 
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6000..0x604d  (77 bytes)
-DATA_6000:
-	defb 009h,029h,02ah,02bh,02ch,02dh,02eh,02fh,030h,031h,000h,019h,020h,021h,022h,023h	; 6000  .)*+,-./01.. !"#
-	defb 024h,025h,026h,027h,028h,000h,00ah,012h,013h,014h,015h,016h,017h,018h,019h,01ch	; 6010  $%&'(...........
-	defb 01dh,019h,009h,00ah,00bh,00ch,00dh,00eh,00fh,010h,011h,000h,009h,001h,002h,003h	; 6020  ................
-	defb 004h,005h,006h,007h,008h,000h,000h,00ah,012h,013h,014h,015h,016h,017h,018h,019h	; 6030  ................
-	defb 01ah,01bh,00ah,012h,013h,014h,015h,016h,017h,018h,019h,01eh,01fh	; 6040  .............
+; DATOS ficha11_0: ficha 0 de 11 bytes (p00:5761: 0x6000 + 11 x 0xE1F6): [bits
+;   altos: color; bajos: cuantos] y un byte por cada uno que p00:57AD
+;   convierte en coordenadas; las 7 llenan el hueco hasta las rachas de
+;   0x604D; lo leen p00:577A (11 bytes)
+;   0x6000..0x600b  (11 bytes)
+DATA_ficha11_0:
+	defb 009h,029h,02ah,02bh,02ch,02dh,02eh,02fh,030h,031h,000h	; 6000  .)*+,-./01.
+
+; ----------------------------------------------------------------------
+; DATOS ficha11_1: ficha 1 de 11 bytes (p00:5761: 0x6000 + 11 x 0xE1F6): [bits
+;   altos: color; bajos: cuantos] y un byte por cada uno que p00:57AD
+;   convierte en coordenadas; las 7 llenan el hueco hasta las rachas de
+;   0x604D; lo leen p00:577A (11 bytes)
+;   0x600b..0x6016  (11 bytes)
+DATA_ficha11_1:
+	defb 019h,020h,021h,022h,023h,024h,025h,026h,027h,028h,000h	; 600b  . !"#$%&'(.
+
+; ----------------------------------------------------------------------
+; DATOS ficha11_2: ficha 2 de 11 bytes (p00:5761: 0x6000 + 11 x 0xE1F6): [bits
+;   altos: color; bajos: cuantos] y un byte por cada uno que p00:57AD
+;   convierte en coordenadas; las 7 llenan el hueco hasta las rachas de
+;   0x604D; lo leen p00:577A (11 bytes)
+;   0x6016..0x6021  (11 bytes)
+DATA_ficha11_2:
+	defb 00ah,012h,013h,014h,015h,016h,017h,018h,019h,01ch,01dh	; 6016  ...........
+
+; ----------------------------------------------------------------------
+; DATOS ficha11_3: ficha 3 de 11 bytes (p00:5761: 0x6000 + 11 x 0xE1F6): [bits
+;   altos: color; bajos: cuantos] y un byte por cada uno que p00:57AD
+;   convierte en coordenadas; las 7 llenan el hueco hasta las rachas de
+;   0x604D; lo leen p00:577A (11 bytes)
+;   0x6021..0x602c  (11 bytes)
+DATA_ficha11_3:
+	defb 019h,009h,00ah,00bh,00ch,00dh,00eh,00fh,010h,011h,000h	; 6021  ...........
+
+; ----------------------------------------------------------------------
+; DATOS ficha11_4: ficha 4 de 11 bytes (p00:5761: 0x6000 + 11 x 0xE1F6): [bits
+;   altos: color; bajos: cuantos] y un byte por cada uno que p00:57AD
+;   convierte en coordenadas; las 7 llenan el hueco hasta las rachas de
+;   0x604D; lo leen p00:577A (11 bytes)
+;   0x602c..0x6037  (11 bytes)
+DATA_ficha11_4:
+	defb 009h,001h,002h,003h,004h,005h,006h,007h,008h,000h,000h	; 602c  ...........
+
+; ----------------------------------------------------------------------
+; DATOS ficha11_5: ficha 5 de 11 bytes (p00:5761: 0x6000 + 11 x 0xE1F6): [bits
+;   altos: color; bajos: cuantos] y un byte por cada uno que p00:57AD
+;   convierte en coordenadas; las 7 llenan el hueco hasta las rachas de
+;   0x604D; lo leen p00:577A (11 bytes)
+;   0x6037..0x6042  (11 bytes)
+DATA_ficha11_5:
+	defb 00ah,012h,013h,014h,015h,016h,017h,018h,019h,01ah,01bh	; 6037  ...........
+
+; ----------------------------------------------------------------------
+; DATOS ficha11_6: ficha 6 de 11 bytes (p00:5761: 0x6000 + 11 x 0xE1F6): [bits
+;   altos: color; bajos: cuantos] y un byte por cada uno que p00:57AD
+;   convierte en coordenadas; las 7 llenan el hueco hasta las rachas de
+;   0x604D; lo leen p00:577A (11 bytes)
+;   0x6042..0x604d  (11 bytes)
+DATA_ficha11_6:
+	defb 00ah,012h,013h,014h,015h,016h,017h,018h,019h,01eh,01fh	; 6042  ...........
 
 ; ----------------------------------------------------------------------
 ; DATOS rachas_604D: rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p00:5686
@@ -279,12 +333,50 @@ DATA_rachas_6808:
 	defb 032h,004h,0f8h,012h,000h,000h	; 6fb8
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6fbe..0x76be  (1792 bytes)
-DATA_6FBE:
-	defb 0c6h,06fh,0d4h,06fh,0e2h,06fh,0f0h,06fh,07eh,072h,0feh,071h,07eh,071h,0feh,070h	; 6fbe  .o.o.o.o~r.q~q.p
-	defb 07eh,070h,0feh,06fh,07eh,076h,07eh,072h,0feh,071h,07eh,071h,0feh,073h,07eh,073h	; 6fce  ~p.o~v~r.q~q.s~s
-	defb 0feh,072h,07eh,076h,07eh,072h,07eh,075h,0feh,074h,07eh,074h,07eh,070h,0feh,06fh	; 6fde  .r~v~r~u.t~t~p.o
-	defb 07eh,076h,07eh,072h,07eh,075h,0feh,074h,0feh,075h,07eh,073h,0feh,072h,07eh,076h	; 6fee  ~v~r~u.t.u~s.r~v
+; DATOS juegos_de_7: 4 punteros (p00:56D5, indice 0xE1EB & 3) a listas de 7
+;   dibujos de 128 bytes; lo leen p00:56D2 (8 bytes)
+;   0x6fbe..0x6fc6  (8 bytes)
+DATA_juegos_de_7:
+	defw 06fc6h,06fd4h,06fe2h,06ff0h	; 6fbe  -> DATA_juego_0 DATA_juego_1 DATA_juego_2 DATA_juego_3
+
+; ----------------------------------------------------------------------
+; DATOS juego_0: 7 punteros a dibujos de 128 bytes (16x16 a 4 bits) que
+;   p00:56F2 copia a la VRAM 0x7C80 + 0x80 x n (juego 0 de 0x6FBE); lo leen
+;   p00:56DB (14 bytes)
+;   0x6fc6..0x6fd4  (14 bytes)
+DATA_juego_0:
+	defw 0727eh,071feh,0717eh,070feh,0707eh,06ffeh,0767eh	; 6fc6
+
+; ----------------------------------------------------------------------
+; DATOS juego_1: 7 punteros a dibujos de 128 bytes (16x16 a 4 bits) que
+;   p00:56F2 copia a la VRAM 0x7C80 + 0x80 x n (juego 1 de 0x6FBE); lo leen
+;   p00:56DB (14 bytes)
+;   0x6fd4..0x6fe2  (14 bytes)
+DATA_juego_1:
+	defw 0727eh,071feh,0717eh,073feh,0737eh,072feh,0767eh	; 6fd4
+
+; ----------------------------------------------------------------------
+; DATOS juego_2: 7 punteros a dibujos de 128 bytes (16x16 a 4 bits) que
+;   p00:56F2 copia a la VRAM 0x7C80 + 0x80 x n (juego 2 de 0x6FBE); lo leen
+;   p00:56DB (14 bytes)
+;   0x6fe2..0x6ff0  (14 bytes)
+DATA_juego_2:
+	defw 0727eh,0757eh,074feh,0747eh,0707eh,06ffeh,0767eh	; 6fe2
+
+; ----------------------------------------------------------------------
+; DATOS juego_3: 7 punteros a dibujos de 128 bytes (16x16 a 4 bits) que
+;   p00:56F2 copia a la VRAM 0x7C80 + 0x80 x n (juego 3 de 0x6FBE); lo leen
+;   p00:56DB (14 bytes)
+;   0x6ff0..0x6ffe  (14 bytes)
+DATA_juego_3:
+	defw 0727eh,0757eh,074feh,075feh,0737eh,072feh,0767eh	; 6ff0
+
+; ----------------------------------------------------------------------
+; DATOS dibujo128_6FFE: 128 bytes (16x16 a 4 bits por punto) que p00:56F2
+;   copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128
+;   bytes)
+;   0x6ffe..0x707e  (128 bytes)
+DATA_dibujo128_6FFE:
 	defb 000h,003h,007h,007h,01fh,03fh,00fh,00fh,00fh,00fh,007h,01fh,03fh,03fh,07eh,07fh	; 6ffe  .....?......??~.
 	defb 0f8h,0feh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0feh,0fch,0fch,042h,081h,0c1h	; 700e  .............B..
 	defb 000h,003h,007h,007h,01fh,03fh,008h,009h,009h,008h,004h,01eh,03fh,037h,06eh,079h	; 701e  .....?......?7ny
@@ -293,6 +385,13 @@ DATA_6FBE:
 	defb 0e5h,0f9h,0c1h,0dah,001h,001h,002h,004h,082h,082h,07ch,04ah,04ah,0feh,0feh,0feh	; 704e  ..........|JJ...
 	defb 03bh,007h,003h,000h,001h,001h,001h,001h,000h,000h,000h,000h,000h,000h,001h,001h	; 705e  ................
 	defb 0ffh,0ffh,0ffh,0feh,0ffh,0ffh,0feh,0fch,0feh,0feh,07ch,07eh,07eh,0feh,0feh,0feh	; 706e  ..........|~~...
+
+; ----------------------------------------------------------------------
+; DATOS dibujo128_707E: 128 bytes (16x16 a 4 bits por punto) que p00:56F2
+;   copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128
+;   bytes)
+;   0x707e..0x70fe  (128 bytes)
+DATA_dibujo128_707E:
 	defb 000h,003h,007h,007h,01fh,03fh,00fh,00fh,00fh,00fh,007h,01fh,03fh,03fh,07eh,07fh	; 707e  .....?......??~.
 	defb 0f8h,0feh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0feh,0fch,0fch,042h,081h,0c1h	; 708e  .............B..
 	defb 000h,003h,007h,007h,01fh,03fh,008h,009h,009h,008h,004h,01eh,03fh,037h,06eh,079h	; 709e  .....?......?7ny
@@ -301,6 +400,13 @@ DATA_6FBE:
 	defb 0e5h,0f9h,0e2h,0b4h,002h,002h,082h,0c4h,0fch,0cch,07ah,02ah,03eh,07eh,0feh,0f0h	; 70ce  ..........z*>~..
 	defb 03bh,007h,00fh,01fh,03fh,03fh,01fh,00fh,01fh,01fh,03fh,07fh,07fh,000h,000h,000h	; 70de  ....??....?.....
 	defb 0ffh,0ffh,0feh,0fch,0feh,0feh,0feh,0fch,0fch,0fch,07eh,03eh,03eh,07eh,0feh,0f0h	; 70ee  ..........~>>~..
+
+; ----------------------------------------------------------------------
+; DATOS dibujo128_70FE: 128 bytes (16x16 a 4 bits por punto) que p00:56F2
+;   copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128
+;   bytes)
+;   0x70fe..0x717e  (128 bytes)
+DATA_dibujo128_70FE:
 	defb 003h,00fh,01fh,01fh,07fh,0ffh,03fh,03fh,03fh,03fh,01fh,00fh,00eh,01eh,07fh,0ffh	; 70fe  ......????......
 	defb 0e0h,0f8h,0fch,0fch,0fch,0fch,0fch,0feh,0ffh,0ffh,0ffh,0ffh,017h,016h,00ah,04ch	; 710e  ...............L
 	defb 003h,00fh,01fh,01fh,07fh,0ffh,020h,025h,025h,020h,010h,009h,00fh,01fh,067h,0b7h	; 711e  ...... %% ....g.
@@ -309,6 +415,13 @@ DATA_6FBE:
 	defb 042h,082h,03ch,0c2h,002h,082h,004h,058h,030h,0e8h,0dch,0feh,0feh,0c0h,0c0h,0c0h	; 714e  B.<....X0.......
 	defb 0efh,0ffh,0fbh,071h,001h,003h,007h,00fh,00fh,007h,007h,007h,007h,00fh,01fh,01fh	; 715e  ...q............
 	defb 0feh,0feh,0fch,0feh,0feh,0feh,0fch,0f8h,0f0h,0f8h,0fch,0feh,0feh,0c0h,0c0h,0c0h	; 716e  ................
+
+; ----------------------------------------------------------------------
+; DATOS dibujo128_717E: 128 bytes (16x16 a 4 bits por punto) que p00:56F2
+;   copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128
+;   bytes)
+;   0x717e..0x71fe  (128 bytes)
+DATA_dibujo128_717E:
 	defb 003h,00fh,01fh,01fh,03fh,07fh,07fh,07fh,0ffh,0ffh,0ffh,067h,043h,021h,010h,010h	; 717e  ....?......gC!..
 	defb 0e0h,0f8h,0fch,0fch,0fch,0fch,0fch,0feh,0feh,0fch,0f8h,0f0h,0ech,0c2h,081h,089h	; 718e  ................
 	defb 003h,00fh,01fh,01fh,03fh,057h,050h,061h,0e1h,0f0h,0f8h,07eh,07fh,03fh,01fh,01fh	; 719e  ....?WPa...~.?..
@@ -317,6 +430,13 @@ DATA_6FBE:
 	defb 00eh,03fh,07fh,0ffh,07eh,038h,008h,030h,060h,0d0h,0f0h,0f0h,0f0h,0c0h,0c0h,0c0h	; 71ce  .?..~8.0`.......
 	defb 03fh,03fh,01fh,01fh,03fh,03fh,01fh,01fh,00fh,007h,007h,007h,007h,00fh,01fh,01fh	; 71de  ??..??..........
 	defb 0feh,0ffh,0f7h,0f3h,0feh,0f8h,0f8h,0f0h,0e0h,0f0h,0f0h,0f0h,0f0h,0c0h,0c0h,0c0h	; 71ee  ................
+
+; ----------------------------------------------------------------------
+; DATOS dibujo128_71FE: 128 bytes (16x16 a 4 bits por punto) que p00:56F2
+;   copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128
+;   bytes)
+;   0x71fe..0x727e  (128 bytes)
+DATA_dibujo128_71FE:
 	defb 001h,003h,007h,00fh,00fh,00fh,00fh,01fh,01fh,02fh,04fh,093h,081h,080h,053h,02fh	; 71fe  ........./O...S/
 	defb 0f0h,0f8h,0fch,0feh,0feh,0feh,0feh,0ffh,0ffh,0feh,0feh,0ffh,0ffh,0ffh,0ffh,0ffh	; 720e  ................
 	defb 001h,003h,007h,00fh,00fh,00fh,00fh,01bh,010h,038h,07ch,0feh,0ffh,0ffh,0ffh,0ffh	; 721e  .........8|.....
@@ -325,6 +445,13 @@ DATA_6FBE:
 	defb 0ffh,07fh,03fh,0ffh,0ffh,0ffh,0ffh,01fh,08fh,00eh,0f8h,068h,048h,0fch,0feh,0feh	; 724e  ..?........hH...
 	defb 03fh,03fh,03fh,07fh,07fh,0ffh,0ffh,0fdh,0f8h,0f9h,070h,001h,001h,001h,001h,001h	; 725e  ???.......p.....
 	defb 081h,0c3h,0ffh,0fdh,0feh,0f7h,0e1h,0f1h,0f9h,0feh,0f8h,0f8h,0f8h,0fch,0feh,0feh	; 726e  ................
+
+; ----------------------------------------------------------------------
+; DATOS dibujo128_727E: 128 bytes (16x16 a 4 bits por punto) que p00:56F2
+;   copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128
+;   bytes)
+;   0x727e..0x72fe  (128 bytes)
+DATA_dibujo128_727E:
 	defb 000h,000h,000h,003h,00fh,01fh,01fh,01fh,01fh,01fh,03fh,03fh,01fh,00fh,017h,023h	; 727e  ..........??...#
 	defb 000h,000h,000h,0e0h,0f8h,0fch,0fch,0fch,0fch,0fch,0feh,0feh,0fch,0fch,0f2h,0e1h	; 728e  ................
 	defb 000h,000h,000h,003h,00fh,01fh,01fh,01fh,017h,010h,021h,021h,010h,008h,01eh,03fh	; 729e  ..........!!...?
@@ -333,6 +460,13 @@ DATA_6FBE:
 	defb 0c5h,047h,04fh,0ffh,0feh,0feh,0fch,0fch,0f4h,084h,07ch,0b4h,0a4h,0feh,0ffh,0ffh	; 72ce  .GO.......|.....
 	defb 07fh,07fh,03fh,03fh,03fh,03fh,01ch,03ch,03fh,03eh,07eh,07eh,07eh,0feh,0fch,078h	; 72de  ..????.<?>~~~..x
 	defb 0ffh,0ffh,0ffh,0ffh,0eeh,0e6h,07ch,07ch,0fch,0fch,07ch,0fch,0fch,0feh,0ffh,0ffh	; 72ee  ......||..|.....
+
+; ----------------------------------------------------------------------
+; DATOS dibujo128_72FE: 128 bytes (16x16 a 4 bits por punto) que p00:56F2
+;   copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128
+;   bytes)
+;   0x72fe..0x737e  (128 bytes)
+DATA_dibujo128_72FE:
 	defb 000h,003h,00fh,01fh,01fh,01fh,01fh,01fh,03fh,03fh,01fh,00fh,007h,01bh,021h,040h	; 72fe  ........??....!@
 	defb 000h,0e0h,0f8h,0fch,0fch,0fch,0fch,0fch,0feh,0feh,0fch,0f8h,0f0h,0ech,0c2h,081h	; 730e  ................
 	defb 000h,003h,00fh,01fh,01fh,01fh,017h,010h,021h,021h,010h,008h,006h,01fh,03fh,07fh	; 731e  ........!!....?.
@@ -341,6 +475,13 @@ DATA_6FBE:
 	defb 081h,087h,0f7h,0ffh,0ffh,0feh,0fch,0f4h,0c4h,0f8h,0c8h,0f0h,0f8h,0fch,0bch,080h	; 734e  ................
 	defb 07fh,07fh,07fh,03fh,013h,01bh,01fh,01fh,01fh,00fh,00fh,00fh,007h,00fh,01fh,01fh	; 735e  ...?............
 	defb 0ffh,0ffh,0ffh,0ffh,0efh,0e6h,0fch,0fch,0fch,0f8h,0f8h,0f0h,0f8h,0fch,0bch,080h	; 736e  ................
+
+; ----------------------------------------------------------------------
+; DATOS dibujo128_737E: 128 bytes (16x16 a 4 bits por punto) que p00:56F2
+;   copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128
+;   bytes)
+;   0x737e..0x73fe  (128 bytes)
+DATA_dibujo128_737E:
 	defb 001h,00fh,03fh,07fh,07fh,07fh,0ffh,07fh,0ffh,0ffh,0ffh,0bfh,09fh,09fh,04eh,044h	; 737e  ..?...........ND
 	defb 0f0h,0f8h,0fch,0feh,0feh,0feh,0feh,0ffh,0ffh,0ffh,0ffh,0deh,08ch,002h,002h,004h	; 738e  ................
 	defb 001h,00fh,03fh,07fh,07fh,07fh,0ffh,040h,0cah,0cah,0c0h,0e0h,0f0h,0ffh,07fh,07fh	; 739e  ..?....@........
@@ -349,6 +490,13 @@ DATA_6FBE:
 	defb 008h,008h,010h,0f0h,010h,008h,008h,010h,010h,0e0h,020h,020h,0e0h,0f0h,0f8h,0f8h	; 73ce  ..........  ....
 	defb 07fh,07fh,07fh,03fh,07fh,07fh,07fh,03fh,03fh,03fh,01fh,03fh,07fh,07fh,007h,003h	; 73de  ...?...???.?....
 	defb 0f8h,0f8h,0f0h,0f0h,0f0h,0f8h,0f8h,0f0h,0f0h,0e0h,0e0h,0e0h,0e0h,0f0h,0f8h,0f8h	; 73ee  ................
+
+; ----------------------------------------------------------------------
+; DATOS dibujo128_73FE: 128 bytes (16x16 a 4 bits por punto) que p00:56F2
+;   copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128
+;   bytes)
+;   0x73fe..0x747e  (128 bytes)
+DATA_dibujo128_73FE:
 	defb 003h,00fh,01fh,01fh,07fh,0ffh,03fh,03fh,03fh,03fh,01fh,00fh,00eh,01eh,07fh,000h	; 73fe  ......????......
 	defb 0e0h,0f8h,0fch,0fch,0fch,0fch,0fch,0fch,0fch,0fch,0f8h,0f8h,034h,012h,00bh,001h	; 740e  ............4...
 	defb 003h,00fh,01fh,01fh,07fh,0ffh,020h,025h,025h,020h,010h,009h,00fh,01fh,067h,000h	; 741e  ...... %% ....g.
@@ -357,6 +505,13 @@ DATA_6FBE:
 	defb 0a7h,047h,007h,083h,077h,002h,082h,0e2h,0c4h,088h,0f0h,050h,050h,0f0h,0f0h,0f0h	; 744e  .G..w......PP...
 	defb 05bh,0efh,0ffh,0ffh,07fh,01fh,0ffh,0ffh,07fh,03dh,019h,001h,001h,003h,007h,007h	; 745e  [........=......
 	defb 0ffh,0ffh,0fch,0feh,0fdh,0feh,0feh,0feh,0fch,0f8h,0f0h,0f0h,0f0h,0f0h,0f0h,0f0h	; 746e  ................
+
+; ----------------------------------------------------------------------
+; DATOS dibujo128_747E: 128 bytes (16x16 a 4 bits por punto) que p00:56F2
+;   copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128
+;   bytes)
+;   0x747e..0x74fe  (128 bytes)
+DATA_dibujo128_747E:
 	defb 000h,000h,003h,00fh,01fh,01fh,07fh,0ffh,03fh,03fh,03fh,03fh,01fh,00fh,004h,00fh	; 747e  ........????....
 	defb 000h,000h,0e0h,0feh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0feh,0fah,00ch,002h,022h	; 748e  ..............."
 	defb 000h,000h,003h,00fh,01fh,01fh,07fh,0ffh,020h,025h,025h,020h,010h,00bh,007h,00fh	; 749e  ........ %% ....
@@ -365,6 +520,13 @@ DATA_6FBE:
 	defb 0a1h,041h,0beh,0c1h,001h,001h,002h,03ch,07eh,033h,0ffh,0ffh,0c0h,0c0h,0c0h,0c0h	; 74ce  .A.....<~3......
 	defb 037h,05bh,0ffh,0feh,07dh,03bh,003h,007h,007h,007h,003h,007h,007h,00fh,01fh,01fh	; 74de  7[..}...........
 	defb 0ffh,0ffh,0feh,0ffh,0ffh,0ffh,0feh,0fch,0feh,0ffh,0ffh,0ffh,0c0h,0c0h,0c0h,0c0h	; 74ee  ................
+
+; ----------------------------------------------------------------------
+; DATOS dibujo128_74FE: 128 bytes (16x16 a 4 bits por punto) que p00:56F2
+;   copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128
+;   bytes)
+;   0x74fe..0x757e  (128 bytes)
+DATA_dibujo128_74FE:
 	defb 000h,000h,000h,000h,000h,000h,007h,01fh,03fh,03fh,03fh,03fh,03fh,07fh,07fh,03fh	; 74fe  ........?????..?
 	defb 000h,000h,000h,000h,000h,000h,0c0h,0f0h,0f8h,0f8h,0f8h,0fch,0fah,0fdh,0fdh,0fah	; 750e  ................
 	defb 000h,000h,000h,000h,000h,000h,007h,01fh,03fh,03fh,03fh,02fh,020h,042h,042h,020h	; 751e  ........???/ BB
@@ -373,6 +535,13 @@ DATA_6FBE:
 	defb 0f2h,0eeh,08eh,01fh,03fh,0ffh,03ch,010h,018h,02ch,0fch,078h,020h,0e0h,0f0h,0f0h	; 754e  ....?.<..,.x ...
 	defb 070h,0fch,0ffh,0ffh,0ffh,0dfh,01fh,01fh,00fh,007h,003h,003h,003h,003h,007h,007h	; 755e  p...............
 	defb 01eh,07eh,0feh,0fdh,0ffh,0ffh,0fch,0f0h,0f8h,0fch,0fch,0f8h,0e0h,0e0h,0f0h,0f0h	; 756e  .~..............
+
+; ----------------------------------------------------------------------
+; DATOS dibujo128_757E: 128 bytes (16x16 a 4 bits por punto) que p00:56F2
+;   copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128
+;   bytes)
+;   0x757e..0x75fe  (128 bytes)
+DATA_dibujo128_757E:
 	defb 000h,000h,000h,000h,003h,00fh,01fh,01fh,01fh,01fh,01fh,03fh,03fh,01fh,00fh,013h	; 757e  ...........??...
 	defb 000h,000h,000h,000h,0e0h,0f8h,0fch,0fch,0fch,0fch,0feh,0feh,0feh,0fch,0fch,0f4h	; 758e  ................
 	defb 000h,000h,000h,000h,003h,00fh,01fh,01fh,01fh,017h,010h,021h,021h,010h,00ch,01eh	; 759e  ...........!!...
@@ -381,6 +550,13 @@ DATA_6FBE:
 	defb 0c4h,0fah,0feh,0ffh,0ffh,0f7h,006h,0e4h,084h,088h,0f8h,068h,048h,0fch,0feh,0feh	; 75ce  ...........hH...
 	defb 03fh,03fh,01fh,00fh,01fh,03fh,07fh,0ffh,0ffh,0feh,078h,031h,001h,003h,003h,000h	; 75de  ??...?....x1....
 	defb 0fch,0feh,0c6h,0c5h,0efh,0ffh,0feh,0fch,0fch,0f8h,0f8h,0f8h,0f8h,0fch,0feh,0feh	; 75ee  ................
+
+; ----------------------------------------------------------------------
+; DATOS dibujo128_75FE: 128 bytes (16x16 a 4 bits por punto) que p00:56F2
+;   copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128
+;   bytes)
+;   0x75fe..0x767e  (128 bytes)
+DATA_dibujo128_75FE:
 	defb 000h,000h,000h,000h,00fh,03fh,07fh,07fh,07fh,0ffh,07fh,07fh,07fh,07fh,03fh,01ch	; 75fe  .....?........?.
 	defb 000h,000h,000h,00ch,0deh,0ffh,0feh,0ffh,0ffh,0ffh,0ffh,0ffh,0fah,0f1h,009h,005h	; 760e  ................
 	defb 000h,000h,000h,000h,00fh,03fh,07fh,07fh,07fh,0ffh,040h,04ah,04ah,040h,023h,017h	; 761e  .....?....@JJ@#.
@@ -389,16 +565,17 @@ DATA_6FBE:
 	defb 002h,042h,062h,0e1h,01ah,041h,0c1h,061h,072h,0c4h,0f8h,0e8h,0a8h,0f8h,0f8h,0f8h	; 764e  .Bb..A.ar.......
 	defb 00fh,00fh,01fh,02fh,077h,0dfh,0fbh,0ffh,077h,00fh,01fh,01fh,000h,001h,003h,003h	; 765e  .../w...w.......
 	defb 0feh,0feh,0feh,0ffh,0feh,0ffh,0ffh,0ffh,0feh,0fch,0f8h,0f8h,0f8h,0f8h,0f8h,0f8h	; 766e  ................
+
+; ----------------------------------------------------------------------
+; DATOS dibujo128_767E: 128 bytes (16x16 a 4 bits por punto) que p00:56F2
+;   copia tal cual a la VRAM (p00:4AB7, BC = 0x80); se solapan 2 bloques:
+;   (rachas_76BE 76BE-782D); lo leen p00:56F2, p00:5397 (431 bytes)
+;   0x767e..0x782d  (431 bytes)
+DATA_dibujo128_767E:
 	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; 767e  ................
 	defb 000h,000h,000h,000h,000h,000h,001h,00fh,01fh,01fh,00eh,000h,000h,000h,000h,000h	; 768e  ................
 	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h	; 769e  ................
 	defb 000h,000h,000h,000h,000h,000h,001h,00fh,013h,011h,00eh,000h,000h,000h,000h,000h	; 76ae  ................
-
-; ----------------------------------------------------------------------
-; DATOS rachas_76BE: rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p00:5397
-;   (367 bytes)
-;   0x76be..0x782d  (367 bytes)
-DATA_rachas_76BE:
 	defb 092h,000h,007h,00fh,00fh,03fh,00fh,07fh,03fh,017h,003h,005h,003h,010h,03eh,03eh	; 76be  .....?..?.....>>
 	defb 000h,000h,0f0h,005h,0f8h,09bh,0f7h,0e7h,0c6h,030h,0c0h,000h,004h,03eh,03eh,000h	; 76ce  .........0...>>.
 	defb 007h,00fh,00fh,03fh,000h,015h,010h,018h,007h,007h,00fh,01fh,03eh,03eh,000h,000h	; 76de  ...?........>>..
@@ -424,8 +601,11 @@ DATA_rachas_76BE:
 	defb 0f8h,0fch,0e8h,0e8h,0c0h,03ch,0fch,0fch,003h,0f0h,083h,078h,07ch,07ch,000h	; 781e  .....<.....x||.
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x782d..0x79ad  (384 bytes)
-DATA_782D:
+; DATOS sprites_782D: 128 bytes de dibujos de sprite que p00:4AB7 copia a la
+;   VRAM 0xFE00; los tres seguidos llenan el hueco hasta las rachas de 0x79AD;
+;   lo leen p00:53F0 (128 bytes)
+;   0x782d..0x78ad  (128 bytes)
+DATA_sprites_782D:
 	defb 000h,007h,03fh,01fh,01fh,00fh,00fh,00fh,030h,039h,01dh,006h,019h,01ch,00fh,003h	; 782d  ..?.....09......
 	defb 000h,0e0h,0f0h,0f8h,0f8h,0f8h,0f8h,0e0h,00eh,00fh,0ffh,004h,00eh,08eh,08eh,01ch	; 783d  ................
 	defb 000h,007h,03fh,01fh,01fh,007h,005h,003h,007h,01fh,01fh,007h,01fh,01fh,00fh,003h	; 784d  ..?.............
@@ -434,6 +614,13 @@ DATA_782D:
 	defb 0e0h,0f0h,0f8h,0f8h,0f8h,0f8h,0e0h,008h,010h,0e0h,008h,038h,010h,038h,070h,0e0h	; 787d  ...........8.8p.
 	defb 007h,03fh,01fh,01fh,007h,005h,003h,007h,007h,003h,001h,001h,001h,000h,000h,000h	; 788d  .?..............
 	defb 0e0h,0f0h,0f8h,0f8h,0f8h,0f8h,0f0h,0f8h,0f8h,0f8h,0f8h,0f8h,0f0h,0f8h,070h,0e0h	; 789d  ..............p.
+
+; ----------------------------------------------------------------------
+; DATOS sprites_78AD: 128 bytes de dibujos de sprite que p00:4AB7 copia a la
+;   VRAM 0xFE80; los tres seguidos llenan el hueco hasta las rachas de 0x79AD;
+;   lo leen p00:53FD (128 bytes)
+;   0x78ad..0x792d  (128 bytes)
+DATA_sprites_78AD:
 	defb 000h,007h,00fh,00fh,03fh,00fh,00fh,01fh,00fh,006h,03ch,03ch,003h,000h,00fh,003h	; 78ad  ....?.....<<....
 	defb 000h,0e0h,0f0h,0f0h,0f8h,0f8h,0f8h,0f0h,01ch,01ch,030h,0cch,00ch,01ch,0e4h,080h	; 78bd  ..........0.....
 	defb 000h,007h,00fh,00fh,03fh,000h,004h,000h,001h,007h,00fh,00fh,003h,001h,00fh,003h	; 78cd  ....?...........
@@ -442,6 +629,13 @@ DATA_782D:
 	defb 0e0h,0f0h,0f0h,0f8h,0f8h,0f8h,0f0h,000h,080h,0a0h,0c0h,000h,018h,038h,0f8h,0f0h	; 78fd  .............8..
 	defb 007h,00fh,00fh,03fh,000h,004h,000h,001h,007h,00ch,00ch,007h,003h,001h,001h,003h	; 790d  ...?............
 	defb 0e0h,0f0h,0f0h,0f8h,0b8h,038h,0f0h,0c0h,0e0h,0e0h,0e0h,0e0h,0f8h,0f8h,0f8h,0f0h	; 791d  .....8..........
+
+; ----------------------------------------------------------------------
+; DATOS sprites_792D: 128 bytes de dibujos de sprite que p00:4AB7 copia a la
+;   VRAM 0xFF00; los tres seguidos llenan el hueco hasta las rachas de 0x79AD;
+;   lo leen p00:5411 (128 bytes)
+;   0x792d..0x79ad  (128 bytes)
+DATA_sprites_792D:
 	defb 000h,00fh,01fh,01fh,01fh,01fh,01fh,0e7h,0f7h,0f3h,008h,006h,061h,070h,070h,038h	; 792d  ............app8
 	defb 000h,0e0h,0f0h,0f0h,0fch,0f0h,0f0h,0f6h,0eeh,0cch,080h,0a0h,0cch,01ch,038h,030h	; 793d  ..............80
 	defb 000h,00fh,01fh,01fh,01fh,008h,008h,0f8h,03ch,03fh,01fh,01fh,07fh,07fh,07ch,038h	; 794d  ........<?....|8
@@ -507,8 +701,10 @@ DATA_rachas_7B90:
 	defb 0f8h,01eh,05fh,01fh,03fh,0feh,0feh,0ffh,0ffh,0feh,000h	; 7c40  .._.?......
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7c4b..0x8000  (949 bytes)
-DATA_7C4B:
+; DATOS copia280_7C4B: 640 bytes que p00:5697 copia a la VRAM 0x7880 (BC =
+;   0x280); lo leen p00:569D (640 bytes)
+;   0x7c4b..0x7ecb  (640 bytes)
+DATA_copia280_7C4B:
 	defb 000h,000h,000h,000h,000h,000h,01ch,03eh,07fh,0ffh,0ffh,0ffh,07fh,03fh,01fh,00fh	; 7c4b  .......>.....?..
 	defb 000h,000h,000h,000h,000h,000h,000h,000h,000h,080h,0c0h,0c0h,0e0h,0f0h,0f8h,0f8h	; 7c5b  ................
 	defb 000h,000h,000h,000h,000h,000h,01ch,022h,041h,080h,080h,080h,040h,020h,010h,00ch	; 7c6b  ......."A...@ ..
@@ -549,6 +745,12 @@ DATA_7C4B:
 	defb 000h,000h,000h,000h,000h,000h,000h,0e0h,0f0h,0e0h,0c0h,080h,080h,000h,000h,000h	; 7e9b  ................
 	defb 0f0h,0e0h,0e0h,0e0h,0e0h,0e0h,0f0h,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0ffh,0feh,07eh	; 7eab  ...............~
 	defb 000h,000h,000h,000h,000h,000h,000h,0e0h,0f0h,0f0h,0c0h,0c0h,080h,000h,000h,000h	; 7ebb  ................
+
+; ----------------------------------------------------------------------
+; DATOS copia280_7ECB: 640 bytes que p00:5697 copia a la VRAM 0x7880 (BC =
+;   0x280); sigue en el banco 11 hasta 0x814B; lo leen p00:569D (309 bytes)
+;   0x7ecb..0x8000  (309 bytes)
+DATA_copia280_7ECB:
 	defb 000h,000h,001h,006h,009h,009h,011h,010h,010h,010h,008h,008h,006h,001h,000h,000h	; 7ecb  ................
 	defb 000h,000h,0f0h,00ch,0c2h,0c2h,0c1h,0c1h,0c1h,001h,062h,063h,00dh,0b1h,049h,031h	; 7edb  ..........bc..I1
 	defb 000h,000h,001h,007h,00fh,00fh,01fh,01fh,01fh,01fh,00fh,00fh,007h,001h,000h,000h	; 7eeb  ................

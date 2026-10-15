@@ -1,8 +1,69 @@
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x6000 0x600B ficha11_0  ficha 0 de 11 bytes (p00:5761: 0x6000 + 11 x 0xE1F6): [bits altos: color; bajos: cuantos] y un byte por cada uno que p00:57AD convierte en coordenadas; las 7 llenan el hueco hasta las rachas de 0x604D; lo leen p00:577A (11 bytes)
+F 0x6000 11
+D 0x600B 0x6016 ficha11_1  ficha 1 de 11 bytes (p00:5761: 0x6000 + 11 x 0xE1F6): [bits altos: color; bajos: cuantos] y un byte por cada uno que p00:57AD convierte en coordenadas; las 7 llenan el hueco hasta las rachas de 0x604D; lo leen p00:577A (11 bytes)
+F 0x600B 11
+D 0x6016 0x6021 ficha11_2  ficha 2 de 11 bytes (p00:5761: 0x6000 + 11 x 0xE1F6): [bits altos: color; bajos: cuantos] y un byte por cada uno que p00:57AD convierte en coordenadas; las 7 llenan el hueco hasta las rachas de 0x604D; lo leen p00:577A (11 bytes)
+F 0x6016 11
+D 0x6021 0x602C ficha11_3  ficha 3 de 11 bytes (p00:5761: 0x6000 + 11 x 0xE1F6): [bits altos: color; bajos: cuantos] y un byte por cada uno que p00:57AD convierte en coordenadas; las 7 llenan el hueco hasta las rachas de 0x604D; lo leen p00:577A (11 bytes)
+F 0x6021 11
+D 0x602C 0x6037 ficha11_4  ficha 4 de 11 bytes (p00:5761: 0x6000 + 11 x 0xE1F6): [bits altos: color; bajos: cuantos] y un byte por cada uno que p00:57AD convierte en coordenadas; las 7 llenan el hueco hasta las rachas de 0x604D; lo leen p00:577A (11 bytes)
+F 0x602C 11
+D 0x6037 0x6042 ficha11_5  ficha 5 de 11 bytes (p00:5761: 0x6000 + 11 x 0xE1F6): [bits altos: color; bajos: cuantos] y un byte por cada uno que p00:57AD convierte en coordenadas; las 7 llenan el hueco hasta las rachas de 0x604D; lo leen p00:577A (11 bytes)
+F 0x6037 11
+D 0x6042 0x604D ficha11_6  ficha 6 de 11 bytes (p00:5761: 0x6000 + 11 x 0xE1F6): [bits altos: color; bajos: cuantos] y un byte por cada uno que p00:57AD convierte en coordenadas; las 7 llenan el hueco hasta las rachas de 0x604D; lo leen p00:577A (11 bytes)
+F 0x6042 11
 D 0x604D 0x6808 rachas_604D  rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p00:5686 (1979 bytes)
 D 0x6808 0x6FBE rachas_6808  rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p00:5691 (1974 bytes)
-D 0x76BE 0x782D rachas_76BE  rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p00:5397 (367 bytes)
+D 0x6FBE 0x6FC6 juegos_de_7  4 punteros (p00:56D5, indice 0xE1EB & 3) a listas de 7 dibujos de 128 bytes; lo leen p00:56D2 (8 bytes)
+F 0x6FBE w4
+D 0x6FC6 0x6FD4 juego_0  7 punteros a dibujos de 128 bytes (16x16 a 4 bits) que p00:56F2 copia a la VRAM 0x7C80 + 0x80 x n (juego 0 de 0x6FBE); lo leen p00:56DB (14 bytes)
+F 0x6FC6 w7
+D 0x6FD4 0x6FE2 juego_1  7 punteros a dibujos de 128 bytes (16x16 a 4 bits) que p00:56F2 copia a la VRAM 0x7C80 + 0x80 x n (juego 1 de 0x6FBE); lo leen p00:56DB (14 bytes)
+F 0x6FD4 w7
+D 0x6FE2 0x6FF0 juego_2  7 punteros a dibujos de 128 bytes (16x16 a 4 bits) que p00:56F2 copia a la VRAM 0x7C80 + 0x80 x n (juego 2 de 0x6FBE); lo leen p00:56DB (14 bytes)
+F 0x6FE2 w7
+D 0x6FF0 0x6FFE juego_3  7 punteros a dibujos de 128 bytes (16x16 a 4 bits) que p00:56F2 copia a la VRAM 0x7C80 + 0x80 x n (juego 3 de 0x6FBE); lo leen p00:56DB (14 bytes)
+F 0x6FF0 w7
+D 0x6FFE 0x707E dibujo128_6FFE  128 bytes (16x16 a 4 bits por punto) que p00:56F2 copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128 bytes)
+F 0x6FFE 16
+D 0x707E 0x70FE dibujo128_707E  128 bytes (16x16 a 4 bits por punto) que p00:56F2 copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128 bytes)
+F 0x707E 16
+D 0x70FE 0x717E dibujo128_70FE  128 bytes (16x16 a 4 bits por punto) que p00:56F2 copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128 bytes)
+F 0x70FE 16
+D 0x717E 0x71FE dibujo128_717E  128 bytes (16x16 a 4 bits por punto) que p00:56F2 copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128 bytes)
+F 0x717E 16
+D 0x71FE 0x727E dibujo128_71FE  128 bytes (16x16 a 4 bits por punto) que p00:56F2 copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128 bytes)
+F 0x71FE 16
+D 0x727E 0x72FE dibujo128_727E  128 bytes (16x16 a 4 bits por punto) que p00:56F2 copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128 bytes)
+F 0x727E 16
+D 0x72FE 0x737E dibujo128_72FE  128 bytes (16x16 a 4 bits por punto) que p00:56F2 copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128 bytes)
+F 0x72FE 16
+D 0x737E 0x73FE dibujo128_737E  128 bytes (16x16 a 4 bits por punto) que p00:56F2 copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128 bytes)
+F 0x737E 16
+D 0x73FE 0x747E dibujo128_73FE  128 bytes (16x16 a 4 bits por punto) que p00:56F2 copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128 bytes)
+F 0x73FE 16
+D 0x747E 0x74FE dibujo128_747E  128 bytes (16x16 a 4 bits por punto) que p00:56F2 copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128 bytes)
+F 0x747E 16
+D 0x74FE 0x757E dibujo128_74FE  128 bytes (16x16 a 4 bits por punto) que p00:56F2 copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128 bytes)
+F 0x74FE 16
+D 0x757E 0x75FE dibujo128_757E  128 bytes (16x16 a 4 bits por punto) que p00:56F2 copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128 bytes)
+F 0x757E 16
+D 0x75FE 0x767E dibujo128_75FE  128 bytes (16x16 a 4 bits por punto) que p00:56F2 copia tal cual a la VRAM (p00:4AB7, BC = 0x80); lo leen p00:56F2 (128 bytes)
+F 0x75FE 16
+D 0x767E 0x782D dibujo128_767E  128 bytes (16x16 a 4 bits por punto) que p00:56F2 copia tal cual a la VRAM (p00:4AB7, BC = 0x80); se solapan 2 bloques: (rachas_76BE 76BE-782D); lo leen p00:56F2, p00:5397 (431 bytes)
+F 0x767E 16
+D 0x782D 0x78AD sprites_782D  128 bytes de dibujos de sprite que p00:4AB7 copia a la VRAM 0xFE00; los tres seguidos llenan el hueco hasta las rachas de 0x79AD; lo leen p00:53F0 (128 bytes)
+F 0x782D 16
+D 0x78AD 0x792D sprites_78AD  128 bytes de dibujos de sprite que p00:4AB7 copia a la VRAM 0xFE80; los tres seguidos llenan el hueco hasta las rachas de 0x79AD; lo leen p00:53FD (128 bytes)
+F 0x78AD 16
+D 0x792D 0x79AD sprites_792D  128 bytes de dibujos de sprite que p00:4AB7 copia a la VRAM 0xFF00; los tres seguidos llenan el hueco hasta las rachas de 0x79AD; lo leen p00:5411 (128 bytes)
+F 0x792D 16
 D 0x79AD 0x7B90 rachas_79AD  rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p00:53AF (483 bytes)
 D 0x7B90 0x7C4B rachas_7B90  rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p00:53B8 (187 bytes)
+D 0x7C4B 0x7ECB copia280_7C4B  640 bytes que p00:5697 copia a la VRAM 0x7880 (BC = 0x280); lo leen p00:569D (640 bytes)
+F 0x7C4B 16
+D 0x7ECB 0x8000 copia280_7ECB  640 bytes que p00:5697 copia a la VRAM 0x7880 (BC = 0x280); sigue en el banco 11 hasta 0x814B; lo leen p00:569D (309 bytes)
+F 0x7ECB 16
 # --- fin de los bloques de bloques.py ---

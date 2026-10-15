@@ -75,4 +75,18 @@ F 0x8FB0 24
 D 0x9178 0x91CC rachas_ram_9178  rachas a la RAM 0xE800 (p00:5659); lo leen p00:559D (84 bytes)
 D 0x91CC 0x9220 rachas_ram_91CC  rachas a la RAM 0xE800 (p00:5659); lo leen p00:55BB (84 bytes)
 D 0x9220 0x9432 rachas_ram_9220  rachas a la RAM 0xE800 (p00:5659); lo leen p00:557F (530 bytes)
+D 0x9432 0x9438 tiras_de_fondo  3 punteros (0xE1A6, p00:5B7F) a las listas de mosaicos del fondo; lo leen p00:5B7C (6 bytes)
+F 0x9432 w3
+D 0x9438 0x94B8 tira_0  128 numeros de mosaico (0xEC41 avanza 8 por llamada, p00:5BAE); cada uno x 16 + 0x9B28 (p03:B317 pone la base en 0xEC43); lo leen p00:5B90 (128 bytes)
+F 0x9438 16
+D 0x94B8 0x9538 tira_1  128 numeros de mosaico (0xEC41 avanza 8 por llamada, p00:5BAE); cada uno x 16 + 0x95B8 (y 0x9A58 desde la posicion 0x70) (p03:B317 pone la base en 0xEC43); lo leen p00:5B90 (128 bytes)
+F 0x94B8 16
+D 0x9538 0x95B8 tira_2  128 numeros de mosaico (0xEC41 avanza 8 por llamada, p00:5BAE); cada uno x 16 + 0xA088 (p03:B317 pone la base en 0xEC43); lo leen p00:5B90 (128 bytes)
+F 0x9538 16
+D 0x95B8 0x9A58 mosaicos_95B8  74 mosaicos de 16 bytes (4 filas de 4 bytes: 8x4 puntos a 4 bits, p00:5BB9) desde la base 0x95B8 (0xE1A6 = 1, posiciones 0-0x6F); los indices de la tira llegan justo hasta 0x9A58; lo leen p00:5BBD (1184 bytes)
+F 0x95B8 16
+D 0x9A58 0x9B28 mosaicos_9A58  13 mosaicos de 16 bytes (4 filas de 4 bytes: 8x4 puntos a 4 bits, p00:5BB9) desde la base 0x9A58 (0xE1A6 = 1, desde la 0x70); los indices de la tira llegan justo hasta 0x9B28; lo leen p00:5BBD (208 bytes)
+F 0x9A58 16
+D 0x9B28 0xA000 mosaicos_9B28  77 mosaicos de 16 bytes (4 filas de 4 bytes: 8x4 puntos a 4 bits, p00:5BB9) desde la base 0x9B28 (0xE1A6 = 0); los indices de la tira llegan justo hasta 0xA088; sigue en el banco 9; lo leen p00:5BBD (1240 bytes)
+F 0x9B28 16
 # --- fin de los bloques de bloques.py ---

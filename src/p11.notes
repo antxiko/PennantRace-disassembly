@@ -1,9 +1,122 @@
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0x8000 0x814B copia280_7ECB_cola  lo que queda de los 640 bytes de 0x7ECB (banco 10), que p00:5697 copia a la VRAM 0x7880; lo leen p00:569D (331 bytes)
+F 0x8000 16
+D 0x814B 0x8499 rachas_destino_814B  [destino lo hi] y rachas a la VRAM (p00:4B2D -> p00:4B35); lo leen p00:53D2 (846 bytes)
 D 0x8719 0x8759 copia_8719  64 bytes que p00:4AB7 copia tal cual a la VRAM 0xFA00; lo leen p00:51D9 (64 bytes)
 F 0x8719 16
+D 0x8759 0x8799 dibujo64_00  dibujo 0 de 64 bytes que p00:5716 (0x8759 + 64 x A) copia a la VRAM 0xFFC0; lo leen p00:5724 (64 bytes)
+F 0x8759 16
+D 0x8799 0x87D9 dibujo64_01  dibujo 1 de 64 bytes que p00:5716 (0x8759 + 64 x A) copia a la VRAM 0xFFC0; lo leen p00:5724 (64 bytes)
+F 0x8799 16
+D 0x87D9 0x8819 dibujo64_02  dibujo 2 de 64 bytes que p00:5716 (0x8759 + 64 x A) copia a la VRAM 0xFFC0; lo leen p00:5724 (64 bytes)
+F 0x87D9 16
+D 0x8819 0x8859 dibujo64_03  dibujo 3 de 64 bytes que p00:5716 (0x8759 + 64 x A) copia a la VRAM 0xFFC0; lo leen p00:5724 (64 bytes)
+F 0x8819 16
+D 0x8859 0x8899 dibujo64_04  dibujo 4 de 64 bytes que p00:5716 (0x8759 + 64 x A) copia a la VRAM 0xFFC0; lo leen p00:5724 (64 bytes)
+F 0x8859 16
+D 0x8899 0x88D9 dibujo64_05  dibujo 5 de 64 bytes que p00:5716 (0x8759 + 64 x A) copia a la VRAM 0xFFC0; lo leen p00:5724 (64 bytes)
+F 0x8899 16
+D 0x88D9 0x8919 dibujo64_06  dibujo 6 de 64 bytes que p00:5716 (0x8759 + 64 x A) copia a la VRAM 0xFFC0; lo leen p00:5724 (64 bytes)
+F 0x88D9 16
+D 0x8919 0x8959 dibujo64_07  dibujo 7 de 64 bytes que p00:5716 (0x8759 + 64 x A) copia a la VRAM 0xFFC0; lo leen p00:5724 (64 bytes)
+F 0x8919 16
+D 0x8959 0x8999 dibujo64_08  dibujo 8 de 64 bytes que p00:5716 (0x8759 + 64 x A) copia a la VRAM 0xFFC0; lo leen p00:5724 (64 bytes)
+F 0x8959 16
+D 0x8999 0x89D9 dibujo64_09  dibujo 9 de 64 bytes que p00:5716 (0x8759 + 64 x A) copia a la VRAM 0xFFC0; lo leen p00:5724 (64 bytes)
+F 0x8999 16
+D 0x89D9 0x8A19 dibujo64_10  dibujo 10 de 64 bytes que p00:5716 (0x8759 + 64 x A) copia a la VRAM 0xFFC0; lo leen p00:5724 (64 bytes)
+F 0x89D9 16
+D 0x8A19 0x8A59 dibujo64_11  dibujo 11 de 64 bytes que p00:5716 (0x8759 + 64 x A) copia a la VRAM 0xFFC0; lo leen p00:5724 (64 bytes)
+F 0x8A19 16
+D 0x8A59 0x8A99 dibujo64_12  dibujo 12 de 64 bytes que p00:5716 (0x8759 + 64 x A) copia a la VRAM 0xFFC0; lo leen p00:5724 (64 bytes)
+F 0x8A59 16
+D 0x8A99 0x8AD9 dibujo64_13  dibujo 13 de 64 bytes que p00:5716 (0x8759 + 64 x A) copia a la VRAM 0xFFC0; lo leen p00:5724 (64 bytes)
+F 0x8A99 16
 D 0x8AD9 0x8FE3 rachas_8AD9  rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p00:5433 (1290 bytes)
 D 0x8FE3 0x9380 rachas_8FE3  rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p00:5474 (925 bytes)
 D 0x9380 0x93F4 rachas_9380  rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p00:53C1 (116 bytes)
+D 0x93F4 0x9401 lista_93F4  2 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x51B2); lo leen p00:51AD (13 bytes)
+F 0x93F4 6
+D 0x9401 0x940E lista_9401  2 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x51B2); lo leen p00:51AD (13 bytes)
+F 0x9401 6
+D 0x940E 0x945E dibujo_940E  5 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 0 de la lista 0x9401 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:51AD (80 bytes)
+F 0x940E 16
+D 0x945E 0x94AE dibujo_945E  5 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 1 de la lista 0x9401 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:51AD (80 bytes)
+F 0x945E 16
+D 0x94AE 0x94BB lista_94AE  2 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x51B2); lo leen p00:51AD (13 bytes)
+F 0x94AE 6
+D 0x94BB 0x94C8 lista_94BB  2 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x51B2); lo leen p00:51AD (13 bytes)
+F 0x94BB 6
+D 0x94C8 0x9538 dibujo_94C8  7 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 0 de la lista 0x94BB (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:51AD (112 bytes)
+F 0x94C8 16
+D 0x9538 0x95A8 dibujo_9538  7 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 1 de la lista 0x94BB (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:51AD (112 bytes)
+F 0x9538 16
+D 0x95A8 0x95BB lista_95A8  3 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x51B2); lo leen p00:51AD (19 bytes)
+F 0x95A8 6
+D 0x95BB 0x95CE lista_95BB  3 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x51B2); lo leen p00:51AD (19 bytes)
+F 0x95BB 6
+D 0x95CE 0x962E dibujo_95CE  6 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 0 de la lista 0x95A8 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:51AD (96 bytes)
+F 0x95CE 16
+D 0x962E 0x968E dibujo_962E  6 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 1 de la lista 0x95A8 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:51AD (96 bytes)
+F 0x962E 16
+D 0x968E 0x96EE dibujo_968E  6 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 2 de la lista 0x95A8 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:51AD (96 bytes)
+F 0x968E 16
+D 0x96EE 0x9701 lista_96EE  3 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x51B2); lo leen p00:51AD (19 bytes)
+F 0x96EE 6
+D 0x9701 0x97B1 dibujo_9701  11 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 0 de la lista 0x96EE (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:51AD (176 bytes)
+F 0x9701 16
+D 0x97B1 0x9861 dibujo_97B1  11 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 1 de la lista 0x96EE (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:51AD (176 bytes)
+F 0x97B1 16
+D 0x9861 0x9911 dibujo_9861  11 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 2 de la lista 0x96EE (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:51AD (176 bytes)
+F 0x9861 16
+D 0x9911 0x991F formaciones_9911  7 punteros (uno por 0xE1F6, p00:5889) a listas de fichas de sprite, sin 0xE1FE (p00:587A / p00:5883); lo leen p00:5889 (14 bytes)
+F 0x9911 w7
+D 0x991F 0x992D formaciones_991F  7 punteros (uno por 0xE1F6, p00:5889) a listas de fichas de sprite, con 0xE1FE (p00:587A / p00:5883); lo leen p00:5889 (14 bytes)
+F 0x991F w7
+D 0x992D 0x9976 formacion_992D  [n] y n fichas de sprite de 4 bytes [y][x][dibujo][color] que p00:5891 copia a 0xE100 (la y y la x se suman a 0xE1F9 y 0xE1F5); lo leen p00:5891 (73 bytes)
+F 0x992D 4
+D 0x9976 0x99BF formacion_9976  [n] y n fichas de sprite de 4 bytes [y][x][dibujo][color] que p00:5891 copia a 0xE100 (la y y la x se suman a 0xE1F9 y 0xE1F5); lo leen p00:5891 (73 bytes)
+F 0x9976 4
+D 0x99BF 0x9A08 formacion_99BF  [n] y n fichas de sprite de 4 bytes [y][x][dibujo][color] que p00:5891 copia a 0xE100 (la y y la x se suman a 0xE1F9 y 0xE1F5); lo leen p00:5891 (73 bytes)
+F 0x99BF 4
+D 0x9A08 0x9A51 formacion_9A08  [n] y n fichas de sprite de 4 bytes [y][x][dibujo][color] que p00:5891 copia a 0xE100 (la y y la x se suman a 0xE1F9 y 0xE1F5); lo leen p00:5891 (73 bytes)
+F 0x9A08 4
+D 0x9A51 0x9AA2 formacion_9A51  [n] y n fichas de sprite de 4 bytes [y][x][dibujo][color] que p00:5891 copia a 0xE100 (la y y la x se suman a 0xE1F9 y 0xE1F5); lo leen p00:5891 (81 bytes)
+F 0x9A51 4
+D 0x9AA2 0x9AF3 formacion_9AA2  [n] y n fichas de sprite de 4 bytes [y][x][dibujo][color] que p00:5891 copia a 0xE100 (la y y la x se suman a 0xE1F9 y 0xE1F5); lo leen p00:5891 (81 bytes)
+F 0x9AA2 4
+D 0x9AF3 0x9B44 formacion_9AF3  [n] y n fichas de sprite de 4 bytes [y][x][dibujo][color] que p00:5891 copia a 0xE100 (la y y la x se suman a 0xE1F9 y 0xE1F5); lo leen p00:5891 (81 bytes)
+F 0x9AF3 4
+D 0x9B44 0x9B8D formacion_9B44  [n] y n fichas de sprite de 4 bytes [y][x][dibujo][color] que p00:5891 copia a 0xE100 (la y y la x se suman a 0xE1F9 y 0xE1F5); lo leen p00:5891 (73 bytes)
+F 0x9B44 4
+D 0x9B8D 0x9BD6 formacion_9B8D  [n] y n fichas de sprite de 4 bytes [y][x][dibujo][color] que p00:5891 copia a 0xE100 (la y y la x se suman a 0xE1F9 y 0xE1F5); lo leen p00:5891 (73 bytes)
+F 0x9B8D 4
+D 0x9BD6 0x9C1F formacion_9BD6  [n] y n fichas de sprite de 4 bytes [y][x][dibujo][color] que p00:5891 copia a 0xE100 (la y y la x se suman a 0xE1F9 y 0xE1F5); lo leen p00:5891 (73 bytes)
+F 0x9BD6 4
+D 0x9C1F 0x9C70 formacion_9C1F  [n] y n fichas de sprite de 4 bytes [y][x][dibujo][color] que p00:5891 copia a 0xE100 (la y y la x se suman a 0xE1F9 y 0xE1F5); lo leen p00:5891 (81 bytes)
+F 0x9C1F 4
+D 0x9C70 0x9CC1 formacion_9C70  [n] y n fichas de sprite de 4 bytes [y][x][dibujo][color] que p00:5891 copia a 0xE100 (la y y la x se suman a 0xE1F9 y 0xE1F5); lo leen p00:5891 (81 bytes)
+F 0x9C70 4
+D 0x9CC1 0x9D12 formacion_9CC1  [n] y n fichas de sprite de 4 bytes [y][x][dibujo][color] que p00:5891 copia a 0xE100 (la y y la x se suman a 0xE1F9 y 0xE1F5); lo leen p00:5891 (81 bytes)
+F 0x9CC1 4
+D 0x9D12 0x9D62 fichas_9D12  20 fichas de sprite de 4 bytes [y][x][dibujo][color] (p00:5891, B = 20); lo leen p00:58CB (80 bytes)
+F 0x9D12 4
+D 0x9D62 0x9DB2 fichas_9D62  20 fichas de sprite de 4 bytes [y][x][dibujo][color] (p00:5891, B = 20); lo leen p00:58D4 (80 bytes)
+F 0x9D62 4
+D 0x9DB2 0x9DBA fichas_por_juego  4 punteros (0xE1EB & 3, p00:5910) a 6 grupos de 4 fichas de sprite, uno por 0xE1D3; lo leen p00:5910 (8 bytes)
+F 0x9DB2 w4
+D 0x9DBA 0x9E1A fichas_9DBA  6 grupos (0xE1D3 x 16, p00:591E) de 4 fichas de sprite de 4 bytes [y][x][dibujo][color] que p00:5929 copia a 0xE158 (juego 0 de 0x9DB2); lo leen p00:5923 (96 bytes)
+F 0x9DBA 4
+D 0x9E1A 0x9E7A fichas_9E1A  6 grupos (0xE1D3 x 16, p00:591E) de 4 fichas de sprite de 4 bytes [y][x][dibujo][color] que p00:5929 copia a 0xE158 (juego 1 de 0x9DB2); lo leen p00:5923 (96 bytes)
+F 0x9E1A 4
+D 0x9E7A 0x9EDA fichas_9E7A  6 grupos (0xE1D3 x 16, p00:591E) de 4 fichas de sprite de 4 bytes [y][x][dibujo][color] que p00:5929 copia a 0xE158 (juego 2 de 0x9DB2); lo leen p00:5923 (96 bytes)
+F 0x9E7A 4
+D 0x9EDA 0x9F3A fichas_9EDA  6 grupos (0xE1D3 x 16, p00:591E) de 4 fichas de sprite de 4 bytes [y][x][dibujo][color] que p00:5929 copia a 0xE158 (juego 3 de 0x9DB2); lo leen p00:5923 (96 bytes)
+F 0x9EDA 4
+D 0x9F3A 0x9F42 fichas_9F3A  2 fichas de sprite de 4 bytes [y][x][dibujo][color] (p00:5929, B = 2); lo leen p00:58F7 (8 bytes)
+F 0x9F3A 4
+D 0x9F42 0x9F4A fichas_9F42  2 fichas de sprite de 4 bytes [y][x][dibujo][color] (p00:5929, B = 2); lo leen p00:58FD (8 bytes)
+F 0x9F42 4
 D 0x9FEA 0xA000 fuente_9FEA  caracteres de la fuente (p00:4EFC): 0xFF acaba, 0xFE [dy] baja de linea (sigue en el banco 12, en 0xA000); lo leen p00:5243 (22 bytes)
 # --- fin de los bloques de bloques.py ---

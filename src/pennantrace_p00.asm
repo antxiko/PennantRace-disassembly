@@ -2640,9 +2640,29 @@ L_51AD:
 	jr L_5177		;51b0
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x51b2..0x51be  (12 bytes)
-DATA_51B2:
-	defb 0b6h,051h,0bah,051h,000h,001h,009h,00dh,000h,001h,00ah,00dh	; 51b2  .Q.Q........
+; DATOS paletas_51B2: 1 punteros a los colores de cada paleta (p00:556D desde
+;   p00:4FB0), para la lista 0x7925; se solapan 2 bloques: (paletas_51B2
+;   51B2-51B6); lo leen p00:5174, p00:51AD (4 bytes)
+;   0x51b2..0x51b6  (4 bytes)
+DATA_paletas_51B2:
+	defw 051b6h	; 51b2  -> DATA_colores_51B6
+	defw 051bah	; 51b4  -> DATA_colores_51BA
+
+; ----------------------------------------------------------------------
+; DATOS colores_51B6: 4 colores (un nibble cada uno, ya en su sitio) que
+;   p00:4FC3 copia a 0xEC00: la paleta 0 de la lista 0x7925; lo leen p00:5174,
+;   p00:51AD (4 bytes)
+;   0x51b6..0x51ba  (4 bytes)
+DATA_colores_51B6:
+	defb 000h,001h,009h,00dh	; 51b6
+
+; ----------------------------------------------------------------------
+; DATOS colores_51BA: 4 colores (un nibble cada uno, ya en su sitio) que
+;   p00:4FC3 copia a 0xEC00: la paleta 1 de la lista 0x9401; lo leen p00:51AD
+;   (4 bytes)
+;   0x51ba..0x51be  (4 bytes)
+DATA_colores_51BA:
+	defb 000h,001h,00ah,00dh	; 51ba
 
 ; ======================================================================
 ; CODIGO 0x51be..0x5362  (420 bytes)

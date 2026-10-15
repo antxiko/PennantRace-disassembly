@@ -267,8 +267,168 @@ def sonido():
                   % (que, lista), "p06:B51E", F=16)
 
 
+def banco10_11():
+    """Lo que leen las rutinas de p00:5689-5761 y p00:53E7-5403 (10-11-12)."""
+    v = B.Ventana((10, 11, 12))
+    # p00:56C4: tabla de 4 punteros (0xE1EB & 3) a listas de 7 dibujos de 128
+    # bytes que p00:56F2 copia a la VRAM 0x7C80, 0x7D00...
+    B.declara(v, 0x6FBE, 0x6FC6, "juegos_de_7", "4 punteros (p00:56D5, indice 0xE1EB & 3) "
+              "a listas de 7 dibujos de 128 bytes", "p00:56D2", F="w4")
+    hechos = set()
+    for k in range(4):
+        lst = v.w(0x6FBE + 2 * k)
+        B.declara(v, lst, lst + 14, "juego_%d" % k, "7 punteros a dibujos de 128 bytes (16x16 "
+                  "a 4 bits) que p00:56F2 copia a la VRAM 0x7C80 + 0x80 x n (juego %d de "
+                  "0x6FBE)" % k, "p00:56DB", F="w7")
+        for j in range(7):
+            q = v.w(lst + 2 * j)
+            if q not in hechos:
+                hechos.add(q)
+                B.declara(v, q, q + 0x80, "dibujo128_%04X" % q, "128 bytes (16x16 a 4 bits "
+                          "por punto) que p00:56F2 copia tal cual a la VRAM (p00:4AB7, BC = "
+                          "0x80)", "p00:56F2", F=16)
+    # p00:5761: fichas de 11 bytes, una por 0xE1F6 (p00:5871, p02:8871, p02:88A0)
+    for k in range(7):
+        a = 0x6000 + 11 * k
+        B.declara(v, a, a + 11, "ficha11_%d" % k,
+                  "ficha %d de 11 bytes (p00:5761: 0x6000 + 11 x 0xE1F6): [bits altos: "
+                  "color; bajos: cuantos] y un byte por cada uno que p00:57AD convierte en "
+                  "coordenadas; las 7 llenan el hueco hasta las rachas de 0x604D" % k,
+                  "p00:577A", F=11)
+    # p00:53E7 / 53F4 / 5403: tres dibujos de sprite a la VRAM 0xFE00, 0xFE80 y
+    # 0xFF00; el BC lo trae quien salta (p02:9680, 9690, 96A0)
+    for a, d, sitio in ((0x782D, 0xFE00, "p00:53F0"), (0x78AD, 0xFE80, "p00:53FD"),
+                        (0x792D, 0xFF00, "p00:5411")):
+        B.declara(v, a, a + 0x80, "sprites_%04X" % a,
+                  "128 bytes de dibujos de sprite que p00:4AB7 copia a la VRAM 0x%04X; los "
+                  "tres seguidos llenan el hueco hasta las rachas de 0x79AD" % d, sitio, F=16)
+    # p00:5689 / 5694: 0x280 bytes a la VRAM 0x7880 (p00:5697); el segundo pasa
+    # del banco 10 al 11 (10-11-12 seguidos en 0x6000-0xBFFF)
+    for a in (0x7C4B, 0x7ECB):
+        f = a + 0x280
+        B.declara(v, a, min(f, 0x8000), "copia280_%04X" % a,
+                  "640 bytes que p00:5697 copia a la VRAM 0x7880 (BC = 0x280)%s"
+                  % ("; sigue en el banco 11 hasta 0x%04X" % f if f > 0x8000 else ""),
+                  "p00:569D", F=16)
+        if f > 0x8000:
+            B.declara(v, 0x8000, f, "copia280_%04X_cola" % a,
+                      "lo que queda de los 640 bytes de 0x%04X (banco 10), que p00:5697 "
+                      "copia a la VRAM 0x7880" % a, "p00:569D", F=16)
+    # p00:5716: dibujos de 64 bytes, A = 0..0x0D (p01:6C47 0x0B, p01:6CA3 0x0C,
+    # p00:53C4 y p01:70EF 0x0D)
+    for k in range(14):
+        a = 0x8759 + 64 * k
+        B.declara(v, a, a + 64, "dibujo64_%02d" % k,
+                  "dibujo %d de 64 bytes que p00:5716 (0x8759 + 64 x A) copia a la VRAM "
+                  "0xFFC0" % k, "p00:5724", F=16)
+    B.por_lector(0x4B2D, "DE", lambda v, a: rachas(v, a + 2), "rachas_destino",
+                 "[destino lo hi] y rachas a la VRAM (p00:4B2D -> p00:4B35)")
+
+
+def dibujos_a_mano():
+    """p00:5153-51B0: el HL de p00:4FA3 se pone antes de un salto a p00:5177
+    (que pone DE = 0x51B2) y el trazador no lo lleva."""
+    for trio, hls, sitio in (((13, 14, 15), (0x7925, 0xBA9B, 0xBA8E), "p00:5174"),
+                             ((10, 11, 12), (0x96EE, 0x94BB, 0x94AE, 0x9401, 0x93F4,
+                                             0x95A8, 0x95BB), "p00:51AD")):
+        v = B.Ventana(trio)
+        for hl in hls:
+            dibujos(v, hl, 0x51B2, sitio)
+
+
+def banco11_fichas():
+    """p00:5877-5926: fichas de sprite de 4 bytes [y][x][dibujo][color] que se
+    copian a los atributos de 0xE100 y 0xE150."""
+    v = B.Ventana((10, 11, 12))
+    for t, cual in ((0x9911, "sin 0xE1FE"), (0x991F, "con 0xE1FE")):
+        B.declara(v, t, t + 14, "formaciones_%04X" % t,
+                  "7 punteros (uno por 0xE1F6, p00:5889) a listas de fichas de sprite, %s "
+                  "(p00:587A / p00:5883)" % cual, "p00:5889", F="w7")
+        for k in range(7):
+            q = v.w(t + 2 * k)
+            n = v(q)
+            B.declara(v, q, q + 1 + 4 * n, "formacion_%04X" % q,
+                      "[n] y n fichas de sprite de 4 bytes [y][x][dibujo][color] que p00:5891 "
+                      "copia a 0xE100 (la y y la x se suman a 0xE1F9 y 0xE1F5)", "p00:5891",
+                      F=4)
+    for a, n, sitio in ((0x9D12, 20, "p00:58CB"), (0x9D62, 20, "p00:58D4"),
+                        (0x9F3A, 2, "p00:58F7"), (0x9F42, 2, "p00:58FD")):
+        B.declara(v, a, a + 4 * n, "fichas_%04X" % a,
+                  "%d fichas de sprite de 4 bytes [y][x][dibujo][color] (p00:%s, B = %d)"
+                  % (n, "5891" if n == 20 else "5929", n), sitio, F=4)
+    B.declara(v, 0x9DB2, 0x9DBA, "fichas_por_juego", "4 punteros (0xE1EB & 3, p00:5910) a "
+              "6 grupos de 4 fichas de sprite, uno por 0xE1D3", "p00:5910", F="w4")
+    for k in range(4):
+        q = v.w(0x9DB2 + 2 * k)
+        B.declara(v, q, q + 0x60, "fichas_%04X" % q,
+                  "6 grupos (0xE1D3 x 16, p00:591E) de 4 fichas de sprite de 4 bytes "
+                  "[y][x][dibujo][color] que p00:5929 copia a 0xE158 (juego %d de 0x9DB2)" % k,
+                  "p00:5923", F=4)
+
+
+def banco8_9():
+    """El fondo en tiras (p00:5B76) y las tablas de p00:59EB-5F95 (7-8-9)."""
+    v = B.Ventana((7, 8, 9))
+    B.declara(v, 0x9432, 0x9438, "tiras_de_fondo", "3 punteros (0xE1A6, p00:5B7F) a las "
+              "listas de mosaicos del fondo", "p00:5B7C", F="w3")
+    for k, (lst, bases) in enumerate(((0x9438, "0x9B28"), (0x94B8, "0x95B8 (y 0x9A58 desde "
+                                                                      "la posicion 0x70)"),
+                                      (0x9538, "0xA088"))):
+        B.declara(v, lst, lst + 0x80, "tira_%d" % k,
+                  "128 numeros de mosaico (0xEC41 avanza 8 por llamada, p00:5BAE); cada uno "
+                  "x 16 + %s (p03:B317 pone la base en 0xEC43)" % bases, "p00:5B90", F=16)
+    for ini, fin, base, cual in ((0x95B8, 0x9A58, 0x95B8, "0xE1A6 = 1, posiciones 0-0x6F"),
+                                 (0x9A58, 0x9B28, 0x9A58, "0xE1A6 = 1, desde la 0x70"),
+                                 (0x9B28, 0xA088, 0x9B28, "0xE1A6 = 0"),
+                                 (0xA088, 0xA5D8, 0xA088, "0xE1A6 = 2")):
+        partes = [(ini, min(fin, 0xA000)), (max(ini, 0xA000), fin)]
+        for i, f in partes:
+            if i >= f:
+                continue
+            B.declara(v, i, f, "mosaicos_%04X" % i,
+                      "%d mosaicos de 16 bytes (4 filas de 4 bytes: 8x4 puntos a 4 bits, "
+                      "p00:5BB9) desde la base 0x%04X (%s); los indices de la tira llegan "
+                      "justo hasta 0x%04X%s" % ((f - i) // 16, base, cual, fin,
+                                               "; sigue en el banco 9" if f == 0xA000 and fin > f
+                                               else ""), "p00:5BBD", F=16)
+    # p00:5A64: 0xBA2A + 0xE1FF (0, 0x10 ... 0x50, p00:5A13) + (R & 0x0F)
+    B.declara(v, 0xBA2A, 0xBA8A, "efecto_al_azar", "6 filas de 16 bytes: p00:5A64 lee 0xBA2A + "
+              "0xE1FF (0x00-0x50, p00:5A28) + (R & 0x0F)", "p00:5A6D", F=16)
+    B.declara(v, 0xBA8A, 0xBA90, "tablas_de_fuerza", "3 punteros (IX+7 - 2, p00:59FF) a "
+              "tablas de punteros", "p00:5A01", F="w3")
+    for t, n in ((0xBA90, 5), (0xBA9A, 5), (0xBAA4, 7)):
+        B.declara(v, t, t + 2 * n, "fuerzas_%04X" % t, "%d punteros (IX+8 >> 1, p00:5A0A) a "
+                  "filas de 8 bytes que p00:5A4C lee con 8 - (0xE1FB - 1)" % n, "p00:5A0C",
+                  F="w%d" % n)
+    B.declara(v, 0xBAB2, 0xBB1A, "filas_de_fuerza", "13 filas de 8 bytes: las apuntan las "
+              "tablas de 0xBA90-0xBAB1 y 0xBAB2 la usa tal cual p00:59F1 (0xED2C)",
+              "p00:5A4F", F=8)
+    B.declara(v, 0xBB1A, 0xBBC4, "valores_bb1a", "85 palabras: p00:5BCC devuelve en DE la "
+              "del indice A (p03:AB23: la mitad de lo que pasa de 0x50)", "p00:5BD2", F="w8")
+    B.declara(v, 0xBBC4, 0xBC05, "valores_bbc4", "65 bytes: p00:5BD9 devuelve el de 0xE1F0",
+              "p00:5BDF", F=16)
+    B.declara(v, 0xBC05, 0xBC45, "rachas_por_dibujo", "32 punteros (uno por dibujo de sprite, "
+              "p00:5B50) a rachas que p00:5659 descomprime en 0xDEF0 + 16 x n", "p00:5B54",
+              F="w8")
+    for k in range(32):
+        q = v.w(0xBC05 + 2 * k)
+        B.declara(v, q, rachas_ram(v, q), "rachas_%04X" % q, "rachas a la RAM (p00:5659): "
+                  "el dibujo de sprite %d de 0xBC05" % k, "p00:5B5C", F=16)
+    B.declara(v, 0xBE96, 0xBF96, "direcciones", "256 bytes: p00:5F35 lee 0xBE96 + (dx & "
+              "0xF0) + dy >> 4: la direccion de un desplazamiento", "p00:5F32", F=16)
+    B.declara(v, 0xBF96, 0xBFD6, "senos", "64 bytes: p00:5ECE y p00:5F88 leen el n y el "
+              "0x3F - n", "p00:5ECA", F=16)
+    B.declara(v, 0xBFDE, 0xBFFE, "colores_de_equipo", "16 colores de 2 bytes [rojo-azul]"
+              "[verde] que p00:5525 y p00:5558 ponen con p00:4BF0 (indice 0xD70A & 0x0F)",
+              "p00:5520", F=2)
+
+
 def todo():
+    banco8_9()
     sonido()
+    banco10_11()
+    dibujos_a_mano()
+    banco11_fichas()
     B.por_lector(0x4B62, "DE", rachas, "rachas",
                  "rachas a la VRAM (p00:4B62 -> p00:4B35)")
     B.por_lector(0x5659, "DE", rachas_ram, "rachas_ram",
