@@ -60,7 +60,7 @@ D 0x78AD 0x792D sprites_78AD  128 bytes de dibujos de sprite que p00:4AB7 copia 
 F 0x78AD 16
 D 0x792D 0x79AD sprites_792D  128 bytes de dibujos de sprite que p00:4AB7 copia a la VRAM 0xFF00; los tres seguidos llenan el hueco hasta las rachas de 0x79AD; lo leen p00:5411 (128 bytes)
 F 0x792D 16
-D 0x79AD 0x7B90 rachas_79AD  rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p00:53AF (483 bytes)
+D 0x79AD 0x7B90 rachas_79AD  rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p00:53AF, p00:53E1 (483 bytes)
 D 0x7B90 0x7C4B rachas_7B90  rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p00:53B8 (187 bytes)
 D 0x7C4B 0x7ECB copia280_7C4B  640 bytes que p00:5697 copia a la VRAM 0x7880 (BC = 0x280); lo leen p00:569D (640 bytes)
 F 0x7C4B 16

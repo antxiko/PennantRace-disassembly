@@ -10,7 +10,7 @@
 
 
 ; ======================================================================
-; CODIGO 0x6000..0x6056  (86 bytes)
+; CODIGO 0x6000..0x6284  (644 bytes)
 ; ======================================================================
 
 
@@ -63,21 +63,44 @@ L_6003:
 	ld a,03eh		;6051
 L_6053:
 	jp 057ffh		;6053
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6056..0x6098  (66 bytes)
-DATA_6056:
-	defb 032h,0f5h,0fah,057h,087h,06fh,087h,087h,087h,05fh,087h,067h,03ah,0e1h,0f3h,0e6h	; 6056  2..W.o..._.g:...
-	defb 01fh,0b4h,047h,00eh,002h,0cdh,047h,000h,03ah,0e9h,0ffh,0e6h,001h,0b5h,047h,00eh	; 6066  ..G...G.:.....G.
-	defb 00ah,0cdh,047h,000h,03ah,0e3h,0f3h,0e6h,00fh,0b3h,047h,00eh,004h,0cdh,047h,000h	; 6076  ..G.:.....G...G.
-	defb 042h,00eh,00bh,0cdh,047h,000h,03ah,0e5h,0f3h,0e6h,00fh,0b3h,047h,00eh,006h,0c3h	; 6086  B...G.:.....G...
-	defb 047h,000h	; 6096
-
-; ======================================================================
-; CODIGO 0x6098..0x6284  (492 bytes)
-; ======================================================================
-
-
+L_6056:
+	ld (0faf5h),a		;6056
+	ld d,a			;6059
+	add a,a			;605a
+	ld l,a			;605b
+	add a,a			;605c
+	add a,a			;605d
+	add a,a			;605e
+	ld e,a			;605f
+	add a,a			;6060
+	ld h,a			;6061
+	ld a,(0f3e1h)		;6062
+	and 01fh		;6065
+	or h			;6067
+	ld b,a			;6068
+	ld c,002h		;6069
+	call 00047h		;606b   ; BIOS WRTVDP - Writes data in the VDP-register
+	ld a,(0ffe9h)		;606e
+	and 001h		;6071
+	or l			;6073
+	ld b,a			;6074
+	ld c,00ah		;6075
+	call 00047h		;6077   ; BIOS WRTVDP - Writes data in the VDP-register
+	ld a,(0f3e3h)		;607a
+	and 00fh		;607d
+	or e			;607f
+	ld b,a			;6080
+	ld c,004h		;6081
+	call 00047h		;6083   ; BIOS WRTVDP - Writes data in the VDP-register
+	ld b,d			;6086
+	ld c,00bh		;6087
+	call 00047h		;6089   ; BIOS WRTVDP - Writes data in the VDP-register
+	ld a,(0f3e5h)		;608c
+	and 00fh		;608f
+	or e			;6091
+	ld b,a			;6092
+	ld c,006h		;6093
+	jp 00047h		;6095   ; BIOS WRTVDP - Writes data in the VDP-register
 L_6098:
 	ld a,006h		;6098
 	call 00141h		;609a   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
@@ -1218,7 +1241,7 @@ DATA_688A:
 	defb 020h,040h,000h,00bh,020h,040h,004h,01dh	; 688a   @.. @..
 
 ; ======================================================================
-; CODIGO 0x6892..0x6986  (244 bytes)
+; CODIGO 0x6892..0x69bd  (299 bytes)
 ; ======================================================================
 
 
@@ -1364,17 +1387,12 @@ L_6974:
 	dec (hl)			;6980
 	ld a,01ch		;6981
 	jp 057ffh		;6983
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6986..0x6991  (11 bytes)
-DATA_6986:
-	defb 021h,018h,028h,001h,028h,0b0h,0afh,057h,0c3h,02ah,04dh	; 6986  !.(.(..W.*M
-
-; ======================================================================
-; CODIGO 0x6991..0x69bd  (44 bytes)
-; ======================================================================
-
-
+L_6986:
+	ld hl,02818h		;6986
+	ld bc,0b028h		;6989
+	xor a			;698c
+	ld d,a			;698d
+	jp 04d2ah		;698e
 L_6991:
 	ld hl,00000h		;6991
 	ld bc,00018h		;6994
@@ -3633,7 +3651,7 @@ DATA_tabla_7916:
 	defw 0793eh,07969h,0798ch,079c1h,07a71h,07a7fh	; 7916
 
 ; ======================================================================
-; CODIGO 0x7922..0x7a6c  (330 bytes)
+; CODIGO 0x7922..0x7b88  (614 bytes)
 ; ======================================================================
 
 
@@ -3818,17 +3836,10 @@ L_7A4E:
 	rlca			;7a68
 	and 0f0h		;7a69
 	ret			;7a6b
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7a6c..0x7a71  (5 bytes)
-DATA_7A6C:
-	defb 021h,029h,0edh,034h,0c9h	; 7a6c
-
-; ======================================================================
-; CODIGO 0x7a71..0x7b88  (279 bytes)
-; ======================================================================
-
-
+L_7A6C:
+	ld hl,0ed29h		;7a6c
+	inc (hl)			;7a6f
+	ret			;7a70
 L_7A71:
 	call L_7AA3		;7a71
 	ld a,(ix+00bh)		;7a74
@@ -4627,6 +4638,9 @@ L_7FEB:
 	ld (0ed00h),a		;7ffc
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7fff..0x8000  (1 bytes)
-DATA_7FFF:
+; DATOS partida_7FFF: los 1 primeros bytes de una instruccion de 3 (CA BE 7B)
+;   que sigue en el banco 2: el trazador de un solo banco no puede verla
+;   entera (tools/bancos.py); lo leen p01:7FFF (1 bytes)
+;   0x7fff..0x8000  (1 bytes)
+DATA_partida_7FFF:
 	defb 0cah	; 7fff

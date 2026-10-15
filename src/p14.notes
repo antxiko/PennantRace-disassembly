@@ -46,4 +46,6 @@ D 0x9E38 0x9E44 tabla_9E38  6 destinos del despachador p00:4220 (call en p14:9E3
 F 0x9E38 w6
 D 0x9F7F 0x9FA7 tabla_9F7F  20 destinos del despachador p00:4220 (call en p14:9F7C, el indice en A): 9FA7, 9FC7, 9FA7, 9FC7, 9FA7, 9FC7, 9FA7, 9FC7, 9FA7, 9FC7, 9FA7, 9FC7, 9FA7, 9FFF, A00F, A063, A0A0, A0E5, A0F2, A13D; lo leen p14:9F7C (40 bytes)
 F 0x9F7F w8
+D 0x9FFF 0xA000 partida_9FFF  los 1 primeros bytes de una instruccion de 3 (CD 6B A2) que sigue en el banco 15: el trazador de un solo banco no puede verla entera (tools/bancos.py); lo leen p14:9FFF (1 bytes)
+F 0x9FFF 1
 # --- fin de los bloques de bloques.py ---

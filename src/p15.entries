@@ -47,8 +47,10 @@
 0xB0AC   # p00:5D0B call
 0xB158   # p00:5D14 call
 0xB25F   # p00:5D1D call
+0xB5CD   # codigo huerfano: 16 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0xB5CD
 0xB693   # p00:5D38 call
-0xBA66   # p13:6DDD call
+0xBA52   # codigo huerfano: 20 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0xBA52
+0xBA74   # codigo huerfano: 14 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0xBA74
 0xBB48   # p00:5DAC call
 0xBB87   # p00:44D2 call
 0xBB97   # p15:BB8A entrada 0 de la tabla de 0xBB8D (call 0x4220 en 0xBB8A)

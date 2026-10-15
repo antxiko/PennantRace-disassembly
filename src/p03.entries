@@ -36,6 +36,8 @@
 0xAC7C   # p02:9163 call
 0xAC91   # p00:474B call cc
 0xAD60   # p02:9906 call cc
+0xAF8D   # codigo huerfano: 19 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0xAF8D
+0xAFC7   # codigo huerfano: 1 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0xAFC7
 0xAFC8   # p02:9234 call
 0xB072   # p02:9478 call
 0xB10C   # p02:9BA9 call

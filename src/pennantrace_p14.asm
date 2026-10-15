@@ -692,16 +692,16 @@ DATA_texto_849D:
 DATA_texto_84A2:
 	defb 020h,00fh,01bh,0ffh	; 84a2
 
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x84a6..0x84af  (9 bytes)
-DATA_84A6:
-	defb 03ah,006h,0deh,0e6h,013h,0c8h,0c3h,07dh,05dh	; 84a6  :......}]
-
 ; ======================================================================
-; CODIGO 0x84af..0x84d4  (37 bytes)
+; CODIGO 0x84a6..0x84d4  (46 bytes)
 ; ======================================================================
 
 
+L_84A6:
+	ld a,(0de06h)		;84a6
+	and 013h		;84a9
+	ret z			;84ab
+	jp 05d7dh		;84ac
 L_84AF:
 	ld b,000h		;84af
 	ld a,(0ffa7h)		;84b1
@@ -2334,7 +2334,7 @@ DATA_tabla_9A3E:
 	defw 09a44h,09a4dh,099a4h	; 9a3e  -> L_9A44 L_9A4D L_99A4
 
 ; ======================================================================
-; CODIGO 0x9a44..0x9b4c  (264 bytes)
+; CODIGO 0x9a44..0x9bab  (359 bytes)
 ; ======================================================================
 
 
@@ -2489,17 +2489,9 @@ L_9B3D:
 	djnz L_9B3D		;9b45
 	ld a,026h		;9b47
 	jp 057ffh		;9b49
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9b4c..0x9b4e  (2 bytes)
-DATA_9B4C:
-	defb 037h,0c9h	; 9b4c
-
-; ======================================================================
-; CODIGO 0x9b4e..0x9bab  (93 bytes)
-; ======================================================================
-
-
+L_9B4C:
+	scf			;9b4c
+	ret			;9b4d
 L_9B4E:
 	ld hl,09bbbh		;9b4e
 	call 04216h		;9b51
@@ -3117,6 +3109,9 @@ L_9FFA:
 	ret			;9ffe
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x9fff..0xa000  (1 bytes)
+; DATOS partida_9FFF: los 1 primeros bytes de una instruccion de 3 (CD 6B A2)
+;   que sigue en el banco 15: el trazador de un solo banco no puede verla
+;   entera (tools/bancos.py); lo leen p14:9FFF (1 bytes)
+;   0x9fff..0xa000  (1 bytes)
 L_9FFF:
 	defb 0cdh	; 9fff

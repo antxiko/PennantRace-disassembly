@@ -646,8 +646,8 @@ DATA_sprites_792D:
 	defb 0e0h,0f0h,0f0h,0fch,000h,0a0h,000h,000h,0e0h,0e0h,0e0h,0e0h,0c0h,080h,000h,080h	; 799d  ................
 
 ; ----------------------------------------------------------------------
-; DATOS rachas_79AD: rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen p00:53AF
-;   (483 bytes)
+; DATOS rachas_79AD: rachas a la VRAM (p00:4B62 -> p00:4B35); lo leen
+;   p00:53AF, p00:53E1 (483 bytes)
 ;   0x79ad..0x7b90  (483 bytes)
 DATA_rachas_79AD:
 	defb 083h,000h,007h,00fh,004h,01fh,08eh,007h,070h,0f0h,0ffh,020h,070h,071h,071h,038h	; 79ad  ........p.. pqq8

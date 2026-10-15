@@ -347,13 +347,17 @@ DATA_texto_6294:
 	defb 01ch,012h,0ffh	; 62d4
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x62d7..0x6319  (66 bytes)
-DATA_62D7:
-	defb 046h,04ch,059h,045h,052h,053h,020h,020h,020h,020h,020h,052h,049h,044h,045h,052h	; 62d7  FLYERS     RIDER
-	defb 053h,020h,020h,020h,020h,020h,04bh,04fh,042h,045h,020h,04ch,049h,04eh,045h,053h	; 62e7  S     KOBE LINES
-	defb 020h,042h,052h,045h,04eh,044h,053h,020h,020h,020h,020h,020h,050h,052h,04fh,047h	; 62f7   BRENDS     PROG
-	defb 052h,041h,04dh,053h,020h,020h,020h,044h,041h,052h,04bh,053h,020h,020h,020h,020h	; 6307  RAMS   DARKS
-	defb 020h,020h	; 6317
+; DATOS nombres_de_equipo: los 6 nombres de equipo, 11 letras en ASCII cada
+;   uno (FLYERS, RIDERS, KOBE LINES, BRENDS, PROGRAMS, DARKS): p13:6028 copia
+;   los 0x42 bytes a 0xDAAE; lo leen p13:6028 (66 bytes)
+;   0x62d7..0x6319  (66 bytes)
+DATA_nombres_de_equipo:
+	defb 046h,04ch,059h,045h,052h,053h,020h,020h,020h,020h,020h	; 62d7  FLYERS
+	defb 052h,049h,044h,045h,052h,053h,020h,020h,020h,020h,020h	; 62e2  RIDERS
+	defb 04bh,04fh,042h,045h,020h,04ch,049h,04eh,045h,053h,020h	; 62ed  KOBE LINES
+	defb 042h,052h,045h,04eh,044h,053h,020h,020h,020h,020h,020h	; 62f8  BRENDS
+	defb 050h,052h,04fh,047h,052h,041h,04dh,053h,020h,020h,020h	; 6303  PROGRAMS
+	defb 044h,041h,052h,04bh,053h,020h,020h,020h,020h,020h,020h	; 630e  DARKS
 
 ; ======================================================================
 ; CODIGO 0x6319..0x631f  (6 bytes)
@@ -1136,10 +1140,32 @@ L_6811:
 	jp 04ea6h		;6825
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6828..0x6846  (30 bytes)
-DATA_6828:
-	defb 02eh,068h,039h,068h,040h,068h,00ah,0c8h,0c4h,0b7h,0c1h,0b7h,0c2h,0bdh,0c0h,0c1h	; 6828  .h9h@h..........
-	defb 0ffh,052h,0c8h,0b6h,0bdh,0bbh,0b3h,0ffh,082h,0c8h,0b3h,0bch,0b2h,0ffh	; 6838  .R............
+; DATOS textos_6828: 3 punteros a textos elegidos por 0xD759 (p13:6825 salta a
+;   p00:4EA6); lo leen p13:681E (6 bytes)
+;   0x6828..0x682e  (6 bytes)
+DATA_textos_6828:
+	defw 0682eh,06839h,06840h	; 6828  -> DATA_texto_682E DATA_texto_6839 DATA_texto_6840
+
+; ----------------------------------------------------------------------
+; DATOS texto_682E: texto 0 de la tabla 0x6828 ([x y] y caracteres hasta
+;   0xFF), que se pinta con p00:4EA6; lo leen p13:681E (11 bytes)
+;   0x682e..0x6839  (11 bytes)
+DATA_texto_682E:
+	defb 00ah,0c8h,0c4h,0b7h,0c1h,0b7h,0c2h,0bdh,0c0h,0c1h,0ffh	; 682e  ...........
+
+; ----------------------------------------------------------------------
+; DATOS texto_6839: texto 1 de la tabla 0x6828 ([x y] y caracteres hasta
+;   0xFF), que se pinta con p00:4EA6; lo leen p13:681E (7 bytes)
+;   0x6839..0x6840  (7 bytes)
+DATA_texto_6839:
+	defb 052h,0c8h,0b6h,0bdh,0bbh,0b3h,0ffh	; 6839
+
+; ----------------------------------------------------------------------
+; DATOS texto_6840: texto 2 de la tabla 0x6828 ([x y] y caracteres hasta
+;   0xFF), que se pinta con p00:4EA6; lo leen p13:681E (6 bytes)
+;   0x6840..0x6846  (6 bytes)
+DATA_texto_6840:
+	defb 082h,0c8h,0b3h,0bch,0b2h,0ffh	; 6840
 
 ; ======================================================================
 ; CODIGO 0x6846..0x689c  (86 bytes)
@@ -1197,9 +1223,17 @@ L_6882:
 	jp 04ae3h		;6899
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x689c..0x68a8  (12 bytes)
-DATA_689C:
-	defb 06ch,040h,078h,040h,084h,040h,090h,040h,09ch,040h,0a8h,040h	; 689c  l@x@.@.@.@.@
+; DATOS pares_689C: 6 pares de bytes (0xD74F x 2, p13:6889): el primero va a
+;   la VRAM 0xF600 y el segundo a la 0xF601 (p00:4AE3); lo leen p13:6885 (12
+;   bytes)
+;   0x689c..0x68a8  (12 bytes)
+DATA_pares_689C:
+	defb 06ch,040h	; 689c
+	defb 078h,040h	; 689e
+	defb 084h,040h	; 68a0
+	defb 090h,040h	; 68a2
+	defb 09ch,040h	; 68a4
+	defb 0a8h,040h	; 68a6
 
 ; ======================================================================
 ; CODIGO 0x68a8..0x69ed  (325 bytes)
@@ -1405,10 +1439,26 @@ L_69E0:
 	jp 04ae3h		;69ea
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x69ed..0x6a0d  (32 bytes)
-DATA_69ED:
-	defb 060h,01ch,060h,084h,06ch,01ch,06ch,084h,078h,01ch,078h,084h,084h,01ch,084h,084h	; 69ed  `.`.l.l.x.x.....
-	defb 090h,01ch,090h,084h,09ch,01ch,09ch,084h,0a8h,01ch,0a8h,084h,0b4h,01ch,0b4h,084h	; 69fd  ................
+; DATOS pares_69ED: 16 pares de bytes ((A - 0xD751) x 2, p13:69CE) que
+;   p13:69DC escribe en la VRAM 0xF600/0xF601; lo leen p13:69CA (32 bytes)
+;   0x69ed..0x6a0d  (32 bytes)
+DATA_pares_69ED:
+	defb 060h,01ch	; 69ed
+	defb 060h,084h	; 69ef
+	defb 06ch,01ch	; 69f1
+	defb 06ch,084h	; 69f3
+	defb 078h,01ch	; 69f5
+	defb 078h,084h	; 69f7
+	defb 084h,01ch	; 69f9
+	defb 084h,084h	; 69fb
+	defb 090h,01ch	; 69fd
+	defb 090h,084h	; 69ff
+	defb 09ch,01ch	; 6a01
+	defb 09ch,084h	; 6a03
+	defb 0a8h,01ch	; 6a05
+	defb 0a8h,084h	; 6a07
+	defb 0b4h,01ch	; 6a09
+	defb 0b4h,084h	; 6a0b
 
 ; ======================================================================
 ; CODIGO 0x6a0d..0x6aab  (158 bytes)
@@ -1518,8 +1568,10 @@ L_6A97:
 	ret			;6aaa
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6aab..0x6ab5  (10 bytes)
-DATA_6AAB:
+; DATOS diez_espacios: 10 espacios en ASCII que p15:A651 pinta (B = 10): borra
+;   un nombre; lo leen p13:6743 (10 bytes)
+;   0x6aab..0x6ab5  (10 bytes)
+DATA_diez_espacios:
 	defb 020h,020h,020h,020h,020h,020h,020h,020h,020h,020h	; 6aab
 
 ; ======================================================================
@@ -1698,8 +1750,10 @@ L_6BC8:
 	ret			;6bd7
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6bd8..0x6bdc  (4 bytes)
-DATA_6BD8:
+; DATOS inicio_e194: 4 bytes que p13:6BAA copia a 0xE194; lo leen p13:6BA7 (4
+;   bytes)
+;   0x6bd8..0x6bdc  (4 bytes)
+DATA_inicio_e194:
 	defb 000h,001h,000h,002h	; 6bd8
 
 ; ======================================================================
@@ -1800,8 +1854,10 @@ L_6C64:
 	jp 04f1ch		;6c65
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6c68..0x6c6e  (6 bytes)
-DATA_6C68:
+; DATOS columnas_6C68: 6 bytes, uno por 0xD758 (p13:6C4F): la x de la flecha
+;   (con D = 0x48); lo leen p13:6C4C (6 bytes)
+;   0x6c68..0x6c6e  (6 bytes)
+DATA_columnas_6C68:
 	defb 010h,01ah,024h,02eh,038h,042h	; 6c68
 
 ; ======================================================================
@@ -1853,12 +1909,46 @@ L_6C9D:
 	jp 04ea6h		;6cb1
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x6cb4..0x6ce6  (50 bytes)
-DATA_6CB4:
-	defb 0beh,06ch,0c7h,06ch,0d8h,06ch,0e0h,06ch,0d0h,06ch,00ah,0c8h,0beh,0bah,0afh,0c7h	; 6cb4  .l.l.l.l.l......
-	defb 0b3h,0c0h,0ffh,042h,0c8h,0c1h,0b3h,0bah,0b3h,0b1h,0c2h,0ffh,0d0h,0c8h,0b1h,0bah	; 6cc4  ...B............
-	defb 0b3h,0afh,0c0h,0ffh,07ah,0c8h,0b1h,0bdh,0c3h,0bch,0c2h,0ffh,0aeh,0c8h,0b3h,0bch	; 6cd4  ....z...........
-	defb 0b2h,0ffh	; 6ce4
+; DATOS textos_6CB4: 5 punteros a textos elegidos por 0xD759 (p13:6CB1 salta a
+;   p00:4EA6); lo leen p13:6CAA (10 bytes)
+;   0x6cb4..0x6cbe  (10 bytes)
+DATA_textos_6CB4:
+	defw 06cbeh,06cc7h,06cd8h,06ce0h,06cd0h	; 6cb4
+
+; ----------------------------------------------------------------------
+; DATOS texto_6CBE: texto 0 de la tabla 0x6CB4 ([x y] y caracteres hasta
+;   0xFF), que se pinta con p00:4EA6; lo leen p13:6CAA (9 bytes)
+;   0x6cbe..0x6cc7  (9 bytes)
+DATA_texto_6CBE:
+	defb 00ah,0c8h,0beh,0bah,0afh,0c7h,0b3h,0c0h,0ffh	; 6cbe  .........
+
+; ----------------------------------------------------------------------
+; DATOS texto_6CC7: texto 1 de la tabla 0x6CB4 ([x y] y caracteres hasta
+;   0xFF), que se pinta con p00:4EA6; lo leen p13:6CAA (9 bytes)
+;   0x6cc7..0x6cd0  (9 bytes)
+DATA_texto_6CC7:
+	defb 042h,0c8h,0c1h,0b3h,0bah,0b3h,0b1h,0c2h,0ffh	; 6cc7  B........
+
+; ----------------------------------------------------------------------
+; DATOS texto_6CD0: texto 4 de la tabla 0x6CB4 ([x y] y caracteres hasta
+;   0xFF), que se pinta con p00:4EA6; lo leen p13:6CAA (8 bytes)
+;   0x6cd0..0x6cd8  (8 bytes)
+DATA_texto_6CD0:
+	defb 0d0h,0c8h,0b1h,0bah,0b3h,0afh,0c0h,0ffh	; 6cd0  ........
+
+; ----------------------------------------------------------------------
+; DATOS texto_6CD8: texto 2 de la tabla 0x6CB4 ([x y] y caracteres hasta
+;   0xFF), que se pinta con p00:4EA6; lo leen p13:6CAA (8 bytes)
+;   0x6cd8..0x6ce0  (8 bytes)
+DATA_texto_6CD8:
+	defb 07ah,0c8h,0b1h,0bdh,0c3h,0bch,0c2h,0ffh	; 6cd8  z.......
+
+; ----------------------------------------------------------------------
+; DATOS texto_6CE0: texto 3 de la tabla 0x6CB4 ([x y] y caracteres hasta
+;   0xFF), que se pinta con p00:4EA6; lo leen p13:6CAA (6 bytes)
+;   0x6ce0..0x6ce6  (6 bytes)
+DATA_texto_6CE0:
+	defb 0aeh,0c8h,0b3h,0bch,0b2h,0ffh	; 6ce0
 
 ; ----------------------------------------------------------------------
 ; DATOS texto_6CE6: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
@@ -2501,8 +2591,10 @@ L_711D:
 	ret			;713d
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x713e..0x7143  (5 bytes)
-DATA_713E:
+; DATOS penan: 'PENAN' en ASCII: p13:71C0 copia 5 bytes a la ficha de 0xD280;
+;   lo leen p13:712B (5 bytes)
+;   0x713e..0x7143  (5 bytes)
+DATA_penan:
 	defb 050h,045h,04eh,041h,04eh	; 713e
 
 ; ======================================================================
@@ -2525,8 +2617,10 @@ L_7143:
 	ret			;7163
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7164..0x7168  (4 bytes)
-DATA_7164:
+; DATOS cola_7164: 4 bytes que p13:71CD copia (BC = 4) detras del nombre en la
+;   ficha de 0xD280; lo leen p13:7107 (4 bytes)
+;   0x7164..0x7168  (4 bytes)
+DATA_cola_7164:
 	defb 080h,0d3h,0ffh,000h	; 7164
 
 ; ======================================================================
@@ -2549,8 +2643,10 @@ L_7168:
 	ret			;7188
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7189..0x718d  (4 bytes)
-DATA_7189:
+; DATOS cola_7189: 4 bytes que p13:71CD copia (BC = 4) detras del nombre en la
+;   ficha de 0xD280; lo leen p13:7173 (4 bytes)
+;   0x7189..0x718d  (4 bytes)
+DATA_cola_7189:
 	defb 07fh,0d4h,0ffh,000h	; 7189
 
 ; ======================================================================
@@ -2642,8 +2738,10 @@ L_720A:
 	ret			;7218
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7219..0x721d  (4 bytes)
-DATA_7219:
+; DATOS cola_7219: 4 bytes que p13:71CD copia (BC = 4) detras del nombre en la
+;   ficha de 0xD280; lo leen p13:7128 (4 bytes)
+;   0x7219..0x721d  (4 bytes)
+DATA_cola_7219:
 	defb 080h,0d6h,0cbh,000h	; 7219
 
 ; ======================================================================
@@ -2783,105 +2881,149 @@ L_7316:
 	ret			;731e
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x731f..0x7925  (1542 bytes)
-DATA_731F:
-	defb 027h,077h,02bh,073h,02ah,074h,028h,076h,029h,075h,026h,078h,020h,017h,012h,013h	; 731f  'w+s*t(v)u&x ...
-	defb 020h,021h,000h,000h,000h,000h,000h,042h,050h,031h,00eh,056h,000h,020h,003h,009h	; 732f   !.....BP1.V. ..
-	defb 008h,000h,006h,00ah,007h,02eh,038h,03dh,000h,000h,000h,01ah,004h,002h,001h,002h	; 733f  ......8=........
-	defb 002h,00ah,002h,034h,05ch,03ch,00ch,02bh,000h,020h,004h,003h,007h,004h,009h,008h	; 734f  ...4\<.+. ......
-	defb 009h,042h,029h,052h,02ah,000h,000h,01ah,004h,004h,004h,005h,006h,009h,003h,03ch	; 735f  .B)R*..........<
-	defb 04fh,02ah,000h,000h,000h,020h,004h,003h,005h,004h,003h,004h,007h,034h,00ch,02ah	; 736f  O*... .......4.*
-	defb 038h,000h,000h,01ah,003h,00ah,001h,003h,001h,007h,006h,03eh,056h,034h,00ch,05ch	; 737f  8..........>V4.\
-	defb 000h,020h,004h,005h,009h,002h,005h,008h,003h,042h,00ch,000h,042h,000h,000h,01ah	; 738f  . .......B..B...
-	defb 003h,006h,005h,000h,00ah,009h,005h,02ch,050h,048h,040h,00eh,038h,020h,003h,006h	; 739f  .......,PH@.8 ..
-	defb 008h,002h,003h,006h,006h,02ah,056h,03ch,051h,00eh,038h,01ah,003h,008h,001h,000h	; 73af  .....*V<Q.8.....
-	defb 007h,005h,003h,044h,057h,04fh,02dh,000h,000h,020h,003h,005h,007h,002h,001h,005h	; 73bf  ...DWO-.. ......
-	defb 007h,050h,030h,02dh,02bh,000h,000h,01ah,004h,001h,002h,002h,009h,007h,003h,044h	; 73cf  .P0-+..........D
-	defb 05ah,02ah,033h,00ch,00eh,020h,023h,002h,007h,002h,002h,005h,006h,006h,006h,009h	; 73df  Z*3.. #.........
-	defb 009h,009h,042h,00dh,050h,038h,00ch,02eh,01ah,012h,002h,004h,001h,003h,001h,00ah	; 73ef  ..B.P8..........
-	defb 009h,003h,003h,00ah,001h,046h,02bh,030h,000h,000h,000h,020h,023h,002h,005h,001h	; 73ff  .....F+0... #...
-	defb 003h,003h,006h,005h,002h,006h,006h,006h,044h,00ch,053h,035h,000h,000h,01ah,023h	; 740f  ........D.S5...#
-	defb 002h,005h,006h,004h,007h,001h,004h,005h,003h,00ah,001h,019h,01dh,010h,013h,000h	; 741f  ................
-	defb 01ah,017h,01ch,013h,021h,000h,053h,05fh,032h,02bh,000h,000h,01ah,003h,004h,001h	; 742f  ....!.S_2+......
-	defb 000h,006h,006h,004h,048h,02eh,031h,00ch,000h,000h,020h,003h,005h,004h,000h,007h	; 743f  ....H.1... .....
-	defb 006h,001h,029h,034h,04ch,000h,000h,000h,020h,003h,009h,001h,000h,00ah,004h,002h	; 744f  ..)4L... .......
-	defb 02dh,02eh,04bh,03ch,000h,000h,01ah,003h,00ah,009h,002h,003h,003h,004h,038h,02eh	; 745f  -.K<..........8.
-	defb 03ch,050h,000h,000h,01ah,003h,001h,004h,000h,009h,004h,007h,03eh,034h,041h,048h	; 746f  <P..........>4AH
-	defb 04ch,000h,020h,003h,003h,002h,000h,009h,005h,001h,046h,00dh,00eh,029h,02ah,000h	; 747f  L. .......F..)*.
-	defb 020h,002h,006h,00ah,000h,006h,005h,003h,02ah,038h,04ch,03ch,00ch,000h,01ah,002h	; 748f   .......*8L<....
-	defb 009h,009h,000h,008h,002h,001h,042h,03dh,030h,047h,000h,000h,01ah,002h,00ah,00ah	; 749f  ......B=0G......
-	defb 000h,008h,000h,005h,038h,051h,048h,000h,000h,000h,020h,003h,001h,006h,000h,004h	; 74af  ....8QH... .....
-	defb 002h,009h,02dh,02bh,034h,00ch,000h,000h,020h,002h,008h,007h,000h,005h,003h,006h	; 74bf  ..-+4... .......
-	defb 044h,02eh,02ch,000h,000h,000h,01ah,003h,005h,004h,000h,002h,003h,002h,033h,056h	; 74cf  D.,...........3V
-	defb 041h,048h,04ch,000h,020h,012h,002h,004h,001h,003h,001h,005h,00ah,002h,00ah,00ah	; 74df  AHL. ...........
-	defb 001h,03dh,000h,038h,00ch,000h,000h,020h,023h,002h,006h,006h,003h,009h,003h,004h	; 74ef  .=.8... #.......
-	defb 005h,006h,004h,002h,04bh,03ch,047h,039h,000h,000h,020h,023h,002h,005h,001h,002h	; 74ff  ....K<G9.. #....
-	defb 006h,004h,006h,001h,006h,003h,001h,035h,000h,047h,000h,000h,000h,01ah,023h,002h	; 750f  .......5.G....#.
-	defb 006h,001h,003h,003h,007h,002h,009h,004h,00ah,00ah,01eh,020h,01dh,015h,020h,00fh	; 751f  ........... .. .
-	defb 01bh,021h,000h,000h,000h,03eh,00eh,04bh,03eh,05fh,030h,01ah,003h,006h,006h,003h	; 752f  .!...>.K>_0.....
-	defb 002h,006h,006h,052h,034h,00ch,035h,038h,000h,020h,004h,001h,003h,002h,004h,00ah	; 753f  ...R4.58. ......
-	defb 001h,033h,044h,00ch,051h,039h,056h,020h,003h,00ah,00ah,003h,001h,005h,002h,02dh	; 754f  .3D.Q9V .......-
-	defb 02bh,02ch,035h,000h,000h,01ah,003h,007h,001h,004h,005h,003h,004h,050h,038h,00eh	; 755f  +,5..........P8.
-	defb 056h,000h,000h,020h,003h,005h,007h,004h,001h,004h,007h,029h,036h,056h,044h,00ch	; 756f  V.. .......)6VD.
-	defb 051h,01ah,003h,005h,001h,002h,008h,007h,006h,050h,056h,030h,000h,000h,000h,01ah	; 757f  Q........PV0....
-	defb 003h,008h,007h,002h,008h,002h,004h,034h,044h,03ch,000h,000h,000h,020h,003h,005h	; 758f  .......4D<... ..
-	defb 008h,000h,007h,003h,006h,053h,02bh,03ch,00ch,000h,000h,020h,003h,007h,008h,002h	; 759f  .....S+<... ....
-	defb 006h,006h,003h,02ah,056h,030h,000h,000h,000h,020h,003h,004h,009h,000h,00ah,008h	; 75af  ...*V0... ......
-	defb 009h,029h,056h,03ch,00ch,02dh,029h,01ah,003h,008h,003h,002h,002h,007h,004h,032h	; 75bf  .)V<.-)........2
-	defb 00eh,051h,000h,000h,000h,020h,003h,006h,001h,000h,005h,003h,00ah,034h,00ch,05ch	; 75cf  .Q... .......4.\
-	defb 056h,044h,00dh,020h,023h,002h,007h,001h,002h,007h,007h,007h,007h,008h,002h,002h	; 75df  VD. #...........
-	defb 050h,035h,03ch,029h,000h,000h,01ah,012h,002h,004h,006h,002h,004h,008h,00ah,001h	; 75ef  P5<)............
-	defb 002h,007h,006h,045h,05fh,030h,035h,000h,000h,01ah,023h,002h,004h,006h,003h,004h	; 75ff  ...E_05...#.....
-	defb 009h,003h,00ah,003h,006h,008h,032h,056h,045h,00dh,029h,000h,020h,023h,002h,005h	; 760f  ......2VE.). #..
-	defb 001h,004h,002h,006h,005h,003h,006h,001h,001h,010h,020h,013h,01ch,012h,021h,000h	; 761f  .......... ...!.
-	defb 000h,000h,000h,000h,029h,04ah,050h,02eh,056h,000h,020h,003h,001h,009h,002h,006h	; 762f  ....)JP.V. .....
-	defb 005h,002h,04bh,000h,02eh,000h,000h,000h,01ah,003h,006h,005h,003h,008h,004h,003h	; 763f  ..K.............
-	defb 02fh,050h,047h,056h,000h,000h,01ah,004h,003h,001h,004h,002h,002h,006h,044h,00ch	; 764f  /PGV..........D.
-	defb 051h,047h,056h,000h,020h,004h,001h,004h,004h,00ah,000h,009h,02ch,035h,044h,00dh	; 765f  QGV. .......,5D.
-	defb 052h,037h,020h,003h,00ah,009h,003h,006h,005h,005h,044h,00ch,04fh,034h,00ch,051h	; 766f  R7 .......D.O4.Q
-	defb 020h,003h,007h,008h,002h,009h,008h,003h,02fh,00ch,05eh,030h,053h,000h,01ah,003h	; 767f   ......./.^0S...
-	defb 005h,005h,002h,002h,004h,004h,045h,00dh,032h,000h,000h,000h,01ah,003h,004h,006h	; 768f  ......E.2.......
-	defb 000h,007h,009h,003h,03bh,05fh,02eh,056h,041h,056h,020h,003h,003h,003h,002h,003h	; 769f  ....._.VAV .....
-	defb 003h,002h,038h,00ch,034h,00ch,050h,056h,01ah,003h,002h,002h,002h,006h,004h,007h	; 76af  ..8.4.PV........
-	defb 029h,051h,030h,00ch,052h,02ah,020h,002h,00ah,009h,002h,001h,005h,003h,02bh,00eh	; 76bf  )Q0.R* .......+.
-	defb 053h,056h,000h,000h,01ah,003h,004h,003h,000h,008h,008h,00ah,044h,00dh,00eh,029h	; 76cf  SV..........D..)
-	defb 051h,000h,020h,023h,002h,006h,001h,003h,002h,005h,00ah,003h,00ah,004h,009h,033h	; 76df  Q. #...........3
-	defb 056h,03ch,035h,000h,000h,01ah,023h,002h,007h,001h,002h,002h,008h,008h,002h,004h	; 76ef  V<5...#.........
-	defb 00ah,005h,031h,00ch,056h,047h,02ah,000h,020h,023h,002h,005h,006h,003h,001h,003h	; 76ff  ..1.VG*. #......
-	defb 005h,004h,008h,008h,008h,04ch,049h,039h,05ch,000h,000h,020h,012h,002h,005h,001h	; 770f  .....LI9\.. ....
-	defb 003h,008h,002h,006h,007h,00ah,006h,001h,014h,01ah,027h,013h,020h,021h,000h,000h	; 771f  ..........'. !..
-	defb 000h,000h,000h,044h,057h,056h,03ch,049h,000h,020h,003h,009h,008h,003h,005h,00ah	; 772f  ...DWV<I. ......
-	defb 00ah,043h,02ch,056h,000h,000h,000h,020h,003h,00ah,001h,004h,003h,009h,003h,03ch	; 773f  .C,V... .......<
-	defb 049h,02fh,05ch,05fh,03ch,01ah,004h,005h,003h,004h,008h,008h,006h,036h,00ch,053h	; 774f  I/\_<........6.S
-	defb 000h,000h,000h,020h,004h,004h,008h,006h,001h,006h,001h,02ah,00eh,030h,00ch,051h	; 775f  ... .......*.0.Q
-	defb 000h,01ah,004h,001h,008h,005h,005h,007h,003h,042h,050h,029h,00eh,000h,000h,020h	; 776f  .........BP)...
-	defb 004h,002h,001h,004h,001h,005h,005h,038h,02ah,02eh,00ch,00eh,000h,020h,003h,009h	; 777f  .......8*.... ..
-	defb 004h,003h,00ah,008h,003h,035h,02eh,02ah,046h,00eh,030h,01ah,003h,007h,002h,004h	; 778f  .....5.*F.0.....
-	defb 004h,007h,006h,04bh,035h,02fh,00eh,03ch,000h,01ah,003h,009h,005h,006h,002h,009h	; 779f  ...K5/.<........
-	defb 002h,04fh,02ah,03bh,00ch,056h,000h,020h,003h,008h,006h,003h,007h,00ah,004h,029h	; 77af  .O*..V. .......)
-	defb 051h,042h,03ch,053h,035h,020h,003h,008h,005h,004h,004h,009h,007h,044h,02dh,031h	; 77bf  QB<S5 .......D-1
-	defb 02bh,051h,044h,01ah,003h,005h,009h,004h,006h,008h,001h,034h,03bh,00ch,056h,02eh	; 77cf  +QD........4..V.
-	defb 02ah,020h,023h,002h,007h,001h,002h,004h,003h,005h,004h,00ah,00ah,00ah,048h,04fh	; 77df  * #...........HO
-	defb 00eh,034h,00ch,05dh,01ah,023h,002h,006h,001h,003h,008h,00ah,008h,006h,004h,009h	; 77ef  .4.].#..........
-	defb 002h,044h,05bh,05fh,02eh,00eh,000h,01ah,012h,002h,005h,001h,003h,007h,002h,005h	; 77ff  .D[_............
-	defb 001h,00ah,00ah,002h,034h,05dh,048h,05fh,03ch,000h,020h,023h,002h,005h,001h,003h	; 780f  ....4]H_<. #....
-	defb 007h,001h,002h,00ah,00ah,001h,00ah,012h,00fh,020h,019h,021h,000h,000h,000h,000h	; 781f  ......... .!....
-	defb 000h,000h,02ah,054h,033h,02fh,000h,000h,020h,004h,001h,001h,002h,002h,009h,001h	; 782f  ..*T3/.. .......
-	defb 047h,03ah,02ah,000h,000h,000h,020h,003h,003h,001h,000h,009h,004h,009h,034h,05eh	; 783f  G:*... .......4^
-	defb 02bh,02eh,00ch,02fh,020h,003h,001h,002h,004h,003h,002h,003h,04bh,029h,02ah,000h	; 784f  +../ .......K)*.
-	defb 000h,000h,01ah,004h,006h,005h,006h,001h,000h,003h,03dh,02eh,00ch,02ch,000h,000h	; 785f  ..........=..,..
-	defb 020h,003h,008h,001h,003h,002h,003h,002h,039h,029h,02fh,000h,000h,000h,01ah,003h	; 786f   .......9)/.....
-	defb 003h,005h,000h,006h,007h,006h,044h,030h,02ah,000h,000h,000h,020h,002h,00ah,00ah	; 787f  ......D0*... ...
-	defb 000h,009h,003h,005h,048h,04eh,034h,000h,000h,000h,01ah,003h,002h,001h,002h,001h	; 788f  ....HN4.........
-	defb 000h,00ah,03dh,02eh,00ch,038h,000h,000h,020h,003h,001h,001h,002h,003h,004h,003h	; 789f  ..=..8.. .......
-	defb 02eh,048h,02dh,000h,000h,000h,01ah,002h,008h,006h,000h,008h,008h,002h,042h,000h	; 78af  .H-...........B.
-	defb 051h,000h,000h,000h,020h,003h,001h,006h,000h,00ah,003h,006h,02dh,00eh,038h,000h	; 78bf  Q... .......-.8.
-	defb 000h,000h,020h,003h,002h,002h,000h,005h,004h,005h,02dh,00eh,03ah,02eh,000h,000h	; 78cf  .. .......-.:...
-	defb 020h,023h,002h,005h,001h,003h,005h,006h,008h,004h,00ah,002h,002h,02bh,02ch,042h	; 78df   #...........+,B
-	defb 04fh,000h,000h,01ah,023h,002h,004h,001h,003h,002h,00ah,004h,007h,008h,008h,003h	; 78ef  O...#...........
-	defb 029h,02eh,038h,00ch,000h,000h,020h,012h,002h,004h,001h,003h,008h,002h,002h,003h	; 78ff  ).8... .........
-	defb 005h,007h,004h,033h,02fh,00ch,033h,02eh,000h,020h,023h,002h,007h,001h,003h,001h	; 790f  ...3/.3.. #.....
-	defb 008h,00ah,00ah,004h,001h,001h	; 791f
+; DATOS fichas_de_equipo: 6 punteros (uno por equipo, p13:6F35) a su ficha de
+;   255 bytes; lo leen p13:6F32 (12 bytes)
+;   0x731f..0x732b  (12 bytes)
+DATA_fichas_de_equipo:
+	defw 07727h,0732bh,0742ah,07628h,07529h,07826h	; 731f
+
+; ----------------------------------------------------------------------
+; DATOS equipo_1: ficha del equipo 1: 255 bytes que p13:6F44 copia con ldir
+;   (BC = 0xFF) a donde apunta 0xE340: la cabecera y los jugadores, cada uno
+;   con su nombre en la fuente; lo leen p13:6F44 (255 bytes)
+;   0x732b..0x742a  (255 bytes)
+DATA_equipo_1:
+	defb 020h,017h,012h,013h,020h,021h,000h,000h,000h,000h,000h,042h,050h,031h,00eh,056h	; 732b   ... !.....BP1.V
+	defb 000h,020h,003h,009h,008h,000h,006h,00ah,007h,02eh,038h,03dh,000h,000h,000h,01ah	; 733b  . ........8=....
+	defb 004h,002h,001h,002h,002h,00ah,002h,034h,05ch,03ch,00ch,02bh,000h,020h,004h,003h	; 734b  .......4\<.+. ..
+	defb 007h,004h,009h,008h,009h,042h,029h,052h,02ah,000h,000h,01ah,004h,004h,004h,005h	; 735b  .....B)R*.......
+	defb 006h,009h,003h,03ch,04fh,02ah,000h,000h,000h,020h,004h,003h,005h,004h,003h,004h	; 736b  ...<O*... ......
+	defb 007h,034h,00ch,02ah,038h,000h,000h,01ah,003h,00ah,001h,003h,001h,007h,006h,03eh	; 737b  .4.*8..........>
+	defb 056h,034h,00ch,05ch,000h,020h,004h,005h,009h,002h,005h,008h,003h,042h,00ch,000h	; 738b  V4.\. .......B..
+	defb 042h,000h,000h,01ah,003h,006h,005h,000h,00ah,009h,005h,02ch,050h,048h,040h,00eh	; 739b  B..........,PH@.
+	defb 038h,020h,003h,006h,008h,002h,003h,006h,006h,02ah,056h,03ch,051h,00eh,038h,01ah	; 73ab  8 .......*V<Q.8.
+	defb 003h,008h,001h,000h,007h,005h,003h,044h,057h,04fh,02dh,000h,000h,020h,003h,005h	; 73bb  .......DWO-.. ..
+	defb 007h,002h,001h,005h,007h,050h,030h,02dh,02bh,000h,000h,01ah,004h,001h,002h,002h	; 73cb  .....P0-+.......
+	defb 009h,007h,003h,044h,05ah,02ah,033h,00ch,00eh,020h,023h,002h,007h,002h,002h,005h	; 73db  ...DZ*3.. #.....
+	defb 006h,006h,006h,009h,009h,009h,042h,00dh,050h,038h,00ch,02eh,01ah,012h,002h,004h	; 73eb  ......B.P8......
+	defb 001h,003h,001h,00ah,009h,003h,003h,00ah,001h,046h,02bh,030h,000h,000h,000h,020h	; 73fb  .........F+0...
+	defb 023h,002h,005h,001h,003h,003h,006h,005h,002h,006h,006h,006h,044h,00ch,053h,035h	; 740b  #...........D.S5
+	defb 000h,000h,01ah,023h,002h,005h,006h,004h,007h,001h,004h,005h,003h,00ah,001h	; 741b  ...#...........
+
+; ----------------------------------------------------------------------
+; DATOS equipo_2: ficha del equipo 2: 255 bytes que p13:6F44 copia con ldir
+;   (BC = 0xFF) a donde apunta 0xE340: la cabecera y los jugadores, cada uno
+;   con su nombre en la fuente; lo leen p13:6F44 (255 bytes)
+;   0x742a..0x7529  (255 bytes)
+DATA_equipo_2:
+	defb 019h,01dh,010h,013h,000h,01ah,017h,01ch,013h,021h,000h,053h,05fh,032h,02bh,000h	; 742a  .........!.S_2+.
+	defb 000h,01ah,003h,004h,001h,000h,006h,006h,004h,048h,02eh,031h,00ch,000h,000h,020h	; 743a  .........H.1...
+	defb 003h,005h,004h,000h,007h,006h,001h,029h,034h,04ch,000h,000h,000h,020h,003h,009h	; 744a  .......)4L... ..
+	defb 001h,000h,00ah,004h,002h,02dh,02eh,04bh,03ch,000h,000h,01ah,003h,00ah,009h,002h	; 745a  .....-.K<.......
+	defb 003h,003h,004h,038h,02eh,03ch,050h,000h,000h,01ah,003h,001h,004h,000h,009h,004h	; 746a  ...8.<P.........
+	defb 007h,03eh,034h,041h,048h,04ch,000h,020h,003h,003h,002h,000h,009h,005h,001h,046h	; 747a  .>4AHL. .......F
+	defb 00dh,00eh,029h,02ah,000h,020h,002h,006h,00ah,000h,006h,005h,003h,02ah,038h,04ch	; 748a  ..)*. .......*8L
+	defb 03ch,00ch,000h,01ah,002h,009h,009h,000h,008h,002h,001h,042h,03dh,030h,047h,000h	; 749a  <..........B=0G.
+	defb 000h,01ah,002h,00ah,00ah,000h,008h,000h,005h,038h,051h,048h,000h,000h,000h,020h	; 74aa  .........8QH...
+	defb 003h,001h,006h,000h,004h,002h,009h,02dh,02bh,034h,00ch,000h,000h,020h,002h,008h	; 74ba  .......-+4... ..
+	defb 007h,000h,005h,003h,006h,044h,02eh,02ch,000h,000h,000h,01ah,003h,005h,004h,000h	; 74ca  .....D.,........
+	defb 002h,003h,002h,033h,056h,041h,048h,04ch,000h,020h,012h,002h,004h,001h,003h,001h	; 74da  ...3VAHL. ......
+	defb 005h,00ah,002h,00ah,00ah,001h,03dh,000h,038h,00ch,000h,000h,020h,023h,002h,006h	; 74ea  ......=.8... #..
+	defb 006h,003h,009h,003h,004h,005h,006h,004h,002h,04bh,03ch,047h,039h,000h,000h,020h	; 74fa  .........K<G9..
+	defb 023h,002h,005h,001h,002h,006h,004h,006h,001h,006h,003h,001h,035h,000h,047h,000h	; 750a  #...........5.G.
+	defb 000h,000h,01ah,023h,002h,006h,001h,003h,003h,007h,002h,009h,004h,00ah,00ah	; 751a  ...#...........
+
+; ----------------------------------------------------------------------
+; DATOS equipo_4: ficha del equipo 4: 255 bytes que p13:6F44 copia con ldir
+;   (BC = 0xFF) a donde apunta 0xE340: la cabecera y los jugadores, cada uno
+;   con su nombre en la fuente; lo leen p13:6F44 (255 bytes)
+;   0x7529..0x7628  (255 bytes)
+DATA_equipo_4:
+	defb 01eh,020h,01dh,015h,020h,00fh,01bh,021h,000h,000h,000h,03eh,00eh,04bh,03eh,05fh	; 7529  . .. ..!...>.K>_
+	defb 030h,01ah,003h,006h,006h,003h,002h,006h,006h,052h,034h,00ch,035h,038h,000h,020h	; 7539  0........R4.58.
+	defb 004h,001h,003h,002h,004h,00ah,001h,033h,044h,00ch,051h,039h,056h,020h,003h,00ah	; 7549  .......3D.Q9V ..
+	defb 00ah,003h,001h,005h,002h,02dh,02bh,02ch,035h,000h,000h,01ah,003h,007h,001h,004h	; 7559  .....-+,5.......
+	defb 005h,003h,004h,050h,038h,00eh,056h,000h,000h,020h,003h,005h,007h,004h,001h,004h	; 7569  ...P8.V.. ......
+	defb 007h,029h,036h,056h,044h,00ch,051h,01ah,003h,005h,001h,002h,008h,007h,006h,050h	; 7579  .)6VD.Q........P
+	defb 056h,030h,000h,000h,000h,01ah,003h,008h,007h,002h,008h,002h,004h,034h,044h,03ch	; 7589  V0...........4D<
+	defb 000h,000h,000h,020h,003h,005h,008h,000h,007h,003h,006h,053h,02bh,03ch,00ch,000h	; 7599  ... .......S+<..
+	defb 000h,020h,003h,007h,008h,002h,006h,006h,003h,02ah,056h,030h,000h,000h,000h,020h	; 75a9  . .......*V0...
+	defb 003h,004h,009h,000h,00ah,008h,009h,029h,056h,03ch,00ch,02dh,029h,01ah,003h,008h	; 75b9  .......)V<.-)...
+	defb 003h,002h,002h,007h,004h,032h,00eh,051h,000h,000h,000h,020h,003h,006h,001h,000h	; 75c9  .....2.Q... ....
+	defb 005h,003h,00ah,034h,00ch,05ch,056h,044h,00dh,020h,023h,002h,007h,001h,002h,007h	; 75d9  ...4.\VD. #.....
+	defb 007h,007h,007h,008h,002h,002h,050h,035h,03ch,029h,000h,000h,01ah,012h,002h,004h	; 75e9  ......P5<)......
+	defb 006h,002h,004h,008h,00ah,001h,002h,007h,006h,045h,05fh,030h,035h,000h,000h,01ah	; 75f9  .........E_05...
+	defb 023h,002h,004h,006h,003h,004h,009h,003h,00ah,003h,006h,008h,032h,056h,045h,00dh	; 7609  #...........2VE.
+	defb 029h,000h,020h,023h,002h,005h,001h,004h,002h,006h,005h,003h,006h,001h,001h	; 7619  ). #...........
+
+; ----------------------------------------------------------------------
+; DATOS equipo_3: ficha del equipo 3: 255 bytes que p13:6F44 copia con ldir
+;   (BC = 0xFF) a donde apunta 0xE340: la cabecera y los jugadores, cada uno
+;   con su nombre en la fuente; lo leen p13:6F44 (255 bytes)
+;   0x7628..0x7727  (255 bytes)
+DATA_equipo_3:
+	defb 010h,020h,013h,01ch,012h,021h,000h,000h,000h,000h,000h,029h,04ah,050h,02eh,056h	; 7628  . ...!.....)JP.V
+	defb 000h,020h,003h,001h,009h,002h,006h,005h,002h,04bh,000h,02eh,000h,000h,000h,01ah	; 7638  . .......K......
+	defb 003h,006h,005h,003h,008h,004h,003h,02fh,050h,047h,056h,000h,000h,01ah,004h,003h	; 7648  ......./PGV.....
+	defb 001h,004h,002h,002h,006h,044h,00ch,051h,047h,056h,000h,020h,004h,001h,004h,004h	; 7658  .....D.QGV. ....
+	defb 00ah,000h,009h,02ch,035h,044h,00dh,052h,037h,020h,003h,00ah,009h,003h,006h,005h	; 7668  ...,5D.R7 ......
+	defb 005h,044h,00ch,04fh,034h,00ch,051h,020h,003h,007h,008h,002h,009h,008h,003h,02fh	; 7678  .D.O4.Q ......./
+	defb 00ch,05eh,030h,053h,000h,01ah,003h,005h,005h,002h,002h,004h,004h,045h,00dh,032h	; 7688  .^0S.........E.2
+	defb 000h,000h,000h,01ah,003h,004h,006h,000h,007h,009h,003h,03bh,05fh,02eh,056h,041h	; 7698  ............_.VA
+	defb 056h,020h,003h,003h,003h,002h,003h,003h,002h,038h,00ch,034h,00ch,050h,056h,01ah	; 76a8  V .......8.4.PV.
+	defb 003h,002h,002h,002h,006h,004h,007h,029h,051h,030h,00ch,052h,02ah,020h,002h,00ah	; 76b8  .......)Q0.R* ..
+	defb 009h,002h,001h,005h,003h,02bh,00eh,053h,056h,000h,000h,01ah,003h,004h,003h,000h	; 76c8  .....+.SV.......
+	defb 008h,008h,00ah,044h,00dh,00eh,029h,051h,000h,020h,023h,002h,006h,001h,003h,002h	; 76d8  ...D..)Q. #.....
+	defb 005h,00ah,003h,00ah,004h,009h,033h,056h,03ch,035h,000h,000h,01ah,023h,002h,007h	; 76e8  ......3V<5...#..
+	defb 001h,002h,002h,008h,008h,002h,004h,00ah,005h,031h,00ch,056h,047h,02ah,000h,020h	; 76f8  .........1.VG*.
+	defb 023h,002h,005h,006h,003h,001h,003h,005h,004h,008h,008h,008h,04ch,049h,039h,05ch	; 7708  #...........LI9\
+	defb 000h,000h,020h,012h,002h,005h,001h,003h,008h,002h,006h,007h,00ah,006h,001h	; 7718  .. ............
+
+; ----------------------------------------------------------------------
+; DATOS equipo_0: ficha del equipo 0: 255 bytes que p13:6F44 copia con ldir
+;   (BC = 0xFF) a donde apunta 0xE340: la cabecera y los jugadores, cada uno
+;   con su nombre en la fuente; lo leen p13:6F44 (255 bytes)
+;   0x7727..0x7826  (255 bytes)
+DATA_equipo_0:
+	defb 014h,01ah,027h,013h,020h,021h,000h,000h,000h,000h,000h,044h,057h,056h,03ch,049h	; 7727  ..'. !.....DWV<I
+	defb 000h,020h,003h,009h,008h,003h,005h,00ah,00ah,043h,02ch,056h,000h,000h,000h,020h	; 7737  . .......C,V...
+	defb 003h,00ah,001h,004h,003h,009h,003h,03ch,049h,02fh,05ch,05fh,03ch,01ah,004h,005h	; 7747  .......<I/\_<...
+	defb 003h,004h,008h,008h,006h,036h,00ch,053h,000h,000h,000h,020h,004h,004h,008h,006h	; 7757  .....6.S... ....
+	defb 001h,006h,001h,02ah,00eh,030h,00ch,051h,000h,01ah,004h,001h,008h,005h,005h,007h	; 7767  ...*.0.Q........
+	defb 003h,042h,050h,029h,00eh,000h,000h,020h,004h,002h,001h,004h,001h,005h,005h,038h	; 7777  .BP)... .......8
+	defb 02ah,02eh,00ch,00eh,000h,020h,003h,009h,004h,003h,00ah,008h,003h,035h,02eh,02ah	; 7787  *.... .......5.*
+	defb 046h,00eh,030h,01ah,003h,007h,002h,004h,004h,007h,006h,04bh,035h,02fh,00eh,03ch	; 7797  F.0........K5/.<
+	defb 000h,01ah,003h,009h,005h,006h,002h,009h,002h,04fh,02ah,03bh,00ch,056h,000h,020h	; 77a7  .........O*..V.
+	defb 003h,008h,006h,003h,007h,00ah,004h,029h,051h,042h,03ch,053h,035h,020h,003h,008h	; 77b7  .......)QB<S5 ..
+	defb 005h,004h,004h,009h,007h,044h,02dh,031h,02bh,051h,044h,01ah,003h,005h,009h,004h	; 77c7  .....D-1+QD.....
+	defb 006h,008h,001h,034h,03bh,00ch,056h,02eh,02ah,020h,023h,002h,007h,001h,002h,004h	; 77d7  ...4..V.* #.....
+	defb 003h,005h,004h,00ah,00ah,00ah,048h,04fh,00eh,034h,00ch,05dh,01ah,023h,002h,006h	; 77e7  ......HO.4.].#..
+	defb 001h,003h,008h,00ah,008h,006h,004h,009h,002h,044h,05bh,05fh,02eh,00eh,000h,01ah	; 77f7  .........D[_....
+	defb 012h,002h,005h,001h,003h,007h,002h,005h,001h,00ah,00ah,002h,034h,05dh,048h,05fh	; 7807  ............4]H_
+	defb 03ch,000h,020h,023h,002h,005h,001h,003h,007h,001h,002h,00ah,00ah,001h,00ah	; 7817  <. #...........
+
+; ----------------------------------------------------------------------
+; DATOS equipo_5: ficha del equipo 5: 255 bytes que p13:6F44 copia con ldir
+;   (BC = 0xFF) a donde apunta 0xE340: la cabecera y los jugadores, cada uno
+;   con su nombre en la fuente; lo leen p13:6F44 (255 bytes)
+;   0x7826..0x7925  (255 bytes)
+DATA_equipo_5:
+	defb 012h,00fh,020h,019h,021h,000h,000h,000h,000h,000h,000h,02ah,054h,033h,02fh,000h	; 7826  .. .!......*T3/.
+	defb 000h,020h,004h,001h,001h,002h,002h,009h,001h,047h,03ah,02ah,000h,000h,000h,020h	; 7836  . .......G:*...
+	defb 003h,003h,001h,000h,009h,004h,009h,034h,05eh,02bh,02eh,00ch,02fh,020h,003h,001h	; 7846  .......4^+../ ..
+	defb 002h,004h,003h,002h,003h,04bh,029h,02ah,000h,000h,000h,01ah,004h,006h,005h,006h	; 7856  .....K)*........
+	defb 001h,000h,003h,03dh,02eh,00ch,02ch,000h,000h,020h,003h,008h,001h,003h,002h,003h	; 7866  ...=..,.. ......
+	defb 002h,039h,029h,02fh,000h,000h,000h,01ah,003h,003h,005h,000h,006h,007h,006h,044h	; 7876  .9)/...........D
+	defb 030h,02ah,000h,000h,000h,020h,002h,00ah,00ah,000h,009h,003h,005h,048h,04eh,034h	; 7886  0*... .......HN4
+	defb 000h,000h,000h,01ah,003h,002h,001h,002h,001h,000h,00ah,03dh,02eh,00ch,038h,000h	; 7896  ...........=..8.
+	defb 000h,020h,003h,001h,001h,002h,003h,004h,003h,02eh,048h,02dh,000h,000h,000h,01ah	; 78a6  . ........H-....
+	defb 002h,008h,006h,000h,008h,008h,002h,042h,000h,051h,000h,000h,000h,020h,003h,001h	; 78b6  .......B.Q... ..
+	defb 006h,000h,00ah,003h,006h,02dh,00eh,038h,000h,000h,000h,020h,003h,002h,002h,000h	; 78c6  .....-.8... ....
+	defb 005h,004h,005h,02dh,00eh,03ah,02eh,000h,000h,020h,023h,002h,005h,001h,003h,005h	; 78d6  ...-.:... #.....
+	defb 006h,008h,004h,00ah,002h,002h,02bh,02ch,042h,04fh,000h,000h,01ah,023h,002h,004h	; 78e6  ......+,BO...#..
+	defb 001h,003h,002h,00ah,004h,007h,008h,008h,003h,029h,02eh,038h,00ch,000h,000h,020h	; 78f6  .........).8...
+	defb 012h,002h,004h,001h,003h,008h,002h,002h,003h,005h,007h,004h,033h,02fh,00ch,033h	; 7906  ............3/.3
+	defb 02eh,000h,020h,023h,002h,007h,001h,003h,001h,008h,00ah,00ah,004h,001h,001h	; 7916  .. #...........
 
 ; ----------------------------------------------------------------------
 ; DATOS lista_7925: 3 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo
@@ -2987,19 +3129,15 @@ DATA_texto_7B99:
 	defb 0ffh	; 7bb9
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7bba..0x7bdd  (35 bytes)
-DATA_7BBA:
+; DATOS textos_7BBA: 2 textos seguidos ([x y] y caracteres hasta 0xFF; 0xFE
+;   trae otra posicion) antes de 0x7BEA; se solapan 4 bloques: (texto_7BDD
+;   7BDD-7BEA) (texto_7BDD 7BDD-7BEA) (texto_7BDD 7BDD-7BEA); lo leen
+;   p13:6D94, p00:48EC, p13:6D5E, p13:6DD3 (48 bytes)
+;   0x7bba..0x7bea  (48 bytes)
+DATA_textos_7BBA:
 	defb 058h,034h,022h,013h,00fh,01bh,000h,012h,00fh,022h,00fh,055h,0feh,058h,040h,021h	; 7bba  X4"......".U.X@!
 	defb 00fh,024h,013h,034h,047h,035h,02eh,0feh,068h,04ch,042h,02ah,0feh,068h,058h,02ah	; 7bca  .$.4G5..hLB*.hX*
-	defb 02ah,02ch,0ffh	; 7bda
-
-; ----------------------------------------------------------------------
-; DATOS texto_7BDD: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
-;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
-;   medio espacio; lo leen p00:48EC, p13:6D5E, p13:6DD3 (13 bytes)
-;   0x7bdd..0x7bea  (13 bytes)
-DATA_texto_7BDD:
-	defb 058h,034h,021h,00fh,024h,013h,039h,05dh,02bh,03bh,00ch,035h,0ffh	; 7bdd  X4!.$.9]+..5.
+	defb 02ah,02ch,0ffh,058h,034h,021h,00fh,024h,013h,039h,05dh,02bh,03bh,00ch,035h,0ffh	; 7bda  *,.X4!.$.9]+..5.
 
 ; ----------------------------------------------------------------------
 ; DATOS sin identificar  0x7bea..0x7c06  (28 bytes)
@@ -3026,8 +3164,10 @@ DATA_texto_7C22:
 	defb 0ffh	; 7c32
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7c33..0x7c79  (70 bytes)
-DATA_7C33:
+; DATOS textos_7C33: 3 textos seguidos ([x y] y caracteres hasta 0xFF; 0xFE
+;   trae otra posicion) (DE = 0x7C33); lo leen p03:B6C1 (70 bytes)
+;   0x7c33..0x7c79  (70 bytes)
+DATA_textos_7C33:
 	defb 058h,034h,08dh,08eh,08fh,055h,035h,045h,00ch,03bh,0feh,058h,040h,06eh,063h,069h	; 7c33  X4...U5E...X@nci
 	defb 034h,03bh,030h,038h,00ch,033h,02ah,0ffh,058h,034h,080h,08fh,055h,035h,045h,00ch	; 7c43  4.08.3*.X4..U5E.
 	defb 03bh,0feh,058h,040h,06eh,063h,069h,034h,03bh,030h,038h,00ch,033h,02ah,0ffh,058h	; 7c53  ..X@nci4.08.3*.X
@@ -3044,19 +3184,14 @@ DATA_texto_7C79:
 	defb 0ffh	; 7c89
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7c8a..0x7ca8  (30 bytes)
-DATA_7C8A:
+; DATOS textos_7C8A: 2 textos seguidos ([x y] y caracteres hasta 0xFF; 0xFE
+;   trae otra posicion) (HL = 0x7C8A); se solapan 2 bloques: (texto_7CA8
+;   7CA8-7CB9); lo leen p00:483C, p00:4848 (47 bytes)
+;   0x7c8a..0x7cb9  (47 bytes)
+DATA_textos_7C8A:
 	defb 050h,0b8h,06eh,00eh,076h,00ch,034h,03bh,000h,02dh,054h,051h,0feh,050h,0c8h,066h	; 7c8a  P.n.v.4..-TQ.P.f
-	defb 00dh,067h,068h,069h,06ah,00eh,06bh,055h,03ah,03ah,00ch,031h,051h,0ffh	; 7c9a  .ghij.kU::.1Q.
-
-; ----------------------------------------------------------------------
-; DATOS texto_7CA8: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
-;   y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es
-;   medio espacio; lo leen p00:4848 (17 bytes)
-;   0x7ca8..0x7cb9  (17 bytes)
-DATA_texto_7CA8:
-	defb 048h,0b8h,01eh,023h,021h,016h,000h,021h,01eh,00fh,011h,013h,000h,019h,013h,027h	; 7ca8  H..#!..!.......'
-	defb 0ffh	; 7cb8
+	defb 00dh,067h,068h,069h,06ah,00eh,06bh,055h,03ah,03ah,00ch,031h,051h,0ffh,048h,0b8h	; 7c9a  .ghij.kU::.1Q.H.
+	defb 01eh,023h,021h,016h,000h,021h,01eh,00fh,011h,013h,000h,019h,013h,027h,0ffh	; 7caa  .#!..!.......'.
 
 ; ----------------------------------------------------------------------
 ; DATOS texto_7CB9: texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y]
@@ -3166,8 +3301,11 @@ DATA_texto_7D8F:
 	defb 028h,070h,002h,01eh,01ah,00fh,027h,013h,020h,0ffh	; 7d9f  (p....'. .
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0x7da9..0x7dd2  (41 bytes)
-DATA_7DA9:
+; DATOS textos_7DA9: 4 textos seguidos ([x y] y caracteres hasta 0xFF; 0xFE
+;   trae otra posicion) (DE = 0x7DA9 / 0x7DB4 segun A); lo leen p00:4559 (41
+;   bytes)
+;   0x7da9..0x7dd2  (41 bytes)
+DATA_textos_7DA9:
 	defb 028h,080h,003h,01eh,01ah,00fh,027h,013h,020h,021h,0ffh,028h,090h,01eh,013h,01ch	; 7da9  (.....'. !.(....
 	defb 01ch,00fh,01ch,022h,0ffh,028h,0a0h,022h,013h,00fh,01bh,000h,013h,012h,017h,022h	; 7db9  ...".(."......."
 	defb 0ffh,028h,0b0h,025h,00fh,022h,011h,016h,0ffh	; 7dc9  .(.%."...

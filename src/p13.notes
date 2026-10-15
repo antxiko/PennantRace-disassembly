@@ -10,6 +10,8 @@ F 0x61B9 w2
 D 0x6291 0x6294 copia_6291  3 bytes que p00:4AB7 copia tal cual a la VRAM 0xF600; lo leen p13:627B (3 bytes)
 F 0x6291 16
 D 0x6294 0x62D7 texto_6294  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; se solapan 2 bloques: (texto_62D1 62D1-62D7); lo leen p13:620B, p13:64AD (67 bytes)
+D 0x62D7 0x6319 nombres_de_equipo  los 6 nombres de equipo, 11 letras en ASCII cada uno (FLYERS, RIDERS, KOBE LINES, BRENDS, PROGRAMS, DARKS): p13:6028 copia los 0x42 bytes a 0xDAAE; lo leen p13:6028 (66 bytes)
+F 0x62D7 11
 D 0x631F 0x6323 tabla_631F  2 destinos del despachador p00:4220 (call en p13:631C, el indice en A): 6323, 633A; lo leen p13:631C (4 bytes)
 F 0x631F w2
 D 0x63C1 0x63C5 tabla_63C1  2 destinos del despachador p00:4220 (call en p13:63BE, el indice en A): 63C5, 63D4; lo leen p13:63BE (4 bytes)
@@ -22,7 +24,29 @@ F 0x648D w2
 D 0x6594 0x65BE texto_6594  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; se solapan 2 bloques: (texto_65B8 65B8-65BE); lo leen p13:658B, p13:6814, p13:667D (42 bytes)
 D 0x6656 0x665A tabla_6656  2 destinos del despachador p00:4220 (call en p13:6653, el indice en A): 665A, 6677; lo leen p13:6653 (4 bytes)
 F 0x6656 w2
+D 0x6828 0x682E textos_6828  3 punteros a textos elegidos por 0xD759 (p13:6825 salta a p00:4EA6); lo leen p13:681E (6 bytes)
+F 0x6828 w3
+D 0x682E 0x6839 texto_682E  texto 0 de la tabla 0x6828 ([x y] y caracteres hasta 0xFF), que se pinta con p00:4EA6; lo leen p13:681E (11 bytes)
+D 0x6839 0x6840 texto_6839  texto 1 de la tabla 0x6828 ([x y] y caracteres hasta 0xFF), que se pinta con p00:4EA6; lo leen p13:681E (7 bytes)
+D 0x6840 0x6846 texto_6840  texto 2 de la tabla 0x6828 ([x y] y caracteres hasta 0xFF), que se pinta con p00:4EA6; lo leen p13:681E (6 bytes)
+D 0x689C 0x68A8 pares_689C  6 pares de bytes (0xD74F x 2, p13:6889): el primero va a la VRAM 0xF600 y el segundo a la 0xF601 (p00:4AE3); lo leen p13:6885 (12 bytes)
+F 0x689C 2
+D 0x69ED 0x6A0D pares_69ED  16 pares de bytes ((A - 0xD751) x 2, p13:69CE) que p13:69DC escribe en la VRAM 0xF600/0xF601; lo leen p13:69CA (32 bytes)
+F 0x69ED 2
+D 0x6AAB 0x6AB5 diez_espacios  10 espacios en ASCII que p15:A651 pinta (B = 10): borra un nombre; lo leen p13:6743 (10 bytes)
+F 0x6AAB 10
+D 0x6BD8 0x6BDC inicio_e194  4 bytes que p13:6BAA copia a 0xE194; lo leen p13:6BA7 (4 bytes)
+F 0x6BD8 4
 D 0x6C31 0x6C49 texto_6C31  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p13:6C18 (24 bytes)
+D 0x6C68 0x6C6E columnas_6C68  6 bytes, uno por 0xD758 (p13:6C4F): la x de la flecha (con D = 0x48); lo leen p13:6C4C (6 bytes)
+F 0x6C68 6
+D 0x6CB4 0x6CBE textos_6CB4  5 punteros a textos elegidos por 0xD759 (p13:6CB1 salta a p00:4EA6); lo leen p13:6CAA (10 bytes)
+F 0x6CB4 w5
+D 0x6CBE 0x6CC7 texto_6CBE  texto 0 de la tabla 0x6CB4 ([x y] y caracteres hasta 0xFF), que se pinta con p00:4EA6; lo leen p13:6CAA (9 bytes)
+D 0x6CC7 0x6CD0 texto_6CC7  texto 1 de la tabla 0x6CB4 ([x y] y caracteres hasta 0xFF), que se pinta con p00:4EA6; lo leen p13:6CAA (9 bytes)
+D 0x6CD0 0x6CD8 texto_6CD0  texto 4 de la tabla 0x6CB4 ([x y] y caracteres hasta 0xFF), que se pinta con p00:4EA6; lo leen p13:6CAA (8 bytes)
+D 0x6CD8 0x6CE0 texto_6CD8  texto 2 de la tabla 0x6CB4 ([x y] y caracteres hasta 0xFF), que se pinta con p00:4EA6; lo leen p13:6CAA (8 bytes)
+D 0x6CE0 0x6CE6 texto_6CE0  texto 3 de la tabla 0x6CB4 ([x y] y caracteres hasta 0xFF), que se pinta con p00:4EA6; lo leen p13:6CAA (6 bytes)
 D 0x6CE6 0x6D0E texto_6CE6  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p13:6CA0 (40 bytes)
 D 0x6D14 0x6D1E tabla_6D14  5 destinos del despachador p00:4220 (call en p13:6D11, el indice en A): 6D1E, 6D41, 6D66, 6DAA, 6DEC; lo leen p13:6D11 (10 bytes)
 F 0x6D14 w5
@@ -32,6 +56,28 @@ D 0x6F7F 0x6F89 tabla_6F7F  5 destinos del despachador p00:4220 (call en p13:6F7
 F 0x6F7F w5
 D 0x7004 0x700E tabla_7004  5 destinos del despachador p00:4220 (call en p13:7001, el indice en A): 700E, 7025, 704B, 707E, 7089; lo leen p13:7001 (10 bytes)
 F 0x7004 w5
+D 0x713E 0x7143 penan  'PENAN' en ASCII: p13:71C0 copia 5 bytes a la ficha de 0xD280; lo leen p13:712B (5 bytes)
+F 0x713E 5
+D 0x7164 0x7168 cola_7164  4 bytes que p13:71CD copia (BC = 4) detras del nombre en la ficha de 0xD280; lo leen p13:7107 (4 bytes)
+F 0x7164 4
+D 0x7189 0x718D cola_7189  4 bytes que p13:71CD copia (BC = 4) detras del nombre en la ficha de 0xD280; lo leen p13:7173 (4 bytes)
+F 0x7189 4
+D 0x7219 0x721D cola_7219  4 bytes que p13:71CD copia (BC = 4) detras del nombre en la ficha de 0xD280; lo leen p13:7128 (4 bytes)
+F 0x7219 4
+D 0x731F 0x732B fichas_de_equipo  6 punteros (uno por equipo, p13:6F35) a su ficha de 255 bytes; lo leen p13:6F32 (12 bytes)
+F 0x731F w6
+D 0x732B 0x742A equipo_1  ficha del equipo 1: 255 bytes que p13:6F44 copia con ldir (BC = 0xFF) a donde apunta 0xE340: la cabecera y los jugadores, cada uno con su nombre en la fuente; lo leen p13:6F44 (255 bytes)
+F 0x732B 16
+D 0x742A 0x7529 equipo_2  ficha del equipo 2: 255 bytes que p13:6F44 copia con ldir (BC = 0xFF) a donde apunta 0xE340: la cabecera y los jugadores, cada uno con su nombre en la fuente; lo leen p13:6F44 (255 bytes)
+F 0x742A 16
+D 0x7529 0x7628 equipo_4  ficha del equipo 4: 255 bytes que p13:6F44 copia con ldir (BC = 0xFF) a donde apunta 0xE340: la cabecera y los jugadores, cada uno con su nombre en la fuente; lo leen p13:6F44 (255 bytes)
+F 0x7529 16
+D 0x7628 0x7727 equipo_3  ficha del equipo 3: 255 bytes que p13:6F44 copia con ldir (BC = 0xFF) a donde apunta 0xE340: la cabecera y los jugadores, cada uno con su nombre en la fuente; lo leen p13:6F44 (255 bytes)
+F 0x7628 16
+D 0x7727 0x7826 equipo_0  ficha del equipo 0: 255 bytes que p13:6F44 copia con ldir (BC = 0xFF) a donde apunta 0xE340: la cabecera y los jugadores, cada uno con su nombre en la fuente; lo leen p13:6F44 (255 bytes)
+F 0x7727 16
+D 0x7826 0x7925 equipo_5  ficha del equipo 5: 255 bytes que p13:6F44 copia con ldir (BC = 0xFF) a donde apunta 0xE340: la cabecera y los jugadores, cada uno con su nombre en la fuente; lo leen p13:6F44 (255 bytes)
+F 0x7826 16
 D 0x7925 0x7938 lista_7925  3 fichas de dibujo de 6 bytes [paleta-tipo][VRAM lo hi][caracteres][puntero] detras del numero (p00:4FA3, paletas en 0x51B2); lo leen p00:5174 (19 bytes)
 F 0x7925 6
 D 0x7938 0x79E8 dibujo_7938  11 caracteres de 8x8 a 2 bits por punto (16 bytes cada uno), ficha 0 de la lista 0x7925 (p00:4FA3, tipo 2 en p00:4FDD); lo leen p00:5174 (176 bytes)
@@ -44,11 +90,12 @@ D 0x7B48 0x7B63 texto_7B48  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): 
 D 0x7B63 0x7B94 texto_7B63  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:9D1E (49 bytes)
 D 0x7B94 0x7B99 texto_7B94  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:648E (5 bytes)
 D 0x7B99 0x7BBA texto_7B99  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:B703 (33 bytes)
-D 0x7BDD 0x7BEA texto_7BDD  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p00:48EC, p13:6D5E, p13:6DD3 (13 bytes)
+D 0x7BBA 0x7BEA textos_7BBA  2 textos seguidos ([x y] y caracteres hasta 0xFF; 0xFE trae otra posicion) antes de 0x7BEA; se solapan 4 bloques: (texto_7BDD 7BDD-7BEA) (texto_7BDD 7BDD-7BEA) (texto_7BDD 7BDD-7BEA); lo leen p13:6D94, p00:48EC, p13:6D5E, p13:6DD3 (48 bytes)
 D 0x7C06 0x7C22 texto_7C06  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:BD41, p13:6D9C (28 bytes)
 D 0x7C22 0x7C33 texto_7C22  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:B9A7, p13:6D76, p13:6FB5 (17 bytes)
+D 0x7C33 0x7C79 textos_7C33  3 textos seguidos ([x y] y caracteres hasta 0xFF; 0xFE trae otra posicion) (DE = 0x7C33); lo leen p03:B6C1 (70 bytes)
 D 0x7C79 0x7C8A texto_7C79  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p00:480C (17 bytes)
-D 0x7CA8 0x7CB9 texto_7CA8  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p00:4848 (17 bytes)
+D 0x7C8A 0x7CB9 textos_7C8A  2 textos seguidos ([x y] y caracteres hasta 0xFF; 0xFE trae otra posicion) (HL = 0x7C8A); se solapan 2 bloques: (texto_7CA8 7CA8-7CB9); lo leen p00:483C, p00:4848 (47 bytes)
 D 0x7CB9 0x7CC8 texto_7CB9  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p00:4863 (15 bytes)
 D 0x7CD1 0x7CEF texto_7CD1  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p00:47EA (30 bytes)
 D 0x7CEF 0x7CFA texto_7CEF  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p13:632C (11 bytes)
@@ -61,6 +108,7 @@ D 0x7D4E 0x7D62 texto_7D4E  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): 
 D 0x7D62 0x7D7D texto_7D62  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p03:A4C1 (27 bytes)
 D 0x7D7D 0x7D8F texto_7D7D  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p14:8466 (18 bytes)
 D 0x7D8F 0x7DA9 texto_7D8F  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:6546 (26 bytes)
+D 0x7DA9 0x7DD2 textos_7DA9  4 textos seguidos ([x y] y caracteres hasta 0xFF; 0xFE trae otra posicion) (DE = 0x7DA9 / 0x7DB4 segun A); lo leen p00:4559 (41 bytes)
 D 0x7DD2 0x7DE1 texto_7DD2  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p00:4577, p01:655E, p00:457A (15 bytes)
 D 0x7DE1 0x7DF7 texto_7DE1  texto (p00:4EA6, con 13-14-15 puesto por p00:439C): [x y] y caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p15:AA5D (22 bytes)
 D 0x7DF7 0x7DF9 texto_7DF7  texto (p00:4EB5, con 13-14-15 puesto por p00:439C): caracteres de la fuente hasta 0xFF; 0xFE trae otra posicion, 0xFD es medio espacio; lo leen p01:65BB, p03:BD01, p15:AACC (2 bytes)

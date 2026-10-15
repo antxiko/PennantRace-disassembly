@@ -10,8 +10,10 @@
 
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa000..0xa002  (2 bytes)
-DATA_A000:
+; DATOS partida_A000: los 2 ultimos bytes de la instruccion de p14:9FFF (CD 6B
+;   A2), que empieza en el banco 14; lo leen p14:9FFF (2 bytes)
+;   0xa000..0xa002  (2 bytes)
+DATA_partida_A000:
 	defb 06bh,0a2h	; a000
 
 ; ======================================================================
@@ -2813,7 +2815,7 @@ DATA_B4E9:
 	defb 0cfh,0e2h,0c9h	; b509
 
 ; ======================================================================
-; CODIGO 0xb50c..0xb5cd  (193 bytes)
+; CODIGO 0xb50c..0xb5ed  (225 bytes)
 ; ======================================================================
 
 
@@ -2914,17 +2916,18 @@ L_B5C4:
 	ld (hl),a			;b5c6
 	call L_B417		;b5c7
 	jp L_B480		;b5ca
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xb5cd..0xb5dd  (16 bytes)
-DATA_B5CD:
-	defb 021h,07eh,0e2h,011h,010h,000h,07eh,0e6h,0f0h,0b9h,0c8h,019h,010h,0f8h,037h,0c9h	; b5cd  !~....~.......7.
-
-; ======================================================================
-; CODIGO 0xb5dd..0xb5ed  (16 bytes)
-; ======================================================================
-
-
+L_B5CD:
+	ld hl,0e27eh		;b5cd
+	ld de,00010h		;b5d0
+L_B5D3:
+	ld a,(hl)			;b5d3
+	and 0f0h		;b5d4
+	cp c			;b5d6
+	ret z			;b5d7
+	add hl,de			;b5d8
+	djnz L_B5D3		;b5d9
+	scf			;b5db
+	ret			;b5dc
 L_B5DD:
 	ld a,l			;b5dd
 	cpl			;b5de
@@ -3412,7 +3415,7 @@ DATA_B8DC:
 	defb 006h,00ah,0ffh,006h,001h,0ffh	; b8dc
 
 ; ======================================================================
-; CODIGO 0xb8e2..0xba52  (368 bytes)
+; CODIGO 0xb8e2..0xba8e  (428 bytes)
 ; ======================================================================
 
 
@@ -3672,35 +3675,28 @@ L_BA44:
 	ld h,l			;ba4f
 	ld l,a			;ba50
 	ret			;ba51
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xba52..0xba66  (20 bytes)
-DATA_BA52:
-	defb 0e5h,021h,030h,052h,011h,040h,040h,001h,035h,058h,03eh,004h,0cdh,066h,04dh,0cdh	; ba52  .!0R.@@.5X>..fM.
-	defb 066h,0bah,0e1h,0c9h	; ba62
-
-; ======================================================================
-; CODIGO 0xba66..0xba74  (14 bytes)
-; ======================================================================
-
-
+L_BA52:
+	push hl			;ba52
+	ld hl,05230h		;ba53
+	ld de,04040h		;ba56
+	ld bc,05835h		;ba59
+	ld a,004h		;ba5c
+	call 04d66h		;ba5e
+	call L_BA66		;ba61
+	pop hl			;ba64
+	ret			;ba65
 L_BA66:
 	call L_BA82		;ba66
 	ld hl,05230h		;ba69
 	ld de,05835h		;ba6c
 	ld c,00dh		;ba6f
 	jp 04cfeh		;ba71
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xba74..0xba82  (14 bytes)
-DATA_BA74:
-	defb 011h,030h,052h,021h,040h,040h,001h,035h,058h,03eh,001h,0c3h,066h,04dh	; ba74  .0R!@@.5X>..fM
-
-; ======================================================================
-; CODIGO 0xba82..0xba8e  (12 bytes)
-; ======================================================================
-
-
+L_BA74:
+	ld de,05230h		;ba74
+	ld hl,04040h		;ba77
+	ld bc,05835h		;ba7a
+	ld a,001h		;ba7d
+	jp 04d66h		;ba7f
 L_BA82:
 	ld hl,05230h		;ba82
 	ld bc,05835h		;ba85

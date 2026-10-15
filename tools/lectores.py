@@ -423,7 +423,62 @@ def banco8_9():
               "p00:5520", F=2)
 
 
+def textos_seguidos(v, a, n, sitio, nota):
+    """n textos [x y]...0xFF seguidos desde a; devuelve el final."""
+    ini = a
+    for _ in range(n):
+        a = texto(v, a)
+    B.declara(v, ini, a, "textos_%04X" % ini, "%d textos seguidos ([x y] y caracteres hasta "
+              "0xFF; 0xFE trae otra posicion) %s" % (n, nota), sitio)
+    return a
+
+
+def tabla_textos(v, t, n, sitio, nota):
+    B.declara(v, t, t + 2 * n, "textos_%04X" % t, "%d punteros a textos %s" % (n, nota), sitio,
+              F="w%d" % n)
+    for k in range(n):
+        q = v.w(t + 2 * k)
+        B.declara(v, q, texto(v, q), "texto_%04X" % q, "texto %d de la tabla 0x%04X ([x y] y "
+                  "caracteres hasta 0xFF), que se pinta con p00:4EA6" % (k, t), sitio)
+
+
+def banco13():
+    v = B.Ventana((13, 14, 15))
+    B.declara(v, 0x62D7, 0x6319, "nombres_de_equipo", "los 6 nombres de equipo, 11 letras en "
+              "ASCII cada uno (FLYERS, RIDERS, KOBE LINES, BRENDS, PROGRAMS, DARKS): p13:6028 "
+              "copia los 0x42 bytes a 0xDAAE", "p13:6028", F=11)
+    B.declara(v, 0x731F, 0x732B, "fichas_de_equipo", "6 punteros (uno por equipo, p13:6F35) a "
+              "su ficha de 255 bytes", "p13:6F32", F="w6")
+    for k in range(6):
+        q = v.w(0x731F + 2 * k)
+        B.declara(v, q, q + 255, "equipo_%d" % k, "ficha del equipo %d: 255 bytes que p13:6F44 "
+                  "copia con ldir (BC = 0xFF) a donde apunta 0xE340: la cabecera y los "
+                  "jugadores, cada uno con su nombre en la fuente" % k, "p13:6F44", F=16)
+    tabla_textos(v, 0x6828, 3, "p13:681E", "elegidos por 0xD759 (p13:6825 salta a p00:4EA6)")
+    tabla_textos(v, 0x6CB4, 5, "p13:6CAA", "elegidos por 0xD759 (p13:6CB1 salta a p00:4EA6)")
+    B.declara(v, 0x689C, 0x68A8, "pares_689C", "6 pares de bytes (0xD74F x 2, p13:6889): el "
+              "primero va a la VRAM 0xF600 y el segundo a la 0xF601 (p00:4AE3)", "p13:6885", F=2)
+    B.declara(v, 0x69ED, 0x6A0D, "pares_69ED", "16 pares de bytes ((A - 0xD751) x 2, p13:69CE) "
+              "que p13:69DC escribe en la VRAM 0xF600/0xF601", "p13:69CA", F=2)
+    B.declara(v, 0x6AAB, 0x6AB5, "diez_espacios", "10 espacios en ASCII que p15:A651 pinta "
+              "(B = 10): borra un nombre", "p13:6743", F=10)
+    B.declara(v, 0x6BD8, 0x6BDC, "inicio_e194", "4 bytes que p13:6BAA copia a 0xE194",
+              "p13:6BA7", F=4)
+    B.declara(v, 0x6C68, 0x6C6E, "columnas_6C68", "6 bytes, uno por 0xD758 (p13:6C4F): la x "
+              "de la flecha (con D = 0x48)", "p13:6C4C", F=6)
+    B.declara(v, 0x713E, 0x7143, "penan", "'PENAN' en ASCII: p13:71C0 copia 5 bytes a la ficha "
+              "de 0xD280", "p13:712B", F=5)
+    for a, sitio in ((0x7164, "p13:7107"), (0x7189, "p13:7173"), (0x7219, "p13:7128")):
+        B.declara(v, a, a + 4, "cola_%04X" % a, "4 bytes que p13:71CD copia (BC = 4) detras del "
+                  "nombre en la ficha de 0xD280", sitio, F=4)
+    textos_seguidos(v, 0x7BBA, 2, "p13:6D94", "antes de 0x7BEA")
+    textos_seguidos(v, 0x7C33, 3, "p03:B6C1", "(DE = 0x7C33)")
+    textos_seguidos(v, 0x7C8A, 2, "p00:483C", "(HL = 0x7C8A)")
+    textos_seguidos(v, 0x7DA9, 4, "p00:4559", "(DE = 0x7DA9 / 0x7DB4 segun A)")
+
+
 def todo():
+    banco13()
     banco8_9()
     sonido()
     banco10_11()

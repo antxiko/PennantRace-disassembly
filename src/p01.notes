@@ -10,4 +10,6 @@ D 0x7916 0x7922 tabla_7916  6 destinos del despachador p00:4220 (call en p01:791
 F 0x7916 w6
 D 0x7B88 0x7B9C tabla_7B88  10 destinos del despachador p00:4220 (call en p01:7B85, el indice en A): 7BA1, 7BC3, 7BE7, 7D57, 7D80, 7F4D, 7F70, 7FB8, 7FEB, 8021; lo leen p01:7B85 (20 bytes)
 F 0x7B88 w8
+D 0x7FFF 0x8000 partida_7FFF  los 1 primeros bytes de una instruccion de 3 (CA BE 7B) que sigue en el banco 2: el trazador de un solo banco no puede verla entera (tools/bancos.py); lo leen p01:7FFF (1 bytes)
+F 0x7FFF 1
 # --- fin de los bloques de bloques.py ---

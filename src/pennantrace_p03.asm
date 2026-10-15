@@ -10,8 +10,10 @@
 
 
 ; ----------------------------------------------------------------------
-; DATOS sin identificar  0xa000..0xa002  (2 bytes)
-DATA_A000:
+; DATOS partida_A000: los 2 ultimos bytes de la instruccion de p02:9FFF (11 04
+;   00), que empieza en el banco 2; lo leen p02:9FFF (2 bytes)
+;   0xa000..0xa002  (2 bytes)
+DATA_partida_A000:
 	defb 004h,000h	; a000
 
 ; ======================================================================
@@ -1918,7 +1920,7 @@ DATA_AD5C:
 	defb 038h,078h,000h,000h	; ad5c
 
 ; ======================================================================
-; CODIGO 0xad60..0xaf8d  (557 bytes)
+; CODIGO 0xad60..0xb30a  (1450 bytes)
 ; ======================================================================
 
 
@@ -2201,7 +2203,7 @@ L_AF47:
 	ld a,c			;af47
 	ld (0ed0dh),a		;af48
 	ld (0ed82h),a		;af4b
-	jr $+110		;af4e
+	jr L_AFBC		;af4e
 L_AF50:
 	ld a,(0eddeh)		;af50
 	or a			;af53
@@ -2235,21 +2237,18 @@ L_AF50:
 L_AF81:
 	ld a,(0e19ah)		;af81
 	cp 002h		;af84
-	jr nz,$+26		;af86
+	jr nz,L_AFA0		;af86
 	call 062f7h		;af88
-	jr $+30		;af8b
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xaf8d..0xafa0  (19 bytes)
-DATA_AF8D:
-	defb 03ah,040h,0e3h,0e6h,00fh,032h,040h,0e3h,0feh,002h,0cch,0f7h,062h,03ah,040h,0e3h	; af8d  :@...2@.....b:@.
-	defb 047h,018h,010h	; af9d
-
-; ======================================================================
-; CODIGO 0xafa0..0xafc7  (39 bytes)
-; ======================================================================
-
-
+	jr L_AFA9		;af8b
+L_AF8D:
+	ld a,(0e340h)		;af8d
+	and 00fh		;af90
+	ld (0e340h),a		;af92
+	cp 002h		;af95
+	call z,062f7h		;af97
+	ld a,(0e340h)		;af9a
+	ld b,a			;af9d
+	jr L_AFB0		;af9e
 L_AFA0:
 	ld a,(0e340h)		;afa0
 	and 00fh		;afa3
@@ -2260,6 +2259,7 @@ L_AFA9:
 	ld b,a			;afac
 	and 00fh		;afad
 	inc a			;afaf
+L_AFB0:
 	or 040h		;afb0
 	ld (0ed0dh),a		;afb2
 	ld (0ed82h),a		;afb5
@@ -2271,17 +2271,8 @@ L_AFBC:
 	add hl,de			;afc1
 	ld (hl),000h		;afc2
 	jp L_B123		;afc4
-
-; ----------------------------------------------------------------------
-; DATOS sin identificar  0xafc7..0xafc8  (1 bytes)
-DATA_AFC7:
-	defb 0c9h	; afc7
-
-; ======================================================================
-; CODIGO 0xafc8..0xb30a  (834 bytes)
-; ======================================================================
-
-
+L_AFC7:
+	ret			;afc7
 L_AFC8:
 	push hl			;afc8
 	ld hl,0e23ch		;afc9

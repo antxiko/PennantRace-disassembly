@@ -1,5 +1,7 @@
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xA000 0xA002 partida_A000  los 2 ultimos bytes de la instruccion de p14:9FFF (CD 6B A2), que empieza en el banco 14; lo leen p14:9FFF (2 bytes)
+F 0xA000 2
 D 0xA441 0xA44D tabla_A441  6 destinos del despachador p00:4220 (call en p15:A43E, el indice en A): A470, A4F2, A55B, A57F, A5A3, 4C21; lo leen p15:A43E (12 bytes)
 F 0xA441 w6
 D 0xA52F 0xA532 copia_A52F  3 bytes que p00:4AB7 copia tal cual a la VRAM 0xF600; lo leen p15:A519 (3 bytes)

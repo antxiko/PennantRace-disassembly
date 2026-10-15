@@ -195,6 +195,29 @@ def despachadores():
                                 lectores=["%s:%04X" % (nombre(p), pc)], F="w%d" % min(n, 8)))
 
 
+def partidas():
+    """Las instrucciones que empiezan al final de un banco y acaban en el
+    siguiente (tools/bancos.py las mide): el trazador de un solo banco no las
+    ve enteras, asi que sus dos trozos van como datos con su explicacion."""
+    t = trazador()
+    for b, pc, n in sorted(t.partidas):
+        v = Ventana(sorted(t.config_de[(b, pc)])[0])
+        bs = bytes(v(pc + i) for i in range(n))
+        fin_banco = (pc & 0xE000) + TAM_PAGINA
+        sig = v.banco(fin_banco)
+        BLOQUES.append(dict(p=b, ini=pc, fin=fin_banco, nombre="partida_%04X" % pc,
+                            texto="los %d primeros bytes de una instruccion de %d (%s) que "
+                            "sigue en el banco %d: el trazador de un solo banco no puede verla "
+                            "entera (tools/bancos.py)" % (fin_banco - pc, n, bs.hex(" ").upper(),
+                                                          sig),
+                            lectores=["%s:%04X" % (nombre(b), pc)], F=fin_banco - pc))
+        BLOQUES.append(dict(p=sig, ini=fin_banco, fin=pc + n, nombre="partida_%04X" % fin_banco,
+                            texto="los %d ultimos bytes de la instruccion de %s:%04X (%s), que "
+                            "empieza en el banco %d" % (pc + n - fin_banco, nombre(b), pc,
+                                                        bs.hex(" ").upper(), b),
+                            lectores=["%s:%04X" % (nombre(b), pc)], F=pc + n - fin_banco))
+
+
 def relleno(minimo=16):
     """La cola de 0xFF de cada banco, cuando es larga: relleno."""
     for p in range(N_PAGINAS):
@@ -273,6 +296,7 @@ def main(argv):
     escribe = "--escribe" in argv
     lectores.todo()
     despachadores()
+    partidas()
     relleno()
     por = defaultdict(list)
     for b in BLOQUES:

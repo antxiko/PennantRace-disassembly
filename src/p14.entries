@@ -18,7 +18,9 @@
 0x814B   # p13:6D66 call
 0x81FC   # p15:A545 call
 0x839E   # p13:7110 call
+0x83D7   # p00:5D2F call
 0x845B   # p13:6D31 call
+0x84A6   # codigo huerfano: 9 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x84A6
 0x84AF   # p00:5D26 call
 0x85E0   # p00:5D6E call
 0x8654   # p00:5D9B call
@@ -34,6 +36,7 @@
 0x9A26   # p00:473C call
 0x9A44   # p14:9A3B entrada 0 de la tabla de 0x9A3E (call 0x4220 en 0x9A3B)
 0x9A4D   # p14:9A3B entrada 1 de la tabla de 0x9A3E (call 0x4220 en 0x9A3B)
+0x9B4C   # codigo huerfano: 2 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x9B4C
 0x9BCC   # p00:4793 call
 0x9C61   # p00:47A1 call
 0x9E0E   # p00:4933 call

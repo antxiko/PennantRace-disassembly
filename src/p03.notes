@@ -1,5 +1,7 @@
 
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
+D 0xA000 0xA002 partida_A000  los 2 ultimos bytes de la instruccion de p02:9FFF (11 04 00), que empieza en el banco 2; lo leen p02:9FFF (2 bytes)
+F 0xA000 2
 D 0xA52B 0xA539 tabla_A52B  7 destinos del despachador p00:4220 (call en p03:A528, el indice en A): A539, A57E, A597, A5F2, A68E, A7DB, A7EF; lo leen p03:A528 (14 bytes)
 F 0xA52B w7
 D 0xB69A 0xB6A6 tabla_B69A  6 destinos del despachador p00:4220 (call en p03:B697, el indice en A): BC22, B6A6, B967, B995, B9B2, B9BA; lo leen p03:B697 (12 bytes)

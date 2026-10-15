@@ -13,13 +13,14 @@
 # Este fichero lo regenera `make semillas` (tools/bancos.py escribe).
 0x6000   # p00:5FFD sigue de largo (el codigo cruza la frontera de banco)
 0x6003   # p00:5FFB jr cc
+0x6056   # codigo huerfano: 66 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6056
 0x6098   # p00:4754 call
 0x60AC   # p00:47FF call
 0x6124   # p03:A6AF call
 0x619F   # p00:40CC call
 0x61C7   # p03:A7F7 call
 0x6267   # p03:A6CD call cc
-0x62F7   # p02:947B call cc
+0x62F7   # p03:AF97 call cc
 0x632F   # p02:91CC call
 0x6352   # p03:ACF9 call
 0x6491   # p02:91B4 call
@@ -40,6 +41,7 @@
 0x6770   # p00:4887 call
 0x6786   # p02:93A6 call
 0x6974   # p03:B4CB jp cc
+0x6986   # codigo huerfano: 11 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6986
 0x6991   # p00:47DA call
 0x69E9   # p03:ACFF call
 0x6A64   # p03:ACFC call
@@ -69,6 +71,7 @@
 0x7969   # p01:7913 entrada 1 de la tabla de 0x7916 (call 0x4220 en 0x7913)
 0x798C   # p01:7913 entrada 2 de la tabla de 0x7916 (call 0x4220 en 0x7913)
 0x79C1   # p01:7913 entrada 3 de la tabla de 0x7916 (call 0x4220 en 0x7913)
+0x7A6C   # codigo huerfano: 5 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x7A6C
 0x7A71   # p01:7913 entrada 4 de la tabla de 0x7916 (call 0x4220 en 0x7913)
 0x7A7F   # p01:7913 entrada 5 de la tabla de 0x7916 (call 0x4220 en 0x7913)
 0x7BA1   # p01:7B85 entrada 0 de la tabla de 0x7B88 (call 0x4220 en 0x7B85)

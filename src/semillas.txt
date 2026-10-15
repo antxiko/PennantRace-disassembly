@@ -35,3 +35,29 @@ p06 0xBB31 4 5 6  # codigo 0xFB de la partitura: tabla 0xB944 (p06:B943 jp (hl))
 p06 0xBB4B 4 5 6  # codigo 0xFC de la partitura: tabla 0xB944 (p06:B943 jp (hl))
 p06 0xBB60 4 5 6  # codigo 0xFD de la partitura: tabla 0xB944 (p06:B943 jp (hl))
 p06 0xBB63 4 5 6  # codigo 0xFE de la partitura: tabla 0xB944 (p06:B943 jp (hl))
+#
+# Codigo huerfano (tools/huerfanas.py --semillas): rutinas enteras que no alcanza nadie.
+p00 0x409C 1 2 3  # codigo huerfano: 9 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x409C
+p00 0x40A5 1 2 3  # codigo huerfano: 9 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x40A5
+p00 0x40B7 1 2 3  # codigo huerfano: 9 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x40B7
+p00 0x4DAA 1 2 3  # codigo huerfano: 81 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4DAA
+p00 0x4EB0 1 2 3  # codigo huerfano: 5 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x4EB0
+p00 0x5362 1 2 3  # codigo huerfano: 26 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x5362
+p00 0x53D8 1 2 3  # codigo huerfano: 15 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x53D8
+p00 0x54FE 1 2 3  # codigo huerfano: 16 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x54FE
+p00 0x5D2C 1 2 3  # codigo huerfano: 9 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x5D2C
+p01 0x6056 1 2 3  # codigo huerfano: 66 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6056
+p01 0x6986 1 2 3  # codigo huerfano: 11 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x6986
+p01 0x7A6C 1 2 3  # codigo huerfano: 5 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x7A6C
+p02 0x807B 1 2 3  # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x807B
+p02 0x81E1 1 2 3  # codigo huerfano: 16 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x81E1
+p02 0x93F0 1 2 3  # codigo huerfano: 15 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x93F0
+p02 0x93FF 1 2 3  # codigo huerfano: 11 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x93FF
+p02 0x9552 1 2 3  # codigo huerfano: 20 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x9552
+p03 0xAF8D 1 2 3  # codigo huerfano: 19 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0xAF8D
+p03 0xAFC7 1 2 3  # codigo huerfano: 1 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0xAFC7
+p14 0x84A6 13 14 15  # codigo huerfano: 9 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x84A6
+p14 0x9B4C 13 14 15  # codigo huerfano: 2 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x9B4C
+p15 0xB5CD 13 14 15  # codigo huerfano: 16 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0xB5CD
+p15 0xBA52 13 14 15  # codigo huerfano: 20 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0xBA52
+p15 0xBA74 13 14 15  # codigo huerfano: 14 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0xBA74

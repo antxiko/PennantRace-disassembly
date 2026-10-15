@@ -14,12 +14,13 @@
 0x8002   # p01:7FFF sigue de largo (el codigo cruza la frontera de banco)
 0x8021   # p01:7B85 entrada 9 de la tabla de 0x7B88 (call 0x4220 en 0x7B85)
 0x8035   # p01:7D6A jp cc
+0x807B   # codigo huerfano: 6 bytes que acaban en un salto; el trazado no entra y ninguna instruccion salta, llama o carga 0x807B
 0x8081   # p01:7F62 call
-0x808A   # p01:7B39 jp
 0x80BA   # p01:7BD8 call
 0x80F2   # p01:7BB8 call
 0x8115   # p01:7FBB call
 0x814D   # p01:7BBB call
+0x81E1   # codigo huerfano: 16 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x81E1
 0x81F1   # p01:7FB8 call
 0x8225   # p01:7D76 call
 0x8278   # p01:7D66 call
@@ -51,7 +52,10 @@
 0x9228   # p02:9152 entrada 3 de la tabla de 0x9155 (call 0x4220 en 0x9152)
 0x93A6   # p02:9152 entrada 4 de la tabla de 0x9155 (call 0x4220 en 0x9152)
 0x93B3   # p02:9152 entrada 5 de la tabla de 0x9155 (call 0x4220 en 0x9152)
+0x93F0   # codigo huerfano: 15 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x93F0
+0x93FF   # codigo huerfano: 11 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x93FF
 0x940A   # p02:9152 entrada 6 de la tabla de 0x9155 (call 0x4220 en 0x9152)
+0x9552   # codigo huerfano: 20 bytes que acaban en ret; el trazado no entra y ninguna instruccion salta, llama o carga 0x9552
 0x9566   # p03:A51C call
 0x9594   # p01:627E call
 0x95AD   # p03:ACD5 call
