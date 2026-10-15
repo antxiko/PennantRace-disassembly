@@ -1,4 +1,224 @@
 
+
+# --- A MANO: comentarios escritos leyendo el codigo ---
+C 0x6000 PENNANT y los menus: en el paso 8 con soporte (0xDD8E), la lectura (p13:6FFE)...
+C 0x6011 ...hasta que 0xD2B1 diga como fue...
+C 0x6019 ...leida: 0xE1D1 = 0...
+C 0x6022 ...el modo guardado, los 6 nombres de equipo (p13:62D7) a 0xDAAE y 0x24 al final...
+C 0x6036 ...0xD2B2 = 6, p14:81FC y a seguir (p13:64DF)
+C 0x6041 con 0xDD90, a seguir
+C 0x604A el paso del despachador 0xD74C
+C 0x606B el aviso: paso 14, 128 cuadros, p15:BA82 y el texto de p13:7D19
+C 0x6081 la espera...
+C 0x6086 ...y vuelta al menu: estado 0, 32 cuadros
+C 0x6096 el paso anterior
+C 0x609E tres pasos mas...
+C 0x60A1 ...dos...
+C 0x60A4 ...uno...
+C 0x60A7 ...el paso siguiente con el subpaso a 0
+C 0x60AF el subpaso siguiente
+C 0x60B4 p13:6BFB y el paso de la opcion (0xD759 + 3)
+C 0x60B9 p13:6B93 y lo mismo
+C 0x60CB el paso 0xD759 + 10
+C 0x60D8 el principio: borra la pantalla y los pasos...
+C 0x60EE ...sin partida guardada ni leida, directo (C = 1)...
+C 0x6102 ...si no, el texto de 0x6115 y las marcas de 0xDD91-0xDD93 a cero
+C 0x6148 la eleccion de p15:AAE1 con DE = 0x6050, hasta 0xDD91...
+C 0x6157 ...0xD750 = la eleccion, borra los tres textos...
+C 0x616D ...sprites fuera y la flecha (p13:6187)...
+C 0x6173 ...con eleccion, al paso siguiente; si no, 0xD2B0 = 0 y cinco pasos mas
+C 0x6187 32 bytes de dibujos de sprite (0x6193) a la VRAM 0xF800
+C 0x61B3 el subpaso de 0xD74D
+C 0x61BD la pantalla de PENNANT: 0xD6E1 = 1, lineas y marcos...
+C 0x61FF la fuente, los textos de 0x613D y 0x6294 y el cuadro de 0x6C9D
+C 0x6214 una temporada nueva: los 6 nombres de equipo a 0xDAAE...
+C 0x6222 ...0xD2B2 = 6, p14:81FC, el sonido 0x2E...
+C 0x622F ...la jornada 1 de 1 (0xD753)...
+C 0x6235 ...0xDD80-0xDD85 a 0xFF, 0xD6E3-0xD706 a cero, los equipos de 0xD70A a 0xFF...
+C 0x625C ...la tabla (p13:6A0D) y 0xDA6C-0xDAAD en blanco
+C 0x6272 el cursor: 3 bytes de atributo (0x6291) a la VRAM 0xF600...
+C 0x627E ...el siguiente fuera (0xD8)...
+C 0x6286 ...y el color 7 a sus 16 lineas
+C 0x6319 el subpaso de 0xD74D
+C 0x6323 el cuadro de la jornada, el texto de p13:7CEF y el numero de jugadores (p13:6B50)
+C 0x633A elegir el numero de jugadores (0xD6E1, 1-6): con otra opcion, a ella...
+C 0x6347 ...izquierda o derecha, cada 8 cuadros si se mantiene...
+C 0x6359 ...la derecha: uno menos (de 1 a 6)...
+C 0x636C ...la izquierda: uno mas (de 6 a 1)...
+C 0x6377 ...lo pinta y el sonido 0x26
+C 0x6383 elegir equipo: con otra opcion, a ella...
+C 0x638D ...la flecha y la tabla...
+C 0x639D ...con el boton, el equipo elegido (p13:6AB5)
+C 0x63C5 sin cursor y 0xD758 = 0
+C 0x63D4 la opcion 4: el cursor de la lista (p13:6BDC, p13:6C49) y con el boton se elige
+C 0x63FE el cuadro de los partidos: el texto de 0x6412 y el numero (p13:6462)
+C 0x641A elegir el numero de partidos (0xD753, 1-26): con otra opcion, a ella...
+C 0x643A ...cada 8 cuadros: abajo uno menos (de 1 a 26)...
+C 0x644E ...arriba uno mas (de 26 a 1)...
+C 0x6454 ...en BCD en 0xD754 y el sonido 0x26
+C 0x6462 el numero de partidos (BCD de 0xD754) en (0x70, 0x98)
+C 0x646D A en BCD (decenas x 16 + unidades)
+C 0x6491 la opcion 3: con el boton y todos los equipos elegidos, el texto de p13:62D1
+C 0x64B4 empezar: p13:6BA1, copia los equipos de 0xD70A a 0xD72A...
+C 0x64C2 ...dos jugadores (bit 5 de 0xDE02) salvo con 1: entonces solo uno...
+C 0x64CF ...0xE1D1 = 1 y 0xD6DC = 0
+C 0x64D9 con mas, al paso 13
+C 0x64DF la siguiente jornada: con un jugador, 0xE1D1 = 1 y fuera
+C 0x64EF los pasos a cero, el paso 9...
+C 0x6507 ...guarda los equipos de 0xD70A en 0xE340 y los pone a 0xFF...
+C 0x651F ...0xD718-0xD729 a 0xFF...
+C 0x652C ...quien juega con quien (p13:65BE)...
+C 0x6532 ...los numeros 2, 3... en columna...
+C 0x6542 ...la flecha, el texto de p13:A710 y la tabla de la jornada...
+C 0x6588 ...el texto de 0x6594, p13:6811 y el cursor
+C 0x65BE los emparejamientos: para cada equipo (0xE340) a 0xD718...
+C 0x65CA ...su fila de la tabla de 0xD6E3 (6 bytes)...
+C 0x65DE ...si ya ha jugado con todos los demas (0xD6DE - 1 veces)...
+C 0x65EE ...se queda; si no, 0xFF (libre)
+C 0x65FB C = el indice del equipo A en 0xD72A
+C 0x6606 la jornada, opcion 0: el visitante: con el boton...
+C 0x661D ...el elegido (p13:66C4) y los dos nombres
+C 0x662A opcion 1: el local (p13:66F6)
+C 0x665A opcion 2: con el boton y los dos elegidos, al subpaso siguiente
+C 0x6677 el orden de la jornada (p13:6761), el texto de 0x65B8 y 0xE1D1 = 1
+C 0x6686 B' = el equipo de la fila del cursor (0xD72A + 0xD74F)
+C 0x6695 los rivales que le quedan: su fila de 0xD6E3...
+C 0x66A6 ...los que ya ha jugado bastante (0xD6DE - 1) van a 0xFF...
+C 0x66B5 ...los demas con su numero
+C 0x66C4 el visitante elegido: no el mismo que el local...
+C 0x66CF ...y que le quede ese rival...
+C 0x66E4 ...0xD70A = el, sus rivales a 0xD71E y su nombre a 0xDA6C
+C 0x66F6 el local: lo mismo con 0xD70B, 0xD724 y 0xDA77
+C 0x6726 el nombre de 11 letras de 0xDAAE + 11 x n y el sonido 0x27
+C 0x6737 los dos nombres (o espacios) en la pantalla y las marcas
+C 0x6761 el orden de la jornada: los dos que juegan primero...
+C 0x676E ...los demas detras en 0xD70C...
+C 0x6783 ...y se recoloca 0xE340 y las fichas de 15 bytes de 0xD680 a la vez
+C 0x67B0 el nombre del local a 0xD740
+C 0x67BC cambia dos equipos de 0xE340
+C 0x67D5 cambia sus fichas de 15 bytes en 0xD680
+C 0x67FA con el boton 2, la opcion siguiente (0xD759, de 0 a 2)...
+C 0x6809 ...el sonido 0x26...
+C 0x6811 ...y su texto (la tabla 0x6828)
+C 0x6846 la fila del cursor (0xD74F) con arriba y abajo, sin pasar de los equipos (p13:6B5B)
+C 0x6874 la fila siguiente (da la vuelta)
+C 0x6882 el cursor en su fila: los 2 bytes de 0x689C a la VRAM 0xF600
+C 0x68A8 la lista de equipos con los que ya no puede jugar en otro color: los del local...
+C 0x68B9 ...o los del visitante
+C 0x68C5 cada equipo de 0xD72A: su nombre (0xDAAE + 11 n)...
+C 0x68EF ...en el color 4 (+0xA0) si esta elegido o no le quedan partidos...
+C 0x690E ...10 letras (p14:9834 da la letra, 0 en blanco)
+C 0x6922 la siguiente fila de jugador (0xD2B2 filas), da la vuelta
+C 0x6938 el cursor de la lista de jugadores: 0xD2B2 filas (o 0xD2B2 - 6)...
+C 0x6948 ...arriba y abajo de 2 en 2, izquierda y derecha cambian de columna...
+C 0x69A3 ...la ventana de 16 filas (0xD751) sigue al cursor...
+C 0x69C3 ...y el cursor en su sitio (la tabla 0x69ED; 0x30 menos en TEAM EDIT)
+C 0x6A0D la lista de jugadores: desde 0xDAAE (los nombres de equipo)...
+C 0x6A13 ...o desde 0xDAF0 (los de la partida)
+C 0x6A17 desde la fila de la ventana (0xD751), 11 bytes cada uno...
+C 0x6A22 ...en (0x60, 0x28), o en 0x30 en TEAM EDIT...
+C 0x6A2E ...8 filas de dos columnas (la segunda 0x68 a la derecha)...
+C 0x6A38 ...0x24 acaba la lista
+C 0x6A51 una columna vacia: espacios
+C 0x6A5E un nombre: en el color 4 si esta entre los elegidos de 0xD70A...
+C 0x6A86 ...10 letras (p14:9834)...
+C 0x6AA2 ...y la fila siguiente
+C 0x6AB5 elegir el equipo de la fila: si ya esta elegido nada...
+C 0x6AC6 ...el primer hueco de 0xD70A...
+C 0x6AD5 ...lo ocupa, copia el nombre a 0xDA6C + 11 n y uno mas en 0xDA6B
+C 0x6AEC el nombre de 11 letras de 0xDAAE + 11 x A y el sonido 0x27
+C 0x6AFD HL = A x 11
+C 0x6B0A HL = A x 15
+C 0x6B17 los 6 equipos elegidos (o espacios) en columna desde (0x10, 0x58)
+C 0x6B50 el numero de jugadores (0xD6E1) en (0x98, 0x78)
+C 0x6B5B B = cuantos equipos juegan: 0xD6E1, o 6 con uno solo
+C 0x6B66 el cursor fuera y un recuadro guardando lo de detras...
+C 0x6B6E ...(0x30 x 0xB0 en (0x80, 0x24))
+C 0x6B93 devuelve lo de detras del recuadro
+C 0x6BA1 una temporada nueva: el marcador de 0x6BD8...
+C 0x6BAC ...0xD680-0xD6D9 a cero, 0xD6DE = los partidos...
+C 0x6BBF ...y la ficha de 15 bytes de cada equipo con su nombre (11 letras)
+C 0x6BDC elegir la fila (0xD758) con arriba y abajo
+C 0x6BFB con menos de 6 jugadores, borra a los que sobran (p13:6C71) y repinta
+C 0x6C15 el texto de 0x6C31 y los numeros 2, 3... de cada fila
+C 0x6C49 la flecha de la fila 0xD758 (x = 0x48, y de 0x6C68)...
+C 0x6C55 ...parpadea con el bit 2 del reloj
+C 0x6C6E borra el equipo de la fila 0xD758...
+C 0x6C71 ...(0xFF en 0xD70A + n) y uno menos en 0xDA6B
+C 0x6C81 con el boton 1, la opcion siguiente...
+C 0x6C85 ...o con el boton 2
+C 0x6C8C la opcion siguiente (0xD759, de 0 a 4) y el sonido 0x26
+C 0x6C9D el texto de 0x6CE6 y el de la opcion (tabla 0x6CB4)
+C 0x6D0E MEDIA SELECT: el paso de 0xD2B0
+C 0x6D1E paso 0: sin el soporte 3, 0xDD8F = el soporte y a grabar...
+C 0x6D31 ...con el 3, p14:845B y la pregunta SI / NO (p00:5D7D)
+C 0x6D41 paso 1: el boton 1 elige (0xDD8F = 0xDD0C + 1)
+C 0x6D53 calla, p15:BA66 y el texto de p13:7BDD
+C 0x6D61 al paso siguiente
+C 0x6D66 paso 2: p14:814B; si no fue bien, el aviso de p13:7C22 y 128 cuadros
+C 0x6D88 bien: el texto de exito
+C 0x6D8D el texto segun el soporte (p13:7BEA o 0x7C06) y SI / NO
+C 0x6DAA paso: con el boton 1, segun la eleccion...
+C 0x6DC7 ...NO: al paso 2 con el texto de 0x7BDD
+C 0x6DD6 el texto de p13:7CFA y 64 cuadros
+C 0x6DEC la espera y 0xD2B1 = 1
+C 0x6DF7 el paso de 0xD2B0
+C 0x6E07 paso 0 de la grabacion: si alguno de los dos equipos es uno editado (0x41), calla
+C 0x6E20 paso: graba (p14:8000); si fue bien, el texto y dos pasos
+C 0x6E32 paso: lee (p14:8054); si fue mal, 0xD2B1 = 1...
+C 0x6E41 ...en PENNANT con el jugador en el local, cambia las dos fichas de equipo
+C 0x6E58 cambia 255 bytes de 0xD380 con 0xD47F
+C 0x6E67 128 cuadros de espera
+C 0x6E70 al paso siguiente
+C 0x6E75 la pregunta: SI, el texto de p13:7CFA y 64 cuadros; NO, al paso de 0xE340
+C 0x6EA4 la espera y 0xD2B1 = 2
+C 0x6EAF la ficha del visitante (0xD380) por el nombre de 0xD680...
+C 0x6EB7 ...o la del local (0xD47F) por el de 0xD740
+C 0x6EBD busca el nombre entre los 6 de serie (0xDAAE, 11 letras cada uno)...
+C 0x6F31 ...y copia su ficha de 255 bytes de la tabla 0x731F
+C 0x6F47 si no, entre los dos editados (0xDAF0, 0xDAFB)...
+C 0x6F68 ...su ficha de 0xD780 + 256 x n
+C 0x6F79 leer: el paso de 0xD2B0
+C 0x6F89 paso 0: 0xD2B1 = 0, calla y al paso siguiente
+C 0x6F97 paso: lee (p14:80F4); bien, el texto; mal, el aviso de p13:7C22 y 160 cuadros
+C 0x6FBE la pregunta: SI repite, NO vuelve
+C 0x6FE8 la espera y 0xD2B1 = 2
+C 0x6FF3 la espera y 0xD2B1 = 1
+C 0x6FFE la lectura en el paso 8: el paso de 0xD2B0
+C 0x700E paso 0: calla, el recuadro y el texto de p13:7D41
+C 0x7025 paso: lee (p14:80A8); bien, el texto; mal, el aviso de p13:7D09 y 128 cuadros
+C 0x704B la pregunta: SI vuelve a intentar, NO vuelve
+C 0x707E la espera y 0xD2B1 = 1
+C 0x7089 la espera, los menus a cero y 0xD2B1 = 2
+C 0x709A busca el Game Master 2: los 4 slots (y sus subslots si estan expandidos)...
+C 0x70B7 ...si no esta, 0xDD0E = 0xFF
+C 0x70BD los 4 subslots del slot C
+C 0x70CD carry si el slot A lleva 'YZ' en 0x4010-0x4011 (RDSLT): el Game Master 2
+C 0x70F1 grabar el equipo en el Game Master 2: H.KEYI fuera mientras tanto...
+C 0x70FC ...su directorio (p13:727A); con 0x22 equipos o mas, no cabe...
+C 0x7107 ...la ficha de grabacion con el nombre de 0xD380 (p13:71D4)...
+C 0x7110 ...p14:839E y le llama con C = 0x0A (p13:721D)
+C 0x711D grabar la partida (PENAN): la ficha de 0xD280 con 'PENAN' y la cola de 0x7219
+C 0x7143 leer el equipo de 0xD680 (C = 0x0B)
+C 0x7168 leer el de 0xD740
+C 0x718D leer la partida PENAN; si no fue mal, 0xD2B1 = 1
+C 0x71B8 la ficha de 0xD280: 5 letras de HL, 8 ceros, los 4 bytes de BC y el slot propio (0xD2AA)
+C 0x71D4 la ficha con el nombre del equipo sin los ceros de delante (5 letras)
+C 0x721D graba: el Game Master 2 en la pagina 2 (ENASLT)...
+C 0x722B ...su banco 4 en 0x8000...
+C 0x7230 ...y `call 0x8000` con C = 0x0A y DE = la ficha...
+C 0x7239 ...el cartucho propio otra vez en la pagina 2...
+C 0x7243 ...A distinto de 0: mal (0xD2B1 = 2); si no, 0xD2B1 = 1
+C 0x724C lee: igual con C = 0x0B
+C 0x727A el directorio del Game Master 2: H.TIMI fuera, p14:843F...
+C 0x7289 ...0xD2B3-0xD37E a cero y la lista en 0xD2B3...
+C 0x72A6 ...le llama con C = 5...
+C 0x72CD ...y cuenta los equipos de la lista (de 8 en 8 bytes)
+C 0x72F1 uno mas: su nombre (5 letras, p14:8423) en la lista...
+C 0x7303 ...5 espacios y 0x41 (editado)...
+C 0x730A ...hasta 0x22 equipos
+C 0x7316 0x24 acaba la lista
+# --- fin de lo escrito a mano ---
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x604D 0x606B tabla_604D  15 destinos del despachador p00:4220 (call en p13:604A, el indice en A): 60D8, 6148, 61B3, 6319, 6383, 63F4, 6487, 63BB, 6FFE, 64DF, 6606, 662A, 6650, 64DF, 6081; lo leen p13:604A (30 bytes)
 F 0x604D w8
@@ -140,27 +360,19 @@ F 0x7E61 16
 # --- fin de los bloques de bloques.py ---
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
-C 0x6000 lee el despachador de los menus (y 0xD74D)
-C 0x6019 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x6025 guarda las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
-C 0x604A despacha: salta a la palabra A de la tabla que va pegada detras del `call`
-C 0x606B apunta a el despachador de los menus (y 0xD74D)
 C 0x607E texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6087 guarda el despachador de los menus (y 0xD74D)
 C 0x608A guarda el estado del juego (indice del despachador principal)
 C 0x608D guarda el paso dentro del estado
 C 0x6092 guarda la cuenta atras del estado
-C 0x6096 apunta a el despachador de los menus (y 0xD74D)
-C 0x60A7 apunta a el despachador de los menus (y 0xD74D)
 C 0x60C3 guarda el despachador de los menus (y 0xD74D)
 C 0x60D0 guarda el despachador de los menus (y 0xD74D)
-C 0x60D8 borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
 C 0x60DC apunta a el despachador de los menus (y 0xD74D)
 C 0x6105 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x615E texto_c0: como texto, con C = 0
 C 0x6164 texto_c0: como texto, con C = 0
 C 0x616A texto_c0: como texto, con C = 0
-C 0x616D esconde_sprites: escribe 0xD8 (Y = 216: no se pinta ninguno) en la VRAM 0xF600, el primer atributo de sprite
 C 0x6190 copia_a_vram: copia BC bytes de HL a la VRAM DE
 C 0x61B6 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x61C9 linea: orden LINE (0x70) del VDP desde HL
@@ -176,10 +388,8 @@ C 0x627B copia_a_vram: copia BC bytes de HL a la VRAM DE
 C 0x6283 byte_a_vram: escribe A en la VRAM HL
 C 0x631C despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x632C texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0x6347 lee los botones recien pulsados del mando 1 / cursores
 C 0x634E lee los botones pulsados del mando 1 / cursores
 C 0x6380 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0x639D lee los botones recien pulsados del mando 1 / cursores
 C 0x63BE despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x63CA byte_a_vram: escribe A en la VRAM HL
 C 0x63E5 lee los botones recien pulsados del mando 1 / cursores
@@ -192,15 +402,12 @@ C 0x646A numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0x648A despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x649C lee los botones recien pulsados del mando 1 / cursores
 C 0x64AD texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0x64C2 apunta a las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0x64D1 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x64D5 guarda el equipo del jugador en PENNANT (bit 0)
 C 0x64DB guarda el despachador de los menus (y 0xD74D)
-C 0x64DF borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
 C 0x64EB guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x64F0 apunta a el despachador de los menus (y 0xD74D)
 C 0x6504 guarda el despachador de los menus (y 0xD74D)
-C 0x6507 apunta a variable de paso (cada rutina la usa a su manera)
 C 0x6538 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x6548 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6552 linea: orden LINE (0x70) del VDP desde HL
@@ -210,7 +417,6 @@ C 0x6571 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
 C 0x657B linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
 C 0x6585 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
 C 0x658B texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0x65BE apunta a variable de paso (cada rutina la usa a su manera)
 C 0x6617 lee los botones recien pulsados del mando 1 / cursores
 C 0x663C lee los botones recien pulsados del mando 1 / cursores
 C 0x6653 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
@@ -224,12 +430,10 @@ C 0x6786 apunta a variable de paso (cada rutina la usa a su manera)
 C 0x67C1 apunta a variable de paso (cada rutina la usa a su manera)
 C 0x67C6 hl_mas_a: HL = HL + A
 C 0x67CA de_mas_a: DE = DE + A
-C 0x67FA lee los botones recien pulsados del mando 1 / cursores
 C 0x680E sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x6814 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x681E hl_mas_a: HL = HL + A
 C 0x6825 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0x6846 lee los botones recien pulsados del mando 1 / cursores
 C 0x684F lee los botones recien pulsados del mando 1 / cursores
 C 0x6863 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x686F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -237,7 +441,6 @@ C 0x6889 hl_mas_a: HL = HL + A
 C 0x6892 byte_a_vram: escribe A en la VRAM HL
 C 0x6899 byte_a_vram: escribe A en la VRAM HL
 C 0x6916 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
-C 0x6948 lee los botones recien pulsados del mando 1 / cursores
 C 0x6951 lee los botones recien pulsados del mando 1 / cursores
 C 0x696E sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x697A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -248,7 +451,6 @@ C 0x69D3 lee el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 
 C 0x69E3 byte_a_vram: escribe A en la VRAM HL
 C 0x69EA byte_a_vram: escribe A en la VRAM HL
 C 0x6A25 lee el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
-C 0x6A5E guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x6A81 lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x6A97 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x6AFA sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -260,7 +462,6 @@ C 0x6B85 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC
 C 0x6B90 marco: un marco de lineas: HL la esquina, DE el tamano
 C 0x6B9E copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 C 0x6BA4 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
-C 0x6BDC lee los botones recien pulsados del mando 1 / cursores
 C 0x6BE9 lee los botones recien pulsados del mando 1 / cursores
 C 0x6C18 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6C24 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
@@ -274,38 +475,29 @@ C 0x6CA0 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos
 C 0x6CAA hl_mas_a: HL = HL + A
 C 0x6CB1 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6D11 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
-C 0x6D41 lee los botones recien pulsados del mando 1 / cursores
 C 0x6D55 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x6D5E texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6D76 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6D9C texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0x6DAA lee los botones recien pulsados del mando 1 / cursores
 C 0x6DD3 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6DE3 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6DFA despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x6E1B sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0x6E41 lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0x6E4A lee el equipo del jugador en PENNANT (bit 0)
 C 0x6E4F apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 C 0x6E52 apunta a la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
-C 0x6E75 lee los botones recien pulsados del mando 1 / cursores
 C 0x6E8F texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6E9D lee variable de paso (cada rutina la usa a su manera)
-C 0x6EAF apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
-C 0x6EB7 apunta a la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
-C 0x6EBD guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x6F36 hl_mas_a: HL = HL + A
 C 0x6F3D lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x6F6F lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x6F7C despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x6F8F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x6FB5 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0x6FBE lee los botones recien pulsados del mando 1 / cursores
 C 0x7001 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x7014 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x701D texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x7048 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0x704B lee los botones recien pulsados del mando 1 / cursores
 C 0x705E sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x7091 guarda el despachador de los menus (y 0xD74D) y el byte siguiente (16 bits)
 C 0x710A apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
