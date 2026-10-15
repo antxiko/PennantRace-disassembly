@@ -223,11 +223,13 @@ C 0xB295 apunta a la cabecera del sonido que empieza (18 bytes)
 C 0xB2B3 apunta a la cabecera del sonido que empieza (18 bytes)
 C 0xB2D1 apunta a la cabecera del sonido que empieza (18 bytes)
 C 0xB2EF apunta a la cabecera del sonido que empieza (18 bytes)
+C 0xB2F7 apunta a lo que dice el motor que suena
 C 0xB381 el mapper: pone en 0x8000 el banco de A
 C 0xB38C el mapper: pone en 0x8000 el banco de A
 C 0xB3CF el mapper: pone en 0x8000 el banco de A
 C 0xB3EC el mapper: pone en 0x8000 el banco de A
 C 0xB473 apunta a las fichas de los 8 canales de sonido (0x2D bytes cada una)
+C 0xB4DE apunta a lo que dice el motor que suena
 C 0xB528 orden_de_partitura: la orden A de la partitura: 0xD0-0xDF octava y volumen (p06:BB99), 0xE0-0xFE por la tabla 0xB944
 C 0xB52C lee_partitura: lee la partitura del canal IX: 0xFF acaba, 0xD0-0xFE son ordenes y lo de abajo notas
 C 0xB63E lee_partitura: lee la partitura del canal IX: 0xFF acaba, 0xD0-0xFE son ordenes y lo de abajo notas

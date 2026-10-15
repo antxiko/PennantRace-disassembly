@@ -161,18 +161,30 @@ C 0xAEFB numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0xAF0F numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0xAF23 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0xB02F caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0xB0FD lee el desplazamiento de la pantalla (16 bits)
 C 0xB139 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0xB149 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0xB153 hl_mas_a: HL = HL + A
+C 0xB173 lee el desplazamiento de la pantalla (16 bits)
 C 0xB238 copia_logica: orden LMMM (0x90 + operacion) del VDP: copia el rectangulo HL a DE, BC de tamano; las paginas en los bits 4-7 de A' y la operacion logica en los 0-3
 C 0xB2D6 hl_mas_a: HL = HL + A
+C 0xB693 lee el desplazamiento de la pantalla (16 bits)
+C 0xB6A7 lee el desplazamiento de la pantalla (16 bits)
 C 0xB6AE hl_mas_a: HL = HL + A
+C 0xB70B lee el desplazamiento de la pantalla (16 bits)
 C 0xB713 hl_mas_a: HL = HL + A
 C 0xB788 lee los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 C 0xB78F texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
+C 0xB79B lee el desplazamiento de la pantalla (16 bits)
 C 0xB7A2 hl_mas_a: HL = HL + A
+C 0xB817 lee el desplazamiento de la pantalla (16 bits)
 C 0xB853 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
+C 0xB856 lee el desplazamiento de la pantalla (16 bits)
+C 0xB8E2 lee el desplazamiento de la pantalla (16 bits)
+C 0xB926 lee el desplazamiento de la pantalla (16 bits)
+C 0xB98C lee el desplazamiento de la pantalla (16 bits)
 C 0xB9C8 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
+C 0xB9CB lee el desplazamiento de la pantalla (16 bits)
 C 0xBA07 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0xBA5E copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 C 0xBA71 marco: un marco de lineas: HL la esquina, DE el tamano
@@ -185,6 +197,7 @@ C 0xBB97 borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM
 C 0xBB9A esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 C 0xBBA6 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0xBBB0 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0xBBB3 guarda el desplazamiento de la pantalla (16 bits)
 C 0xBBB8 guarda la cuenta atras del estado
 C 0xBBBD apunta a la cuenta atras del estado
 C 0xBBD5 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes

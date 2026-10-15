@@ -1214,7 +1214,7 @@ L_B2EF:
 	bit 0,(hl)		;b2f2
 	ret z			;b2f4
 	push ix		;b2f5
-	ld ix,0ef3bh		;b2f7
+	ld ix,0ef3bh		;b2f7   ; apunta a lo que dice el motor que suena
 	call L_B405		;b2fb
 	pop ix		;b2fe
 	inc hl			;b300
@@ -1463,7 +1463,7 @@ L_B4B5:
 	call L_B4E9		;b4d6
 	ld a,080h		;b4d9
 	ld (0efdbh),a		;b4db
-	ld ix,0ef3bh		;b4de
+	ld ix,0ef3bh		;b4de   ; apunta a lo que dice el motor que suena
 	call L_B4E9		;b4e2
 	call L_BBB8		;b4e5
 	ret			;b4e8

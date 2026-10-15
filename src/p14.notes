@@ -97,9 +97,12 @@ C 0x8649 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMM
 C 0x86CC copia_a_vram: copia BC bytes de HL a la VRAM DE
 C 0x8723 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x874E copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
+C 0x93CB lee el desplazamiento de la pantalla (16 bits)
 C 0x93D9 texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
 C 0x93F8 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x93FE texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x9401 apunta a los strikes de la cuenta (3 = eliminado)
+C 0x941E apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0x946F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9472 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x96D7 hl_mas_a: HL = HL + A
@@ -145,10 +148,12 @@ C 0x9B61 hl_mas_a: HL = HL + A
 C 0x9B92 de_mas_a: DE = DE + A
 C 0x9BCF lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x9BF9 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x9C34 lee el orden de bateo del visitante (0-8)
 C 0x9C3A hl_mas_a: HL = HL + A
 C 0x9C42 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x9C64 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x9C8E lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x9CC9 lee el orden de bateo del local (0-8)
 C 0x9CCF hl_mas_a: HL = HL + A
 C 0x9CD7 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x9CF6 borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende

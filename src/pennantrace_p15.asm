@@ -2350,7 +2350,7 @@ L_B0E3:
 	ld bc,0feb0h		;b0f7
 	add hl,bc			;b0fa
 	jr nc,L_B0D9		;b0fb
-	ld hl,(0e1a2h)		;b0fd
+	ld hl,(0e1a2h)		;b0fd   ; lee el desplazamiento de la pantalla (16 bits)
 	ld de,0ff30h		;b100
 	add hl,de			;b103
 	ret nc			;b104
@@ -2418,7 +2418,7 @@ L_B158:
 	ld (hl),001h		;b16d
 	call L_B1D8		;b16f
 	ret nc			;b172
-	ld hl,(0e1a2h)		;b173
+	ld hl,(0e1a2h)		;b173   ; lee el desplazamiento de la pantalla (16 bits)
 	ld de,0ffa0h		;b176
 	add hl,de			;b179
 	ret nc			;b17a
@@ -3077,7 +3077,7 @@ DATA_texto_suelto_B68C:
 
 
 L_B693:
-	ld a,(0e1a2h)		;b693
+	ld a,(0e1a2h)		;b693   ; lee el desplazamiento de la pantalla (16 bits)
 	cp 00dh		;b696
 	ld a,(0e1a3h)		;b698
 	jp nc,L_B801		;b69b
@@ -3085,7 +3085,7 @@ L_B693:
 	jr c,L_B70B		;b6a0
 	cp 00ch		;b6a2
 	jp c,L_B79B		;b6a4
-	ld a,(0e1a2h)		;b6a7
+	ld a,(0e1a2h)		;b6a7   ; lee el desplazamiento de la pantalla (16 bits)
 	dec a			;b6aa
 	ld hl,0e1d8h		;b6ab
 	call 04216h		;b6ae   ; hl_mas_a: HL = HL + A
@@ -3154,7 +3154,7 @@ L_B709:
 	scf			;b709
 	ret			;b70a
 L_B70B:
-	ld a,(0e1a2h)		;b70b
+	ld a,(0e1a2h)		;b70b   ; lee el desplazamiento de la pantalla (16 bits)
 	dec a			;b70e
 	add a,a			;b70f
 	ld hl,0e1b4h		;b710
@@ -3242,7 +3242,7 @@ L_B796:
 	ld (hl),c			;b799
 	ret			;b79a
 L_B79B:
-	ld a,(0e1a2h)		;b79b
+	ld a,(0e1a2h)		;b79b   ; lee el desplazamiento de la pantalla (16 bits)
 	dec a			;b79e
 	ld hl,0e1cch		;b79f
 	call 04216h		;b7a2   ; hl_mas_a: HL = HL + A
@@ -3320,7 +3320,7 @@ L_B801:
 	jp z,L_B9CB		;b80f
 	cp 011h		;b812
 	jp z,L_B98C		;b814
-	ld a,(0e1a2h)		;b817
+	ld a,(0e1a2h)		;b817   ; lee el desplazamiento de la pantalla (16 bits)
 	sub 00dh		;b81a
 	ld e,a			;b81c
 	ld d,000h		;b81d
@@ -3361,7 +3361,7 @@ L_B84B:
 	ld b,001h		;b851
 	jp 05bf1h		;b853   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 L_B856:
-	ld a,(0e1a2h)		;b856
+	ld a,(0e1a2h)		;b856   ; lee el desplazamiento de la pantalla (16 bits)
 	sub 00dh		;b859
 	add a,a			;b85b
 	ld e,a			;b85c
@@ -3466,7 +3466,7 @@ DATA_resto_B8DC:
 
 
 L_B8E2:
-	ld a,(0e1a2h)		;b8e2
+	ld a,(0e1a2h)		;b8e2   ; lee el desplazamiento de la pantalla (16 bits)
 	sub 00dh		;b8e5
 	add a,a			;b8e7
 	ld e,a			;b8e8
@@ -3503,7 +3503,7 @@ L_B91B:
 	ld b,003h		;b921
 	jp 05c34h		;b923
 L_B926:
-	ld a,(0e1a2h)		;b926
+	ld a,(0e1a2h)		;b926   ; lee el desplazamiento de la pantalla (16 bits)
 	sub 00dh		;b929
 	ld e,a			;b92b
 	ld d,000h		;b92c
@@ -3573,7 +3573,7 @@ L_B981:
 	ld b,003h		;b987
 	jp 05c34h		;b989
 L_B98C:
-	ld a,(0e1a2h)		;b98c
+	ld a,(0e1a2h)		;b98c   ; lee el desplazamiento de la pantalla (16 bits)
 	sub 00dh		;b98f
 	ld e,a			;b991
 	ld d,000h		;b992
@@ -3614,7 +3614,7 @@ L_B9C0:
 	ld b,001h		;b9c6
 	jp 05bf1h		;b9c8   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 L_B9CB:
-	ld a,(0e1a2h)		;b9cb
+	ld a,(0e1a2h)		;b9cb   ; lee el desplazamiento de la pantalla (16 bits)
 	sub 00dh		;b9ce
 	ld e,a			;b9d0
 	ld d,000h		;b9d1
@@ -3870,7 +3870,7 @@ L_BB97:
 	call 052e1h		;bbac
 	xor a			;bbaf
 	ld (0e1d1h),a		;bbb0   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
-	ld (0e1a2h),a		;bbb3
+	ld (0e1a2h),a		;bbb3   ; guarda el desplazamiento de la pantalla (16 bits)
 	ld a,020h		;bbb6
 	ld (0de04h),a		;bbb8   ; guarda la cuenta atras del estado
 	jr L_BC1D		;bbbb

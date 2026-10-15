@@ -778,7 +778,7 @@ L_A539:
 	ld a,c			;a554
 	ld (0e1e5h),a		;a555
 	call L_AA02		;a558
-	ld hl,0e231h		;a55b
+	ld hl,0e231h		;a55b   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld de,0ec98h		;a55e
 	ld bc,00040h		;a561
 	ldir		;a564
@@ -786,7 +786,7 @@ L_A539:
 	ld de,0ecdch		;a569
 	ld bc,00004h		;a56c
 	ldir		;a56f
-	ld hl,0e311h		;a571
+	ld hl,0e311h		;a571   ; apunta a las carreras del visitante por entrada (10 casillas, 12-13 el total)
 	ld de,0eda2h		;a574
 	ld bc,00020h		;a577
 	ldir		;a57a
@@ -935,7 +935,7 @@ L_A65A:
 L_A68E:
 	call L_A592		;a68e
 	call L_A6E9		;a691
-	ld a,(0e198h)		;a694
+	ld a,(0e198h)		;a694   ; lee los strikes de la cuenta (3 = eliminado)
 	cp 003h		;a697
 	jr c,L_A6AC		;a699
 	ld hl,0ed19h		;a69b
@@ -972,7 +972,7 @@ L_A6D0:
 	ld a,(0ecebh)		;a6d4
 	or a			;a6d7
 	ret z			;a6d8
-	ld a,(0e19ah)		;a6d9
+	ld a,(0e19ah)		;a6d9   ; lee los outs de la media entrada
 	cp 003h		;a6dc
 	ret nc			;a6de
 	ld a,001h		;a6df
@@ -989,7 +989,7 @@ L_A6E9:
 	pop hl			;a6f2
 	jp L_A789		;a6f3
 L_A6F6:
-	ld hl,0e199h		;a6f6
+	ld hl,0e199h		;a6f6   ; apunta a las bolas de la cuenta (4 = base por bolas, FOUR BALL)
 	inc (hl)			;a6f9
 	ld a,(hl)			;a6fa
 	cp 004h		;a6fb
@@ -1006,7 +1006,7 @@ L_A70D:
 	ld a,(0eddch)		;a70d
 	or a			;a710
 	jr nz,L_A724		;a711
-	ld hl,0e198h		;a713
+	ld hl,0e198h		;a713   ; apunta a los strikes de la cuenta (3 = eliminado)
 	inc (hl)			;a716
 	ld b,013h		;a717
 	ld a,(0e1f0h)		;a719
@@ -1017,7 +1017,7 @@ L_A70D:
 L_A724:
 	ld b,01bh		;a724
 	call L_A709		;a726
-	ld hl,0e198h		;a729
+	ld hl,0e198h		;a729   ; apunta a los strikes de la cuenta (3 = eliminado)
 	ld a,(hl)			;a72c
 	cp 002h		;a72d
 	ret nc			;a72f
@@ -1065,7 +1065,7 @@ L_A76C:
 	ret nc			;a778
 	cp 002h		;a779
 	jp z,05193h		;a77b
-	ld a,(0e198h)		;a77e
+	ld a,(0e198h)		;a77e   ; lee los strikes de la cuenta (3 = eliminado)
 	cp 003h		;a781
 	jp nc,051a1h		;a783
 	jp 05185h		;a786
@@ -1837,7 +1837,7 @@ L_ACA6:
 	call 05576h		;acc8
 	call 0537ch		;accb
 	xor a			;acce
-	ld (0e1a2h),a		;accf
+	ld (0e1a2h),a		;accf   ; guarda el desplazamiento de la pantalla (16 bits)
 	call 05c7dh		;acd2   ; esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 	call 095adh		;acd5
 	call L_AD26		;acd8
@@ -2004,7 +2004,7 @@ L_ADC3:
 	or a			;adf8
 	jr nz,L_AE5D		;adf9
 	push ix		;adfb
-	ld ix,0e231h		;adfd
+	ld ix,0e231h		;adfd   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld de,00010h		;ae01
 	ld bc,00405h		;ae04
 	ld h,001h		;ae07
@@ -2036,7 +2036,7 @@ L_AE23:
 	add a,a			;ae2d
 	ld e,a			;ae2e
 	ld d,000h		;ae2f
-	ld ix,0e231h		;ae31
+	ld ix,0e231h		;ae31   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	add ix,de		;ae35
 L_AE37:
 	ld a,(0ecebh)		;ae37
@@ -2152,7 +2152,7 @@ L_AED0:
 	ld (0e340h),a		;aefb
 	ld hl,0e23ch		;aefe
 L_AF01:
-	ld iy,0e231h		;af01
+	ld iy,0e231h		;af01   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld de,00010h		;af05
 	ld b,004h		;af08
 L_AF0A:
@@ -2235,7 +2235,7 @@ L_AF50:
 	inc a			;af7d
 	ld (0edd7h),a		;af7e
 L_AF81:
-	ld a,(0e19ah)		;af81
+	ld a,(0e19ah)		;af81   ; lee los outs de la media entrada
 	cp 002h		;af84
 	jr nz,L_AFA0		;af86
 	call 062f7h		;af88
@@ -2512,7 +2512,7 @@ L_B125:
 	pop bc			;b130
 	ld a,042h		;b131
 	call 057ffh		;b133   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-	ld hl,0e19ah		;b136
+	ld hl,0e19ah		;b136   ; apunta a los outs de la media entrada
 	inc (hl)			;b139
 	ld a,(hl)			;b13a
 	cp 003h		;b13b
@@ -2587,7 +2587,7 @@ L_B1BD:
 	call L_B23B		;b1bd
 	jp nc,L_B24F		;b1c0
 	ld a,(0e1b6h)		;b1c3
-	ld hl,(0e1a2h)		;b1c6
+	ld hl,(0e1a2h)		;b1c6   ; lee el desplazamiento de la pantalla (16 bits)
 	ld (0e1b6h),hl		;b1c9
 	xor l			;b1cc
 	bit 3,a		;b1cd
@@ -2649,7 +2649,7 @@ L_B23B:
 	call L_B232		;b23b
 	cp 009h		;b23e
 	ret c			;b240
-	ld a,(0e1a2h)		;b241
+	ld a,(0e1a2h)		;b241   ; lee el desplazamiento de la pantalla (16 bits)
 	ld b,a			;b244
 	ld a,(0e1b6h)		;b245
 	xor b			;b248
@@ -2661,7 +2661,7 @@ L_B23B:
 L_B24F:
 	call L_B25F		;b24f
 	call L_B214		;b252
-	ld hl,(0e1a2h)		;b255
+	ld hl,(0e1a2h)		;b255   ; lee el desplazamiento de la pantalla (16 bits)
 	ld (0e1b6h),hl		;b258
 	call L_B1D0		;b25b
 	ret			;b25e
@@ -2678,7 +2678,7 @@ L_B26C:
 	add hl,de			;b26e
 	ret			;b26f
 L_B270:
-	ld hl,(0e1a2h)		;b270
+	ld hl,(0e1a2h)		;b270   ; lee el desplazamiento de la pantalla (16 bits)
 L_B273:
 	ld a,l			;b273
 	rlca			;b274
@@ -2737,7 +2737,7 @@ L_B2A3:
 L_B2DA:
 	ld de,04020h		;b2da
 	ld a,(0d380h)		;b2dd
-	ld hl,0e311h		;b2e0
+	ld hl,0e311h		;b2e0   ; apunta a las carreras del visitante por entrada (10 casillas, 12-13 el total)
 L_B2E3:
 	call 04f1ch		;b2e3   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	ld d,050h		;b2e6
@@ -2745,7 +2745,7 @@ L_B2E3:
 L_B2EB:
 	ld de,0402ch		;b2eb
 	ld a,(0d47fh)		;b2ee
-	ld hl,0e321h		;b2f1
+	ld hl,0e321h		;b2f1   ; apunta a las carreras del local por entrada (10 casillas, 12-13 el total)
 	jr L_B2E3		;b2f4
 L_B2F6:
 	ld b,00dh		;b2f6
@@ -2814,7 +2814,7 @@ L_B358:
 	xor a			;b358
 	ld (0e1b5h),a		;b359
 	call L_B349		;b35c
-	ld hl,(0e1a2h)		;b35f
+	ld hl,(0e1a2h)		;b35f   ; lee el desplazamiento de la pantalla (16 bits)
 	ld d,h			;b362
 	ld e,l			;b363
 	add hl,bc			;b364
@@ -2934,25 +2934,25 @@ L_B42A:
 	ld a,l			;b42a
 	ld (0e1c9h),a		;b42b
 	ld c,a			;b42e
-	ld hl,(0e1a2h)		;b42f
+	ld hl,(0e1a2h)		;b42f   ; lee el desplazamiento de la pantalla (16 bits)
 	rla			;b432
 	ld b,000h		;b433
 	jr nc,L_B438		;b435
 	dec b			;b437
 L_B438:
 	add hl,bc			;b438
-	ld (0e1a2h),hl		;b439
+	ld (0e1a2h),hl		;b439   ; guarda el desplazamiento de la pantalla (16 bits)
 	call L_B1BD		;b43c
 	ret			;b43f
 L_B440:
-	ld a,(0e1a2h)		;b440
+	ld a,(0e1a2h)		;b440   ; lee el desplazamiento de la pantalla (16 bits)
 L_B443:
 	ld c,017h		;b443
 	ld b,a			;b445
 	jp 00047h		;b446   ; BIOS WRTVDP - Writes data in the VDP-register
 L_B449:
 	xor a			;b449
-	ld (0e1a2h),a		;b44a
+	ld (0e1a2h),a		;b44a   ; guarda el desplazamiento de la pantalla (16 bits)
 	jr L_B443		;b44d
 L_B44F:
 	xor a			;b44f
@@ -2962,12 +2962,12 @@ L_B44F:
 	ld a,(0e1a6h)		;b458
 	dec a			;b45b
 	jr nz,L_B46F		;b45c
-	ld hl,0e1a2h		;b45e
+	ld hl,0e1a2h		;b45e   ; apunta a el desplazamiento de la pantalla (16 bits)
 	ld de,0fffch		;b461
 	add hl,de			;b464
 	jr c,L_B46F		;b465
 	ld hl,00000h		;b467
-	ld (0e1a2h),hl		;b46a
+	ld (0e1a2h),hl		;b46a   ; guarda el desplazamiento de la pantalla (16 bits)
 	jr L_B498		;b46d
 L_B46F:
 	ld hl,00000h		;b46f
@@ -2977,7 +2977,7 @@ L_B46F:
 L_B47B:
 	ld hl,000e0h		;b47b
 L_B47E:
-	ld (0e1a2h),hl		;b47e
+	ld (0e1a2h),hl		;b47e   ; guarda el desplazamiento de la pantalla (16 bits)
 	ld (0e1b6h),hl		;b481
 	call 04bc5h		;b484   ; apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
 	call L_B440		;b487
@@ -3026,7 +3026,7 @@ L_B4D2:
 	call nc,L_B508		;b4e3
 	ld a,060h		;b4e6
 	ld (0ed22h),a		;b4e8
-	ld hl,0e231h		;b4eb
+	ld hl,0e231h		;b4eb   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld de,0e232h		;b4ee
 	ld bc,0003fh		;b4f1
 	ld (hl),000h		;b4f4
@@ -3049,7 +3049,7 @@ L_B510:
 	jr L_B51E		;b516
 L_B518:
 	ld hl,0b23fh		;b518
-	ld de,0e231h		;b51b
+	ld de,0e231h		;b51b   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 L_B51E:
 	ld bc,00010h		;b51e
 	jp 05da1h		;b521
@@ -3341,7 +3341,7 @@ L_B712:
 	call L_B8BD		;b71f
 	call L_B76F		;b722
 	ret z			;b725
-	ld a,(0e1a2h)		;b726
+	ld a,(0e1a2h)		;b726   ; lee el desplazamiento de la pantalla (16 bits)
 	or a			;b729
 	jr z,L_B747		;b72a
 	cp 00dh		;b72c
@@ -3448,7 +3448,7 @@ L_B7D4:
 	inc e			;b7d4
 	call 04f1ch		;b7d5   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	ld a,008h		;b7d8
-	ld hl,0e1a2h		;b7da
+	ld hl,0e1a2h		;b7da   ; apunta a el desplazamiento de la pantalla (16 bits)
 	ld c,(hl)			;b7dd
 	inc hl			;b7de
 	ld b,(hl)			;b7df
@@ -3479,7 +3479,7 @@ L_B805:
 	dec (hl)			;b80e
 	ret nz			;b80f
 	ld (hl),008h		;b810
-	ld hl,0e1a2h		;b812
+	ld hl,0e1a2h		;b812   ; apunta a el desplazamiento de la pantalla (16 bits)
 	ld c,(hl)			;b815
 	inc hl			;b816
 	ld b,(hl)			;b817
@@ -3773,7 +3773,7 @@ L_B9DA:
 	xor a			;b9e0
 	ld (0ede6h),a		;b9e1
 	ld (0dd0ch),a		;b9e4
-	ld (0e1a2h),a		;b9e7
+	ld (0e1a2h),a		;b9e7   ; guarda el desplazamiento de la pantalla (16 bits)
 	call 05c7dh		;b9ea   ; esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 	call 05202h		;b9ed
 	call 052b5h		;b9f0
@@ -3833,7 +3833,7 @@ L_BA44:
 	ld de,00007h		;ba56
 	add hl,de			;ba59
 	djnz L_BA44		;ba5a
-	ld de,0e1a2h		;ba5c
+	ld de,0e1a2h		;ba5c   ; apunta a el desplazamiento de la pantalla (16 bits)
 	ld hl,0e1a1h		;ba5f
 	ld bc,000ffh		;ba62
 	ld (hl),000h		;ba65
@@ -3916,7 +3916,7 @@ L_BB91:
 	or a			;bb92
 	ret nz			;bb93
 	ld (hl),001h		;bb94
-	ld hl,0e1a2h		;bb96
+	ld hl,0e1a2h		;bb96   ; apunta a el desplazamiento de la pantalla (16 bits)
 	ld a,(hl)			;bb99
 	or a			;bb9a
 	ret z			;bb9b
@@ -3966,7 +3966,7 @@ L_BBDF:
 	jr L_BBF3		;bbe0
 L_BBE2:
 	ld (hl),001h		;bbe2
-	ld hl,0e1a2h		;bbe4
+	ld hl,0e1a2h		;bbe4   ; apunta a el desplazamiento de la pantalla (16 bits)
 	ld a,(hl)			;bbe7
 	inc a			;bbe8
 	cp 011h		;bbe9
@@ -3977,7 +3977,7 @@ L_BBEE:
 	xor a			;bbef
 	ld (0e1a3h),a		;bbf0
 L_BBF3:
-	ld a,(0e1a2h)		;bbf3
+	ld a,(0e1a2h)		;bbf3   ; lee el desplazamiento de la pantalla (16 bits)
 	ld b,a			;bbf6
 	ld de,05fb5h		;bbf7
 	call 0421bh		;bbfa   ; de_mas_a: DE = DE + A

@@ -72,11 +72,19 @@ C 0xA4F3 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos
 C 0xA516 copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 C 0xA525 lee la marca de 'acabado' que dejan las rutinas de cada paso
 C 0xA528 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xA55B apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0xA566 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
+C 0xA571 apunta a las carreras del visitante por entrada (10 casillas, 12-13 el total)
 C 0xA592 apunta a la marca de 'acabado' que dejan las rutinas de cada paso
 C 0xA5E4 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0xA694 lee los strikes de la cuenta (3 = eliminado)
 C 0xA69E lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0xA6D9 lee los outs de la media entrada
+C 0xA6F6 apunta a las bolas de la cuenta (4 = base por bolas, FOUR BALL)
 C 0xA70A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0xA713 apunta a los strikes de la cuenta (3 = eliminado)
+C 0xA729 apunta a los strikes de la cuenta (3 = eliminado)
+C 0xA77E lee los strikes de la cuenta (3 = eliminado)
 C 0xA789 apunta a la marca de 'acabado' que dejan las rutinas de cada paso
 C 0xA837 hl_mas_a: HL = HL + A
 C 0xA88A lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
@@ -92,26 +100,48 @@ C 0xAC2F lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la
 C 0xAC5F lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0xAC92 apunta a la marca de 'acabado' que dejan las rutinas de cada paso
 C 0xACBA apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
+C 0xACCF guarda el desplazamiento de la pantalla (16 bits)
 C 0xACD2 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 C 0xAD06 enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
 C 0xAD1A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xADD4 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0xADFD apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
+C 0xAE31 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0xAE5A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0xAF01 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
+C 0xAF81 lee los outs de la media entrada
 C 0xB104 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xB109 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xB12D texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xB133 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0xB136 apunta a los outs de la media entrada
 C 0xB163 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0xB1C6 lee el desplazamiento de la pantalla (16 bits)
 C 0xB1EE hl_mas_a: HL = HL + A
+C 0xB241 lee el desplazamiento de la pantalla (16 bits)
+C 0xB255 lee el desplazamiento de la pantalla (16 bits)
+C 0xB270 lee el desplazamiento de la pantalla (16 bits)
 C 0xB2B3 hl_mas_a: HL = HL + A
+C 0xB2E0 apunta a las carreras del visitante por entrada (10 casillas, 12-13 el total)
 C 0xB2E3 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0xB2E8 texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
+C 0xB2F1 apunta a las carreras del local por entrada (10 casillas, 12-13 el total)
+C 0xB35F lee el desplazamiento de la pantalla (16 bits)
+C 0xB42F lee el desplazamiento de la pantalla (16 bits)
+C 0xB439 guarda el desplazamiento de la pantalla (16 bits)
+C 0xB440 lee el desplazamiento de la pantalla (16 bits)
+C 0xB44A guarda el desplazamiento de la pantalla (16 bits)
 C 0xB450 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0xB45E apunta a el desplazamiento de la pantalla (16 bits)
+C 0xB46A guarda el desplazamiento de la pantalla (16 bits)
 C 0xB478 enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
+C 0xB47E guarda el desplazamiento de la pantalla (16 bits)
 C 0xB484 apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
 C 0xB498 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 C 0xB4A4 apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
 C 0xB4AA enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
+C 0xB4EB apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
+C 0xB51B apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0xB667 multiplica: HL = A x E (8 x 8 bits)
 C 0xB670 apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
 C 0xB67F rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
@@ -120,23 +150,31 @@ C 0xB697 despacha: salta a la palabra A de la tabla que va pegada detras del `ca
 C 0xB6F1 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xB6FA esconde_sprites: escribe 0xD8 (Y = 216: no se pinta ninguno) en la VRAM 0xF600, el primer atributo de sprite
 C 0xB703 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xB726 lee el desplazamiento de la pantalla (16 bits)
 C 0xB742 hl_mas_a: HL = HL + A
 C 0xB74D hl_mas_a: HL = HL + A
 C 0xB762 hl_mas_a: HL = HL + A
 C 0xB7CD lee los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color]) y el byte siguiente (16 bits)
 C 0xB7D5 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0xB7DA apunta a el desplazamiento de la pantalla (16 bits)
 C 0xB805 lee los botones pulsados del mando 1 / cursores
+C 0xB812 apunta a el desplazamiento de la pantalla (16 bits)
 C 0xB8AF hl_mas_a: HL = HL + A
 C 0xB967 lee los botones recien pulsados del mando 1 / cursores
 C 0xB9A7 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xB9DA borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
+C 0xB9E7 guarda el desplazamiento de la pantalla (16 bits)
 C 0xB9EA esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 C 0xB9F7 pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
 C 0xBA00 apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
+C 0xBA5C apunta a el desplazamiento de la pantalla (16 bits)
 C 0xBA8E texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xBA97 linea: orden LINE (0x70) del VDP desde HL
 C 0xBAA0 linea: orden LINE (0x70) del VDP desde HL
 C 0xBAA9 linea: orden LINE (0x70) del VDP desde HL
+C 0xBB96 apunta a el desplazamiento de la pantalla (16 bits)
+C 0xBBE4 apunta a el desplazamiento de la pantalla (16 bits)
+C 0xBBF3 lee el desplazamiento de la pantalla (16 bits)
 C 0xBBFA de_mas_a: DE = DE + A
 C 0xBC13 hl_mas_a: HL = HL + A
 C 0xBC17 apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])

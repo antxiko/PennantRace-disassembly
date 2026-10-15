@@ -1353,7 +1353,7 @@ L_93B1:
 	ld (0eddfh),a		;93c7
 	ret			;93ca
 L_93CB:
-	ld a,(0e1a2h)		;93cb
+	ld a,(0e1a2h)		;93cb   ; lee el desplazamiento de la pantalla (16 bits)
 	add a,050h		;93ce
 	cp 0f0h		;93d0
 	jr c,L_93D6		;93d2
@@ -1381,7 +1381,7 @@ L_93E4:
 	ld hl,07e5ah		;93fb
 	jp 04ea6h		;93fe   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 L_9401:
-	ld hl,0e198h		;9401
+	ld hl,0e198h		;9401   ; apunta a los strikes de la cuenta (3 = eliminado)
 	ld a,(hl)			;9404
 	cp 002h		;9405
 	jr z,L_940C		;9407
@@ -1400,7 +1400,7 @@ L_940C:
 	add hl,hl			;941b
 	add hl,hl			;941c
 	add hl,hl			;941d
-	ld de,0e231h		;941e
+	ld de,0e231h		;941e   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	add hl,de			;9421
 	ld (hl),000h		;9422
 	ld de,0000bh		;9424
@@ -2626,7 +2626,7 @@ L_9C2F:
 	add a,c			;9c30
 	ld e,a			;9c31
 	djnz L_9C1B		;9c32
-	ld a,(0ec4fh)		;9c34
+	ld a,(0ec4fh)		;9c34   ; lee el orden de bateo del visitante (0-8)
 	ld hl,09bbbh		;9c37
 	call 04216h		;9c3a   ; hl_mas_a: HL = HL + A
 	ld e,(hl)			;9c3d
@@ -2701,7 +2701,7 @@ L_9CC4:
 	add a,c			;9cc5
 	ld e,a			;9cc6
 	djnz L_9CB0		;9cc7
-	ld a,(0ec61h)		;9cc9
+	ld a,(0ec61h)		;9cc9   ; lee el orden de bateo del local (0-8)
 	ld hl,09bbbh		;9ccc
 	call 04216h		;9ccf   ; hl_mas_a: HL = HL + A
 	ld e,(hl)			;9cd2

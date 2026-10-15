@@ -375,7 +375,7 @@ L_823B:
 	ld (0edd5h),a		;8244
 	jp L_8278		;8247
 L_824A:
-	ld ix,0e231h		;824a
+	ld ix,0e231h		;824a   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld iy,0ec98h		;824e
 	ld bc,00400h		;8252
 	ld de,00010h		;8255
@@ -399,7 +399,7 @@ L_8271:
 	ret			;8277
 L_8278:
 	call L_82A7		;8278
-	ld a,(0e19ah)		;827b
+	ld a,(0e19ah)		;827b   ; lee los outs de la media entrada
 	cp 002h		;827e
 	jr nc,L_8293		;8280
 	ld a,(0edc8h)		;8282
@@ -434,7 +434,7 @@ L_82A7:
 	ld (hl),a			;82b8
 	inc hl			;82b9
 	ld (hl),0ffh		;82ba
-	ld ix,0e231h		;82bc
+	ld ix,0e231h		;82bc   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld b,004h		;82c0
 	ld de,00010h		;82c2
 L_82C5:
@@ -1124,7 +1124,7 @@ L_871A:
 	rr e		;8741
 	ld (0e1d6h),de		;8743
 	ld c,009h		;8747
-	ld a,(0e1f6h)		;8749
+	ld a,(0e1f6h)		;8749   ; lee la formacion del campo (0-6)
 	cp 005h		;874c
 	jr z,L_8758		;874e
 	ld c,012h		;8750
@@ -1241,7 +1241,7 @@ L_8817:
 	ld a,(0e1fah)		;8817
 	dec a			;881a
 	ld b,a			;881b
-	ld a,(0e1feh)		;881c
+	ld a,(0e1feh)		;881c   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
 	or a			;881f
 	ld a,b			;8820
 	jr nz,L_8826		;8821
@@ -1302,7 +1302,7 @@ L_8860:
 	call 059d3h		;8869
 	call 05677h		;886c
 	ld a,004h		;886f
-	ld (0e1f6h),a		;8871
+	ld (0e1f6h),a		;8871   ; guarda la formacion del campo (0-6)
 	call 05761h		;8874
 	call 0583bh		;8877
 	ld hl,0e1f9h		;887a
@@ -1323,7 +1323,7 @@ L_887F:
 	ld (0ed7ch),a		;8899
 	ld (0ed2eh),a		;889c
 	dec a			;889f
-	ld (0e1f6h),a		;88a0
+	ld (0e1f6h),a		;88a0   ; guarda la formacion del campo (0-6)
 	ld a,007h		;88a3
 	ld (0e1fah),a		;88a5
 	ret			;88a8
@@ -1356,12 +1356,12 @@ L_88D9:
 	djnz L_88D9		;88da
 	jp 04216h		;88dc   ; hl_mas_a: HL = HL + A
 L_88DF:
-	ld a,(0ec4fh)		;88df
+	ld a,(0ec4fh)		;88df   ; lee el orden de bateo del visitante (0-8)
 	ld hl,0ec50h		;88e2
 	call 04216h		;88e5   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;88e8
 	ld (0ed44h),a		;88e9
-	ld a,(0ec61h)		;88ec
+	ld a,(0ec61h)		;88ec   ; lee el orden de bateo del local (0-8)
 	ld hl,0ec62h		;88ef
 	call 04216h		;88f2   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;88f5
@@ -1391,7 +1391,7 @@ L_8919:
 	ld b,001h		;8922
 L_8924:
 	ld a,b			;8924
-	ld (0e1feh),a		;8925
+	ld (0e1feh),a		;8925   ; guarda si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
 	ld hl,0e1f5h		;8928
 	ld (hl),d			;892b
 	or a			;892c
@@ -1415,7 +1415,7 @@ L_8940:
 	cp 00ch		;894c
 	ret z			;894e
 	ld d,a			;894f
-	ld a,(0e1feh)		;8950
+	ld a,(0e1feh)		;8950   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
 	or a			;8953
 	ld bc,04050h		;8954
 	jr z,L_895C		;8957
@@ -1446,7 +1446,7 @@ L_896E:
 	ret z			;8978
 	call L_8A1B		;8979
 	ret nc			;897c
-	ld a,(0e1f6h)		;897d
+	ld a,(0e1f6h)		;897d   ; lee la formacion del campo (0-6)
 	cp 005h		;8980
 	jr z,L_8997		;8982
 	cp 006h		;8984
@@ -1476,7 +1476,7 @@ L_89A6:
 	ld (0ece0h),a		;89ae
 	ret			;89b1
 L_89B2:
-	ld a,(0e1feh)		;89b2
+	ld a,(0e1feh)		;89b2   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
 	or a			;89b5
 	jp nz,L_89E1		;89b6
 	ld hl,08a41h		;89b9
@@ -1582,7 +1582,7 @@ L_8A71:
 	ld a,(0e338h)		;8a71
 	rra			;8a74
 	ret c			;8a75
-	ld a,(0e1feh)		;8a76
+	ld a,(0e1feh)		;8a76   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
 	dec a			;8a79
 	jr z,L_8AB5		;8a7a
 	ld a,(0e1d9h)		;8a7c
@@ -1679,7 +1679,7 @@ L_8B17:
 	res 4,a		;8b1e
 L_8B20:
 	ld (0ede1h),a		;8b20
-	ld ix,0e231h		;8b23
+	ld ix,0e231h		;8b23   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld a,004h		;8b27
 	ld (0e301h),a		;8b29
 L_8B2C:
@@ -1704,7 +1704,7 @@ L_8B37:
 	ld a,0ffh		;8b52
 	ld (0e1ceh),a		;8b54
 	ld bc,00400h		;8b57
-	ld ix,0e231h		;8b5a
+	ld ix,0e231h		;8b5a   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ret			;8b5e
 L_8B5F:
 	ld hl,0e23ch		;8b5f
@@ -1738,7 +1738,7 @@ L_8B88:
 	ld a,(0ed02h)		;8b88
 	or a			;8b8b
 	ret z			;8b8c
-	ld ix,0e231h		;8b8d
+	ld ix,0e231h		;8b8d   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld hl,0eca3h		;8b91
 	ld b,004h		;8b94
 L_8B96:
@@ -2280,7 +2280,7 @@ L_8F49:
 	or a			;8f58
 	ret z			;8f59
 L_8F5A:
-	ld a,(0e19ah)		;8f5a
+	ld a,(0e19ah)		;8f5a   ; lee los outs de la media entrada
 	cp 003h		;8f5d
 	jr c,L_8F66		;8f5f
 	ld a,(0edd7h)		;8f61
@@ -2294,7 +2294,7 @@ L_8F6B:
 	ld a,(0e338h)		;8f6b
 	cp 003h		;8f6e
 	ret z			;8f70
-	ld iy,0e231h		;8f71
+	ld iy,0e231h		;8f71   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld de,00010h		;8f75
 	ld b,004h		;8f78
 	ld a,(0ed02h)		;8f7a
@@ -2464,7 +2464,7 @@ DATA_resto_908A:
 
 
 L_90B2:
-	ld hl,0e231h		;90b2
+	ld hl,0e231h		;90b2   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld de,00010h		;90b5
 	ld b,004h		;90b8
 L_90BA:
@@ -2489,10 +2489,10 @@ L_90C2:
 	ldir		;90d6
 	ld a,(0e19bh)		;90d8   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;90db
-	ld de,0ec4fh		;90dc
+	ld de,0ec4fh		;90dc   ; apunta a el orden de bateo del visitante (0-8)
 	ld hl,0d397h		;90df
 	jr nc,L_90EA		;90e2
-	ld de,0ec61h		;90e4
+	ld de,0ec61h		;90e4   ; apunta a el orden de bateo del local (0-8)
 	ld hl,0d496h		;90e7
 L_90EA:
 	call 06a40h		;90ea
@@ -2587,7 +2587,7 @@ L_917C:
 	inc (hl)			;917f
 	ret			;9180
 L_9181:
-	ld a,(0e19ah)		;9181
+	ld a,(0e19ah)		;9181   ; lee los outs de la media entrada
 	cp 003h		;9184
 	jp nc,L_9311		;9186
 	ld a,(0e30fh)		;9189
@@ -2671,7 +2671,7 @@ L_923A:
 	ld hl,0ed0eh		;923a
 	inc (hl)			;923d
 	call 05ff7h		;923e
-	ld a,(0e19ah)		;9241
+	ld a,(0e19ah)		;9241   ; lee los outs de la media entrada
 	cp 003h		;9244
 	jp nc,L_9311		;9246
 	call 05d11h		;9249
@@ -2725,7 +2725,7 @@ L_9293:
 	or a			;929c
 	jr z,L_92BC		;929d
 	ld b,004h		;929f
-	ld ix,0e231h		;92a1
+	ld ix,0e231h		;92a1   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 L_92A5:
 	ld a,(ix+000h)		;92a5
 	or a			;92a8
@@ -2743,7 +2743,7 @@ L_92BC:
 	ld a,(0eddeh)		;92bf
 	and 001h		;92c2
 	ret z			;92c4
-	ld de,0e231h		;92c5
+	ld de,0e231h		;92c5   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld hl,0ec98h		;92c8
 	ld bc,00040h		;92cb
 	ldir		;92ce
@@ -2751,7 +2751,7 @@ L_92BC:
 	ld hl,0ecdch		;92d3
 	ld bc,00004h		;92d6
 	ldir		;92d9
-	ld de,0e311h		;92db
+	ld de,0e311h		;92db   ; apunta a las carreras del visitante por entrada (10 casillas, 12-13 el total)
 	ld hl,0eda2h		;92de
 	ld bc,00020h		;92e1
 	ldir		;92e4
@@ -2828,13 +2828,13 @@ L_9366:
 	ld hl,0ecdch		;9372
 	ld bc,00004h		;9375
 	ldir		;9378
-	ld de,0e311h		;937a
+	ld de,0e311h		;937a   ; apunta a las carreras del visitante por entrada (10 casillas, 12-13 el total)
 	ld hl,0eda2h		;937d
 	ld bc,00020h		;9380
 	ldir		;9383
 	ret			;9385
 L_9386:
-	ld hl,0e231h		;9386
+	ld hl,0e231h		;9386   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld de,00010h		;9389
 	ld bc,00400h		;938c
 L_938F:
@@ -2847,7 +2847,7 @@ L_9394:
 	djnz L_938F		;9395
 	ld a,c			;9397
 	ld de,0e232h		;9398
-	ld hl,0e231h		;939b
+	ld hl,0e231h		;939b   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld (hl),000h		;939e
 	ld bc,0003fh		;93a0
 	ldir		;93a3
@@ -3011,12 +3011,12 @@ L_94A8:
 	ld a,001h		;94a8
 	ld (0e1cbh),a		;94aa
 	xor a			;94ad
-	ld hl,0e231h		;94ae
+	ld hl,0e231h		;94ae   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld de,0e232h		;94b1
 	ld bc,00040h		;94b4
 	ld (hl),a			;94b7
 	ldir		;94b8
-	ld hl,0e198h		;94ba
+	ld hl,0e198h		;94ba   ; apunta a los strikes de la cuenta (3 = eliminado)
 	ld (hl),a			;94bd
 	inc hl			;94be
 	ld (hl),a			;94bf
@@ -3119,7 +3119,7 @@ L_9566:
 	ret z			;9571
 	ld a,c			;9572
 	and 003h		;9573
-	ld hl,0e231h		;9575
+	ld hl,0e231h		;9575   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld de,00010h		;9578
 	ld b,004h		;957b
 L_957D:
@@ -3234,7 +3234,7 @@ L_9618:
 	djnz L_9618		;9622
 	ret			;9624
 L_9625:
-	ld hl,0e231h		;9625
+	ld hl,0e231h		;9625   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld de,00010h		;9628
 	ld b,004h		;962b
 L_962D:
@@ -3419,7 +3419,7 @@ L_972B:
 L_9743:
 	ret			;9743
 L_9744:
-	ld hl,0e1a2h		;9744
+	ld hl,0e1a2h		;9744   ; apunta a el desplazamiento de la pantalla (16 bits)
 	ld c,(hl)			;9747
 	inc hl			;9748
 	ld b,(hl)			;9749
@@ -3443,7 +3443,7 @@ L_975D:
 	call L_97B8		;9763
 	ld a,0ffh		;9766
 	ld (0ed07h),a		;9768
-	ld ix,0e231h		;976b
+	ld ix,0e231h		;976b   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld b,004h		;976f
 L_9771:
 	ld a,(ix+00bh)		;9771
@@ -3924,7 +3924,7 @@ L_9A62:
 	xor a			;9a6f
 	ld (0e10bh),a		;9a70
 L_9A73:
-	ld a,(0e1a2h)		;9a73
+	ld a,(0e1a2h)		;9a73   ; lee el desplazamiento de la pantalla (16 bits)
 	add a,0d7h		;9a76
 	cp 0d8h		;9a78
 	jr nz,L_9A7D		;9a7a
@@ -3972,7 +3972,7 @@ L_9AC0:
 	ld (0e103h),a		;9ac1
 	ret			;9ac4
 L_9AC5:
-	ld de,(0e1a2h)		;9ac5
+	ld de,(0e1a2h)		;9ac5   ; lee el desplazamiento de la pantalla (16 bits)
 	push hl			;9ac9
 	or a			;9aca
 	sbc hl,de		;9acb

@@ -321,7 +321,7 @@ L_4245:
 	ld a,(hl)			;428f
 	or a			;4290
 	jr nz,L_42A1		;4291   ; ...y al llegar a 0 vuelve a 9, o a 10 si 0xE1A2 pasa de 0x78
-	ld a,(0e1a2h)		;4293
+	ld a,(0e1a2h)		;4293   ; lee el desplazamiento de la pantalla (16 bits)
 	cp 078h		;4296
 	ld a,009h		;4298
 	jr c,L_429D		;429a
@@ -781,7 +781,7 @@ L_45B0:
 L_45BC:
 	ld (0effah),a		;45bc   ; 0xEFFA: 1 si no esta pulsada
 	xor a			;45bf
-	ld (0ed99h),a		;45c0
+	ld (0ed99h),a		;45c0   ; guarda la espera antes de la siguiente musica
 	ld a,080h		;45c3   ; calla la musica (0x80) y el sonido 0x23
 	call sonido		;45c5   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,023h		;45c8
@@ -876,7 +876,7 @@ L_465D:
 L_4674:
 	call L_5E80		;4674
 	ld a,001h		;4677   ; 0xED13 y 0xED14 a 1
-	ld hl,0ed13h		;4679
+	ld hl,0ed13h		;4679   ; apunta a los bateadores del visitante (BCD; uno mas por turno, p01:6316)
 	ld (hl),a			;467c
 	inc hl			;467d
 	ld (hl),a			;467e
@@ -1295,10 +1295,10 @@ L_49D7:
 	ld hl,0e401h		;49d7   ; funde la paleta de 0xE400: los 13 colores...
 	ld b,00dh		;49da
 L_49DC:
-	ld e,(hl)			;49dc   ; ...el rojo (nibble alto de E) baja uno...
+	ld e,(hl)			;49dc   ; E = rojo-azul, D = verde
 	inc hl			;49dd
 	ld d,(hl)			;49de
-	rr e		;49df
+	rr e		;49df   ; el nibble bajo de E (azul) pasa a A
 	rra			;49e1
 	rr e		;49e2
 	rra			;49e4
@@ -1306,7 +1306,7 @@ L_49DC:
 	rra			;49e7
 	rr e		;49e8
 	rra			;49ea
-	and 0f0h		;49eb
+	and 0f0h		;49eb   ; el rojo, uno menos si no es 0
 	jr z,L_49F1		;49ed
 	sub 010h		;49ef
 L_49F1:
@@ -1317,7 +1317,7 @@ L_49F1:
 	dec a			;49f7
 L_49F8:
 	ld e,a			;49f8
-	ld a,c			;49f9
+	ld a,c			;49f9   ; vuelven a su sitio rojo y azul
 	rla			;49fa
 	rl e		;49fb
 	rla			;49fd
@@ -1326,7 +1326,7 @@ L_49F8:
 	rl e		;4a01
 	rla			;4a03
 	rl e		;4a04
-	ld a,d			;4a06   ; ...y el verde (D) baja uno
+	ld a,d			;4a06   ; el verde, uno menos si no es 0
 	and 00fh		;4a07
 	jr z,L_4A0C		;4a09
 	dec a			;4a0b
@@ -1807,13 +1807,13 @@ linea_vertical:		; orden LINE (0x70) del VDP, el lado largo en vertical
 	out (c),a		;4cd7
 	inc c			;4cd9
 	inc c			;4cda
-	out (c),h		;4cdb
+	out (c),h		;4cdb   ; DX, DY
 	xor a			;4cdd
 	out (c),a		;4cde
 	out (c),l		;4ce0
 	out (c),a		;4ce2
 	pop hl			;4ce4
-	out (c),h		;4ce5
+	out (c),h		;4ce5   ; NX (0 vale 256)
 	xor a			;4ce7
 	cp h			;4ce8
 	jr nz,L_4CEC		;4ce9
@@ -2080,11 +2080,11 @@ L_4E62:
 	xor a			;4e69
 L_4E6A:
 	rld		;4e6a
-	inc hl			;4e6c
+	inc hl			;4e6c   ; el byte siguiente del bufer
 	djnz L_4E5C		;4e6d
 	ex de,hl			;4e6f
 	pop hl			;4e70
-	inc hl			;4e71
+	inc hl			;4e71   ; la fila siguiente del caracter
 	pop bc			;4e72
 	djnz L_4E55		;4e73
 	ret			;4e75
@@ -2566,15 +2566,15 @@ L_50E2:
 	inc hl			;50e9
 L_50EA:
 	xor a			;50ea   ; tres bits eligen uno de los 8 colores...
-	rl c		;50eb
+	rl c		;50eb   ; el plano de C...
 	rla			;50ed
-	rl d		;50ee
+	rl d		;50ee   ; ...el de D...
 	rla			;50f0
-	rl e		;50f1
+	rl e		;50f1   ; ...y el de E: tres bits
 	rla			;50f3
 	exx			;50f4
 	ld e,a			;50f5
-	ld d,0ech		;50f6
+	ld d,0ech		;50f6   ; el color en 0xEC00 + bits
 	ld a,(de)			;50f8
 	add a,a			;50f9
 	add a,a			;50fa
@@ -2583,7 +2583,7 @@ L_50EA:
 	ld c,a			;50fd
 	exx			;50fe   ; ...y otros tres el nibble bajo
 	xor a			;50ff
-	rl c		;5100
+	rl c		;5100   ; los tres bits del punto siguiente
 	rla			;5102
 	rl d		;5103
 	rla			;5105
@@ -2593,7 +2593,7 @@ L_50EA:
 	ld e,a			;510a
 	ld d,0ech		;510b
 	ld a,(de)			;510d
-	or c			;510e
+	or c			;510e   ; dos puntos en un byte
 	ld (hl),a			;510f   ; al bufer
 	inc hl			;5110
 	exx			;5111
@@ -2662,7 +2662,7 @@ L_5153:
 	jr L_5174		;5166
 L_5168:
 	ld hl,0ba9bh		;5168
-	ld a,(0e1feh)		;516b
+	ld a,(0e1feh)		;516b   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
 	or a			;516e
 	jr z,L_5174		;516f
 	ld hl,0ba8eh		;5171
@@ -2677,21 +2677,21 @@ L_5180:
 	jr L_51AD		;5183
 L_5185:
 	ld hl,094bbh		;5185   ; los de p11, cada par con o sin 0xE1FE
-	ld a,(0e1feh)		;5188
+	ld a,(0e1feh)		;5188   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
 	or a			;518b
 	jr z,L_51AD		;518c
 	ld hl,094aeh		;518e
 	jr L_51AD		;5191
 L_5193:
-	ld hl,09401h		;5193
-	ld a,(0e1feh)		;5196
+	ld hl,09401h		;5193   ; p11:9401, o 0x93F4 con 0xE1FE
+	ld a,(0e1feh)		;5196   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
 	or a			;5199
 	jr z,L_51AD		;519a
 	ld hl,093f4h		;519c
 	jr L_51AD		;519f
 L_51A1:
 	ld hl,095a8h		;51a1
-	ld a,(0e1feh)		;51a4
+	ld a,(0e1feh)		;51a4   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
 	or a			;51a7
 	jr z,L_51AD		;51a8
 	ld hl,095bbh		;51aa
@@ -3181,14 +3181,14 @@ L_55F0:
 L_55F8:
 	ld a,(hl)			;55f8
 	inc hl			;55f9
-	call L_4F35		;55fa
+	call L_4F35		;55fa   ; un caracter de la fila 0x30
 	ld a,d			;55fd
 	add a,008h		;55fe
 	ld d,a			;5600
 	djnz L_55F8		;5601
 	dec c			;5603   ; al acabar la fila, la siguiente
 	ret z			;5604
-	ld a,e			;5605
+	ld a,e			;5605   ; la fila siguiente, 8 mas abajo
 	add a,008h		;5606
 	ld e,a			;5608
 	ld a,(0e341h)		;5609
@@ -3272,7 +3272,7 @@ L_5671:
 L_5677:
 	call bancos_10_11_12		;5677   ; rachas a la VRAM 0x6C00: las de p10:604D...
 	ld hl,06c00h		;567a
-	ld a,(0e1feh)		;567d
+	ld a,(0e1feh)		;567d   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
 	or a			;5680
 	jr nz,L_568E		;5681
 	ld de,0604dh		;5683
@@ -3383,33 +3383,33 @@ L_574E:
 	ld h,000h		;5752
 	add hl,hl			;5754
 L_5755:
-	add hl,hl			;5755
+	add hl,hl			;5755   ; x 64
 	add hl,hl			;5756
 	add hl,hl			;5757
 	add hl,hl			;5758
 	add hl,hl			;5759
 	add hl,hl			;575a
 	add hl,de			;575b
-	ld d,b			;575c   ; y DE = BC, el destino
+	ld d,b			;575c   ; DE = el destino
 	ld e,c			;575d
 	ld b,000h		;575e
 	ret			;5760
 L_5761:
 	call bancos_10_11_12		;5761   ; la ficha 0xE1F6 de 11 bytes de p10:6000 (0x6000 + 11 x n)
-	ld a,(0e1f6h)		;5764
+	ld a,(0e1f6h)		;5764   ; lee la formacion del campo (0-6)
 	ld (0e340h),a		;5767
-	ld l,a			;576a
+	ld l,a			;576a   ; 11 x 0xE1F6: 2n...
 	ld h,000h		;576b
 	ld c,a			;576d
 	ld b,h			;576e
 	add hl,hl			;576f
 	ld d,h			;5770
 	ld e,l			;5771
-	add hl,hl			;5772
+	add hl,hl			;5772   ; ...8n + 2n + n
 	add hl,hl			;5773
 	add hl,de			;5774
 	add hl,bc			;5775
-	ld de,06000h		;5776
+	ld de,06000h		;5776   ; + 0x6000
 	add hl,de			;5779
 	ld a,(hl)			;577a   ; [bits altos: color; bajos: cuantos]
 	ld (0e341h),a		;577b
@@ -3539,7 +3539,7 @@ L_5860:
 	add a,c			;5867
 L_5868:
 	ld b,a			;5868   ; si la formacion no cambia, no se vuelve a pintar el campo
-	ld a,(0e1f6h)		;5869
+	ld a,(0e1f6h)		;5869   ; lee la formacion del campo (0-6)
 	cp b			;586c
 	jp z,L_5877		;586d
 	ld a,b			;5870
@@ -3548,7 +3548,7 @@ L_5868:
 L_5877:
 	call bancos_10_11_12		;5877   ; las fichas de sprite de los jugadores de campo: p11:9911, o 0x991F con 0xE1FE
 	ld hl,09911h		;587a
-	ld a,(0e1feh)		;587d
+	ld a,(0e1feh)		;587d   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
 	or a			;5880
 	jr z,L_5886		;5881
 	ld hl,0991fh		;5883
@@ -3595,7 +3595,7 @@ L_58C5:
 	call L_56A3		;58c5   ; la pagina 1 (p00:56A3) y 20 fichas de sprite de p11:9D12 (o 0x9D62 con 0xE1FE) desde el sprite 0
 	call bancos_10_11_12		;58c8   ; bancos_10_11_12: pone los bancos 10, 11 y 12 (los graficos) y sus copias
 	ld hl,09d12h		;58cb
-	ld a,(0e1feh)		;58ce
+	ld a,(0e1feh)		;58ce   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
 	or a			;58d1
 	jr z,L_58D7		;58d2
 	ld hl,09d62h		;58d4
@@ -3676,14 +3676,14 @@ L_595B:
 	ret			;5960
 L_5961:
 	inc hl			;5961   ; la x mas C, el dibujo, y Z si el color de la ficha es 0 (o NZ = 7)
-	add a,c			;5962
+	add a,c			;5962   ; la x mas C
 	ld (de),a			;5963
 	inc de			;5964
-	ld a,(hl)			;5965
+	ld a,(hl)			;5965   ; el dibujo
 	inc hl			;5966
 	ld (de),a			;5967
 	inc de			;5968
-	ld a,(hl)			;5969
+	ld a,(hl)			;5969   ; el color de la ficha
 	or a			;596a
 	ret z			;596b
 	cp 007h		;596c
@@ -3714,7 +3714,7 @@ L_5988:
 	jp bancos_1_2_3		;598e   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 L_5991:
 	ld a,001h		;5991   ; 0xFAF6 = 1 mientras se carga la fuente: 161 caracteres de un bit (p12:B6C3), color 0x0D, en (0, 0) de la pagina 1
-	ld (0faf6h),a		;5993
+	ld (0faf6h),a		;5993   ; guarda ACPAGE de la BIOS: la pagina en la que se pinta
 	call bancos_10_11_12		;5996   ; bancos_10_11_12: pone los bancos 10, 11 y 12 (los graficos) y sus copias
 	ld de,00000h		;5999
 	ld hl,0b6c3h		;599c
@@ -3722,7 +3722,7 @@ L_5991:
 	call caracteres_de_un_bit		;59a2   ; caracteres_de_un_bit: pinta B caracteres de un bit por punto de HL, con el color C, desde DE
 	call bancos_1_2_3		;59a5   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 	xor a			;59a8
-	ld (0faf6h),a		;59a9
+	ld (0faf6h),a		;59a9   ; guarda ACPAGE de la BIOS: la pagina en la que se pinta
 	ret			;59ac
 L_59AD:
 	call bancos_10_11_12		;59ad   ; la fuente con el color 4 (p00:59BF), con 10-11-12, y vuelta a 1-2-3...
@@ -3753,28 +3753,28 @@ L_59DF:
 	ld a,(0ed45h)		;59e7
 	ret			;59ea
 L_59EB:
-	call L_5A13		;59eb
-	call L_59DF		;59ee
+	call L_5A13		;59eb   ; la fila de 0xBA2A que toca (0xE1FF) segun la ficha IX
+	call L_59DF		;59ee   ; el valor del equipo que batea...
 	ld hl,0bab2h		;59f1
-	cp 00dh		;59f4
+	cp 00dh		;59f4   ; ...desde 13 se usa la fila fija de 0xBAB2
 	jr nc,L_5A0F		;59f6
-	ld a,(ix+007h)		;59f8
+	ld a,(ix+007h)		;59f8   ; con IX+7 de 2 en adelante, la tabla de 0xBA8A...
 	cp 002h		;59fb
 	jr c,L_5A0F		;59fd
 	sub 002h		;59ff
 	ld hl,0ba8ah		;5a01
 	call palabra_a		;5a04   ; palabra_a: HL = la palabra A de la tabla HL
-	ld a,(ix+008h)		;5a07
+	ld a,(ix+008h)		;5a07   ; ...y en ella la fila IX+8 / 2
 	srl a		;5a0a
 	call palabra_a		;5a0c   ; palabra_a: HL = la palabra A de la tabla HL
 L_5A0F:
-	ld (0ed2ch),hl		;5a0f
+	ld (0ed2ch),hl		;5a0f   ; 0xED2C = la fila de 8 bytes elegida
 	ret			;5a12
 L_5A13:
-	call L_59DF		;5a13
+	call L_59DF		;5a13   ; 0xE1FF: la fila de 16 de 0xBA2A...
 	cp 00dh		;5a16
 	jr nc,L_5A32		;5a18
-	ld a,(ix+00ah)		;5a1a
+	ld a,(ix+00ah)		;5a1a   ; ...segun IX+10: 0 y 1 la primera, y de 2 a 6 las siguientes (hasta la 5)
 	cp 002h		;5a1d
 	jr c,L_5A32		;5a1f
 	dec a			;5a21
@@ -3782,7 +3782,7 @@ L_5A13:
 	jr c,L_5A28		;5a24
 	ld a,005h		;5a26
 L_5A28:
-	rlca			;5a28
+	rlca			;5a28   ; x 16
 	rlca			;5a29
 	rlca			;5a2a
 	rlca			;5a2b
@@ -3791,16 +3791,16 @@ L_5A2E:
 	ld (0e1ffh),a		;5a2e
 	ret			;5a31
 L_5A32:
-	xor a			;5a32
+	xor a			;5a32   ; desde 13, la primera
 	jr L_5A2E		;5a33
 L_5A35:
-	call 088a9h		;5a35
+	call 088a9h		;5a35   ; p02:88A9 y p00:5A41 con 7-8-9
 	call bancos_7_8_9		;5a38   ; bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
 	call L_5A41		;5a3b
 	jp bancos_1_2_3		;5a3e   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 L_5A41:
-	call L_5A64		;5a41
-	ld a,(0e1fbh)		;5a44
+	call L_5A64		;5a41   ; E = un valor al azar de la fila de 0xBA2A
+	ld a,(0e1fbh)		;5a44   ; D = el byte 8 - (0xE1FB - 1) de la fila de 0xED2C
 	dec a			;5a47
 	ld b,a			;5a48
 	ld a,008h		;5a49
@@ -3808,17 +3808,17 @@ L_5A41:
 	ld hl,(0ed2ch)		;5a4c
 	call hl_mas_a		;5a4f   ; hl_mas_a: HL = HL + A
 	ld d,(hl)			;5a52
-	call L_5A75		;5a53
-	call L_5AE0		;5a56
-	call L_5AEE		;5a59
-	call L_5AB9		;5a5c
-	call L_5A8B		;5a5f
-	ex de,hl			;5a62
+	call L_5A75		;5a53   ; D mas el de 0x5A85 segun 0xE1FA (sin pasar de 255)
+	call L_5AE0		;5a56   ; mas 16 en la 8.a entrada
+	call L_5AEE		;5a59   ; mas o menos 16 segun la ficha IX y lo de 0xE231
+	call L_5AB9		;5a5c   ; los ajustes de E
+	call L_5A8B		;5a5f   ; y los de 0xECE0
+	ex de,hl			;5a62   ; vuelve con HL = (E, D)
 	ret			;5a63
 L_5A64:
-	ld a,(0e1ffh)		;5a64
+	ld a,(0e1ffh)		;5a64   ; la fila 0xE1FF de 0xBA2A...
 	ld b,a			;5a67
-	ld a,r		;5a68
+	ld a,r		;5a68   ; ...y en ella una al azar (R & 0x0F)
 	and 00fh		;5a6a
 	add a,b			;5a6c
 	ld hl,0ba2ah		;5a6d
@@ -3826,14 +3826,14 @@ L_5A64:
 	ld e,(hl)			;5a73
 	ret			;5a74
 L_5A75:
-	ld a,(0e1fah)		;5a75
+	ld a,(0e1fah)		;5a75   ; 0xE1FA - 1 elige el ajuste de 0x5A85...
 	dec a			;5a78
 	ld c,a			;5a79
 	ld b,000h		;5a7a
 	ld hl,05a85h		;5a7c
 	add hl,bc			;5a7f
 	ld a,(hl)			;5a80
-	add a,d			;5a81
+	add a,d			;5a81   ; ...que se suma a D si no pasa de 255
 	ret c			;5a82
 	ld d,a			;5a83
 	ret			;5a84
@@ -3852,10 +3852,10 @@ DATA_resto_5A85:
 
 
 L_5A8B:
-	ld a,(0ece0h)		;5a8b
+	ld a,(0ece0h)		;5a8b   ; segun 0xECE0: 1 nada...
 	dec a			;5a8e
 	ret z			;5a8f
-	dec a			;5a90
+	dec a			;5a90   ; ...2: D - 0x30 y E + 2 (hasta 11)...
 	jr nz,L_5AA8		;5a91
 	call L_5AA0		;5a93
 	ld a,e			;5a96
@@ -3867,13 +3867,13 @@ L_5A8B:
 	ret			;5a9f
 L_5AA0:
 	ld a,d			;5aa0
-	sub 030h		;5aa1
+	sub 030h		;5aa1   ; D - 0x30 (desde 0)
 	ld d,a			;5aa3
 	ret nc			;5aa4
 	ld d,000h		;5aa5
 	ret			;5aa7
 L_5AA8:
-	call L_5AB2		;5aa8
+	call L_5AB2		;5aa8   ; ...3: D + 0x30 y E - 2 (desde 0)
 	ld a,e			;5aab
 	sub 002h		;5aac
 	ret nc			;5aae
@@ -3886,7 +3886,7 @@ L_5AB2:
 	ld d,0ffh		;5ab6
 	ret			;5ab8
 L_5AB9:
-	ld a,e			;5ab9
+	ld a,e			;5ab9   ; segun E: 0-3 D sube al azar (0x30-0xAF), 4-5 nada, 6-9 D baja un octavo, 10 y mas D a la mitad
 	cp 004h		;5aba
 	jr c,L_5AC8		;5abc
 	cp 006h		;5abe
@@ -3896,11 +3896,11 @@ L_5AB9:
 	srl d		;5ac5
 	ret			;5ac7
 L_5AC8:
-	ld a,r		;5ac8
+	ld a,r		;5ac8   ; un valor al azar 0x30-0xAF...
 	and 07fh		;5aca
 	add a,030h		;5acc
 	jr c,L_5AD3		;5ace
-	add a,d			;5ad0
+	add a,d			;5ad0   ; ...se suma a D (hasta 255)
 	ld d,a			;5ad1
 	ret nc			;5ad2
 L_5AD3:
@@ -3908,29 +3908,29 @@ L_5AD3:
 	ret			;5ad5
 L_5AD6:
 	ld a,d			;5ad6
-	srl d		;5ad7
+	srl d		;5ad7   ; D / 8...
 	srl d		;5ad9
 	srl d		;5adb
-	sub d			;5add
+	sub d			;5add   ; ...D - D / 8
 	ld d,a			;5ade
 	ret			;5adf
 L_5AE0:
-	ld a,(0e19bh)		;5ae0   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+	ld a,(0e19bh)		;5ae0   ; en la 8.a entrada (0xE19B / 2 = 7)...
 	srl a		;5ae3
 	cp 007h		;5ae5
 	ret nz			;5ae7
 L_5AE8:
-	ld a,d			;5ae8
+	ld a,d			;5ae8   ; ...D + 16 (hasta 255)
 	add a,010h		;5ae9
 	ret c			;5aeb
 	ld d,a			;5aec
 	ret			;5aed
 L_5AEE:
-	ld c,(ix+000h)		;5aee
-	call L_5B0D		;5af1
+	ld c,(ix+000h)		;5aee   ; segun los bits 0-1 de IX+0 y si hay alguno en 0xE231...
+	call L_5B0D		;5af1   ; hay alguien en las fichas de 0xE231?
 	ld b,a			;5af4
 	ld a,c			;5af5
-	and 003h		;5af6
+	and 003h		;5af6   ; los bits 0-1 de IX+0: 0 y 3 cambian D
 	jr z,L_5B07		;5af8
 	cp 003h		;5afa
 	ret nz			;5afc
@@ -3938,7 +3938,7 @@ L_5AEE:
 	or a			;5afe
 	jr z,L_5AE8		;5aff
 L_5B01:
-	ld a,d			;5b01
+	ld a,d			;5b01   ; D - 16 (desde 0)
 	sub 010h		;5b02
 	ret c			;5b04
 	ld d,a			;5b05
@@ -3949,19 +3949,19 @@ L_5B07:
 	jr nz,L_5AE8		;5b09
 	jr L_5B01		;5b0b
 L_5B0D:
-	xor a			;5b0d
-	ld ix,0e231h		;5b0e
+	xor a			;5b0d   ; A = el OR de IX+11 de las 4 fichas de 0xE231 (0 si ninguna)
+	ld ix,0e231h		;5b0e   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	or (ix+00bh)		;5b12
 	or (ix+01bh)		;5b15
 	or (ix+02bh)		;5b18
 	or (ix+03bh)		;5b1b
 	ret			;5b1e
 L_5B1F:
-	ld de,0ec96h		;5b1f
+	ld de,0ec96h		;5b1f   ; los dibujos de los 32 sprites: compara el dibujo de cada atributo (0xE17F hacia atras)...
 	ld hl,0e17fh		;5b22
 	ld b,020h		;5b25
 L_5B27:
-	ld a,(de)			;5b27
+	ld a,(de)			;5b27   ; ...con el que ya estaba (0xEC96 hacia atras)
 	cp (hl)			;5b28
 	ld a,(hl)			;5b29
 	ld c,a			;5b2a
@@ -3969,12 +3969,12 @@ L_5B27:
 	dec hl			;5b2c
 	dec hl			;5b2d
 	dec hl			;5b2e
-	jr z,L_5B65		;5b2f
-	ld (de),a			;5b31
+	jr z,L_5B65		;5b2f   ; si es el mismo, no se toca
+	ld (de),a			;5b31   ; apunta el nuevo
 	push hl			;5b32
 	push bc			;5b33
 	push de			;5b34
-	ld a,b			;5b35
+	ld a,b			;5b35   ; el bufer del sprite: 0xDEF0 + 16 x n
 	ld d,000h		;5b36
 	or a			;5b38
 	rla			;5b39
@@ -3991,7 +3991,7 @@ L_5B27:
 	ld b,h			;5b4a
 	ld a,c			;5b4b
 	ld c,l			;5b4c
-	call bancos_7_8_9		;5b4d   ; bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
+	call bancos_7_8_9		;5b4d   ; con 7-8-9: las rachas del dibujo (p09:BC05)...
 	add a,a			;5b50
 	ld hl,0bc05h		;5b51
 	call hl_mas_a		;5b54   ; hl_mas_a: HL = HL + A
@@ -4000,23 +4000,23 @@ L_5B27:
 	ld d,(hl)			;5b59
 	ld h,b			;5b5a
 	ld l,c			;5b5b
-	call rachas_a_ram		;5b5c   ; rachas_a_ram: descomprime las rachas de DE en la RAM HL
+	call rachas_a_ram		;5b5c   ; ...descomprimidas en su bufer
 	call bancos_1_2_3		;5b5f   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 	pop de			;5b62
 	pop bc			;5b63
 	pop hl			;5b64
 L_5B65:
-	dec de			;5b65
+	dec de			;5b65   ; el sprite anterior
 	djnz L_5B27		;5b66
 	ret			;5b68
 L_5B69:
-	call bancos_10_11_12		;5b69   ; bancos_10_11_12: pone los bancos 10, 11 y 12 (los graficos) y sus copias
+	call bancos_10_11_12		;5b69   ; B = el byte A de p12:BC78
 	ld hl,0bc78h		;5b6c
 	call hl_mas_a		;5b6f   ; hl_mas_a: HL = HL + A
 	ld b,(hl)			;5b72
 	jp bancos_1_2_3		;5b73   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 L_5B76:
-	call bancos_7_8_9		;5b76   ; bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
+	call bancos_7_8_9		;5b76   ; una tira de 8 mosaicos del fondo: la lista de 0xE1A6 (p08:9432)
 	ld a,(0e1a6h)		;5b79
 	ld hl,09432h		;5b7c
 	call palabra_a		;5b7f   ; palabra_a: HL = la palabra A de la tabla HL
@@ -4024,35 +4024,35 @@ L_5B76:
 L_5B84:
 	push bc			;5b84
 	push hl			;5b85
-	ld a,(0ec41h)		;5b86
+	ld a,(0ec41h)		;5b86   ; la posicion 0xEC41 en la lista (apuntada en 0xE1B2)...
 	ld (0e1b2h),a		;5b89
 	ld e,a			;5b8c
 	ld d,000h		;5b8d
 	add hl,de			;5b8f
-	ld l,(hl)			;5b90
+	ld l,(hl)			;5b90   ; ...da el mosaico: x 16...
 	ld h,d			;5b91
 	add hl,hl			;5b92
 	add hl,hl			;5b93
 	add hl,hl			;5b94
 	add hl,hl			;5b95
-	ld de,(0ec43h)		;5b96
+	ld de,(0ec43h)		;5b96   ; ...mas la base de 0xEC43
 	add hl,de			;5b9a
-	ld de,0de10h		;5b9b
+	ld de,0de10h		;5b9b   ; en el bufer 0xDE10 + 0xEC40...
 	ld a,(0ec40h)		;5b9e
 	ld c,a			;5ba1
 	call de_mas_a		;5ba2   ; de_mas_a: DE = DE + A
-	ld a,004h		;5ba5
+	ld a,004h		;5ba5   ; ...4 bytes mas a la derecha cada vez
 	add a,c			;5ba7
 	ld (0ec40h),a		;5ba8
-	call L_5BB9		;5bab
-	ld hl,0ec41h		;5bae
+	call L_5BB9		;5bab   ; copia el mosaico
+	ld hl,0ec41h		;5bae   ; la posicion siguiente
 	inc (hl)			;5bb1
 	pop hl			;5bb2
 	pop bc			;5bb3
 	djnz L_5B84		;5bb4
 	jp bancos_1_2_3		;5bb6   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 L_5BB9:
-	ld c,004h		;5bb9
+	ld c,004h		;5bb9   ; un mosaico: 4 filas de 4 bytes...
 L_5BBB:
 	ld b,004h		;5bbb
 L_5BBD:
@@ -4061,13 +4061,13 @@ L_5BBD:
 	inc hl			;5bbf
 	inc de			;5bc0
 	djnz L_5BBD		;5bc1
-	ld a,01ch		;5bc3
+	ld a,01ch		;5bc3   ; ...en un bufer de 32 bytes de ancho
 	call de_mas_a		;5bc5   ; de_mas_a: DE = DE + A
 	dec c			;5bc8
 	ret z			;5bc9
 	jr L_5BBB		;5bca
 L_5BCC:
-	call bancos_7_8_9		;5bcc   ; bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
+	call bancos_7_8_9		;5bcc   ; DE = la palabra A de p09:BB1A y A = el byte 0xE1F0 de p09:BBC4
 	ld hl,0bb1ah		;5bcf
 	call palabra_a		;5bd2   ; palabra_a: HL = la palabra A de la tabla HL
 	ex de,hl			;5bd5
@@ -4078,7 +4078,7 @@ L_5BCC:
 	ex de,hl			;5be0
 	jp bancos_1_2_3		;5be1   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 L_5BE4:
-	ld b,00ah		;5be4
+	ld b,00ah		;5be4   ; 10 caracteres seguidos de HL
 L_5BE6:
 	ld a,(hl)			;5be6
 	inc hl			;5be7
@@ -4087,14 +4087,14 @@ L_5BE6:
 	djnz L_5BE6		;5bee
 	ret			;5bf0
 numero:		; pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
-	ld c,000h		;5bf1
+	ld c,000h		;5bf1   ; B parejas de cifras BCD; C = 0 mientras sean ceros a la izquierda
 L_5BF3:
-	dec b			;5bf3
+	dec b			;5bf3   ; la ultima pareja siempre se pinta
 	jr nz,L_5BF8		;5bf4
 	ld c,0ffh		;5bf6
 L_5BF8:
 	inc b			;5bf8
-	ld a,(hl)			;5bf9
+	ld a,(hl)			;5bf9   ; la cifra alta: 0 a la izquierda va en blanco
 	rra			;5bfa
 	rra			;5bfb
 	rra			;5bfc
@@ -4106,22 +4106,22 @@ L_5BF8:
 L_5C07:
 	call L_5C12		;5c07
 L_5C0A:
-	ld a,(hl)			;5c0a
+	ld a,(hl)			;5c0a   ; la baja
 	inc hl			;5c0b
 	call L_5C12		;5c0c
 	djnz L_5BF3		;5c0f
 	ret			;5c11
 L_5C12:
-	and 00fh		;5c12
+	and 00fh		;5c12   ; una cifra: si no es 0, ya no hay ceros a la izquierda
 	jr z,L_5C18		;5c14
 	ld c,0ffh		;5c16
 L_5C18:
-	add a,001h		;5c18
+	add a,001h		;5c18   ; el caracter de la cifra (1-10), o 0 si es cero a la izquierda
 	and c			;5c1a
 	call caracter		;5c1b   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	jr L_5C2F		;5c1e
 L_5C20:
-	push bc			;5c20
+	push bc			;5c20   ; un hueco de 8x8 en color 0
 	push de			;5c21
 	push hl			;5c22
 	ex de,hl			;5c23
@@ -4133,12 +4133,12 @@ L_5C20:
 	pop de			;5c2d
 	pop bc			;5c2e
 L_5C2F:
-	ld a,d			;5c2f
+	ld a,d			;5c2f   ; 8 puntos a la derecha
 	add a,008h		;5c30
 	ld d,a			;5c32
 	ret			;5c33
 L_5C34:
-	ld c,b			;5c34
+	ld c,b			;5c34   ; B cifras BCD con ceros, empezando por la baja si B es impar
 	ld a,b			;5c35
 	and 0feh		;5c36
 	ld b,a			;5c38
@@ -4146,24 +4146,24 @@ L_5C34:
 	jr c,L_5C45		;5c3b
 L_5C3D:
 	ld a,(hl)			;5c3d
-	rra			;5c3e
+	rra			;5c3e   ; la cifra alta
 	rra			;5c3f
 	rra			;5c40
 	rra			;5c41
 	call L_5C4D		;5c42
 L_5C45:
-	ld a,(hl)			;5c45
+	ld a,(hl)			;5c45   ; la baja
 	inc hl			;5c46
 	call L_5C4D		;5c47
 	djnz L_5C3D		;5c4a
 	ret			;5c4c
 L_5C4D:
-	and 00fh		;5c4d
+	and 00fh		;5c4d   ; una cifra: el caracter 1-10
 	add a,001h		;5c4f
 	call caracter		;5c51   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	jr L_5C2F		;5c54
 L_5C56:
-	ld c,000h		;5c56
+	ld c,000h		;5c56   ; tres cifras con los ceros a la izquierda en blanco
 	ld a,(hl)			;5c58
 	call L_5C12		;5c59
 	ld c,000h		;5c5c
@@ -4173,20 +4173,20 @@ L_5C56:
 	ld c,0ffh		;5c63
 L_5C65:
 	inc hl			;5c65
-	ld a,(hl)			;5c66
+	ld a,(hl)			;5c66   ; la cifra alta del byte siguiente
 	rra			;5c67
 	rra			;5c68
 	rra			;5c69
 	rra			;5c6a
 	call L_5C12		;5c6b
 	ld c,0ffh		;5c6e
-	ld a,(hl)			;5c70
+	ld a,(hl)			;5c70   ; y la baja
 	jr L_5C12		;5c71
 L_5C73:
-	ld a,001h		;5c73
+	ld a,001h		;5c73   ; pide copiar los colores de sprite (0xED09 = 1)
 	jr L_5C79		;5c75
 L_5C77:
-	ld a,002h		;5c77
+	ld a,002h		;5c77   ; pide copiar todo con rotacion (0xED09 = 2)
 L_5C79:
 	ld (0ed09h),a		;5c79   ; guarda la peticion de copiar sprites a la VRAM (1 colores, 2 todo)
 	ret			;5c7c
@@ -4194,23 +4194,23 @@ esconde_atributos:		; pone las 32 fichas de sprite de 0xE100 fuera de la pantall
 	ld hl,0e100h		;5c7d   ; apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 	ld b,020h		;5c80
 L_5C82:
-	ld a,(0e1a2h)		;5c82
+	ld a,(0e1a2h)		;5c82   ; Y = X = 0xD7 + 0xE1A2 y dibujo 0 en los 32 atributos
 	add a,0d7h		;5c85
 	ld e,a			;5c87
 	xor a			;5c88
 L_5C89:
-	ld (hl),e			;5c89
+	ld (hl),e			;5c89   ; y, x y dibujo...
 	inc hl			;5c8a
 	ld (hl),e			;5c8b
 	inc hl			;5c8c
 	ld (hl),e			;5c8d
 	inc hl			;5c8e
-	ld (hl),a			;5c8f
+	ld (hl),a			;5c8f   ; ...color 0
 	inc hl			;5c90
 	djnz L_5C89		;5c91
 	ret			;5c93
 L_5C94:
-	call bancos_13_14_15		;5c94   ; bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+	call bancos_13_14_15		;5c94   ; DE = la palabra A de la tabla p15:ABF2
 	ld hl,0abf2h		;5c97
 	call hl_mas_a		;5c9a   ; hl_mas_a: HL = HL + A
 	ld e,(hl)			;5c9d
@@ -4218,7 +4218,7 @@ L_5C94:
 	ld d,(hl)			;5c9f
 	jp bancos_1_2_3		;5ca0   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 L_5CA3:
-	call bancos_13_14_15		;5ca3   ; bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+	call bancos_13_14_15		;5ca3   ; DE = la palabra de (HL) con 13-14-15
 	ld e,(hl)			;5ca6
 	inc hl			;5ca7
 	ld d,(hl)			;5ca8
@@ -4350,10 +4350,10 @@ L_5DBB:
 	call 06543h		;5dbe
 	jp bancos_13_14_15		;5dc1   ; bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 sonidos_del_partido:		; en el estado 5-4 (el partido): la tecla F5, la cuenta de 0xED99 y el sonido de fondo segun 0xE23C
-	ld a,(0ed9fh)		;5dc4
+	ld a,(0ed9fh)		;5dc4   ; mientras se copian sprites (0xED9F) no
 	or a			;5dc7
 	ret nz			;5dc8
-	ld hl,0de00h		;5dc9   ; apunta a el estado del juego (indice del despachador principal)
+	ld hl,0de00h		;5dc9   ; solo en el partido: estado 5, paso 4
 	ld a,(hl)			;5dcc
 	cp 005h		;5dcd
 	ret nz			;5dcf
@@ -4361,19 +4361,19 @@ sonidos_del_partido:		; en el estado 5-4 (el partido): la tecla F5, la cuenta de
 	ld a,(hl)			;5dd1
 	cp 004h		;5dd2
 	ret nz			;5dd4
-	call L_5E8C		;5dd5
+	call L_5E8C		;5dd5   ; la musica que espera (p00:5E8C) y la tecla F5 (p00:5E47)
 	call L_5E47		;5dd8
-	ld a,(0effah)		;5ddb   ; lee si no es 0, el motor rechaza los sonidos 0x32-0x3C
+	ld a,(0effah)		;5ddb   ; con la musica quitada (0xEFFA) nada mas
 	or a			;5dde
 	ret nz			;5ddf
-	ld a,(0ef3bh)		;5de0
+	ld a,(0ef3bh)		;5de0   ; 0xEF3B: el motor dice que musica suena...
 	or a			;5de3
 	jr z,L_5DEA		;5de4
-	ld (0e33dh),a		;5de6
+	ld (0e33dh),a		;5de6   ; ...y se apunta en 0xE33D
 	ret			;5de9
 L_5DEA:
-	ld a,(0e33dh)		;5dea
-	cp 03dh		;5ded
+	ld a,(0e33dh)		;5dea   ; calla: si la ultima era una de las del partido (0x3D, 0x3E, 0x3F, 0x42-0x45)...
+	cp 03dh		;5ded   ; la musica del partido: 0x3D, 0x3E, 0x3F y 0x42-0x45
 	jr z,L_5E08		;5def
 	cp 03eh		;5df1
 	jr z,L_5E08		;5df3
@@ -4388,7 +4388,7 @@ L_5DEA:
 	cp 03fh		;5e05
 	ret nz			;5e07
 L_5E08:
-	ld hl,0e23ch		;5e08
+	ld hl,0e23ch		;5e08   ; ...se elige otra segun 0xE23C de las 4 fichas de 0xE231 (los bits 0-2)
 	ld ix,0e340h		;5e0b
 	ld de,00010h		;5e0f
 	ld b,004h		;5e12
@@ -4399,59 +4399,59 @@ L_5E14:
 	add hl,de			;5e1a
 	inc ix		;5e1b
 	djnz L_5E14		;5e1d
-	ld hl,0e340h		;5e1f
+	ld hl,0e340h		;5e1f   ; la mayor de las cuatro...
 	ld b,003h		;5e22
 L_5E24:
 	ld a,(hl)			;5e24
 	inc hl			;5e25
 	cp (hl)			;5e26
-	call nc,L_5E41		;5e27
+	call nc,L_5E41		;5e27   ; ...(burbuja: la deja al final)
 	djnz L_5E24		;5e2a
-	ld a,(0e19bh)		;5e2c   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+	ld a,(0e19bh)		;5e2c   ; la tabla del equipo que batea: 0x5E74 en la alta, 0x5E7A en la baja
 	rra			;5e2f
 	ld de,05e74h		;5e30
 	jr nc,L_5E38		;5e33
 	ld de,05e7ah		;5e35
 L_5E38:
-	ld a,(hl)			;5e38
+	ld a,(hl)			;5e38   ; el sonido de esa posicion, y a tocarlo
 	ex de,hl			;5e39
 	call hl_mas_a		;5e3a   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;5e3d
 	jp 06003h		;5e3e
 L_5E41:
-	ld c,(hl)			;5e41
+	ld c,(hl)			;5e41   ; cambia el byte de HL con el de antes
 	ld (hl),a			;5e42
 	dec hl			;5e43
 	ld (hl),c			;5e44
 	inc hl			;5e45
 	ret			;5e46
 L_5E47:
-	ld a,(0eddbh)		;5e47
+	ld a,(0eddbh)		;5e47   ; la tecla F5 (SNSMAT fila 7, bit 1), salvo con 0xEDDB
 	or a			;5e4a
 	ret nz			;5e4b
 	ld a,007h		;5e4c
 	call 00141h		;5e4e   ; BIOS SNSMAT - Returns the value of the specified line from the keyboard matrix
 	bit 1,a		;5e51
-	ld hl,0effbh		;5e53
+	ld hl,0effbh		;5e53   ; apunta a la tecla F5 estaba suelta
 	jr z,L_5E5B		;5e56
-	ld (hl),001h		;5e58
+	ld (hl),001h		;5e58   ; suelta: 0xEFFB = 1
 	ret			;5e5a
 L_5E5B:
-	ld a,(hl)			;5e5b
+	ld a,(hl)			;5e5b   ; al pulsarla (despues de soltarla)...
 	or a			;5e5c
 	ret z			;5e5d
-	dec hl			;5e5e
+	dec hl			;5e5e   ; ...cambia 0xEFFA: musica quitada o puesta
 	ld a,001h		;5e5f
 	xor (hl)			;5e61
 	ld (hl),a			;5e62
 	jr z,L_5E6F		;5e63
-	ld a,046h		;5e65
+	ld a,046h		;5e65   ; quitada: el sonido 0x46 (silencio)
 	call 06003h		;5e67
 	xor a			;5e6a
-	ld (0effbh),a		;5e6b
+	ld (0effbh),a		;5e6b   ; guarda la tecla F5 estaba suelta
 	ret			;5e6e
 L_5E6F:
-	inc hl			;5e6f
+	inc hl			;5e6f   ; puesta: otra vez la del partido
 	ld (hl),000h		;5e70
 	jr L_5E08		;5e72
 
@@ -4469,33 +4469,33 @@ DATA_resto_5E74:
 
 
 L_5E80:
-	ld hl,0ed99h		;5e80
+	ld hl,0ed99h		;5e80   ; calla la musica (0x81) y apunta la siguiente en 0xED9A con 0x68 cuadros de espera
 	ld (hl),068h		;5e83
 	inc hl			;5e85
 	ld (hl),a			;5e86
 	ld a,081h		;5e87
 	jp sonido		;5e89   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_5E8C:
-	ld hl,0ed99h		;5e8c
+	ld hl,0ed99h		;5e8c   ; la espera de 0xED99...
 	ld a,(hl)			;5e8f
 	or a			;5e90
 	ret z			;5e91
 	dec (hl)			;5e92
 	ret nz			;5e93
-	ld a,080h		;5e94
+	ld a,080h		;5e94   ; ...al acabar: corta (0x80) y toca la de 0xED9A
 	call 06003h		;5e96
-	ld a,(0ed9ah)		;5e99
+	ld a,(0ed9ah)		;5e99   ; lee la siguiente musica
 	jp 06003h		;5e9c
 L_5E9F:
-	call bancos_7_8_9		;5e9f   ; bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
+	call bancos_7_8_9		;5e9f   ; la velocidad de HL (x, y) a DE con el modulo A: con 7-8-9 por las tablas
 	ld (0e350h),a		;5ea2
-	ld b,000h		;5ea5
+	ld b,000h		;5ea5   ; B = 1 si la x no cambia...
 	ld a,d			;5ea7
 	sub h			;5ea8
 	jr nz,L_5EAD		;5ea9
 	ld b,001h		;5eab
 L_5EAD:
-	ld c,000h		;5ead
+	ld c,000h		;5ead   ; ...C = 2 si la y no cambia
 	ld a,e			;5eaf
 	sub l			;5eb0
 	jr nz,L_5EB5		;5eb1
@@ -4504,12 +4504,12 @@ L_5EB5:
 	ld a,b			;5eb5
 	or c			;5eb6
 	ld (0e35ch),a		;5eb7
-	call L_5F04		;5eba
+	call L_5F04		;5eba   ; el angulo (0-0x3F en un cuadrante) y los signos
 	ld d,000h		;5ebd
 	ld a,(0e351h)		;5ebf
 	ld e,a			;5ec2
 	ld d,000h		;5ec3
-	ld a,e			;5ec5
+	ld a,e			;5ec5   ; coseno: la entrada 0x3F - angulo de la tabla de senos...
 	sub 03fh		;5ec6
 	neg		;5ec8
 	ld hl,0bf96h		;5eca
@@ -4518,23 +4518,23 @@ L_5EB5:
 	ld c,(hl)			;5ecf
 	pop hl			;5ed0
 	ld e,a			;5ed1
-	add hl,de			;5ed2
+	add hl,de			;5ed2   ; ...y seno: la entrada angulo
 	ld a,(hl)			;5ed3
 	ld (0e352h),a		;5ed4
-	ld e,c			;5ed7
+	ld e,c			;5ed7   ; la componente x = modulo x coseno / 32...
 	call L_5F53		;5ed8
-	ld a,(0e353h)		;5edb
+	ld a,(0e353h)		;5edb   ; ...con su signo
 	and a			;5ede
 	call nz,L_5F79		;5edf
 	push de			;5ee2
-	ld a,(0e352h)		;5ee3
+	ld a,(0e352h)		;5ee3   ; la y = modulo x seno / 32, con su signo
 	ld e,a			;5ee6
 	call L_5F53		;5ee7
 	ld a,(0e354h)		;5eea
 	and a			;5eed
 	call nz,L_5F79		;5eee
 	pop hl			;5ef1
-	ld a,(0e35ch)		;5ef2
+	ld a,(0e35ch)		;5ef2   ; si la x o la y no cambian, su componente a cero
 	rra			;5ef5
 	jr nc,L_5EFB		;5ef6
 	ld de,00000h		;5ef8
@@ -4545,29 +4545,29 @@ L_5EFB:
 L_5F01:
 	jp bancos_1_2_3		;5f01   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 L_5F04:
-	ld a,l			;5f04
-	ld (0e340h),a		;5f05
+	ld a,l			;5f04   ; el angulo de HL a DE: dx (en 0xE353 el signo)...
+	ld (0e340h),a		;5f05   ; apunta HL en 0xE340-0xE341
 	ld a,h			;5f08
 	ld (0e341h),a		;5f09
 	ld hl,0e353h		;5f0c
 	ld (hl),000h		;5f0f
 	ld a,(0e340h)		;5f11
-	sub e			;5f14
+	sub e			;5f14   ; dx = l - e (positivo)
 	jr nc,L_5F1A		;5f15
 	neg		;5f17
 	inc (hl)			;5f19
 L_5F1A:
-	and 0f0h		;5f1a
+	and 0f0h		;5f1a   ; ...en el nibble alto...
 	ld e,a			;5f1c
 	inc hl			;5f1d
 	ld (hl),000h		;5f1e
-	ld a,(0e341h)		;5f20
+	ld a,(0e341h)		;5f20   ; ...dy (en 0xE354 el signo)...
 	sub d			;5f23
 	jr nc,L_5F29		;5f24
 	neg		;5f26
 	inc (hl)			;5f28
 L_5F29:
-	ld d,a			;5f29
+	ld d,a			;5f29   ; ...en el bajo
 	ld a,d			;5f2a
 	rra			;5f2b
 	rra			;5f2c
@@ -4575,12 +4575,12 @@ L_5F29:
 	rra			;5f2e
 	and 00fh		;5f2f
 	add a,e			;5f31
-	ld hl,0be96h		;5f32
+	ld hl,0be96h		;5f32   ; la tabla de direcciones de p09:BE96 da el angulo...
 	call hl_mas_a		;5f35   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;5f38
-	ld (0e351h),a		;5f39
+	ld (0e351h),a		;5f39   ; ...en 0xE351
 	ld c,a			;5f3c
-	ld hl,(0e353h)		;5f3d
+	ld hl,(0e353h)		;5f3d   ; y el rumbo en 0xE357: el angulo con signo y el bit 7 si dy es negativo
 	ld a,h			;5f40
 	ld b,000h		;5f41
 	and a			;5f43
@@ -4596,11 +4596,11 @@ L_5F4E:
 	ld (0e357h),a		;5f4f
 	ret			;5f52
 L_5F53:
-	ld a,(0e350h)		;5f53
-	ld h,a			;5f56
+	ld a,(0e350h)		;5f53   ; DE = E x 0xE350 / 32 (la componente)
+	ld h,a			;5f56   ; H = el modulo
 	call L_5F65		;5f57
 	xor a			;5f5a
-	add hl,hl			;5f5b
+	add hl,hl			;5f5b   ; HL x 8: el byte alto da / 32
 	adc a,a			;5f5c
 	add hl,hl			;5f5d
 	adc a,a			;5f5e
@@ -4608,10 +4608,10 @@ L_5F53:
 	adc a,a			;5f60
 	ld l,h			;5f61
 	ld h,a			;5f62
-	ex de,hl			;5f63
+	ex de,hl			;5f63   ; en DE
 	ret			;5f64
 L_5F65:
-	ld b,008h		;5f65
+	ld b,008h		;5f65   ; HL = H x E (8 x 8 bits)
 	ld l,000h		;5f67
 	ld d,l			;5f69
 L_5F6A:
@@ -4622,7 +4622,7 @@ L_5F6E:
 	djnz L_5F6A		;5f6e
 	ret			;5f70
 L_5F71:
-	ld a,l			;5f71
+	ld a,l			;5f71   ; HL = -HL
 	cpl			;5f72
 	ld l,a			;5f73
 	ld a,h			;5f74
@@ -4631,7 +4631,7 @@ L_5F71:
 	inc hl			;5f77
 	ret			;5f78
 L_5F79:
-	ld a,e			;5f79
+	ld a,e			;5f79   ; DE = -DE
 	cpl			;5f7a
 	ld e,a			;5f7b
 	ld a,d			;5f7c
@@ -4640,7 +4640,7 @@ L_5F79:
 	inc de			;5f7f
 	ret			;5f80
 L_5F81:
-	call bancos_7_8_9		;5f81   ; bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
+	call bancos_7_8_9		;5f81   ; con 7-8-9: DE = C x seno(B) y HL = C x coseno(B) (p09:BF96)
 	ld a,b			;5f84
 	ld hl,0bf96h		;5f85
 	call hl_mas_a		;5f88   ; hl_mas_a: HL = HL + A
@@ -4659,7 +4659,7 @@ L_5F81:
 	pop de			;5fa0
 	jp bancos_1_2_3		;5fa1   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 multiplica:		; HL = A x E (8 x 8 bits)
-	push bc			;5fa4
+	push bc			;5fa4   ; HL = A x E: 8 vueltas de desplazar y sumar
 	ld d,000h		;5fa5
 	ld hl,00000h		;5fa7
 	ld b,008h		;5faa
