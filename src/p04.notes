@@ -1,4 +1,11 @@
 
+
+# --- A MANO: comentarios escritos leyendo el codigo ---
+C 0x6000 el arranque del motor de sonido (p06:B15E)
+C 0x6003 el sonido pedido en 0xEFFC...
+C 0x6006 ...y al motor (p06:B193)
+C 0x6009 el sonido de cada cuadro (p06:B41E)
+# --- fin de lo escrito a mano ---
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x600C 0x609C sonidos  72 punteros, uno por sonido del 1 al 0x48, a su cabecera (p06:B204: 0x600A + 2 x numero); lo leen p06:B204 (144 bytes)
 F 0x600C w8

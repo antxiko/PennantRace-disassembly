@@ -52,71 +52,141 @@ C 0x425B los colores de los sprites 0-3 (64 bytes)...
 C 0x4267 ...0xE060-0xE0FF a la VRAM 0xF560 (los colores de los 10 sprites fijos de abajo)
 C 0x4273 los atributos de los sprites 0-3, que no rotan
 C 0x427F y los de 0xE158 en adelante (10 sprites), que tampoco
+C 0x4285 40 bytes (10 atributos)
 C 0x428B la rotacion: 0xECE5 cuenta hacia atras...
-C 0x4291 ...y al llegar a 0 vuelve a 9, o a 10 si 0xE1A2 pasa de 0x78
+C 0x4291 sin llegar a 0, sigue
+C 0x4296 con el desplazamiento por debajo de 0x78, 9; si no, 10
 C 0x429D 0xED04 = cuantos sprites rotan
+C 0x42A0 la cuenta otra vez
 C 0x42A1 primer trozo: los atributos desde el sprite 4 + (0xECE5 - 1)...
+C 0x42A8 D = la rotacion - 1
+C 0x42AA E - D: los sprites del primer trozo
+C 0x42AE x 8: BC = los bytes
+C 0x42B5 HL = D x 8...
 C 0x42BB ...de 0xE110 en adelante...
+C 0x42BE ...desde 0xE110
 C 0x42BF ...a la VRAM desde 0xF610
 C 0x42C2 apunta el trozo en 0xE340 (para depurar o rehacer)
 C 0x42D0 copia el primer trozo
 C 0x42D3 si la rotacion no esta en 1, queda el segundo trozo: lo que da la vuelta
+C 0x42D7 en 1, no hay segundo
+C 0x42DB HL = (rotacion - 1) x 8: los bytes del segundo
+C 0x42E6 E - D
+C 0x42EA x 8 + 0xF610: su sitio en la VRAM
 C 0x42F0 ...a su sitio de la VRAM
+C 0x42F5 desde 0xE110
+C 0x42F8 apunta el trozo en 0xE348
 C 0x4306 copia el segundo trozo
 C 0x4309 lo mismo con los colores (16 bytes por sprite): el primer trozo...
-C 0x4327 ...de 0xDF40...
+C 0x4312 E - D
+C 0x4315 x 32: los bytes de colores
+C 0x431F D x 32...
+C 0x4327 ...desde 0xDF40
 C 0x432B ...a la VRAM 0xF440
+C 0x432E apunta el trozo en 0xE350
 C 0x433C copia los colores del primer trozo
 C 0x433F y el segundo, si lo hay
+C 0x4343 en 1, no hay segundo
+C 0x4347 x 32: los bytes
+C 0x4354 E - D...
+C 0x4358 ...x 32 + 0xF440
+C 0x4365 desde 0xDF40
+C 0x4368 apunta el trozo en 0xE358
 C 0x4376 copia los colores del segundo trozo
+C 0x4379 (sin efecto: A se cambia en seguida)
 C 0x437C 0xE347 = la rotacion de este cuadro
+C 0x4382 interrupciones otra vez
 C 0x4384 la rotacion en curso
 C 0x4387 un trozo mas
+C 0x438E el 1
+C 0x4393 el 7
+C 0x4398 el 10
+C 0x43A0 el 13
+C 0x43A2 sin interrupciones mientras se cambian
+C 0x43AA y su copia
+C 0x43AB el siguiente en 0x8000
+C 0x43B0 y su copia
+C 0x43B1 el siguiente en 0xA000
+C 0x43B6 y su copia
+C 0x43B9 interrupciones otra vez
+C 0x43BB sin interrupciones
+C 0x43D7 interrupciones otra vez
+C 0x43E2 a 0xED47
+C 0x43E8 a 0xED48
 C 0x43EF el slot primario de la pagina 1...
+C 0x43F4 BC = el slot
 C 0x43F6 ...y su marca de expandido (0xFCC1 + slot)
+C 0x43FB el bit 7: expandido
+C 0x43FE C = el slot con su marca
 C 0x4400 el subslot, de 0xFCC5 + slot
+C 0x4403 el subslot (bits 2-3)
 C 0x4407 H = 0x80: la pagina 2
-C 0x4409 ENASLT: el cartucho tambien en 0x8000-0xBFFF
+C 0x4409 ENASLT
 C 0x440F el slot primario de la pagina 1 (la del cartucho)
 C 0x4416 ...con su marca de expandido (0xFCC1 + slot)
+C 0x441A con la marca del slot
 C 0x4420 el subslot, de 0xFCC5 + slot
+C 0x4421 bits 2-3
 C 0x4424 apunta el slot en 0xD2AA
 C 0x4428 el reloj de juego: 0xED4A cuenta cuadros hasta 60...
+C 0x442B 60 cuadros: un segundo
 C 0x442F ...0xED4B los segundos hasta 60...
+C 0x4430 60 segundos: un minuto
 C 0x4434 ...0xED4C y 0xED4D los minutos en dos cifras...
 C 0x4439 ...0xED4E las horas hasta 6...
+C 0x443B 6 horas
 C 0x4440 ...y 0xED4F-0xED50 lo que pasa de ahi
 C 0x4448 el reloj de juego a cero
 C 0x4455 una cifra del reloj que cuenta hasta 60: carry si no ha dado la vuelta
+C 0x4457 hasta 60
+C 0x445A vuelve a 0, sin carry
 C 0x445E la cifra siguiente, hasta 10: carry si no ha dado la vuelta
+C 0x4461 hasta 10
+C 0x4464 vuelve a 0, sin carry
 C 0x4468 lee 32 bytes de la VRAM 0xF680 a 0xDDA0
+C 0x4471 p00:4A9C: leer la VRAM
 C 0x4474 si los dos primeros son 0 vuelve con Z
+C 0x447F si no, NZ
 C 0x4480 un cuadro mas (0xDE03, el reloj de las animaciones)
 C 0x4484 C = el estado (0xDE00), B = el paso (0xDE01)
-C 0x4489 en los estados 0-2 se vuelve por p00:4A42 (los avisos y la pantalla)
+C 0x4489 los estados 0-2 vuelven por p00:4A42 (la vuelta de la tabla)
 C 0x4491 el estado A por la tabla de detras
+C 0x4494 la tabla de los 10 estados del juego
 C 0x44A8 estado 0, paso 0: p14:872E cada cuadro...
+C 0x44AD el rotulo (p14:872E)
 C 0x44B3 ...hasta que marque 0xDE0F...
+C 0x44B7 sin marcar, nada
 C 0x44B8 ...2 segundos de espera y al paso siguiente
 C 0x44C0 paso 1: la espera
+C 0x44C6 hasta 0, nada
 C 0x44C7 0xECEF = 0
 C 0x44CD paso 2: p15:BB87 cada cuadro...
+C 0x44D2 la presentacion (p15:BB87)
 C 0x44D8 ...hasta que marque 0xE1D1...
+C 0x44DC sin marcar, nada
 C 0x44DD ...el sonido 0x2D y al estado 0, paso 0
+C 0x44E3 cuenta 0 y al estado siguiente (1, el menu) con el paso 0
 C 0x44E6 paso 3: calla todo (sonido 1)...
+C 0x44EC el tono libre a 0
 C 0x44EF ...borra la pantalla, carga la fuente (p00:5991: 161 caracteres a la VRAM 0) y p03:B670
+C 0x44F5 el menu de modos (p03:B670)
 C 0x44FA estado 1: la espera del menu; al acabar...
+C 0x44FD mientras cuenta, el menu (p01:6561); al acabar, la demostracion
 C 0x4501 ...el modo 0 (1PLAYER) y al estado siguiente
 C 0x4508 estado 2, paso 0: p15:AB40 cada cuadro...
+C 0x450D la demostracion (p15:AB40)
 C 0x4513 ...hasta que marque 0xE1A0 (el modo elegido)
+C 0x4516 sin acabar (0xE1A0), nada
 C 0x4518 el sonido de la eleccion (p00:5E80)
 C 0x451D el menu: deja el estado y el despachador del menu a 0...
 C 0x4527 ...32 cuadros de espera...
 C 0x452C ...y el paso a 0
 C 0x452F paso 1: borra la pantalla, 17 caracteres a la VRAM 0xF818 (p00:52B5) y p15:AB1D
+C 0x4538 la demostracion se prepara (p15:AB1D)
 C 0x453E 32 cuadros de espera y al paso siguiente
 C 0x4543 al paso siguiente
 C 0x4548 paso 2: la cuenta atras con el nombre del modo...
+C 0x454E acabada: al paso siguiente
 C 0x4550 ...elegido en 0xE190: 1PLAYER...
 C 0x4559 ...2PLAYERS...
 C 0x455F ...PENNANT...
@@ -124,118 +194,225 @@ C 0x4565 ...TEAM EDIT...
 C 0x456B ...WATCH...
 C 0x4571 ...o MEDIA SELECT
 C 0x4574 parpadea: el bit 2 de la cuenta elige pintarlo o borrarlo
+C 0x4576 HL = el texto
 C 0x457D paso 3: MEDIA SELECT (modo 5) va aparte...
+C 0x4584 MEDIA SELECT: p00:458B
 C 0x4586 ...los demas vuelven al menu
+C 0x4589 y al estado siguiente
 C 0x458B MEDIA SELECT: las marcas de 0xDD91-0xDD93 a cero
-C 0x4595 y un caracter en 0x18C0 (el cursor)
+C 0x4595 en (0xC0, 0x18)
 C 0x459D paso 4: MEDIA SELECT (p15:AA3B) hasta que acabe (0xDD91)
+C 0x45A2 MEDIA SELECT (p15:AA3B)
+C 0x45AC sin acabar, nada
 C 0x45B0 paso 5: la tecla F5 (SNSMAT fila 7, bit 1) decide si el motor acepta los sonidos 0x32-0x3C
+C 0x45B5 el bit 1 (F5)
+C 0x45BB pulsada: 0
 C 0x45BC 0xEFFA: 1 si no esta pulsada
 C 0x45C3 calla la musica (0x80) y el sonido 0x23
+C 0x45C8 el sonido 0x23
 C 0x45CD 160 cuadros de espera
 C 0x45D2 antes del partido: p00:5FF1, la fuente, p00:59AD, caracteres (p00:52B5, p00:52D9)...
+C 0x45DA p00:59AD
+C 0x45E0 p00:52D9
 C 0x45E3 ...el color 7 a 0x77 0x07...
 C 0x45EB ...y en TEAM EDIT (modo 3) p15:B9DA
+C 0x45F0 TEAM EDIT: su pantalla
 C 0x45F3 0xE1A0 = 1
 C 0x45F8 32 cuadros
 C 0x45FD al estado siguiente
+C 0x4600 uno mas
 C 0x4601 paso 0 del estado
 C 0x4606 borra la pantalla y 120 cuadros de espera
 C 0x4611 la cuenta del paso...
+C 0x4618 en 0, nada que contar
 C 0x461D ...0xD2B1 = 1: se sigue esperando
+C 0x4621 1: se sigue esperando
 C 0x4622 p13:6DF7 cada cuadro
+C 0x4625 MEDIA SELECT y la grabacion (p13:6DF7)
 C 0x462B 0xD2B1 = 2: vuelta al menu
+C 0x4634 0: nada
 C 0x4635 acabada la cuenta...
+C 0x4639 sin acabar la cuenta, nada
 C 0x463A ...el sonido 0x2F, p02:9EA9 y al paso siguiente
+C 0x463F la pantalla de los lanzadores (p02:9EA9)
+C 0x4649 si no es 1, p00:4622
 C 0x464D paso siguiente: p02:9D49 hasta que marque 0xE1D1
-C 0x4657 y p15:A2ED
+C 0x464F los lanzadores (p02:9D49)
+C 0x4656 sin marcar, nada
+C 0x4657 y p03:A2ED (la pantalla del orden de bateo)
 C 0x465D p02:9F8A hasta que marque 0xE1D1
+C 0x465F el orden de bateo (p02:9F8A)
+C 0x4666 sin marcar, nada
 C 0x4667 el reloj de juego a cero
 C 0x466A la musica del partido (0x32) si 0xEFFA lo deja; si no, el sonido 1
+C 0x4670 con 0xEFFA (musica quitada): el sonido 1 (callar)
 C 0x4677 0xED13 y 0xED14 a 1
+C 0x467E los dos a 1: el primer bateador
 C 0x467F p01:6770
 C 0x4682 0xE1CB = 1
 C 0x468A el partido (p02:9149)...
 C 0x468F ...0xEDA0 no 0: estado 6, con 1 o 2 segun 0xEDA0
+C 0x469A 1: p00:4790; si no p00:479E
 C 0x46A1 el fin del partido: 0xED87 lo pide...
+C 0x46A5 se acaba: p00:46EE
 C 0x46A7 ...0xEDA1 vuelve al menu...
 C 0x46AE ...o un marcador llega a 99
 C 0x46BC 0xEDDA: este cuadro no se mira
+C 0x46C0 a 0
+C 0x46C3 este cuadro no: nada
 C 0x46C4 solo al acabar una baja (bit 0 de 0xE19B)
+C 0x46C9 en la alta, nada
 C 0x46CA la diferencia de carreras: visitante - local
+C 0x46D0 las del visitante menos las del local
 C 0x46D1 C = 1 si gana el local
+C 0x46D6 la diferencia en valor absoluto
 C 0x46D8 si gana el local por 10 o mas, se acaba
+C 0x46DB gana el visitante: sigue
 C 0x46E2 antes de la baja de la 9.a (0xE19B < 0x11) se sigue
+C 0x46E5 antes de 0x11, nada
 C 0x46E6 desde la 9.a, si el local va por delante se acaba
+C 0x46EC el visitante no pierde: nada
 C 0x46EE fin del partido: estado 9 y 128 cuadros
 C 0x46FB TEAM EDIT (modo 3) va a p03:B694
+C 0x4700 TEAM EDIT: su bucle (p03:B694)
 C 0x4703 p00:596F hasta que marque 0xE1D1
+C 0x4709 sin marcar, nada
 C 0x470B con el bit 4 de 0xDE02, p14:9697
+C 0x4715 el rival de PENNANT (p14:9697)
 C 0x471B 60 cuadros, 0xD2B0 y 0xD2B1 a cero y al paso siguiente
 C 0x472A p14:9853 o p14:9A26 segun el paso...
+C 0x472F el cambio del visitante (p14:9853)
+C 0x473C el del local (p14:9A26)
 C 0x4742 ...hasta que marque 0xE1D1
+C 0x4745 sin marcar, nada
 C 0x4747 sin 0xED9B, p15:AC91
+C 0x474B p15:AC91 si no hay 0xED9B
 C 0x4754 p01:6098: con carry se acaba (al estado 5-4)
+C 0x4757 F1 pulsada: el partido
 C 0x4759 los bits de 0xDE02: el 3 no deja seguir...
+C 0x475F el ordenador solo: nada
 C 0x4760 ...el 4 y el 5 dicen que mando atiende
+C 0x4762 PENNANT: p00:476A
+C 0x4766 un jugador: el primer mando
+C 0x4768 dos: los dos mandos
+C 0x476C PENNANT con dos: los dos
 C 0x476E con el bit 0 de 0xD6DC...
+C 0x4772 el jugador de visitante: el primero
 C 0x4774 ...el disparo del segundo mando
+C 0x4779 de local: el segundo cambia al visitante...
 C 0x477B ...o el del primero
+C 0x4780 ...y el primero al local
 C 0x4783 el disparo del segundo mando: p14:9C61
+C 0x4788 el segundo: el local
 C 0x478A el disparo del primero: p14:9BCC
+C 0x478F sin disparo, nada
+C 0x4793 el cambio del visitante (p14:9BCC)
 C 0x4799 al paso 1
+C 0x47A1 el del local (p14:9C61)
 C 0x47A7 al paso 2
 C 0x47AC p01:64A5
 C 0x47AF al estado 5, paso 4: el partido
+C 0x47B4 paso 4
+C 0x47B8 paso 0: el fundido
 C 0x47BC cada 32 cuadros...
 C 0x47C2 ...funde la paleta (p00:49D7) y la pone
 C 0x47CB mira si ya son negros los 13 colores
+C 0x47D1 los dos bytes de cada color...
+C 0x47D5 ...alguno no es 0: sigue
+C 0x47D8 los 13
 C 0x47DA del todo negra: p01:6991, el color 0 a negro...
+C 0x47DE el color 0 = 0x0703
 C 0x47E4 ...los caracteres, el texto de 0x7CD1...
 C 0x47ED ...y dos numeros de 10 cifras: 0xD380 y 0xD47F
+C 0x47F0 en (0x50, 0x48)
+C 0x47F9 en (0x50, 0xA8)
 C 0x47FF p01:60AC
 C 0x4802 con el bit 4 de 0xDE02, el texto de 0x7C79 y al paso siguiente
+C 0x4805 sin PENNANT, al paso 5
+C 0x480C el texto de 0x7C79
 C 0x4812 si no, al paso 5
 C 0x4818 paso 2: sin el bit 4 de 0xDE02, al paso 5
 C 0x4821 espera al disparo (bit 4 de 0xDE07)
+C 0x4826 sin disparo, nada
 C 0x4827 caracteres (p00:52C7), p15:AC1A y p15:A792
+C 0x482D la jornada siguiente (p15:AC1A)...
+C 0x4830 ...y el campeon (p15:A792)
 C 0x4836 0xDD9D: el texto de 0x7CB9 y al paso 9
+C 0x483A con campeon: p00:4860
 C 0x483C si no, el de 0x7C8A, o el de 0x7CA8 sin 0xDD8E
+C 0x4843 sin soportes, 0x7CA8
 C 0x484B las marcas 0xDD91-0xDD93 a cero
 C 0x4855 el color 7 a 0x77 0x07 y al paso siguiente
 C 0x486E espera al disparo recien pulsado
+C 0x4873 sin disparo, nada
 C 0x4874 un partido nuevo: pantalla apagada y borrada...
 C 0x487A ...0xE194-0xEDE7 a cero (marcadores, entradas y todo el partido)...
+C 0x4880 0xC54 bytes
 C 0x4887 ...p01:6770, los colores de equipo (p00:550E), el color 15 a 0x70 0x00...
+C 0x488A p00:550E
+C 0x488F el color 15 = 0x7000
 C 0x4895 ...la fuente y la pantalla encendida
 C 0x489B el despachador 0xD74C a 9, paso 0...
 C 0x48A3 ...estado 5 (el partido) y calla todo (sonido 1)
 C 0x48AF paso 3: sin 0xDD8E, a esperar el disparo
+C 0x48B3 sin soportes, p00:486E
 C 0x48B5 p15:AAE1 con DE = 0xB840...
+C 0x48BB SI / NO (p15:AAE1) en (0x40, 0xB8)
 C 0x48C1 ...hasta que marque 0xDD91
+C 0x48C5 sin elegir, nada
 C 0x48C6 0xDD93: partido nuevo
+C 0x48CA SI (0xDD93 = 1)? partido nuevo
 C 0x48CC copia 0xDE02 a 0xD73F
 C 0x48D2 0xDD90 = 1
 C 0x48D7 con 0xDD0E = 0xFF y sin nada en H.SAVE (0xFFA7 = ret) se salta
+C 0x48DC el Game Master 2 esta: p00:48E6
+C 0x48E3 tampoco disco (H.PHYD en ret): p00:4967
 C 0x48E6 p03:BDD4, el texto de 0x7BDD, 0xD2B0 = 0 y al paso siguiente
+C 0x48E9 el texto de 0x7BDD
 C 0x48F6 calla todo (sonido 1)
 C 0x48FB paso 4: p13:6F79 hasta que marque 0xD2B1; entonces al menu
+C 0x4900 la grabacion (p13:6F79)
+C 0x490A sin acabar, nada
 C 0x490E paso 5: espera los botones 1 o 2 (bits 4-5) de cualquier mando
+C 0x4915 sin el primero, el segundo
+C 0x491C ninguno: nada
 C 0x491D sin el bit 4 de 0xDE02, al menu
 C 0x4925 el sonido 0x31, pantalla borrada, p00:526E y p14:9E0E; al paso 6
+C 0x492D p00:526E
+C 0x4933 la escena del campeon (p14:9E0E)
+C 0x4939 al paso 6
 C 0x493F paso 6: p14:9E2F hasta que marque 0xED2F...
+C 0x4944 la escena (p14:9E2F)
+C 0x494D sin acabar, nada
 C 0x494F ...0xD74C y 0xD74D a cero y al paso siguiente
 C 0x4958 paso 7: espera los botones 1 o 2
+C 0x495F con el primero, si no el segundo
+C 0x4966 ninguno: nada
 C 0x4967 el sonido de la eleccion, el bit 6 de 0xDE02 a 0 y al menu
+C 0x496F sin el bit 6 (un jugador)
 C 0x4976 paso 8: p14:9F76 hasta 0xED2F; despachador a cero y al paso 7
+C 0x497B la escena final (p14:9F76)
+C 0x4985 sin acabar, nada
+C 0x498C al paso 7
 C 0x4992 paso 9: SNSMAT fila 6 bit 5 (F1) sin pulsar...
+C 0x499B pulsada: nada
 C 0x499C ...0xDD9D = 1 o 2 elige
+C 0x49A0 1: p00:49A6
+C 0x49A3 2: p00:491D
 C 0x49A6 el sonido 0x31, pantalla borrada, p00:5222 y p14:9F22; al paso 8
+C 0x49AE p00:5222
+C 0x49B4 la escena del final (p14:9F22)
+C 0x49BA al paso 8
 C 0x49C0 p01:66B3 hasta que el bit 7 de 0xE1D1 lo marque
+C 0x49C6 sin el bit 7, nada
 C 0x49C8 copia los 45 bytes de p07:6003 a 0xE400 (con 7-8-9, p00:535A)
+C 0x49CE 45 bytes (15 colores)
+C 0x49D4 y al paso siguiente
 C 0x49D7 funde la paleta de 0xE400: los 13 colores...
+C 0x49DA 13 colores
 C 0x49DC E = rojo-azul, D = verde
 C 0x49DF el nibble bajo de E (azul) pasa a A
+C 0x49E1 4 bits de E a A...
 C 0x49EB el rojo, uno menos si no es 0
 C 0x49F2 ...el azul (nibble bajo de E) baja uno...
 C 0x49F9 vuelven a su sitio rojo y azul
@@ -336,76 +513,168 @@ C 0x4C73 los puertos del VDP de la BIOS (0x0006 lectura, 0x0007 escritura) + 1: 
 C 0x4C7A R#15 = el estado que se quiere leer
 C 0x4C81 lo lee
 C 0x4C84 y R#15 vuelve a 0, el que espera la BIOS
+C 0x4C94 guarda el largo (BC)
+C 0x4C95 C = el puerto del VDP de 0x0007 + 1: el de control
 C 0x4C9A R#36 en adelante con autoincremento (R#17 = 36)
+C 0x4C9C sin interrupciones mientras se escriben los registros
+C 0x4C9F R#17 (0x91 = 17 con el bit 7: sin autoincremento no)
+C 0x4CA3 C + 2: el puerto de los registros (0x9B)
 C 0x4CA5 DX = H...
+C 0x4CA8 R#37 = 0
 C 0x4CAA ...DY = L
+C 0x4CAC R#39 = 0 (pagina 0)
 C 0x4CAF el largo (NX = H de BC)...
 C 0x4CB2 ...0 vale 256
+C 0x4CB5 0 se cambia por 1
+C 0x4CB6 R#40...
+C 0x4CB9 R#41, R#42...
 C 0x4CBD ...y el corto (NY = L)
+C 0x4CBF R#43 = 0
 C 0x4CC1 LINE, en horizontal (ARG = 0)
+C 0x4CC5 interrupciones otra vez
+C 0x4CCA guarda el largo
+C 0x4CCB C = el puerto de control
 C 0x4CD0 R#36 en adelante con autoincremento
+C 0x4CD2 sin interrupciones
+C 0x4CD5 R#17
+C 0x4CD9 C = 0x9B
 C 0x4CDB DX, DY
+C 0x4CE0 DY
 C 0x4CE5 NX (0 vale 256)
+C 0x4CEC R#40
+C 0x4CF3 R#42 = L
 C 0x4CF5 ARG = 1: el lado largo en vertical
 C 0x4CF8 LINE
+C 0x4CFC interrupciones otra vez
 C 0x4CFE el lado de arriba (vertical: B = E)...
 C 0x4D02 ...el de la izquierda...
 C 0x4D06 ...el de la derecha...
-C 0x4D0F ...y el de abajo
-C 0x4D16 una linea vertical sin tocar los registros
-C 0x4D20 una linea horizontal sin tocar los registros
+C 0x4D07 L + E: el lado de la derecha
+C 0x4D0F H + D: el lado de abajo
+C 0x4D16 conserva HL, DE y BC
+C 0x4D20 conserva HL, DE y BC
 C 0x4D2A el color, aparte
+C 0x4D2E guarda el tamano
+C 0x4D2F C = el puerto de control
 C 0x4D34 R#36 en adelante: DX, DY (D = la pagina), NX, NY, color, ARG, orden
+C 0x4D36 sin interrupciones
+C 0x4D39 R#17
+C 0x4D3D C = 0x9B
+C 0x4D3F DX = H
+C 0x4D44 DY = L, la pagina D
+C 0x4D48 HL = el tamano
 C 0x4D49 NX = H de BC (0 vale 256)
 C 0x4D52 NY = L (0 vale 256)
 C 0x4D5A el color
+C 0x4D5D R#45 = 0 (ARG)
 C 0x4D60 HMMV: rellena
+C 0x4D64 interrupciones otra vez
+C 0x4D6A guarda el tamano
+C 0x4D6B C = el puerto de control
 C 0x4D70 R#32 en adelante: SX, SY, DX, DY, NX, NY, ARG, orden
+C 0x4D72 sin interrupciones
+C 0x4D75 R#17
+C 0x4D79 C = 0x9B
+C 0x4D7B SX = H
+C 0x4D80 SY = L
 C 0x4D82 la pagina de origen (bits 0-1 de A')
 C 0x4D88 DX = D, DY = E...
 C 0x4D8F ...con la pagina de destino (bits 2-3 de A')
+C 0x4D96 HL = el tamano
 C 0x4D97 NX y NY
+C 0x4D9A R#41 = 0
+C 0x4D9E R#43 = 0, R#44 = 0, R#45 = 0
 C 0x4DA4 HMMM: copia el rectangulo
+C 0x4DA8 interrupciones otra vez
 C 0x4DAA HMMC desde la RAM HL: DX = D, DY = E, NX y NY de BC, color A'
+C 0x4DAE guarda el tamano
+C 0x4DAF C = el puerto de control
+C 0x4DB6 sin interrupciones
+C 0x4DB9 R#17: desde R#36
+C 0x4DBD C = 0x9B
+C 0x4DBF DX = D
+C 0x4DC4 DY = E
+C 0x4DC7 la pagina (A')
+C 0x4DC9 DE = el tamano
+C 0x4DCA NX = D
+C 0x4DCF NY = E
 C 0x4DD3 el primer byte va en R#44
+C 0x4DD7 R#45 = 0
 C 0x4DDA HMMC
+C 0x4DDE C = el puerto de control
 C 0x4DE0 R#44 sin autoincremento...
+C 0x4DE4 R#17 = 44 sin autoincremento (0x80 + 44)
+C 0x4DE8 C = 0x9B
 C 0x4DEA ...y cada byte cuando el VDP lo pide (S#2: TR, bit 7)
+C 0x4DEF bit 0 (CE): sin el, acabado
 C 0x4DF0 CE a 0: acabado
+C 0x4DF1 el bit 7 (TR): el VDP espera un byte
+C 0x4DF5 el byte siguiente a R#44
+C 0x4DFF guarda el tamano
+C 0x4E00 C = el puerto de control
 C 0x4E05 R#32 en adelante
+C 0x4E07 sin interrupciones
+C 0x4E0A R#17: desde R#32
+C 0x4E0E C = 0x9B
+C 0x4E10 SX = H
+C 0x4E15 SY = L
 C 0x4E17 las paginas en los bits 4-7 de A'...
+C 0x4E1B la pagina de origen
+C 0x4E1F DX = D
+C 0x4E24 DY = E
+C 0x4E28 la pagina de destino
+C 0x4E2E HL = el tamano
+C 0x4E2F NX = H
+C 0x4E34 NY = L
+C 0x4E38 R#44 = 0, R#45 = 0
 C 0x4E3C ...y la operacion logica en los bits 0-3
 C 0x4E41 LMMM: copia con operacion logica (TIMP: sin el color 0)
+C 0x4E43 la orden
+C 0x4E45 interrupciones otra vez
 C 0x4E47 un caracter...
 C 0x4E4A ...y 8 puntos a la derecha
 C 0x4E50 un caracter de un bit a 4 bits en 0xDE10: 8 filas
 C 0x4E58 la fila: 8 puntos en 8 bits
+C 0x4E5A 4 bytes por fila
 C 0x4E5C dos puntos por byte: el bit a 1 da el color C...
+C 0x4E5D el bit de la izquierda
 C 0x4E61 ...el 0, el color 0
 C 0x4E62 entra por la derecha de (HL)
+C 0x4E65 el segundo punto
 C 0x4E6C el byte siguiente del bufer
+C 0x4E6F HL = el caracter otra vez
 C 0x4E71 la fila siguiente del caracter
+C 0x4E73 las 8 filas
 C 0x4E76 un caracter de un bit en la posicion DE (x, y)
 C 0x4E7A pasado a 4 bits en 0xDE10
 C 0x4E7E la direccion de SCREEN 5: y x 128 + x / 2...
+C 0x4E81 / 2...
 C 0x4E85 ...en la pagina 1 (0x8000 en adelante)
 C 0x4E8E 8 filas de 4 bytes...
+C 0x4E8F 4 bytes
 C 0x4E96 ...cada una 128 bytes mas abajo
 C 0x4E9F el caracter siguiente, 8 bytes despues
+C 0x4EA3 los registros como estaban
 C 0x4EA6 texto con [x y] delante, mascara 0xFF: pinta
 C 0x4EAB con [x y] delante, mascara 0: borra (todo caracter 0)
 C 0x4EB0 con [x y] delante y la mascara C de quien llama
 C 0x4EB5 en la posicion DE, sin [x y] delante
+C 0x4EBA mascara 0xFF: el caracter tal cual
+C 0x4EBE mascara 0: borra
 C 0x4EC0 [x y]: D = x, E = y
 C 0x4EC4 el caracter
+C 0x4EC5 el siguiente
 C 0x4EC7 0xFF acaba y devuelve los bancos
 C 0x4ECB 0xFE trae otra posicion
 C 0x4ECE 0xFD es medio espacio
-C 0x4ED2 con la mascara: 0 borra
+C 0x4ED2 el caracter con la mascara
 C 0x4ED4 el caracter, de la fuente de la pagina 1
 C 0x4ED8 0x0C y 0x0D (estrechos) solo avanzan 4 puntos
 C 0x4EE0 los demas, 8
 C 0x4EE6 medio espacio: un rectangulo 4x8 de color 0
+C 0x4EE9 4 x 8
+C 0x4EF0 de color 0
+C 0x4EF3 los registros como estaban
 C 0x4EF6 4 puntos a la derecha
 C 0x4EFC una lista de caracteres de la fuente de 0x38 (p00:4F44)
 C 0x4F00 0xFF acaba
@@ -451,6 +720,7 @@ C 0x4FE9 3: dos bits, al reves
 C 0x4FEC 4: tres bits; 5: tres bits, al reves
 C 0x4FF5 el bufer de 4 bits, en el HL' de reserva
 C 0x4FF9 B caracteres pasados a 4 bits
+C 0x4FFF el caracter
 C 0x5002 y del bufer a la VRAM
 C 0x5018 al reves: de derecha a izquierda (p00:513B)
 C 0x501E 8 filas de un byte
@@ -1011,7 +1281,6 @@ C 0x44CF bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x44D5 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x44DF sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x44E8 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0x44EC guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
 C 0x44F2 carga_la_fuente: carga la fuente: 161 caracteres de un bit (0xFAF6 = 1 mientras tanto)
 C 0x4502 guarda el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
 C 0x450A bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
@@ -1086,7 +1355,6 @@ C 0x47EA texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos
 C 0x47F3 diez_caracteres: 10 caracteres seguidos de HL en (D, E)
 C 0x47F6 apunta a la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 C 0x47FC diez_caracteres: 10 caracteres seguidos de HL en (D, E)
-C 0x480C texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x480F paso_siguiente: al paso siguiente del estado (0xDE01 + 1)
 C 0x4814 guarda el paso dentro del estado
 C 0x481A lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
@@ -1175,7 +1443,6 @@ C 0x4DEC lee_estado: A = el registro de estado A del VDP (R#15)
 C 0x4DFC espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
 C 0x4E92 copia_a_vram: copia BC bytes de HL a la VRAM DE
 C 0x4EC8 devuelve_reparto: vuelve a poner el reparto guardado en 0xED46-0xED48
-C 0x4EF0 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0x4F15 siguiente_columna: D += 8; si da la vuelta, E += 8
 C 0x4F29 copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 C 0x4F4F copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'

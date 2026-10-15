@@ -496,8 +496,8 @@ C 0x8AFE en la baja corre el ordenador
 C 0x8B06 en la alta corre el ordenador
 C 0x8B0E los corredores: el ordenador, p02:8B88 y p02:8B5F...
 C 0x8B11 los que vuelven y los que coinciden
-C 0x8B17 ...con el bit 5 del mando (volver) no vale el 4 (avanzar)...
-C 0x8B1C con el bit 5 (volver), sin el 4
+C 0x8B17 con el bit 5 del mando (avanzar) no vale el 4 (volver)
+C 0x8B1C con el bit 5 (avanzar), sin el 4
 C 0x8B20 ...en 0xEDE1
 C 0x8B23 las 4 fichas de corredor:...
 C 0x8B27 4 fichas (0xE301 cuenta)
@@ -593,7 +593,7 @@ C 0x8D9D ...y el camino a la siguiente (p02:8FEC)
 C 0x8DA2 el camino a la siguiente (p02:8FEC)
 C 0x8DA5 y su sprite (p02:8FB2)
 C 0x8DA8 carrera: estado 0xF2 y el bit 6
-C 0x8DB5 vuelve atras con el mando (bit 5) si avanzaba y la direccion es la de su base
+C 0x8DB5 con el bit 5 del mando (avanzar), el que vuelve (bit 7) avanza otra vez si la direccion es la de su base
 C 0x8DB8 sin el bit 5 del mando, nada
 C 0x8DBF si no avanza (bit 7 a 0), nada
 C 0x8DC5 desde la 1.a, nada
@@ -602,13 +602,13 @@ C 0x8DD1 la 3.a: 4
 C 0x8DD4 la casa: 2
 C 0x8DD7 si la direccion no es esa, nada
 C 0x8DE0 el camino de vuelta de 0x908C
-C 0x8DE3 vuelve (bit 7 a 0)
-C 0x8DE9 0xE340 = 0: volviendo
+C 0x8DE3 deja de volver (bit 7 a 0)
+C 0x8DE9 0xE340 = 0
 C 0x8DFF con el mando: no antes de la jugada ni parado ni tirandose
 C 0x8E03 con la jugada acabada, nada
 C 0x8E0E antes del paso 3, nada
 C 0x8E14 parado o decidido, nada
-C 0x8E18 avanzar (bit 4): el camino de 0x9141 de su base
+C 0x8E18 volver (bit 4): pasado el punto del camino (0x9141) de su base
 C 0x8E1E sin el bit 4: p02:8DB5
 C 0x8E26 si ya vuelve, nada
 C 0x8E2B la base - 1, x 2
@@ -622,9 +622,9 @@ C 0x8E5D la 3.a: 4
 C 0x8E61 si no coincide, nada
 C 0x8E64 ...se apunta, y desde la 2.a vuelve: el bit 7 y el camino de 0x9092
 C 0x8E6D desde la 1.a, nada
-C 0x8E71 0xE340 = 1: avanzando
+C 0x8E71 0xE340 = 1
 C 0x8E79 el camino de 0x9092
-C 0x8E7C el bit 7 de las marcas
+C 0x8E7C vuelve (bit 7 de las marcas)
 C 0x8E8D con la direccion pedida: el paso y la velocidad del camino (p00:5C94)...
 C 0x8E91 si no coincide, nada
 C 0x8E95 la palabra 2 x E de la tabla
@@ -781,9 +781,9 @@ C 0x9262 ninguno: p02:9293
 C 0x9264 si algun corredor sigue corriendo (sin el bit 6), la jugada sigue
 C 0x926C con estado...
 C 0x9270 ...y sin llegar (bit 6): sigue
-C 0x9277 con 0xE33C, si algun defensor esta lanzando (estado 3), sigue
+C 0x9277 con 0xE33C, si algun defensor corre con la pelota (estado 3), sigue
 C 0x927B sin cogida, sigue
-C 0x9283 9 defensores, C = 0x30 (lanzando)
+C 0x9283 9 defensores, C = 0x30 (corriendo con la pelota)
 C 0x9286 estado 0x30 o 0x31: sigue
 C 0x9293 la espera de 0xE339 hasta acabar la jugada...
 C 0x9297 hasta 0, sigue

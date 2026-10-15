@@ -15,12 +15,12 @@
 
 
 L_6000:
-	jp 0b15eh		;6000
+	jp 0b15eh		;6000   ; el arranque del motor de sonido (p06:B15E)
 L_6003:
-	ld (0effch),a		;6003
-	jp 0b193h		;6006
+	ld (0effch),a		;6003   ; el sonido pedido en 0xEFFC...
+	jp 0b193h		;6006   ; ...y al motor (p06:B193)
 L_6009:
-	jp 0b41eh		;6009
+	jp 0b41eh		;6009   ; el sonido de cada cuadro (p06:B41E)
 
 ; ----------------------------------------------------------------------
 ; DATOS sonidos: 72 punteros, uno por sonido del 1 al 0x48, a su cabecera

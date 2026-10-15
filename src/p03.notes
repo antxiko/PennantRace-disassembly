@@ -1370,6 +1370,7 @@ C 0xA4F3 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos
 C 0xA516 copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 C 0xA542 apunta a la velocidad y de la pelota lanzada (16 bits)
 C 0xA551 guarda la x del lanzador (0x71-0x7F)
+C 0xA555 guarda la x a la que va el lanzador del ordenador
 C 0xA55B apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0xA59F guarda el efecto pedido al lanzar (0 recto, 1 o 2)
 C 0xA5E4 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes

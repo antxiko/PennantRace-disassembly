@@ -1673,9 +1673,9 @@ L_8B0E:
 	call L_8B88		;8b11   ; los que vuelven y los que coinciden
 	call L_8B5F		;8b14
 L_8B17:
-	ld a,(0e19dh)		;8b17   ; ...con el bit 5 del mando (volver) no vale el 4 (avanzar)...
+	ld a,(0e19dh)		;8b17   ; con el bit 5 del mando (avanzar) no vale el 4 (volver)
 	bit 5,a		;8b1a
-	jr z,L_8B20		;8b1c   ; con el bit 5 (volver), sin el 4
+	jr z,L_8B20		;8b1c   ; con el bit 5 (avanzar), sin el 4
 	res 4,a		;8b1e
 L_8B20:
 	ld (0ede1h),a		;8b20   ; ...en 0xEDE1
@@ -2033,7 +2033,7 @@ L_8DA8:
 	ld (ix+00bh),a		;8db1   ; guarda las marcas
 	ret			;8db4
 L_8DB5:
-	ld a,b			;8db5   ; vuelve atras con el mando (bit 5) si avanzaba y la direccion es la de su base
+	ld a,b			;8db5   ; con el bit 5 del mando (avanzar), el que vuelve (bit 7) avanza otra vez si la direccion es la de su base
 	and 020h		;8db6
 	ret z			;8db8   ; sin el bit 5 del mando, nada
 	ld a,(ix+00bh)		;8db9   ; lee las marcas
@@ -2064,10 +2064,10 @@ L_8DD6:
 	dec a			;8dde
 	ret z			;8ddf
 	ld hl,0908ch		;8de0   ; el camino de vuelta de 0x908C
-	res 7,(ix+00bh)		;8de3   ; vuelve (bit 7 a 0)
+	res 7,(ix+00bh)		;8de3   ; deja de volver (bit 7 a 0)
 	ld b,a			;8de7
 	xor a			;8de8
-	ld (0e340h),a		;8de9   ; 0xE340 = 0: volviendo
+	ld (0e340h),a		;8de9   ; 0xE340 = 0
 	ld a,b			;8dec
 	dec a			;8ded
 	ld e,a			;8dee
@@ -2093,7 +2093,7 @@ L_8DFF:
 	ret nz			;8e14   ; parado o decidido, nada
 	bit 5,a		;8e15
 	ret nz			;8e17
-	ld a,(0ede1h)		;8e18   ; avanzar (bit 4): el camino de 0x9141 de su base
+	ld a,(0ede1h)		;8e18   ; volver (bit 4): pasado el punto del camino (0x9141) de su base
 	ld b,a			;8e1b
 	and 010h		;8e1c
 	jr z,L_8DB5		;8e1e   ; sin el bit 4: p02:8DB5
@@ -2147,11 +2147,11 @@ L_8E61:
 	ret z			;8e6d   ; desde la 1.a, nada
 	ld b,a			;8e6e
 	ld a,001h		;8e6f
-	ld (0e340h),a		;8e71   ; 0xE340 = 1: avanzando
+	ld (0e340h),a		;8e71   ; 0xE340 = 1
 	ld a,b			;8e74
 	res 7,(ix+00dh)		;8e75   ; pone a cero el bit 7 de la base de destino (nibble alto; 2 abajo: llegado)
 	ld hl,09092h		;8e79   ; el camino de 0x9092
-	set 7,(ix+00bh)		;8e7c   ; el bit 7 de las marcas
+	set 7,(ix+00bh)		;8e7c   ; vuelve (bit 7 de las marcas)
 	dec a			;8e80
 	ld e,a			;8e81
 	ld c,008h		;8e82
@@ -2701,12 +2701,12 @@ L_926C:
 L_9274:
 	add hl,de			;9274
 	djnz L_926C		;9275
-	ld a,(0e33ch)		;9277   ; con 0xE33C, si algun defensor esta lanzando (estado 3), sigue
+	ld a,(0e33ch)		;9277   ; con 0xE33C, si algun defensor corre con la pelota (estado 3), sigue
 	or a			;927a
 	jr z,L_92E7		;927b   ; sin cogida, sigue
 	ld hl,0e271h		;927d   ; apunta a las 9 fichas de 16 bytes de los defensores
 	ld de,00010h		;9280
-	ld bc,00930h		;9283   ; 9 defensores, C = 0x30 (lanzando)
+	ld bc,00930h		;9283   ; 9 defensores, C = 0x30 (corriendo con la pelota)
 L_9286:
 	ld a,(hl)			;9286   ; estado 0x30 o 0x31: sigue
 	and 0f0h		;9287

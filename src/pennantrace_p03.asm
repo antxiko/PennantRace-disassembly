@@ -776,7 +776,7 @@ L_A539:
 	ld a,b			;a550   ; 0xE1E1 y 0xE1E5 de vuelta
 	ld (0e1e1h),a		;a551   ; guarda la x del lanzador (0x71-0x7F)
 	ld a,c			;a554
-	ld (0e1e5h),a		;a555
+	ld (0e1e5h),a		;a555   ; guarda la x a la que va el lanzador del ordenador
 	call L_AA02		;a558   ; ...p03:AA02 y guarda corredores, marcador y casillas por si se anula
 	ld hl,0e231h		;a55b   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld de,0ec98h		;a55e   ; los corredores a 0xEC98 (64 bytes)

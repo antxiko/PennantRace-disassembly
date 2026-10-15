@@ -65,8 +65,8 @@ RUTINAS = {
     (0, 0x5991): ("carga_la_fuente", "carga la fuente: 161 caracteres de un bit (0xFAF6 = 1 mientras tanto)"),
     (0, 0x4F79): ("bufer_a_vram", "B caracteres de 8x8 del bufer HL a la VRAM DE"),
     (1, 0x7DC6): ("paso_anterior", "al paso anterior (0xECE6 - 1)"),
-    (1, 0x7AC0): ("que_vuelva", "el corredor IX vuelve: segun su base, el mando 1, 4 o 2 con el bit 5"),
-    (1, 0x7AE3): ("que_avance", "el corredor IX avanza (si no corre ya): el mando 8, 1 o 4 con el bit 4"),
+    (1, 0x7AC0): ("que_avance", "el corredor IX parado o volviendo avanza: segun su base, el mando 1, 4 o 2 con el bit 5"),
+    (1, 0x7AE3): ("que_vuelva", "el corredor IX que avanza vuelve: segun su base, el mando 8, 1 o 4 con el bit 4"),
     (1, 0x62F7): ("bateador_mas", "un bateador mas: en 0xE1A1 = 3, solo la primera vez (0xEDD4)"),
     (1, 0x7F10): ("x_mas_de", "HL = la x del IX mas DE"),
     (1, 0x6939): ("paso_e339", "al paso siguiente (0xE339 + 1)"),
@@ -336,6 +336,11 @@ RAM.update({
     0xE1DD: ("el guante del receptor por cambiar", "p03:A5C7, p03:A64F"),
     0xE1DF: ("la altura de la pelota lanzada", "p03:A5CE, p03:A633"),
     0xE1E1: ("la x del lanzador (0x71-0x7F)", "p03:A857"),
+    0xE1E3: ("la espera del lanzador del ordenador", "p01:7605, p01:76D2"),
+    0xE1E4: ("el mando de efecto del lanzador del ordenador", "p01:76D2"),
+    0xE1E5: ("la x a la que va el lanzador del ordenador", "p01:75F5"),
+    0xE1E7: ("el tipo de lanzamiento del ordenador (4 o 8: el efecto)", "p01:7733"),
+    0xE1EA: ("la velocidad del lanzamiento para la pelota; el bateador del ordenador la cuenta atras", "p03:AB2E, p01:7796"),
     0xE1E6: ("el efecto pedido al lanzar (0 recto, 1 o 2)", "p03:A59F, p03:A8A4"),
     0xE1E8: ("los cuadros de vuelo de la pelota lanzada", "p03:A5F2"),
     0xE1EB: ("el estilo del lanzador (bits)", "p03:A806, p03:A8CA"),
@@ -353,7 +358,7 @@ RAM.update({
     0xE1F2: ("la cuenta de cuadros del swing", "p02:8696, p02:86C8"),
     0xE1F5: ("la x del bateador en la caja", "p02:8928, p02:8940"),
     0xE1FB: ("la altura del golpe (0-8; 9 no llega)", "p02:89D8"),
-    0xEDE1: ("el mando de los corredores (sin el bit 4 si vuelven)", "p02:8B20"),
+    0xEDE1: ("el mando de los corredores (bit 5 avanzar, bit 4 volver; con el 5 no vale el 4)", "p02:8B20, p02:8E18"),
     0xE1F7: ("el toque (1)", "p02:8689"),
     0xE1FA: ("la fase del swing (1-7)", "p02:8696, p02:8817"),
     0xE201: ("los cuadros desde el golpe", "p02:8657"),
@@ -467,7 +472,9 @@ RAM16 = {}
 # nombres no valen. p15:A8AC-AA40 calcula las medias del equipo de TEAM EDIT
 # en 0xE1B4-0xE22B (donde en el partido estan la pelota y los demas), y
 # p15:B693-BA8E reparte los puntos de los jugadores en esa misma RAM.
-RAM_PRESTADA = ((15, 0xA8AC, 0xAA40), (15, 0xB693, 0xBA8E))
+RAM_PRESTADA = ((15, 0xA8AC, 0xAA40), (15, 0xB693, 0xBA8E),
+                # el defensor movido con el mando guarda su sitio en 0xE1D1-0xE1D6
+                (1, 0x72CB, 0x7375))
 
 # Las fichas de 16 bytes de los que se mueven por el campo: la pelota
 # (0xE211), los 4 corredores (0xE231) y los 9 de campo (0xE271, p01:6ACF).
