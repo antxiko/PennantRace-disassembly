@@ -733,6 +733,7 @@ C 0x6737 hl_mas_a: HL = HL + A
 C 0x675E apunta a las carreras del local por entrada (10 casillas, 12-13 el total)
 C 0x6764 apunta a las carreras del visitante por entrada (10 casillas, 12-13 el total)
 C 0x6768 hl_mas_a: HL = HL + A
+C 0x679F guarda el mando del bateador o los corredores
 C 0x67A8 lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x67C4 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x67CC lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
@@ -755,16 +756,26 @@ C 0x6999 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC
 C 0x69A4 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0x69AF rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0x69BA rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
+C 0x69ED apunta a los jugadores del visitante (14 bytes cada uno)
+C 0x69F5 apunta a los jugadores del local (14 bytes cada uno)
 C 0x6A21 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6A34 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0x6A42 de_mas_a: DE = DE + A
+C 0x6A68 apunta a el orden de bateo del visitante (9 numeros de jugador)
+C 0x6A6B apunta a los jugadores del visitante (14 bytes cada uno)
+C 0x6A70 apunta a el orden de bateo del local (9 numeros de jugador)
+C 0x6A73 apunta a los jugadores del local (14 bytes cada uno)
 C 0x6A89 hl_mas_a: HL = HL + A
+C 0x6ACF apunta a las 9 fichas de 16 bytes de los defensores
+C 0x6AF1 lee el defensor que tiene la pelota (1-9; 0 nadie)
 C 0x6B05 lee la base de destino (nibble alto; 2 abajo: llegado)
 C 0x6B12 guarda el numero (bits 0-3) y el estado (bits 4-7)
 C 0x6B28 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x6B4A lee el defensor que tiene la pelota (1-9; 0 nadie)
 C 0x6B82 guarda la velocidad y, byte alto
 C 0x6B85 guarda la velocidad x, byte bajo
 C 0x6B88 guarda la velocidad x, byte alto
+C 0x6B99 lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0x6BDB guarda la y de destino
 C 0x6BDE guarda la x de destino
 C 0x6BE7 lee el numero (bits 0-3) y el estado (bits 4-7)
@@ -782,6 +793,7 @@ C 0x6CE6 las marcas = 0x01
 C 0x6CEA guarda el dibujo de su sprite
 C 0x6CED guarda la y de destino
 C 0x6D13 hl_mas_a: HL = HL + A
+C 0x6D35 guarda el defensor que tiene la pelota (1-9; 0 nadie)
 C 0x6D5A lee el numero (bits 0-3) y el estado (bits 4-7)
 C 0x6D5F guarda el numero (bits 0-3) y el estado (bits 4-7)
 C 0x6D65 guarda el dibujo de su sprite
@@ -792,19 +804,26 @@ C 0x6D89 lee la velocidad x, byte alto
 C 0x6DBF lee la x (horizontal)
 C 0x6DC2 lee la x, byte alto
 C 0x6DE2 lee la y, byte alto
+C 0x6DF6 lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x6E2C de_mas_a: DE = DE + A
 C 0x6E39 lee la y, byte alto
 C 0x6E4A lee la x, byte alto
 C 0x6E91 hl_mas_a: HL = HL + A
 C 0x6EA4 lee la y, byte alto
+C 0x6EA8 guarda variable de paso (cada rutina la usa a su manera)
+C 0x6EB9 guarda variable de paso (cada rutina la usa a su manera)
 C 0x6ED1 lee la x (horizontal)
 C 0x6ED4 lee la x, byte alto
+C 0x6F61 lee el equipo del jugador en PENNANT (bit 0)
 C 0x6F80 lee la x, byte alto
 C 0x6F83 lee la y (vertical)
 C 0x6F86 lee la y, byte alto
+C 0x6F89 guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x6F95 lee el numero (bits 0-3) y el estado (bits 4-7)
+C 0x6F9B lee el defensor que tiene la pelota (1-9; 0 nadie)
 C 0x6FA6 lee el numero (bits 0-3) y el estado (bits 4-7)
 C 0x6FD0 lee la x, byte alto
+C 0x6FE1 lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x6FF4 mira el bit 4 de las marcas
 C 0x7007 las marcas = 0x00
 C 0x7014 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
@@ -863,6 +882,7 @@ C 0x721F lee la y de destino
 C 0x722D lee la x de destino
 C 0x7246 guarda la base de destino (nibble alto; 2 abajo: llegado)
 C 0x72A7 guarda el dibujo de su sprite
+C 0x72BF lee el contador de cuadros de la jugada (las piernas de los sprites)
 C 0x72D3 lee la y, fraccion
 C 0x72D6 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0x72DA lee la y, byte alto
@@ -900,9 +920,11 @@ C 0x73E3 lee la velocidad y, byte alto
 C 0x73E6 lee la velocidad x, byte bajo
 C 0x73E9 lee la velocidad x, byte alto
 C 0x741C hl_mas_a: HL = HL + A
+C 0x741F lee el contador de cuadros de la jugada (las piernas de los sprites)
 C 0x7425 guarda el dibujo de su sprite
 C 0x7441 lee la velocidad y, byte bajo
 C 0x7444 lee la velocidad y, byte alto
+C 0x7447 guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x744E lee la y, fraccion
 C 0x7451 lee la y (vertical)
 C 0x7456 guarda la y, fraccion
@@ -932,6 +954,7 @@ C 0x74E0 le suma la x, byte alto
 C 0x74E3 guarda la x, byte alto
 C 0x74ED palabra_a: HL = la palabra A de la tabla HL
 C 0x74FD apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
+C 0x750F apunta a las 9 fichas de 16 bytes de los defensores
 C 0x7517 lee el desplazamiento de la pantalla (16 bits)
 C 0x7523 lee el numero (bits 0-3) y el estado (bits 4-7)
 C 0x7529 lee la y (vertical)
@@ -944,21 +967,86 @@ C 0x758C lee la x (horizontal)
 C 0x7594 lee el dibujo de su sprite
 C 0x75A4 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x75A7 lee el dibujo de su sprite
+C 0x75D8 lee el paso del lanzador del ordenador
 C 0x75DB despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x75FE guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x763C guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7662 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7670 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x76A1 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0x76ED lee las bolas de la cuenta (4 = base por bolas, FOUR BALL)
+C 0x76F6 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x770F guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0x772F hl_mas_a: HL = HL + A
-C 0x774E lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
+C 0x774E lee el lado por el que batea (0 si IX+6 de su ficha es 0x20, si no 1): elige las tablas del otro lado
 C 0x778B despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x77C1 apunta a el paso del bateador del ordenador
+C 0x77D5 lee el mando del bateador o los corredores
+C 0x77DB guarda el mando del bateador o los corredores
+C 0x77E3 lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0x7802 multiplica: HL = A x E (8 x 8 bits)
+C 0x7857 guarda el mando del bateador o los corredores
+C 0x785A guarda el paso del bateador del ordenador
+C 0x787F lee el mando del bateador o los corredores
+C 0x788A guarda el mando del bateador o los corredores
+C 0x7890 guarda el mando del bateador o los corredores
+C 0x7898 guarda el mando del bateador o los corredores
+C 0x78A9 lee el mando del bateador o los corredores
+C 0x78E4 guarda el mando del bateador o los corredores
+C 0x78F3 guarda el mando del bateador o los corredores
+C 0x7902 lee el paso de los corredores del ordenador
 C 0x7913 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x793A guarda el paso de los corredores del ordenador
+C 0x7965 guarda el paso de los corredores del ordenador
 C 0x7990 lee las marcas
 C 0x799A mira el bit 6 de la base de destino (nibble alto; 2 abajo: llegado)
+C 0x79A7 guarda el paso de los corredores del ordenador
+C 0x79B0 lee el defensor que tiene la pelota (1-9; 0 nadie)
 C 0x79C5 lee las marcas
 C 0x79D5 mira el bit 5 de la base de destino (nibble alto; 2 abajo: llegado)
+C 0x79E0 lee el defensor que tiene la pelota (1-9; 0 nadie)
+C 0x7A5B apunta a las 9 fichas de 16 bytes de los defensores
 C 0x7A5E hl_mas_a: HL = HL + A
 C 0x7A74 lee las marcas
 C 0x7A8F lee las marcas
 C 0x7AB3 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
+C 0x7AD3 guarda el mando del bateador o los corredores
+C 0x7AF6 guarda el mando del bateador o los corredores
+C 0x7B33 apunta a las 9 fichas de 16 bytes de los defensores
+C 0x7B82 lee el paso de la defensa del ordenador
 C 0x7B85 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x7B9D guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7BA2 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7BDB lee el defensor que va a por la pelota (desplazamiento de 16 en 16)
+C 0x7C24 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7C52 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7C66 lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7C6A guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7C74 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7C84 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7CB9 lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7CD8 lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7CDD guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7CEB lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7CF0 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7D08 lee la velocidad x de la pelota y el byte siguiente (16 bits)
+C 0x7D11 lee la velocidad y de la pelota y el byte siguiente (16 bits)
+C 0x7D2D apunta a las 9 fichas de 16 bytes de los defensores
+C 0x7D38 guarda el defensor que va a por la pelota (desplazamiento de 16 en 16)
+C 0x7D58 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7DA9 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7DB2 lee el defensor que tiene la pelota (1-9; 0 nadie)
+C 0x7DC2 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7DED guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7EBA guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7F1A guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7F56 apunta a el paso de la defensa del ordenador
+C 0x7F80 apunta a las 9 fichas de 16 bytes de los defensores
 C 0x7F86 lee la base de destino (nibble alto; 2 abajo: llegado)
+C 0x7FB2 guarda el defensor que va a por la pelota (desplazamiento de 16 en 16)
+C 0x7FC4 lee la y de la pelota (vertical) y el byte siguiente (16 bits)
+C 0x7FCB lee la x de la pelota y el byte siguiente (16 bits)
+C 0x7FE7 guarda el paso de la defensa del ordenador
+C 0x7FEC guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7FEF lee el defensor que tiene la pelota (1-9; 0 nadie)
 # --- fin de las anotaciones de anota.py ---

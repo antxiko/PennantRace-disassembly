@@ -295,7 +295,7 @@ L_4245:
 	ld ix,0ed05h		;4245   ; IX+0 cuenta los trozos copiados por rotacion
 	ld (ix+000h),000h		;4249
 	ld de,0e341h		;424d   ; el apunte de los trozos (0xE340-0xE35F) a cero
-	ld hl,0e340h		;4250
+	ld hl,0e340h		;4250   ; apunta a variable de paso (cada rutina la usa a su manera)
 	ld bc,0001fh		;4253
 	ld (hl),000h		;4256
 	ldir		;4258
@@ -702,7 +702,7 @@ L_4508:
 L_451D:
 	call 0650eh		;451d   ; el menu: deja el estado y el despachador del menu a 0...
 	xor a			;4520
-	ld (0d74ch),a		;4521
+	ld (0d74ch),a		;4521   ; guarda el despachador de los menus (y 0xD74D)
 	ld (0de00h),a		;4524   ; guarda el estado del juego (indice del despachador principal)
 	ld a,020h		;4527   ; ...32 cuadros de espera...
 	ld (0de04h),a		;4529   ; guarda la cuenta atras del estado
@@ -1075,7 +1075,7 @@ L_47D1:
 	ld hl,0d380h		;47ed   ; ...y dos numeros de 10 cifras: 0xD380 y 0xD47F
 	ld de,04850h		;47f0
 	call L_5BE4		;47f3
-	ld hl,0d47fh		;47f6
+	ld hl,0d47fh		;47f6   ; apunta a la ficha del local (255 bytes de p13:731F)
 	ld de,0a850h		;47f9
 	call L_5BE4		;47fc
 	call 060ach		;47ff   ; p01:60AC
@@ -1091,7 +1091,7 @@ L_4812:
 	ret			;4817
 L_4818:
 	djnz L_486C		;4818   ; paso 2: sin el bit 4 de 0xDE02, al paso 5
-	ld a,(0de02h)		;481a
+	ld a,(0de02h)		;481a   ; lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 	and 010h		;481d
 	jr z,L_4812		;481f
 	ld a,(0de07h)		;4821   ; espera al disparo (bit 4 de 0xDE07)
@@ -1148,7 +1148,7 @@ L_4874:
 	call L_59AD		;4895   ; ...la fuente y la pantalla encendida
 	call enciende_pantalla		;4898   ; enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
 	ld a,009h		;489b   ; el despachador 0xD74C a 9, paso 0...
-	ld (0d74ch),a		;489d
+	ld (0d74ch),a		;489d   ; guarda el despachador de los menus (y 0xD74D)
 	call L_4601		;48a0
 	ld a,005h		;48a3   ; ...estado 5 (el partido) y calla todo (sonido 1)
 	ld (0de00h),a		;48a5   ; guarda el estado del juego (indice del despachador principal)
@@ -1228,7 +1228,7 @@ L_493F:
 	or a			;494d
 	ret z			;494e
 	ld hl,00000h		;494f   ; ...0xD74C y 0xD74D a cero y al paso siguiente
-	ld (0d74ch),hl		;4952
+	ld (0d74ch),hl		;4952   ; guarda el despachador de los menus (y 0xD74D) y el byte siguiente (16 bits)
 	jp L_4543		;4955
 L_4958:
 	djnz L_4976		;4958   ; paso 7: espera los botones 1 o 2
@@ -1241,7 +1241,7 @@ L_4958:
 L_4967:
 	ld a,001h		;4967   ; el sonido de la eleccion, el bit 6 de 0xDE02 a 0 y al menu
 	call L_5E80		;4969
-	ld hl,0de02h		;496c
+	ld hl,0de02h		;496c   ; apunta a las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 	ld a,(hl)			;496f
 	and 0bfh		;4970
 	ld (hl),a			;4972
@@ -1255,7 +1255,7 @@ L_4976:
 	or a			;4984
 	ret z			;4985
 	ld hl,00000h		;4986
-	ld (0d74ch),hl		;4989
+	ld (0d74ch),hl		;4989   ; guarda el despachador de los menus (y 0xD74D) y el byte siguiente (16 bits)
 	ld a,007h		;498c
 	ld (0de01h),a		;498e   ; guarda el paso dentro del estado
 	ret			;4991
@@ -1388,7 +1388,7 @@ L_4A42:
 	ld b,008h		;4a70   ; ...y los demas 0x08
 L_4A72:
 	ld a,b			;4a72
-	ld (0de02h),a		;4a73
+	ld (0de02h),a		;4a73   ; guarda las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 	ld (hl),003h		;4a76   ; al estado 0, paso 3
 	inc hl			;4a78
 	xor a			;4a79
@@ -2662,7 +2662,7 @@ L_5153:
 	jr L_5174		;5166
 L_5168:
 	ld hl,0ba9bh		;5168
-	ld a,(0e1feh)		;516b   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
+	ld a,(0e1feh)		;516b   ; lee el lado por el que batea (0 si IX+6 de su ficha es 0x20, si no 1): elige las tablas del otro lado
 	or a			;516e
 	jr z,L_5174		;516f
 	ld hl,0ba8eh		;5171
@@ -2677,21 +2677,21 @@ L_5180:
 	jr L_51AD		;5183
 L_5185:
 	ld hl,094bbh		;5185   ; los de p11, cada par con o sin 0xE1FE
-	ld a,(0e1feh)		;5188   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
+	ld a,(0e1feh)		;5188   ; lee el lado por el que batea (0 si IX+6 de su ficha es 0x20, si no 1): elige las tablas del otro lado
 	or a			;518b
 	jr z,L_51AD		;518c
 	ld hl,094aeh		;518e
 	jr L_51AD		;5191
 L_5193:
 	ld hl,09401h		;5193   ; p11:9401, o 0x93F4 con 0xE1FE
-	ld a,(0e1feh)		;5196   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
+	ld a,(0e1feh)		;5196   ; lee el lado por el que batea (0 si IX+6 de su ficha es 0x20, si no 1): elige las tablas del otro lado
 	or a			;5199
 	jr z,L_51AD		;519a
 	ld hl,093f4h		;519c
 	jr L_51AD		;519f
 L_51A1:
 	ld hl,095a8h		;51a1
-	ld a,(0e1feh)		;51a4   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
+	ld a,(0e1feh)		;51a4   ; lee el lado por el que batea (0 si IX+6 de su ficha es 0x20, si no 1): elige las tablas del otro lado
 	or a			;51a7
 	jr z,L_51AD		;51a8
 	ld hl,095bbh		;51aa
@@ -3079,7 +3079,7 @@ L_550E:
 	ld e,(hl)			;5527
 	call pon_color		;5528   ; pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
 	ld hl,0d70bh		;552b   ; ...y el color 8: con el bit 4 de 0xDE02 y sin el 5...
-	ld a,(0de02h)		;552e
+	ld a,(0de02h)		;552e   ; lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 	bit 4,a		;5531
 	jr z,L_554C		;5533
 	bit 5,a		;5535
@@ -3152,7 +3152,7 @@ L_55AF:
 	jp bancos_1_2_3		;55ca   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 L_55CD:
 	ld a,b			;55cd   ; B caracteres por fila y C filas de la fuente de la fila 0x28 desde HL, en DE
-	ld (0e340h),a		;55ce
+	ld (0e340h),a		;55ce   ; guarda variable de paso (cada rutina la usa a su manera)
 	ld a,d			;55d1
 	ld (0e341h),a		;55d2
 L_55D5:
@@ -3170,12 +3170,12 @@ L_55D5:
 	ld e,a			;55e5
 	ld a,(0e341h)		;55e6
 	ld d,a			;55e9
-	ld a,(0e340h)		;55ea
+	ld a,(0e340h)		;55ea   ; lee variable de paso (cada rutina la usa a su manera)
 	ld b,a			;55ed
 	jr L_55CD		;55ee
 L_55F0:
 	ld a,b			;55f0   ; lo mismo con la fuente de la fila 0x30
-	ld (0e340h),a		;55f1
+	ld (0e340h),a		;55f1   ; guarda variable de paso (cada rutina la usa a su manera)
 	ld a,d			;55f4
 	ld (0e341h),a		;55f5
 L_55F8:
@@ -3193,12 +3193,12 @@ L_55F8:
 	ld e,a			;5608
 	ld a,(0e341h)		;5609
 	ld d,a			;560c
-	ld a,(0e340h)		;560d
+	ld a,(0e340h)		;560d   ; lee variable de paso (cada rutina la usa a su manera)
 	ld b,a			;5610
 	jr L_55F0		;5611
 L_5613:
 	ld a,b			;5613   ; lo mismo con la fuente de la fila 0x68
-	ld (0e340h),a		;5614
+	ld (0e340h),a		;5614   ; guarda variable de paso (cada rutina la usa a su manera)
 	ld a,d			;5617
 	ld (0e341h),a		;5618
 L_561B:
@@ -3216,12 +3216,12 @@ L_561B:
 	ld e,a			;562b
 	ld a,(0e341h)		;562c
 	ld d,a			;562f
-	ld a,(0e340h)		;5630
+	ld a,(0e340h)		;5630   ; lee variable de paso (cada rutina la usa a su manera)
 	ld b,a			;5633
 	jr L_5613		;5634
 L_5636:
 	ld a,b			;5636   ; lo mismo con la fuente de la fila 0xA8
-	ld (0e340h),a		;5637
+	ld (0e340h),a		;5637   ; guarda variable de paso (cada rutina la usa a su manera)
 	ld a,d			;563a
 	ld (0e341h),a		;563b
 L_563E:
@@ -3239,7 +3239,7 @@ L_563E:
 	ld e,a			;564e
 	ld a,(0e341h)		;564f
 	ld d,a			;5652
-	ld a,(0e340h)		;5653
+	ld a,(0e340h)		;5653   ; lee variable de paso (cada rutina la usa a su manera)
 	ld b,a			;5656
 	jr L_5636		;5657
 rachas_a_ram:		; descomprime las rachas de DE en la RAM HL
@@ -3272,7 +3272,7 @@ L_5671:
 L_5677:
 	call bancos_10_11_12		;5677   ; rachas a la VRAM 0x6C00: las de p10:604D...
 	ld hl,06c00h		;567a
-	ld a,(0e1feh)		;567d   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
+	ld a,(0e1feh)		;567d   ; lee el lado por el que batea (0 si IX+6 de su ficha es 0x20, si no 1): elige las tablas del otro lado
 	or a			;5680
 	jr nz,L_568E		;5681
 	ld de,0604dh		;5683
@@ -3306,7 +3306,7 @@ L_56B1:
 L_56C4:
 	call bancos_10_11_12		;56c4   ; los 7 dibujos de 128 bytes del juego 0xE1EB & 3 (p10:6FBE)...
 	ld hl,07c00h		;56c7   ; ...a la VRAM 0x7C80 en adelante
-	ld (0e340h),hl		;56ca
+	ld (0e340h),hl		;56ca   ; guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 	ld a,(0e1ebh)		;56cd
 	and 003h		;56d0
 	ld hl,06fbeh		;56d2
@@ -3322,7 +3322,7 @@ L_56DA:
 	ld hl,(0e340h)		;56e0   ; ...128 bytes mas abajo
 	ld bc,00080h		;56e3
 	add hl,bc			;56e6
-	ld (0e340h),hl		;56e7
+	ld (0e340h),hl		;56e7   ; guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 	ex de,hl			;56ea
 	ld a,(0e1ebh)		;56eb   ; con el bit 2 de 0xE1EB, girado en espejo (p00:4B66)
 	and 004h		;56ee
@@ -3397,7 +3397,7 @@ L_5755:
 L_5761:
 	call bancos_10_11_12		;5761   ; la ficha 0xE1F6 de 11 bytes de p10:6000 (0x6000 + 11 x n)
 	ld a,(0e1f6h)		;5764   ; lee la formacion del campo (0-6)
-	ld (0e340h),a		;5767
+	ld (0e340h),a		;5767   ; guarda variable de paso (cada rutina la usa a su manera)
 	ld l,a			;576a   ; 11 x 0xE1F6: 2n...
 	ld h,000h		;576b
 	ld c,a			;576d
@@ -3519,7 +3519,7 @@ L_583B:
 	ld (0e14ch),a		;5840
 	ld a,(0e1f7h)		;5843   ; la base de la formacion: 0xE19D, o 0xEC76 sin 0xE1F7
 	or a			;5846
-	ld a,(0e19dh)		;5847
+	ld a,(0e19dh)		;5847   ; lee el mando del bateador o los corredores
 	jr nz,L_584F		;584a
 	ld a,(0ec76h)		;584c
 L_584F:
@@ -3548,7 +3548,7 @@ L_5868:
 L_5877:
 	call bancos_10_11_12		;5877   ; las fichas de sprite de los jugadores de campo: p11:9911, o 0x991F con 0xE1FE
 	ld hl,09911h		;587a
-	ld a,(0e1feh)		;587d   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
+	ld a,(0e1feh)		;587d   ; lee el lado por el que batea (0 si IX+6 de su ficha es 0x20, si no 1): elige las tablas del otro lado
 	or a			;5880
 	jr z,L_5886		;5881
 	ld hl,0991fh		;5883
@@ -3595,7 +3595,7 @@ L_58C5:
 	call L_56A3		;58c5   ; la pagina 1 (p00:56A3) y 20 fichas de sprite de p11:9D12 (o 0x9D62 con 0xE1FE) desde el sprite 0
 	call bancos_10_11_12		;58c8   ; bancos_10_11_12: pone los bancos 10, 11 y 12 (los graficos) y sus copias
 	ld hl,09d12h		;58cb
-	ld a,(0e1feh)		;58ce   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
+	ld a,(0e1feh)		;58ce   ; lee el lado por el que batea (0 si IX+6 de su ficha es 0x20, si no 1): elige las tablas del otro lado
 	or a			;58d1
 	jr z,L_58D7		;58d2
 	ld hl,09d62h		;58d4
@@ -3748,9 +3748,9 @@ L_59D3:
 L_59DF:
 	ld a,(0e19bh)		;59df   ; el valor del equipo que batea: 0xED45 en la baja, 0xED44 en la alta
 	rra			;59e2
-	ld a,(0ed44h)		;59e3
+	ld a,(0ed44h)		;59e3   ; lee el jugador del visitante al bate (13 en adelante: lanzador)
 	ret nc			;59e6
-	ld a,(0ed45h)		;59e7
+	ld a,(0ed45h)		;59e7   ; lee el jugador del local al bate
 	ret			;59ea
 L_59EB:
 	call L_5A13		;59eb   ; la fila de 0xBA2A que toca (0xE1FF) segun la ficha IX
@@ -4389,7 +4389,7 @@ L_5DEA:
 	ret nz			;5e07
 L_5E08:
 	ld hl,0e23ch		;5e08   ; ...se elige otra segun 0xE23C de las 4 fichas de 0xE231 (los bits 0-2)
-	ld ix,0e340h		;5e0b
+	ld ix,0e340h		;5e0b   ; apunta a variable de paso (cada rutina la usa a su manera)
 	ld de,00010h		;5e0f
 	ld b,004h		;5e12
 L_5E14:
@@ -4551,7 +4551,7 @@ L_5F04:
 	ld (0e341h),a		;5f09
 	ld hl,0e353h		;5f0c
 	ld (hl),000h		;5f0f
-	ld a,(0e340h)		;5f11
+	ld a,(0e340h)		;5f11   ; lee variable de paso (cada rutina la usa a su manera)
 	sub e			;5f14   ; dx = l - e (positivo)
 	jr nc,L_5F1A		;5f15
 	neg		;5f17

@@ -44,7 +44,7 @@ L_800A:
 	ei			;8044
 	ret			;8045
 L_8046:
-	ld de,0d380h		;8046
+	ld de,0d380h		;8046   ; apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 	ld c,01ah		;8049
 	call 0f37dh		;804b
 	ld hl,000ffh		;804e
@@ -79,7 +79,7 @@ L_805E:
 	ei			;8098
 	ret			;8099
 L_809A:
-	ld de,0d47fh		;809a
+	ld de,0d47fh		;809a   ; apunta a la ficha del local (255 bytes de p13:731F)
 	ld c,01ah		;809d
 	call 0f37dh		;809f
 	ld hl,000ffh		;80a2
@@ -183,7 +183,7 @@ L_8167:
 	ld (0fd9fh),a		;8170
 	ld (0d2a7h),sp		;8173
 	call L_8334		;8177
-	ld hl,0d380h		;817a
+	ld hl,0d380h		;817a   ; apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 	ld de,0d280h		;817d   ; apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 	call L_82E6		;8180
 	call L_83A5		;8183
@@ -199,7 +199,7 @@ L_8167:
 	ei			;819f
 	ret			;81a0
 L_81A1:
-	ld de,0d380h		;81a1
+	ld de,0d380h		;81a1   ; apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 	ld c,01ah		;81a4
 	call 0f37dh		;81a6
 	ld hl,000ffh		;81a9
@@ -222,7 +222,7 @@ L_81BF:
 	ld e,000h		;81c5
 	add hl,de			;81c7
 	ex de,hl			;81c8
-	ld hl,0d380h		;81c9
+	ld hl,0d380h		;81c9   ; apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 	ld bc,000ffh		;81cc
 	ldir		;81cf
 	ld a,001h		;81d1
@@ -802,12 +802,12 @@ L_85E0:
 	ret			;85e9
 L_85EA:
 	ld de,0780ch		;85ea
-	ld hl,0d380h		;85ed
+	ld hl,0d380h		;85ed   ; apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 	ld b,00ah		;85f0
 	jr L_8646		;85f2
 L_85F4:
-	ld hl,0d38bh		;85f4
-	ld (0e340h),hl		;85f7
+	ld hl,0d38bh		;85f4   ; apunta a los jugadores del visitante (14 bytes cada uno)
+	ld (0e340h),hl		;85f7   ; guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 	ld e,029h		;85fa
 	ld c,00ch		;85fc
 L_85FE:
@@ -817,10 +817,10 @@ L_8603:
 	ld d,(hl)			;8603
 	inc hl			;8604
 	push hl			;8605
-	ld hl,(0e340h)		;8606
+	ld hl,(0e340h)		;8606   ; lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 	ld a,(hl)			;8609
 	inc hl			;860a
-	ld (0e340h),hl		;860b
+	ld (0e340h),hl		;860b   ; guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 	pop hl			;860e
 	call 04f1ch		;860f   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	djnz L_8603		;8612
@@ -832,7 +832,7 @@ L_8603:
 	ret			;861b
 L_861C:
 	ld hl,0d433h		;861c
-	ld (0e340h),hl		;861f
+	ld (0e340h),hl		;861f   ; guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 	ld e,0a4h		;8622
 	ld c,004h		;8624
 L_8626:
@@ -842,10 +842,10 @@ L_862B:
 	ld d,(hl)			;862b
 	inc hl			;862c
 	push hl			;862d
-	ld hl,(0e340h)		;862e
+	ld hl,(0e340h)		;862e   ; lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 	ld a,(hl)			;8631
 	inc hl			;8632
-	ld (0e340h),hl		;8633
+	ld (0e340h),hl		;8633   ; guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 	pop hl			;8636
 	push af			;8637
 	call 04f1ch		;8638   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
@@ -1291,10 +1291,10 @@ L_9348:
 	rra			;934b
 	ret c			;934c
 	ld de,00008h		;934d
-	ld hl,(0e218h)		;9350
+	ld hl,(0e218h)		;9350   ; lee la x de la pelota y el byte siguiente (16 bits)
 	add hl,de			;9353
 	ld (0e223h),hl		;9354
-	ld hl,(0e213h)		;9357
+	ld hl,(0e213h)		;9357   ; lee la y de la pelota (vertical) y el byte siguiente (16 bits)
 	add hl,de			;935a
 	ld (0e221h),hl		;935b
 	ld a,(0eddfh)		;935e
@@ -1763,7 +1763,7 @@ L_9673:
 	sbc hl,de		;9686
 	jr L_964D		;9688
 L_968A:
-	ld a,(0de02h)		;968a
+	ld a,(0de02h)		;968a   ; lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 	bit 4,a		;968d
 	jr z,L_9694		;968f
 	call L_971A		;9691
@@ -1779,7 +1779,7 @@ L_9697:
 	dec a			;96a3
 	ret nz			;96a4
 	push hl			;96a5
-	ld hl,0d6dch		;96a6
+	ld hl,0d6dch		;96a6   ; apunta a el equipo del jugador en PENNANT (bit 0)
 	ld a,(hl)			;96a9
 	cp 005h		;96aa
 	jr c,L_96B4		;96ac
@@ -1825,7 +1825,7 @@ L_96E6:
 	ld a,c			;96e9
 	or a			;96ea
 	jr nz,L_96E6		;96eb
-	ld a,(0d6dch)		;96ed
+	ld a,(0d6dch)		;96ed   ; lee el equipo del jugador en PENNANT (bit 0)
 	rra			;96f0
 	ret nc			;96f1
 	ld a,(0e195h)		;96f2
@@ -1852,17 +1852,17 @@ DATA_resto_9701:
 
 L_971A:
 	sub a			;971a
-	ld hl,0e340h		;971b
+	ld hl,0e340h		;971b   ; apunta a variable de paso (cada rutina la usa a su manera)
 	ld (hl),a			;971e
 	inc (hl)			;971f
 	ld (hl),a			;9720
 	ld a,(0d6e1h)		;9721
 	dec a			;9724
 	jr nz,L_973D		;9725
-	ld a,(0d6dch)		;9727
+	ld a,(0d6dch)		;9727   ; lee el equipo del jugador en PENNANT (bit 0)
 	inc a			;972a
 L_972B:
-	ld hl,0e340h		;972b
+	ld hl,0e340h		;972b   ; apunta a variable de paso (cada rutina la usa a su manera)
 	call 0adach		;972e
 	ld de,06c0ch		;9731
 	call 05c56h		;9734
@@ -1914,7 +1914,7 @@ L_9773:
 	call 04ea6h		;9782   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	jr L_97B1		;9785
 L_9787:
-	ld a,(0de02h)		;9787
+	ld a,(0de02h)		;9787   ; lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 	bit 3,a		;978a
 	jr nz,L_9773		;978c
 	ld a,(0e190h)		;978e   ; lee el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
@@ -1922,7 +1922,7 @@ L_9787:
 	jr z,L_97D3		;9793
 	ld hl,097fah		;9795
 	call 04ea6h		;9798   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-	ld a,(0de02h)		;979b
+	ld a,(0de02h)		;979b   ; lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 	bit 5,a		;979e
 	ld hl,09804h		;97a0
 	jr nz,L_97A8		;97a3
@@ -1934,10 +1934,10 @@ L_97A8:
 L_97B1:
 	ld de,01834h		;97b1
 	ld hl,09034h		;97b4
-	ld a,(0de02h)		;97b7
+	ld a,(0de02h)		;97b7   ; lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 	bit 5,a		;97ba
 	jr nz,L_97C5		;97bc
-	ld a,(0d6dch)		;97be
+	ld a,(0d6dch)		;97be   ; lee el equipo del jugador en PENNANT (bit 0)
 	rra			;97c1
 	jr nc,L_97C5		;97c2
 	ex de,hl			;97c4
@@ -2130,7 +2130,7 @@ L_98AA:
 L_98CA:
 	call L_9B67		;98ca
 	ld a,(0e30dh)		;98cd
-	ld hl,0ec50h		;98d0
+	ld hl,0ec50h		;98d0   ; apunta a el orden de bateo del visitante (9 numeros de jugador)
 	call 04216h		;98d3   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;98d6
 	cp 00dh		;98d7
@@ -2149,15 +2149,15 @@ L_98EA:
 	call L_9B4E		;98ed
 	ld d,050h		;98f0
 	ld a,(0e30bh)		;98f2
-	ld hl,0d38bh		;98f5
-	ld bc,0ec50h		;98f8
+	ld hl,0d38bh		;98f5   ; apunta a los jugadores del visitante (14 bytes cada uno)
+	ld bc,0ec50h		;98f8   ; apunta a el orden de bateo del visitante (9 numeros de jugador)
 	call 04054h		;98fb
 	ld a,(0e30bh)		;98fe
 	call L_9B4E		;9901
 	ld d,050h		;9904
 	call 04030h		;9906
 	ld a,(0e30bh)		;9909
-	ld hl,0ec50h		;990c
+	ld hl,0ec50h		;990c   ; apunta a el orden de bateo del visitante (9 numeros de jugador)
 	ld d,h			;990f
 	ld e,l			;9910
 	call 04216h		;9911   ; hl_mas_a: HL = HL + A
@@ -2171,7 +2171,7 @@ L_98EA:
 	xor a			;9920
 	ld (0e304h),a		;9921
 	ld hl,0e30bh		;9924
-	ld de,0ec50h		;9927
+	ld de,0ec50h		;9927   ; apunta a el orden de bateo del visitante (9 numeros de jugador)
 	call L_9B80		;992a
 	ld a,027h		;992d
 	call 057ffh		;992f   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -2223,7 +2223,7 @@ L_9971:
 L_9974:
 	push hl			;9974
 	ld a,c			;9975
-	ld hl,0ec50h		;9976
+	ld hl,0ec50h		;9976   ; apunta a el orden de bateo del visitante (9 numeros de jugador)
 	call 04216h		;9979   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;997c
 	pop hl			;997d
@@ -2271,7 +2271,7 @@ L_99B5:
 	and 010h		;99be
 	ret z			;99c0
 L_99C1:
-	ld de,0ec50h		;99c1
+	ld de,0ec50h		;99c1   ; apunta a el orden de bateo del visitante (9 numeros de jugador)
 	call 04042h		;99c4
 	ld a,000h		;99c7
 	jr nc,L_99D3		;99c9
@@ -2293,7 +2293,7 @@ L_99E2:
 	and 010h		;99e5
 	ret z			;99e7
 L_99E8:
-	ld de,0ec62h		;99e8
+	ld de,0ec62h		;99e8   ; apunta a el orden de bateo del local (9 numeros de jugador)
 	call 04042h		;99eb
 	ld a,000h		;99ee
 	jr nc,L_99FA		;99f0
@@ -2368,7 +2368,7 @@ L_9A4D:
 L_9A6C:
 	call L_9B67		;9a6c
 	ld a,(0e30eh)		;9a6f
-	ld hl,0ec62h		;9a72
+	ld hl,0ec62h		;9a72   ; apunta a el orden de bateo del local (9 numeros de jugador)
 	call 04216h		;9a75   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;9a78
 	cp 00dh		;9a79
@@ -2387,15 +2387,15 @@ L_9A8C:
 	call L_9B4E		;9a8f
 	ld d,050h		;9a92
 	ld a,(0e30ch)		;9a94
-	ld hl,0d48ah		;9a97
-	ld bc,0ec62h		;9a9a
+	ld hl,0d48ah		;9a97   ; apunta a los jugadores del local (14 bytes cada uno)
+	ld bc,0ec62h		;9a9a   ; apunta a el orden de bateo del local (9 numeros de jugador)
 	call 04054h		;9a9d
 	ld a,(0e30ch)		;9aa0
 	call L_9B4E		;9aa3
 	ld d,050h		;9aa6
 	call 04030h		;9aa8
 	ld a,(0e30ch)		;9aab
-	ld hl,0ec62h		;9aae
+	ld hl,0ec62h		;9aae   ; apunta a el orden de bateo del local (9 numeros de jugador)
 	ld d,h			;9ab1
 	ld e,l			;9ab2
 	call 04216h		;9ab3   ; hl_mas_a: HL = HL + A
@@ -2409,7 +2409,7 @@ L_9A8C:
 	xor a			;9ac2
 	ld (0e304h),a		;9ac3
 	ld hl,0e30ch		;9ac6
-	ld de,0ec62h		;9ac9
+	ld de,0ec62h		;9ac9   ; apunta a el orden de bateo del local (9 numeros de jugador)
 	call L_9B80		;9acc
 	ld a,027h		;9acf
 	call 057ffh		;9ad1   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -2448,7 +2448,7 @@ L_9B01:
 L_9B04:
 	push hl			;9b04
 	ld a,c			;9b05
-	ld hl,0ec62h		;9b06
+	ld hl,0ec62h		;9b06   ; apunta a el orden de bateo del local (9 numeros de jugador)
 	call 04216h		;9b09   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;9b0c
 	pop hl			;9b0d
@@ -2586,11 +2586,11 @@ L_9BD9:
 	ld (0edd8h),a		;9bd9
 	ld (0e30bh),a		;9bdc
 	ld hl,0e30bh		;9bdf
-	ld de,0ec50h		;9be2
+	ld de,0ec50h		;9be2   ; apunta a el orden de bateo del visitante (9 numeros de jugador)
 	call L_9D59		;9be5
 	ld a,(0e30bh)		;9be8
 	call L_9DC0		;9beb
-	ld hl,0ec50h		;9bee
+	ld hl,0ec50h		;9bee   ; apunta a el orden de bateo del visitante (9 numeros de jugador)
 	ld de,0e30dh		;9bf1
 	xor a			;9bf4
 	ld (de),a			;9bf5
@@ -2600,7 +2600,7 @@ L_9BD9:
 	jr nc,L_9C02		;9bfd
 	call L_9D42		;9bff
 L_9C02:
-	ld hl,0d380h		;9c02
+	ld hl,0d380h		;9c02   ; apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 	ld de,06000h		;9c05
 	call 05be4h		;9c08
 	ld a,002h		;9c0b
@@ -2608,7 +2608,7 @@ L_9C02:
 	call 0405dh		;9c10
 	ld b,011h		;9c13
 	ld de,05028h		;9c15
-	ld hl,0ec50h		;9c18
+	ld hl,0ec50h		;9c18   ; apunta a el orden de bateo del visitante (9 numeros de jugador)
 L_9C1B:
 	ld a,(hl)			;9c1b
 	inc hl			;9c1c
@@ -2636,7 +2636,7 @@ L_9C2F:
 	ld a,(0edd8h)		;9c45
 	ld e,a			;9c48
 	ld d,000h		;9c49
-	ld hl,0ec50h		;9c4b
+	ld hl,0ec50h		;9c4b   ; apunta a el orden de bateo del visitante (9 numeros de jugador)
 	add hl,de			;9c4e
 	ld b,004h		;9c4f
 	jp L_993D		;9c51
@@ -2644,7 +2644,7 @@ L_9C54:
 	push hl			;9c54
 	push de			;9c55
 	push bc			;9c56
-	ld hl,0d38bh		;9c57
+	ld hl,0d38bh		;9c57   ; apunta a los jugadores del visitante (14 bytes cada uno)
 	call 04066h		;9c5a
 	pop bc			;9c5d
 	pop de			;9c5e
@@ -2661,11 +2661,11 @@ L_9C6E:
 	ld (0edd8h),a		;9c6e
 	ld (0e30ch),a		;9c71
 	ld hl,0e30ch		;9c74
-	ld de,0ec62h		;9c77
+	ld de,0ec62h		;9c77   ; apunta a el orden de bateo del local (9 numeros de jugador)
 	call L_9D59		;9c7a
 	ld a,(0e30ch)		;9c7d
 	call L_9DC0		;9c80
-	ld hl,0ec62h		;9c83
+	ld hl,0ec62h		;9c83   ; apunta a el orden de bateo del local (9 numeros de jugador)
 	ld de,0e30eh		;9c86
 	xor a			;9c89
 	ld (de),a			;9c8a
@@ -2675,7 +2675,7 @@ L_9C6E:
 	jr c,L_9C97		;9c92
 	call L_9D42		;9c94
 L_9C97:
-	ld hl,0d47fh		;9c97
+	ld hl,0d47fh		;9c97   ; apunta a la ficha del local (255 bytes de p13:731F)
 	ld de,06000h		;9c9a
 	call 05be4h		;9c9d
 	ld a,002h		;9ca0
@@ -2683,7 +2683,7 @@ L_9C97:
 	call 0405dh		;9ca5
 	ld b,011h		;9ca8
 	ld de,05028h		;9caa
-	ld hl,0ec62h		;9cad
+	ld hl,0ec62h		;9cad   ; apunta a el orden de bateo del local (9 numeros de jugador)
 L_9CB0:
 	ld a,(hl)			;9cb0
 	inc hl			;9cb1
@@ -2711,7 +2711,7 @@ L_9CC4:
 	ld a,(0edd8h)		;9cda
 	ld e,a			;9cdd
 	ld d,000h		;9cde
-	ld hl,0ec62h		;9ce0
+	ld hl,0ec62h		;9ce0   ; apunta a el orden de bateo del local (9 numeros de jugador)
 	add hl,de			;9ce3
 	ld b,004h		;9ce4
 	jp L_993D		;9ce6
@@ -2719,7 +2719,7 @@ L_9CE9:
 	push hl			;9ce9
 	push de			;9cea
 	push bc			;9ceb
-	ld hl,0d48ah		;9cec
+	ld hl,0d48ah		;9cec   ; apunta a los jugadores del local (14 bytes cada uno)
 	call 04066h		;9cef
 	pop bc			;9cf2
 	pop de			;9cf3
@@ -2846,7 +2846,7 @@ L_9DCC:
 	djnz L_9DCC		;9dd1
 	ret			;9dd3
 L_9DD4:
-	ld a,(0de02h)		;9dd4
+	ld a,(0de02h)		;9dd4   ; lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 	bit 3,a		;9dd7
 	ret nz			;9dd9
 	bit 4,a		;9dda
@@ -2854,7 +2854,7 @@ L_9DD4:
 L_9DDE:
 	ld hl,(0de06h)		;9dde   ; lee los botones recien pulsados del mando 1 / cursores y el byte siguiente (16 bits)
 	ld (0e19ch),hl		;9de1
-	ld hl,0de02h		;9de4
+	ld hl,0de02h		;9de4   ; apunta a las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 	bit 5,(hl)		;9de7
 	ret z			;9de9
 	ld hl,(0de08h)		;9dea   ; lee los botones recien pulsados (segundo mando) y el byte siguiente (16 bits)
@@ -2863,12 +2863,12 @@ L_9DDE:
 L_9DF1:
 	bit 5,a		;9df1
 	jr nz,L_9DDE		;9df3
-	ld a,(0d6dch)		;9df5
+	ld a,(0d6dch)		;9df5   ; lee el equipo del jugador en PENNANT (bit 0)
 	rra			;9df8
 	jr nc,L_9DDE		;9df9
 	ld hl,(0de06h)		;9dfb   ; lee los botones recien pulsados del mando 1 / cursores y el byte siguiente (16 bits)
 	ld (0e19eh),hl		;9dfe
-	ld hl,0de02h		;9e01
+	ld hl,0de02h		;9e01   ; apunta a las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 	bit 5,(hl)		;9e04
 	ret z			;9e06
 	ld hl,(0de08h)		;9e07   ; lee los botones recien pulsados (segundo mando) y el byte siguiente (16 bits)

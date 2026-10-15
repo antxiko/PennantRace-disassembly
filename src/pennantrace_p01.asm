@@ -1117,7 +1117,7 @@ L_6786:
 	ld b,008h		;6798
 	call 05c82h		;679a
 	ld a,03fh		;679d   ; ...0xE19D = 0x3F y p02:8B0E
-	ld (0e19dh),a		;679f
+	ld (0e19dh),a		;679f   ; guarda el mando del bateador o los corredores
 	call 08b0eh		;67a2
 	call L_66B3		;67a5   ; el desplazamiento (p01:66B3) hasta que acaba (bit 0 de 0xE1D1)
 	ld a,(0e1d1h)		;67a8   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
@@ -1449,10 +1449,10 @@ DATA_resto_69BD:
 L_69E9:
 	ld a,(0e19bh)		;69e9   ; el bateador: los datos del equipo de la alta (0xD38B) o de la baja (0xD48A)...
 	rra			;69ec
-	ld hl,0d38bh		;69ed
+	ld hl,0d38bh		;69ed   ; apunta a los jugadores del visitante (14 bytes cada uno)
 	ld de,0ec4fh		;69f0   ; ...y su orden de bateo (0xEC4F o 0xEC61)
 	jr nc,L_69FA		;69f3
-	ld hl,0d48ah		;69f5
+	ld hl,0d48ah		;69f5   ; apunta a los jugadores del local (14 bytes cada uno)
 	ld e,061h		;69f8
 L_69FA:
 	push de			;69fa
@@ -1525,11 +1525,11 @@ L_6A5F:
 L_6A64:
 	ld a,(0e19bh)		;6a64   ; el lanzador del equipo que no batea: su lista de la alineacion...
 	rra			;6a67
-	ld de,0ec50h		;6a68
-	ld hl,0d38bh		;6a6b
+	ld de,0ec50h		;6a68   ; apunta a el orden de bateo del visitante (9 numeros de jugador)
+	ld hl,0d38bh		;6a6b   ; apunta a los jugadores del visitante (14 bytes cada uno)
 	jr c,L_6A76		;6a6e
-	ld de,0ec62h		;6a70
-	ld hl,0d48ah		;6a73
+	ld de,0ec62h		;6a70   ; apunta a el orden de bateo del local (9 numeros de jugador)
+	ld hl,0d48ah		;6a73   ; apunta a los jugadores del local (14 bytes cada uno)
 L_6A76:
 	ld b,009h		;6a76   ; ...busca en los 9 el primero de 13 en adelante
 	ld c,00dh		;6a78
@@ -1586,7 +1586,7 @@ L_6AC1:
 	call 08324h		;6ac7
 	call L_6F52		;6aca
 	ld b,009h		;6acd   ; ...y los 9 jugadores de campo (fichas de 16 bytes desde 0xE271)
-	ld ix,0e271h		;6acf
+	ld ix,0e271h		;6acf   ; apunta a las 9 fichas de 16 bytes de los defensores
 L_6AD3:
 	push bc			;6ad3
 	call L_6AEA		;6ad4   ; si tiene la pelota, p01:6AEA; luego p01:6B44 y lo suyo (p01:6B1F)
@@ -1604,7 +1604,7 @@ L_6AEA:
 	ld c,a			;6aed
 	and 00fh		;6aee
 	ld b,a			;6af0
-	ld a,(0e220h)		;6af1
+	ld a,(0e220h)		;6af1   ; lee el defensor que tiene la pelota (1-9; 0 nadie)
 	cp b			;6af4
 	ret nz			;6af5
 	ld b,a			;6af6
@@ -1664,7 +1664,7 @@ L_6B44:
 	ld a,(ix+000h)		;6b44   ; si el que tiene la pelota (0xE220)...
 	and 00fh		;6b47
 	ld b,a			;6b49
-	ld a,(0e220h)		;6b4a
+	ld a,(0e220h)		;6b4a   ; lee el defensor que tiene la pelota (1-9; 0 nadie)
 	cp b			;6b4d
 	ret nz			;6b4e
 	ld a,(0e19fh)		;6b4f   ; ...y se pulsa una direccion de lanzar (0xE19F, bits 4-5)...
@@ -1702,7 +1702,7 @@ L_6B7C:
 	jr nz,L_6BB6		;6b92
 	ld a,001h		;6b94   ; ...0xED3A = 1 y el dibujo de la base: 0, 2, 4 o 6 segun 0xE19F
 	ld (0ed3ah),a		;6b96
-	ld a,(0e19fh)		;6b99
+	ld a,(0e19fh)		;6b99   ; lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ld b,000h		;6b9c
 	rra			;6b9e
 	jr c,L_6BAD		;6b9f
@@ -1924,7 +1924,7 @@ L_6D19:
 	xor a			;6d2e   ; nadie tiene la pelota: 0xE33C, 0xED3A, 0xE220 y 0xED50 a 0
 	ld (0e33ch),a		;6d2f
 	ld (0ed3ah),a		;6d32
-	ld (0e220h),a		;6d35
+	ld (0e220h),a		;6d35   ; guarda el defensor que tiene la pelota (1-9; 0 nadie)
 	ld (0ed50h),a		;6d38
 	call L_6D7D		;6d3b   ; el dibujo del que lanza
 	ld a,(0edc3h)		;6d3e   ; 0xEDC3: el que la tenia...
@@ -2032,7 +2032,7 @@ L_6DD5:
 	inc hl			;6df4
 L_6DF5:
 	push hl			;6df5
-	ld de,(0e340h)		;6df6
+	ld de,(0e340h)		;6df6   ; lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 	or a			;6dfa
 	sbc hl,de		;6dfb   ; la mayor y la menor de las dos...
 	rl h		;6dfd
@@ -2152,7 +2152,7 @@ L_6E8C:
 	ld e,(ix+002h)		;6ea1   ; dy = y de la base - y del jugador (0xE340: signo)
 	ld d,(ix+003h)		;6ea4   ; lee la y, byte alto
 	xor a			;6ea7
-	ld (0e340h),a		;6ea8
+	ld (0e340h),a		;6ea8   ; guarda variable de paso (cada rutina la usa a su manera)
 	or a			;6eab
 	sbc hl,de		;6eac
 	jr nc,L_6EBC		;6eae
@@ -2164,7 +2164,7 @@ L_6E8C:
 	ld h,a			;6eb5
 	inc hl			;6eb6
 	ld a,001h		;6eb7
-	ld (0e340h),a		;6eb9
+	ld (0e340h),a		;6eb9   ; guarda variable de paso (cada rutina la usa a su manera)
 L_6EBC:
 	ld (0e341h),hl		;6ebc   ; |dy| en 0xE341; 0xE346 = 1 si pasa de 255
 	xor a			;6ebf
@@ -2268,7 +2268,7 @@ L_6F52:
 	jp nz,L_7B79		;6f5a
 	bit 4,a		;6f5d   ; con el bit 4 (contra el ordenador) segun 0xD6DC el equipo del jugador...
 	jr z,L_6F67		;6f5f
-	ld a,(0d6dch)		;6f61
+	ld a,(0d6dch)		;6f61   ; lee el equipo del jugador en PENNANT (bit 0)
 	rra			;6f64
 	jr c,L_6F6F		;6f65
 L_6F67:
@@ -2288,7 +2288,7 @@ L_6F77:
 	ld l,(ix+008h)		;6f80   ; lee la x, byte alto
 	ld d,(ix+002h)		;6f83   ; lee la y (vertical)
 	ld e,(ix+003h)		;6f86   ; lee la y, byte alto
-	ld (0e340h),de		;6f89
+	ld (0e340h),de		;6f89   ; guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 	ld (0e342h),hl		;6f8d
 L_6F90:
 	ld a,(0eddeh)		;6f90   ; si tiene la pelota (0xE220) toca a algun corredor?
@@ -2297,7 +2297,7 @@ L_6F90:
 	ld a,(ix+000h)		;6f95   ; lee el numero (bits 0-3) y el estado (bits 4-7)
 	and 00fh		;6f98
 	ld b,a			;6f9a
-	ld a,(0e220h)		;6f9b
+	ld a,(0e220h)		;6f9b   ; lee el defensor que tiene la pelota (1-9; 0 nadie)
 	cp b			;6f9e
 	ret nz			;6f9f
 	ld ix,0e231h		;6fa0   ; las 4 fichas de corredor de 0xE231
@@ -2337,7 +2337,7 @@ L_6FD8:
 L_6FDC:
 	ld de,00010h		;6fdc   ; el siguiente corredor
 	add ix,de		;6fdf
-	ld de,(0e340h)		;6fe1
+	ld de,(0e340h)		;6fe1   ; lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 	djnz L_6FA6		;6fe5
 	ret			;6fe7
 L_6FE8:
@@ -2732,7 +2732,7 @@ L_72BB:
 	ld a,b			;72bb
 	sla a		;72bc
 	ld b,a			;72be
-	ld a,(0ed0eh)		;72bf
+	ld a,(0ed0eh)		;72bf   ; lee el contador de cuadros de la jugada (las piernas de los sprites)
 	rra			;72c2
 	rra			;72c3
 	rra			;72c4
@@ -2909,7 +2909,7 @@ L_740E:
 L_7419:
 	ld hl,07437h		;7419   ; la fila de 0x7437 con el paso de las piernas (bit 3 de 0xED0E)
 	call 04216h		;741c   ; hl_mas_a: HL = HL + A
-	ld a,(0ed0eh)		;741f
+	ld a,(0ed0eh)		;741f   ; lee el contador de cuadros de la jugada (las piernas de los sprites)
 	and 008h		;7422
 	or (hl)			;7424
 L_7425:
@@ -2934,7 +2934,7 @@ L_743F:
 	ld c,001h		;743f
 	ld e,(ix+004h)		;7441   ; lee la velocidad y, byte bajo
 	ld d,(ix+005h)		;7444   ; lee la velocidad y, byte alto
-	ld (0e340h),de		;7447
+	ld (0e340h),de		;7447   ; guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 	ld a,d			;744b
 	or e			;744c
 	ret z			;744d
@@ -3046,7 +3046,7 @@ L_74F6:
 	ld ix,0e281h		;7506
 	call L_7513		;750a
 	ld b,001h		;750d
-	ld ix,0e271h		;750f
+	ld ix,0e271h		;750f   ; apunta a las 9 fichas de 16 bytes de los defensores
 L_7513:
 	call L_74E7		;7513
 	push hl			;7516
@@ -3179,7 +3179,7 @@ L_75D0:
 	ret			;75d4
 L_75D5:
 	call L_767D		;75d5   ; el lanzador del ordenador: lo de p01:767D y el paso de 0xED3E
-	ld a,(0ed3eh)		;75d8
+	ld a,(0ed3eh)		;75d8   ; lee el paso del lanzador del ordenador
 	call 04220h		;75db   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
@@ -3208,7 +3208,7 @@ L_75F8:
 	ret			;75fc
 L_75FD:
 	xor a			;75fd   ; paso 1: sin mando, y otra espera al azar (0x30-0x4F) en 0xE1E3
-	ld (0e19fh),a		;75fe
+	ld (0e19fh),a		;75fe   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ld a,r		;7601
 	and 01fh		;7603
 	add a,030h		;7605
@@ -3240,7 +3240,7 @@ L_762C:
 	call L_770B		;7634
 	ld a,(0e19fh)		;7637   ; ...y lanza (bit 4 del mando)
 	or 010h		;763a
-	ld (0e19fh),a		;763c
+	ld (0e19fh),a		;763c   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	jr L_75F8		;763f
 L_7641:
 	ld hl,0e1d3h		;7641   ; paso 3: si 0xE1D2 = 1 y 0xE1D3 = 2...
@@ -3265,12 +3265,12 @@ L_765C:
 	dec (hl)			;765f
 	ret nz			;7660
 	xor a			;7661   ; ...y el efecto elegido (0xE1E7, 0xE1E4)
-	ld (0e19fh),a		;7662
+	ld (0e19fh),a		;7662   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ld b,0ffh		;7665
 	ld a,(0e1e7h)		;7667
 	call L_76D2		;766a
 	ld a,(0e1e4h)		;766d
-	ld (0e19fh),a		;7670
+	ld (0e19fh),a		;7670   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ret			;7673
 L_7674:
 	xor a			;7674   ; fuera de ahi, sin efecto
@@ -3297,7 +3297,7 @@ L_767D:
 	ld (hl),b			;769e
 L_769F:
 	ld a,020h		;769f   ; ...el boton 2 (0x20) y se sale del que llamo
-	ld (0e19fh),a		;76a1
+	ld (0e19fh),a		;76a1   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	pop hl			;76a4
 	ret			;76a5
 L_76A6:
@@ -3351,7 +3351,7 @@ L_76EB:
 	cp 003h		;76f0
 	call nz,L_76FA		;76f2
 	ld a,b			;76f5
-	ld (0e19fh),a		;76f6
+	ld (0e19fh),a		;76f6   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ret			;76f9
 L_76FA:
 	ld b,001h		;76fa   ; ...si no, al azar: 1 (1 de 8), 2 (1 de 8) o nada
@@ -3367,7 +3367,7 @@ L_76FA:
 L_770B:
 	call L_7713		;770b   ; la direccion del lanzamiento al azar: 2 (1 de 8), 1 (2 de 8) o 0
 	ld a,b			;770e
-	ld (0e19fh),a		;770f
+	ld (0e19fh),a		;770f   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ret			;7712
 L_7713:
 	ld b,002h		;7713
@@ -3402,7 +3402,7 @@ L_7737:
 	ret			;774a
 L_774B:
 	ld bc,00505h		;774b   ; los limites: 5 y 5, o 11 en uno segun 0xE1E5 y 0xE1FE
-	ld a,(0e1feh)		;774e   ; lee si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)
+	ld a,(0e1feh)		;774e   ; lee el lado por el que batea (0 si IX+6 de su ficha es 0x20, si no 1): elige las tablas del otro lado
 	or a			;7751
 	jr z,L_775D		;7752
 	ld a,(0e1e5h)		;7754
@@ -3479,7 +3479,7 @@ L_7796:
 	inc a			;77bd
 	ld (0ed98h),a		;77be
 L_77C1:
-	ld hl,0eceeh		;77c1
+	ld hl,0eceeh		;77c1   ; apunta a el paso del bateador del ordenador
 	inc (hl)			;77c4
 	ret			;77c5
 L_77C6:
@@ -3491,14 +3491,14 @@ L_77C6:
 	cp 006h		;77cf
 	ret nz			;77d1
 	call L_783B		;77d2   ; ...y batea: 0xE19D con el bit 4
-	ld a,(0e19dh)		;77d5
+	ld a,(0e19dh)		;77d5   ; lee el mando del bateador o los corredores
 	or 010h		;77d8
 	or b			;77da
-	ld (0e19dh),a		;77db
+	ld (0e19dh),a		;77db   ; guarda el mando del bateador o los corredores
 	jr L_77C1		;77de
 L_77E0:
 	ld hl,(0e1d8h)		;77e0   ; donde va a pasar la pelota: 0xE1D8 y la direccion de 0xE19F...
-	ld a,(0e19fh)		;77e3
+	ld a,(0e19fh)		;77e3   ; lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	and 00ch		;77e6
 	ret z			;77e8
 	cp 00ch		;77e9
@@ -3574,8 +3574,8 @@ L_7851:
 	dec (hl)			;7854
 	ret nz			;7855
 	xor a			;7856
-	ld (0e19dh),a		;7857
-	ld (0eceeh),a		;785a
+	ld (0e19dh),a		;7857   ; guarda el mando del bateador o los corredores
+	ld (0eceeh),a		;785a   ; guarda el paso del bateador del ordenador
 	ret			;785d
 L_785E:
 	ld a,(0e1d1h)		;785e   ; el bateador se coloca: con 0xE1D1 >= 3 solo si faltan menos de 10
@@ -3594,22 +3594,22 @@ L_786B:
 	call L_78B2		;7878
 	ld a,(0e1f5h)		;787b   ; ...contra su sitio (0xE1F5): igual, quieto...
 	cp b			;787e
-	ld a,(0e19dh)		;787f
+	ld a,(0e19dh)		;787f   ; lee el mando del bateador o los corredores
 	jr z,L_788E		;7882
 	jr c,L_7894		;7884
 L_7886:
 	and 0f3h		;7886   ; ...antes, hacia un lado (bit 2)...
 	or 004h		;7888
-	ld (0e19dh),a		;788a
+	ld (0e19dh),a		;788a   ; guarda el mando del bateador o los corredores
 	ret			;788d
 L_788E:
 	and 0f3h		;788e
-	ld (0e19dh),a		;7890
+	ld (0e19dh),a		;7890   ; guarda el mando del bateador o los corredores
 	ret			;7893
 L_7894:
 	and 0f3h		;7894   ; ...despues, al otro (bit 3)
 	or 008h		;7896
-	ld (0e19dh),a		;7898
+	ld (0e19dh),a		;7898   ; guarda el mando del bateador o los corredores
 	ret			;789b
 L_789C:
 	ld a,(0e1d9h)		;789c
@@ -3618,7 +3618,7 @@ L_789C:
 	call L_78BB		;78a2
 	ld a,(0e1f5h)		;78a5
 	cp b			;78a8
-	ld a,(0e19dh)		;78a9
+	ld a,(0e19dh)		;78a9   ; lee el mando del bateador o los corredores
 	jr z,L_788E		;78ac
 	jr c,L_7894		;78ae
 	jr L_7886		;78b0
@@ -3654,7 +3654,7 @@ L_78DD:
 	call 0b06eh		;78df
 	ret nc			;78e2
 	xor a			;78e3
-	ld (0e19dh),a		;78e4
+	ld (0e19dh),a		;78e4   ; guarda el mando del bateador o los corredores
 	dec a			;78e7
 	ld (0ed79h),a		;78e8
 	ret			;78eb
@@ -3664,13 +3664,13 @@ L_78EC:
 	ret			;78f1
 L_78F2:
 	xor a			;78f2   ; los corredores del ordenador: sin mando...
-	ld (0e19dh),a		;78f3
+	ld (0e19dh),a		;78f3   ; guarda el mando del bateador o los corredores
 	call L_7933		;78f6   ; ...el toque (p01:7933) y p01:7922...
 	call L_7922		;78f9
 	ld a,(0ed3fh)		;78fc   ; ...con 0xED3F y sin el paso 3, p01:7AA3 / p01:7AE3
 	or a			;78ff
 	jr z,L_7910		;7900
-	ld a,(0ed29h)		;7902
+	ld a,(0ed29h)		;7902   ; lee el paso de los corredores del ordenador
 	cp 003h		;7905
 	jr z,L_7910		;7907
 	call L_7AA3		;7909
@@ -3709,7 +3709,7 @@ L_7933:
 	or a			;7936
 	ret z			;7937
 	ld a,005h		;7938
-	ld (0ed29h),a		;793a
+	ld (0ed29h),a		;793a   ; guarda el paso de los corredores del ordenador
 	ret			;793d
 L_793E:
 	ld a,(0ed72h)		;793e   ; el paso segun la jugada: 4 con el bit 1 de 0xED72...
@@ -3735,7 +3735,7 @@ L_795F:
 L_7963:
 	ld a,004h		;7963
 L_7965:
-	ld (0ed29h),a		;7965
+	ld (0ed29h),a		;7965   ; guarda el paso de los corredores del ordenador
 	ret			;7968
 L_7969:
 	ld a,(0e1d0h)		;7969   ; paso 1: sin 0xE1D0 ni el bit 0 de 0xEDDF, p01:7AA3...
@@ -3768,13 +3768,13 @@ L_798C:
 	jp z,L_7AE3		;79a3
 L_79A6:
 	xor a			;79a6   ; al paso 0
-	ld (0ed29h),a		;79a7
+	ld (0ed29h),a		;79a7   ; guarda el paso de los corredores del ordenador
 	ret			;79aa
 L_79AB:
 	ld a,(0ecffh)		;79ab   ; con 0xECFF, si la pelota no la tiene nadie o uno de los 7 primeros...
 	or a			;79ae
 	ret z			;79af
-	ld a,(0e220h)		;79b0
+	ld a,(0e220h)		;79b0   ; lee el defensor que tiene la pelota (1-9; 0 nadie)
 	or a			;79b3
 	jr z,L_79B9		;79b4
 	cp 007h		;79b6
@@ -3796,7 +3796,7 @@ L_79C1:
 	ret nz			;79d9
 	call L_7B3C		;79da   ; ...y segun p01:7B3C y p01:7A44, p01:7AE3
 	jp c,L_7AE3		;79dd
-	ld a,(0e220h)		;79e0
+	ld a,(0e220h)		;79e0   ; lee el defensor que tiene la pelota (1-9; 0 nadie)
 	or a			;79e3
 	ret z			;79e4
 	call L_7A44		;79e5
@@ -3864,7 +3864,7 @@ L_7A4E:
 	rlca			;7a57
 	rlca			;7a58
 	add a,00dh		;7a59
-	ld hl,0e271h		;7a5b
+	ld hl,0e271h		;7a5b   ; apunta a las 9 fichas de 16 bytes de los defensores
 	call 04216h		;7a5e   ; hl_mas_a: HL = HL + A
 	ld b,(hl)			;7a61
 	ld a,(ix+00bh)		;7a62   ; ...y A = la base del corredor en el nibble alto
@@ -3931,7 +3931,7 @@ L_7AC0:
 	call L_7AD7		;7acd
 	ld a,020h		;7ad0
 	or b			;7ad2
-	ld (0e19dh),a		;7ad3
+	ld (0e19dh),a		;7ad3   ; guarda el mando del bateador o los corredores
 	ret			;7ad6
 L_7AD7:
 	dec a			;7ad7   ; la base 2 -> 1, 3 -> 4, 4 -> 2
@@ -3955,7 +3955,7 @@ L_7AE3:
 	call L_7AFA		;7af0
 	ld a,010h		;7af3
 	or b			;7af5
-	ld (0e19dh),a		;7af6
+	ld (0e19dh),a		;7af6   ; guarda el mando del bateador o los corredores
 	ret			;7af9
 L_7AFA:
 	dec a			;7afa   ; la base 2 -> 8, 3 -> 1, 4 -> 4
@@ -3995,7 +3995,7 @@ L_7B1C:
 L_7B30:
 	ld d,000h		;7b30   ; la distancia del defensor A (p14:808A)
 	ld e,a			;7b32
-	ld ix,0e271h		;7b33
+	ld ix,0e271h		;7b33   ; apunta a las 9 fichas de 16 bytes de los defensores
 	add ix,de		;7b37
 	jp 0808ah		;7b39
 L_7B3C:
@@ -4046,7 +4046,7 @@ L_7B79:
 	ld a,(0eddeh)		;7b7c
 	rra			;7b7f
 	jr c,$+28		;7b80
-	ld a,(0ece6h)		;7b82
+	ld a,(0ece6h)		;7b82   ; lee el paso de la defensa del ordenador
 	call 04220h		;7b85   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
@@ -4065,11 +4065,11 @@ DATA_tabla_7B88:
 
 L_7B9C:
 	xor a			;7b9c   ; sin mando
-	ld (0e19fh),a		;7b9d
+	ld (0e19fh),a		;7b9d   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ret			;7ba0
 L_7BA1:
 	xor a			;7ba1   ; paso 0: todo a cero, 5 cuadros (0xEDD6), p15:B524, p14:80F2 y p14:814D
-	ld (0e19fh),a		;7ba2
+	ld (0e19fh),a		;7ba2   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ld (0ed86h),a		;7ba5
 	ld h,a			;7ba8
 	ld l,a			;7ba9
@@ -4097,7 +4097,7 @@ L_7BC3:
 L_7BD5:
 	call L_7BBE		;7bd5   ; ...p14:80BA y, si 0xE22B baja de 0x30, p01:7D27 y p15:B531
 	call 080bah		;7bd8
-	ld a,(0e22bh)		;7bdb
+	ld a,(0e22bh)		;7bdb   ; lee el defensor que va a por la pelota (desplazamiento de 16 en 16)
 	cp 030h		;7bde
 	ret nc			;7be0
 	call L_7D27		;7be1
@@ -4133,7 +4133,7 @@ L_7C16:
 	cp 002h		;7c1f
 	jr nz,L_7C3A		;7c21
 	xor a			;7c23
-	ld (0e19fh),a		;7c24
+	ld (0e19fh),a		;7c24   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ret			;7c27
 L_7C28:
 	call L_7D34		;7c28   ; el defensor que va (p01:7D34)
@@ -4152,7 +4152,7 @@ L_7C3A:
 	cp 002h		;7c4b
 	jp nz,L_7CA4		;7c4d
 	ld a,002h		;7c50
-	ld (0e19fh),a		;7c52
+	ld (0e19fh),a		;7c52   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ret			;7c55
 L_7C56:
 	ld l,(ix+007h)		;7c56   ; la direccion x: izquierda o derecha (bits 2-3)...
@@ -4164,9 +4164,9 @@ L_7C56:
 	rla			;7c63
 	rla			;7c64
 	ld b,a			;7c65
-	ld a,(0e19fh)		;7c66
+	ld a,(0e19fh)		;7c66   ; lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	or b			;7c69
-	ld (0e19fh),a		;7c6a
+	ld (0e19fh),a		;7c6a   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ret			;7c6d
 L_7C6E:
 	ld hl,0ed86h		;7c6e   ; ...o ya esta (0xED86 + 1)
@@ -4174,13 +4174,13 @@ L_7C6E:
 	ret			;7c72
 L_7C73:
 	xor a			;7c73   ; la direccion y: arriba o abajo (bits 0-1), o ya esta
-	ld (0e19fh),a		;7c74
+	ld (0e19fh),a		;7c74   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ld (0ed86h),a		;7c77
 	ld l,(ix+002h)		;7c7a
 	ld h,(ix+003h)		;7c7d
 	call L_7C8F		;7c80
 	ld a,b			;7c83
-	ld (0e19fh),a		;7c84
+	ld (0e19fh),a		;7c84   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	or a			;7c87
 	ret nz			;7c88
 	ld a,001h		;7c89
@@ -4212,7 +4212,7 @@ L_7CA4:
 	ld h,(ix+003h)		;7cb2
 	ld bc,0000ch		;7cb5
 	add hl,bc			;7cb8
-	ld a,(0e19fh)		;7cb9
+	ld a,(0e19fh)		;7cb9   ; lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	and 00fh		;7cbc
 	ret z			;7cbe
 	push af			;7cbf   ; ...arriba-abajo (p01:7CE1)...
@@ -4233,9 +4233,9 @@ L_7CA4:
 L_7CD4:
 	call L_7CF4		;7cd4
 	ret nc			;7cd7
-	ld a,(0e19fh)		;7cd8
+	ld a,(0e19fh)		;7cd8   ; lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	and 0f3h		;7cdb
-	ld (0e19fh),a		;7cdd
+	ld (0e19fh),a		;7cdd   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ret			;7ce0
 L_7CE1:
 	dec hl			;7ce1   ; un punto mas arriba o abajo
@@ -4246,9 +4246,9 @@ L_7CE1:
 L_7CE7:
 	call L_7CF4		;7ce7
 	ret nc			;7cea
-	ld a,(0e19fh)		;7ceb
+	ld a,(0e19fh)		;7ceb   ; lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	and 0fch		;7cee
-	ld (0e19fh),a		;7cf0
+	ld (0e19fh),a		;7cf0   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ret			;7cf3
 L_7CF4:
 	push de			;7cf4   ; carry si se sale: segun el lado de 0x118, p14:95BB o p14:9557
@@ -4261,11 +4261,11 @@ L_7CF4:
 	ret			;7d03
 L_7D04:
 	ld de,(0e218h)		;7d04   ; donde cae la pelota en x: 0xE218 + 0xE21A x 8 / 256
-	ld hl,(0e21ah)		;7d08
+	ld hl,(0e21ah)		;7d08   ; lee la velocidad x de la pelota y el byte siguiente (16 bits)
 	jr L_7D14		;7d0b
 L_7D0D:
 	ld de,(0e213h)		;7d0d   ; donde cae en y: 0xE213 + 0xE215 x 8 / 256
-	ld hl,(0e215h)		;7d11
+	ld hl,(0e215h)		;7d11   ; lee la velocidad y de la pelota y el byte siguiente (16 bits)
 L_7D14:
 	ld a,h			;7d14   ; (si la velocidad es pequena, sin cambio)
 	inc a			;7d15
@@ -4287,13 +4287,13 @@ L_7D27:
 	ld a,(0e22bh)		;7d27   ; IX = la ficha del defensor 0xE22B
 	ld e,a			;7d2a
 	ld d,000h		;7d2b
-	ld ix,0e271h		;7d2d
+	ld ix,0e271h		;7d2d   ; apunta a las 9 fichas de 16 bytes de los defensores
 	add ix,de		;7d31
 	ret			;7d33
 L_7D34:
 	call L_7D3C		;7d34   ; el defensor que va a por la pelota (0xE22B)
 	ld a,b			;7d37
-	ld (0e22bh),a		;7d38
+	ld (0e22bh),a		;7d38   ; guarda el defensor que va a por la pelota (desplazamiento de 16 en 16)
 	ret			;7d3b
 L_7D3C:
 	ld a,(0ed40h)		;7d3c   ; 0xED40 si no es 0xFF y hay 0xED43; si no 0xED41, o 0xED42 con 0xECFF
@@ -4314,7 +4314,7 @@ L_7D49:
 	ret			;7d56
 L_7D57:
 	xor a			;7d57   ; sin mando: segun 0xED02, p14:8278 o p14:8225 deciden...
-	ld (0e19fh),a		;7d58
+	ld (0e19fh),a		;7d58   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ld a,(0ed02h)		;7d5b
 	or a			;7d5e
 	jr nz,L_7D70		;7d5f
@@ -4354,19 +4354,19 @@ L_7D8F:
 L_7DA4:
 	ld a,(0ed6eh)		;7da4   ; lanza a la base de 0xED6E (bit 5)
 	or 020h		;7da7
-	ld (0e19fh),a		;7da9
+	ld (0e19fh),a		;7da9   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	jr L_7DC6		;7dac
 L_7DAE:
 	cp 022h		;7dae   ; con 0x22, o el 3 no tiene la pelota, o 0xED6E no es 8, se espera
 	jr z,L_7DC6		;7db0
-	ld a,(0e220h)		;7db2
+	ld a,(0e220h)		;7db2   ; lee el defensor que tiene la pelota (1-9; 0 nadie)
 	cp 003h		;7db5
 	jr nz,L_7DC6		;7db7
 	ld a,(0ed6eh)		;7db9
 	cp 008h		;7dbc
 	jr nz,L_7DC6		;7dbe
 	or 020h		;7dc0
-	ld (0e19fh),a		;7dc2
+	ld (0e19fh),a		;7dc2   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ret			;7dc5
 L_7DC6:
 	ld hl,0ece6h		;7dc6   ; al paso anterior
@@ -4391,7 +4391,7 @@ L_7DCB:
 L_7DE8:
 	ld a,(0ed6eh)		;7de8   ; lanza a la base de 0xED6E (bit 4), 0xED00 = 0x18 y al paso siguiente
 	or 010h		;7deb
-	ld (0e19fh),a		;7ded
+	ld (0e19fh),a		;7ded   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ld a,018h		;7df0
 	ld (0ed00h),a		;7df2
 	jp L_7BBE		;7df5
@@ -4502,7 +4502,7 @@ L_7EB6:
 	ld a,001h		;7eb6   ; ...lanza a la base 1
 L_7EB8:
 	or 020h		;7eb8   ; el mando con el bit 5 y 0xEDD3 = 1
-	ld (0e19fh),a		;7eba
+	ld (0e19fh),a		;7eba   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ld a,001h		;7ebd
 	ld (0edd3h),a		;7ebf
 	ret			;7ec2
@@ -4551,7 +4551,7 @@ L_7F10:
 L_7F18:
 	ld a,021h		;7f18   ; lanza a la base 1, 4 u 8 (bit 5)
 L_7F1A:
-	ld (0e19fh),a		;7f1a
+	ld (0e19fh),a		;7f1a   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ret			;7f1d
 L_7F1E:
 	ld a,024h		;7f1e
@@ -4593,7 +4593,7 @@ L_7F4D:
 	or a			;7f53
 	jr z,L_7F5C		;7f54
 L_7F56:
-	ld hl,0ece6h		;7f56
+	ld hl,0ece6h		;7f56   ; apunta a el paso de la defensa del ordenador
 	ld (hl),003h		;7f59
 	ret			;7f5b
 L_7F5C:
@@ -4615,7 +4615,7 @@ L_7F70:
 	jr nc,L_7FAF		;7f7b
 	ld e,a			;7f7d
 	ld d,000h		;7f7e
-	ld ix,0e271h		;7f80
+	ld ix,0e271h		;7f80   ; apunta a las 9 fichas de 16 bytes de los defensores
 	add ix,de		;7f84
 	ld a,(ix+00dh)		;7f86   ; lee la base de destino (nibble alto; 2 abajo: llegado)
 	or a			;7f89
@@ -4638,16 +4638,16 @@ L_7FA6:
 	ret			;7fae
 L_7FAF:
 	ld a,(0ed25h)		;7faf   ; al acabar: el defensor elegido (0xE22B) y al paso siguiente
-	ld (0e22bh),a		;7fb2
+	ld (0e22bh),a		;7fb2   ; guarda el defensor que va a por la pelota (desplazamiento de 16 en 16)
 	jp L_7BBE		;7fb5
 L_7FB8:
 	call 081f1h		;7fb8   ; va a por la pelota: p14:81F1, p14:8115, el defensor y su direccion
 	call 08115h		;7fbb
 	call L_7D34		;7fbe
 	call L_7D27		;7fc1
-	ld de,(0e213h)		;7fc4
+	ld de,(0e213h)		;7fc4   ; lee la y de la pelota (vertical) y el byte siguiente (16 bits)
 	call L_7C73		;7fc8
-	ld de,(0e218h)		;7fcb
+	ld de,(0e218h)		;7fcb   ; lee la x de la pelota y el byte siguiente (16 bits)
 	call L_7C56		;7fcf
 	ld a,(0e33ch)		;7fd2   ; con 0xE33C, al paso 3
 	or a			;7fd5
@@ -4661,12 +4661,12 @@ L_7FDA:
 	or a			;7fe3
 	ret z			;7fe4
 	ld a,008h		;7fe5
-	ld (0ece6h),a		;7fe7
+	ld (0ece6h),a		;7fe7   ; guarda el paso de la defensa del ordenador
 	ret			;7fea
 L_7FEB:
 	xor a			;7feb   ; sin mando, y segun quien tiene la pelota...
-	ld (0e19fh),a		;7fec
-	ld a,(0e220h)		;7fef
+	ld (0e19fh),a		;7fec   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+	ld a,(0e220h)		;7fef   ; lee el defensor que tiene la pelota (1-9; 0 nadie)
 	or a			;7ff2
 	jr z,$+28		;7ff3
 	cp 003h		;7ff5

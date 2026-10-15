@@ -15,7 +15,7 @@
 
 
 L_6000:
-	ld a,(0d74ch)		;6000
+	ld a,(0d74ch)		;6000   ; lee el despachador de los menus (y 0xD74D)
 	cp 008h		;6003
 	jr nz,L_604A		;6005
 	ld a,(0dd8eh)		;6007
@@ -32,7 +32,7 @@ L_6000:
 	or a			;601f
 	jr z,L_6041		;6020
 	ld a,(0d73fh)		;6022
-	ld (0de02h),a		;6025
+	ld (0de02h),a		;6025   ; guarda las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 	ld hl,062d7h		;6028
 	ld de,0daaeh		;602b
 	ld bc,00042h		;602e
@@ -66,7 +66,7 @@ DATA_tabla_604D:
 
 
 L_606B:
-	ld hl,0d74ch		;606b
+	ld hl,0d74ch		;606b   ; apunta a el despachador de los menus (y 0xD74D)
 	ld (hl),00eh		;606e
 	inc hl			;6070
 	ld (hl),000h		;6071
@@ -81,14 +81,14 @@ L_6081:
 	ret nz			;6085
 L_6086:
 	xor a			;6086
-	ld (0d74ch),a		;6087
+	ld (0d74ch),a		;6087   ; guarda el despachador de los menus (y 0xD74D)
 	ld (0de00h),a		;608a   ; guarda el estado del juego (indice del despachador principal)
 	ld (0de01h),a		;608d   ; guarda el paso dentro del estado
 	ld a,020h		;6090
 	ld (0de04h),a		;6092   ; guarda la cuenta atras del estado
 	ret			;6095
 L_6096:
-	ld hl,0d74ch		;6096
+	ld hl,0d74ch		;6096   ; apunta a el despachador de los menus (y 0xD74D)
 	dec (hl)			;6099
 	inc hl			;609a
 	ld (hl),000h		;609b
@@ -100,7 +100,7 @@ L_60A1:
 L_60A4:
 	call L_60A7		;60a4
 L_60A7:
-	ld hl,0d74ch		;60a7
+	ld hl,0d74ch		;60a7   ; apunta a el despachador de los menus (y 0xD74D)
 	inc (hl)			;60aa
 	inc hl			;60ab
 	ld (hl),000h		;60ac
@@ -119,21 +119,21 @@ L_60B9:
 L_60BE:
 	ld a,(0d759h)		;60be
 	add a,003h		;60c1
-	ld (0d74ch),a		;60c3
+	ld (0d74ch),a		;60c3   ; guarda el despachador de los menus (y 0xD74D)
 	xor a			;60c6
 	ld (0d74dh),a		;60c7
 	ret			;60ca
 L_60CB:
 	ld a,(0d759h)		;60cb
 	add a,00ah		;60ce
-	ld (0d74ch),a		;60d0
+	ld (0d74ch),a		;60d0   ; guarda el despachador de los menus (y 0xD74D)
 	xor a			;60d3
 	ld (0d74dh),a		;60d4
 	ret			;60d7
 L_60D8:
 	call 04b9fh		;60d8   ; borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
 	xor a			;60db
-	ld hl,0d74ch		;60dc
+	ld hl,0d74ch		;60dc   ; apunta a el despachador de los menus (y 0xD74D)
 	ld de,0d74dh		;60df
 	ld (hl),a			;60e2
 	ld bc,0000fh		;60e3
@@ -627,7 +627,7 @@ L_64B4:
 	ld hl,0d70ah		;64ba
 	ld bc,00006h		;64bd
 	ldir		;64c0
-	ld hl,0de02h		;64c2
+	ld hl,0de02h		;64c2   ; apunta a las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 	set 5,(hl)		;64c5
 	ld a,(0d6e1h)		;64c7
 	dec a			;64ca
@@ -636,11 +636,11 @@ L_64B4:
 	ld a,001h		;64cf
 	ld (0e1d1h),a		;64d1   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
 	xor a			;64d4
-	ld (0d6dch),a		;64d5
+	ld (0d6dch),a		;64d5   ; guarda el equipo del jugador en PENNANT (bit 0)
 	ret			;64d8
 L_64D9:
 	ld a,00dh		;64d9
-	ld (0d74ch),a		;64db
+	ld (0d74ch),a		;64db   ; guarda el despachador de los menus (y 0xD74D)
 	ret			;64de
 L_64DF:
 	call 04b9fh		;64df   ; borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
@@ -652,7 +652,7 @@ L_64DF:
 	ret			;64ee
 L_64EF:
 	xor a			;64ef
-	ld hl,0d74ch		;64f0
+	ld hl,0d74ch		;64f0   ; apunta a el despachador de los menus (y 0xD74D)
 	ld de,0d74dh		;64f3
 	ld (hl),a			;64f6
 	ld bc,0000fh		;64f7
@@ -660,8 +660,8 @@ L_64EF:
 	ld (0da6bh),a		;64fc
 	ld (0d759h),a		;64ff
 	ld a,009h		;6502
-	ld (0d74ch),a		;6504
-	ld de,0e340h		;6507
+	ld (0d74ch),a		;6504   ; guarda el despachador de los menus (y 0xD74D)
+	ld de,0e340h		;6507   ; apunta a variable de paso (cada rutina la usa a su manera)
 	ld hl,0d70ah		;650a
 	ld bc,00006h		;650d
 	ldir		;6510
@@ -736,7 +736,7 @@ DATA_texto_6594:
 
 
 L_65BE:
-	ld hl,0e340h		;65be
+	ld hl,0e340h		;65be   ; apunta a variable de paso (cada rutina la usa a su manera)
 	ld de,0d718h		;65c1
 	call L_6B5B		;65c4
 L_65C7:
@@ -997,7 +997,7 @@ L_6761:
 	dec b			;6765
 	jr z,L_6783		;6766
 	ld de,0d70ch		;6768
-	ld hl,0e340h		;676b
+	ld hl,0e340h		;676b   ; apunta a variable de paso (cada rutina la usa a su manera)
 L_676E:
 	ld a,(0d70ah)		;676e
 	cp (hl)			;6771
@@ -1014,7 +1014,7 @@ L_677D:
 	djnz L_676E		;6781
 L_6783:
 	ld de,0d70ah		;6783
-	ld hl,0e340h		;6786
+	ld hl,0e340h		;6786   ; apunta a variable de paso (cada rutina la usa a su manera)
 	call L_6B5B		;6789
 	exx			;678c
 	ld c,000h		;678d
@@ -1057,7 +1057,7 @@ L_67BC:
 	add a,b			;67be
 	ld b,a			;67bf
 	push bc			;67c0
-	ld hl,0e340h		;67c1
+	ld hl,0e340h		;67c1   ; apunta a variable de paso (cada rutina la usa a su manera)
 	ld d,h			;67c4
 	ld e,l			;67c5
 	call 04216h		;67c6   ; hl_mas_a: HL = HL + A
@@ -1507,7 +1507,7 @@ L_6A5C:
 	pop bc			;6a5c
 	ret			;6a5d
 L_6A5E:
-	ld (0e340h),hl		;6a5e
+	ld (0e340h),hl		;6a5e   ; guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 	xor a			;6a61
 	ld (0e342h),a		;6a62
 	ld hl,0d70ah		;6a65
@@ -1528,7 +1528,7 @@ L_6A7E:
 	inc hl			;6a7e
 	djnz L_6A75		;6a7f
 L_6A81:
-	ld hl,(0e340h)		;6a81
+	ld hl,(0e340h)		;6a81   ; lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 	ld b,00ah		;6a84
 L_6A86:
 	push bc			;6a86
@@ -2119,16 +2119,16 @@ L_6E32:
 	jr z,L_6E67		;6e3a
 	ld a,001h		;6e3c
 	ld (0d2b1h),a		;6e3e
-	ld a,(0de02h)		;6e41
+	ld a,(0de02h)		;6e41   ; lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 	bit 4,a		;6e44
 	ret z			;6e46
 	bit 5,a		;6e47
 	ret nz			;6e49
-	ld a,(0d6dch)		;6e4a
+	ld a,(0d6dch)		;6e4a   ; lee el equipo del jugador en PENNANT (bit 0)
 	rra			;6e4d
 	ret nc			;6e4e
-	ld hl,0d380h		;6e4f
-	ld de,0d47fh		;6e52
+	ld hl,0d380h		;6e4f   ; apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
+	ld de,0d47fh		;6e52   ; apunta a la ficha del local (255 bytes de p13:731F)
 	ld bc,000ffh		;6e55
 L_6E58:
 	push bc			;6e58
@@ -2174,7 +2174,7 @@ L_6E75:
 L_6E99:
 	xor a			;6e99
 	ld (0d2b1h),a		;6e9a
-	ld a,(0e340h)		;6e9d
+	ld a,(0e340h)		;6e9d   ; lee variable de paso (cada rutina la usa a su manera)
 	ld (0d2b0h),a		;6ea0
 	ret			;6ea3
 L_6EA4:
@@ -2185,14 +2185,14 @@ L_6EA4:
 	ld (0d2b1h),a		;6eab
 	ret			;6eae
 L_6EAF:
-	ld de,0d380h		;6eaf
+	ld de,0d380h		;6eaf   ; apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 	ld hl,0d680h		;6eb2
 	jr L_6EBD		;6eb5
 L_6EB7:
-	ld de,0d47fh		;6eb7
+	ld de,0d47fh		;6eb7   ; apunta a la ficha del local (255 bytes de p13:731F)
 	ld hl,0d740h		;6eba
 L_6EBD:
-	ld (0e340h),de		;6ebd
+	ld (0e340h),de		;6ebd   ; guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 	ld c,000h		;6ec1
 	push hl			;6ec3
 	ld de,0daaeh		;6ec4
@@ -2289,7 +2289,7 @@ L_6F31:
 	inc hl			;6f3a
 	ld d,(hl)			;6f3b
 	ex de,hl			;6f3c
-	ld de,(0e340h)		;6f3d
+	ld de,(0e340h)		;6f3d   ; lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 	ld bc,000ffh		;6f41
 	ldir		;6f44
 	ret			;6f46
@@ -2324,7 +2324,7 @@ L_6F68:
 	ld d,c			;6f6b
 	ld e,000h		;6f6c
 	add hl,de			;6f6e
-	ld de,(0e340h)		;6f6f
+	ld de,(0e340h)		;6f6f   ; lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 	ld bc,000ffh		;6f73
 	ldir		;6f76
 	ret			;6f78
@@ -2489,7 +2489,7 @@ L_7089:
 	dec (hl)			;708c
 	ret nz			;708d
 	ld hl,00000h		;708e
-	ld (0d74ch),hl		;7091
+	ld (0d74ch),hl		;7091   ; guarda el despachador de los menus (y 0xD74D) y el byte siguiente (16 bits)
 	ld a,002h		;7094
 	ld (0d2b1h),a		;7096
 	ret			;7099
@@ -2557,7 +2557,7 @@ L_70F1:
 	cp 022h		;7102
 	jp nc,L_7274		;7104
 	ld bc,07164h		;7107
-	ld hl,0d380h		;710a
+	ld hl,0d380h		;710a   ; apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 	call L_71D4		;710d
 	call 0839eh		;7110
 	call L_721D		;7113

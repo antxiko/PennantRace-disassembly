@@ -180,12 +180,40 @@ RAM.update({
     0xEF3B: ("lo que dice el motor que suena", "p00:5DE0"),
     0xE231: ("las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)", "p00:5B0D, p01:61E2"),
     0xE1F6: ("la formacion del campo (0-6)", "p00:5868"),
-    0xE1FE: ("si no es 0, se usan las tablas de la otra mitad (p11:991F, 0x9D62, p15:BA8E...)", "p00:5877, p00:5168"),
+    0xE1FE: ("el lado por el que batea (0 si IX+6 de su ficha es 0x20, si no 1): elige las tablas del otro lado", "p02:8919"),
     0xFAF5: ("DPPAGE de la BIOS: la pagina que se ve", "p01:6056"),
     0xFAF6: ("ACPAGE de la BIOS: la pagina en la que se pinta", "p00:5993"),
     0xE311: ("las carreras del visitante por entrada (10 casillas, 12-13 el total)", "p01:66FA"),
     0xE321: ("las carreras del local por entrada (10 casillas, 12-13 el total)", "p01:66F2"),
     0xE1A2: ("el desplazamiento de la pantalla (16 bits)", "p01:66B3"),
+    0xE211: ("la ficha de 16 bytes de la pelota", "p01:6CD2"),
+    0xE213: ("la y de la pelota (vertical)", "ficha 0xE211 + 2; p01:7D0D"),
+    0xE215: ("la velocidad y de la pelota", "ficha 0xE211 + 4; p01:7D11"),
+    0xE218: ("la x de la pelota", "ficha 0xE211 + 7; p01:7D04"),
+    0xE21A: ("la velocidad x de la pelota", "ficha 0xE211 + 9; p01:7D08"),
+    0xE220: ("el defensor que tiene la pelota (1-9; 0 nadie)", "p01:6AF1, p01:6D35"),
+    0xE22B: ("el defensor que va a por la pelota (desplazamiento de 16 en 16)", "p01:7D27, p01:7FB2"),
+    0xE271: ("las 9 fichas de 16 bytes de los defensores", "p01:6ACF"),
+    0xE19F: ("el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)", "p01:6B4F, p01:724A"),
+    0xE19D: ("el mando del bateador o los corredores", "p01:77D5, p01:7AC0"),
+    0xED3E: ("el paso del lanzador del ordenador", "p01:75D8"),
+    0xECEE: ("el paso del bateador del ordenador", "p01:7788"),
+    0xED29: ("el paso de los corredores del ordenador", "p01:7910"),
+    0xECE6: ("el paso de la defensa del ordenador", "p01:7B82"),
+    0xE340: ("variable de paso (cada rutina la usa a su manera)", "p00:42C2, p01:6DD5, p02:84EF"),
+    0xDE02: ("las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo", "p00:4A5E, p01:6F52"),
+    0xD6DC: ("el equipo del jugador en PENNANT (bit 0)", "p01:6F61, p02:83C9"),
+    0xD380: ("la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)", "p13:6F44, p01:63FC"),
+    0xD47F: ("la ficha del local (255 bytes de p13:731F)", "p13:6F44, p01:6405"),
+    0xD38B: ("los jugadores del visitante (14 bytes cada uno)", "p01:69E9, p02:88BA"),
+    0xD48A: ("los jugadores del local (14 bytes cada uno)", "p01:69F5, p02:88C6"),
+    0xEC50: ("el orden de bateo del visitante (9 numeros de jugador)", "p02:88E2"),
+    0xEC62: ("el orden de bateo del local (9 numeros de jugador)", "p02:88EF"),
+    0xED44: ("el jugador del visitante al bate (13 en adelante: lanzador)", "p02:88E9"),
+    0xED45: ("el jugador del local al bate", "p02:88F6"),
+    0xE1A1: ("el paso de la jugada (p02:9149)", "p02:917C"),
+    0xED0E: ("el contador de cuadros de la jugada (las piernas de los sprites)", "p02:923A, p01:7023"),
+    0xD74C: ("el despachador de los menus (y 0xD74D)", "p00:4521, p00:489D"),
 })
 
 RAM16 = {}
@@ -213,6 +241,6 @@ CAMPOS_JUGADOR = {
     0x0F: "la x de destino",
 }
 CARGAS_JUGADOR = (0xE211, 0xE231, 0xE271, 0xE281)
-IX_JUGADOR_POR_DEFECTO = {1: ((0x6AEA, 0x75D5), (0x78F2, 0x7B79))}
+IX_JUGADOR_POR_DEFECTO = {1: ((0x6AEA, 0x75D5), (0x78F2, 0x7B79)), 2: ((0x8BB8, 0x8FFF),)}
 
 FICHAS = ((CARGAS_JUGADOR, IX_JUGADOR_POR_DEFECTO, CAMPOS_JUGADOR),)

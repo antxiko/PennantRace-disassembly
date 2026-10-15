@@ -76,10 +76,15 @@ F 0x9F1A 16
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
 C 0x8028 apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x8046 apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 C 0x807C apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x809A apunta a la ficha del local (255 bytes de p13:731F)
 C 0x80C8 apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 C 0x8114 apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x817A apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 C 0x817D apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x81A1 apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
+C 0x81C9 apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 C 0x8296 apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 C 0x839E apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 C 0x83DF apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
@@ -91,12 +96,22 @@ C 0x8495 texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
 C 0x84A6 lee los botones recien pulsados del mando 1 / cursores
 C 0x851D texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x8523 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x85ED apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
+C 0x85F4 apunta a los jugadores del visitante (14 bytes cada uno)
+C 0x85F7 guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
+C 0x8606 lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
+C 0x860B guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x860F caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0x861F guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
+C 0x862E lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
+C 0x8633 guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x8638 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x8649 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x86CC copia_a_vram: copia BC bytes de HL a la VRAM DE
 C 0x8723 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x874E copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
+C 0x9350 lee la x de la pelota y el byte siguiente (16 bits)
+C 0x9357 lee la y de la pelota (vertical) y el byte siguiente (16 bits)
 C 0x93CB lee el desplazamiento de la pantalla (16 bits)
 C 0x93D9 texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
 C 0x93F8 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -105,15 +120,25 @@ C 0x9401 apunta a los strikes de la cuenta (3 = eliminado)
 C 0x941E apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0x946F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9472 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x968A lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
+C 0x96A6 apunta a el equipo del jugador en PENNANT (bit 0)
 C 0x96D7 hl_mas_a: HL = HL + A
+C 0x96ED lee el equipo del jugador en PENNANT (bit 0)
+C 0x971B apunta a variable de paso (cada rutina la usa a su manera)
+C 0x9727 lee el equipo del jugador en PENNANT (bit 0)
+C 0x972B apunta a variable de paso (cada rutina la usa a su manera)
 C 0x973A texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x9776 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x977C texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x9782 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x9787 lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0x978E lee el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
 C 0x9798 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x979B lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0x97A8 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x97AE texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x97B7 lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
+C 0x97BE lee el equipo del jugador en PENNANT (bit 0)
 C 0x97D6 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x97DC texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x97E9 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
@@ -121,24 +146,38 @@ C 0x9865 despacha: salta a la palabra A de la tabla que va pegada detras del `ca
 C 0x987B sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x98A7 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x98BC lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x98D0 apunta a el orden de bateo del visitante (9 numeros de jugador)
 C 0x98D3 hl_mas_a: HL = HL + A
+C 0x98F5 apunta a los jugadores del visitante (14 bytes cada uno)
+C 0x98F8 apunta a el orden de bateo del visitante (9 numeros de jugador)
+C 0x990C apunta a el orden de bateo del visitante (9 numeros de jugador)
 C 0x9911 hl_mas_a: HL = HL + A
 C 0x9918 de_mas_a: DE = DE + A
+C 0x9927 apunta a el orden de bateo del visitante (9 numeros de jugador)
 C 0x992F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x9976 apunta a el orden de bateo del visitante (9 numeros de jugador)
 C 0x9979 hl_mas_a: HL = HL + A
 C 0x999E apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 C 0x99AB guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+C 0x99C1 apunta a el orden de bateo del visitante (9 numeros de jugador)
 C 0x99CB lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x99DB lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x99E8 apunta a el orden de bateo del local (9 numeros de jugador)
 C 0x99F2 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x9A02 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x9A09 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x9A3B despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x9A5F lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x9A72 apunta a el orden de bateo del local (9 numeros de jugador)
 C 0x9A75 hl_mas_a: HL = HL + A
+C 0x9A97 apunta a los jugadores del local (14 bytes cada uno)
+C 0x9A9A apunta a el orden de bateo del local (9 numeros de jugador)
+C 0x9AAE apunta a el orden de bateo del local (9 numeros de jugador)
 C 0x9AB3 hl_mas_a: HL = HL + A
 C 0x9ABA de_mas_a: DE = DE + A
+C 0x9AC9 apunta a el orden de bateo del local (9 numeros de jugador)
 C 0x9AD1 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x9B06 apunta a el orden de bateo del local (9 numeros de jugador)
 C 0x9B09 hl_mas_a: HL = HL + A
 C 0x9B2E apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 C 0x9B34 hl_mas_a: HL = HL + A
@@ -147,15 +186,27 @@ C 0x9B51 hl_mas_a: HL = HL + A
 C 0x9B61 hl_mas_a: HL = HL + A
 C 0x9B92 de_mas_a: DE = DE + A
 C 0x9BCF lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x9BE2 apunta a el orden de bateo del visitante (9 numeros de jugador)
+C 0x9BEE apunta a el orden de bateo del visitante (9 numeros de jugador)
 C 0x9BF9 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x9C02 apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
+C 0x9C18 apunta a el orden de bateo del visitante (9 numeros de jugador)
 C 0x9C34 lee el orden de bateo del visitante (0-8)
 C 0x9C3A hl_mas_a: HL = HL + A
 C 0x9C42 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0x9C4B apunta a el orden de bateo del visitante (9 numeros de jugador)
+C 0x9C57 apunta a los jugadores del visitante (14 bytes cada uno)
 C 0x9C64 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x9C77 apunta a el orden de bateo del local (9 numeros de jugador)
+C 0x9C83 apunta a el orden de bateo del local (9 numeros de jugador)
 C 0x9C8E lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x9C97 apunta a la ficha del local (255 bytes de p13:731F)
+C 0x9CAD apunta a el orden de bateo del local (9 numeros de jugador)
 C 0x9CC9 lee el orden de bateo del local (0-8)
 C 0x9CCF hl_mas_a: HL = HL + A
 C 0x9CD7 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0x9CE0 apunta a el orden de bateo del local (9 numeros de jugador)
+C 0x9CEC apunta a los jugadores del local (14 bytes cada uno)
 C 0x9CF6 borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
 C 0x9CF9 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 C 0x9D04 pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
@@ -170,9 +221,13 @@ C 0x9D8B texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos
 C 0x9D8E lee el paso dentro del estado
 C 0x9DC3 hl_mas_a: HL = HL + A
 C 0x9DC7 apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
+C 0x9DD4 lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0x9DDE lee los botones recien pulsados del mando 1 / cursores y el byte siguiente (16 bits)
+C 0x9DE4 apunta a las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0x9DEA lee los botones recien pulsados (segundo mando) y el byte siguiente (16 bits)
+C 0x9DF5 lee el equipo del jugador en PENNANT (bit 0)
 C 0x9DFB lee los botones recien pulsados del mando 1 / cursores y el byte siguiente (16 bits)
+C 0x9E01 apunta a las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0x9E07 lee los botones recien pulsados (segundo mando) y el byte siguiente (16 bits)
 C 0x9E11 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 C 0x9E14 apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
