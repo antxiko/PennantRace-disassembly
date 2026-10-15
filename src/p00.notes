@@ -1,4 +1,635 @@
 
+
+# --- A MANO: comentarios escritos leyendo el codigo ---
+C 0x4108 0xF323 (DISKVE, el gestor de errores de disco) = 0x84D4
+C 0x410E copia 0x1100 bytes de 0xE280 a 0xC000...
+C 0x4117 ...de una vez
+C 0x4119 y 0x280 bytes de 0xF100 a 0xD780
+C 0x4124 guarda el gancho H.TIMI de la BIOS (5 bytes) en 0xD2AB...
+C 0x412F ...y lo deja en `ret` mientras arranca
+C 0x4134 el cartucho tambien en 0x8000-0xBFFF (p00:43EC: ENASLT con H = 0x80)
+C 0x413A A = 0 para los borrados de abajo
+C 0x413E la RAM 0xD380-0xD75A a cero
+C 0x4150 y 0xDE00-0xEFFB, la del juego y la del sonido
+C 0x4159 el mapper en su reparto de encendido: 0 en 0x4000...
+C 0x4162 ...1 en 0x6000...
+C 0x4168 ...2 en 0x8000...
+C 0x416E ...y 3 en 0xA000
+C 0x4173 sonido, SCREEN 5, borde, registros del VDP y paleta (p01:65BE)
+C 0x4177 el contador de cuadros de 0xED0F a cero
+C 0x417C H.TIMI = jp interrupcion: desde aqui el juego corre en la interrupcion
+C 0x4187 0xF3DB (CLIKSW) = 0: sin el clic de las teclas
+C 0x418B y a esperar
+C 0x418E lo primero: H.TIMI deja leido el estado del VDP; la BIOS lo vuelve a pedir (0x013E: RDVDP)
+C 0x4191 si ya hay un cuadro en marcha no se entra
+C 0x4197 el estado 2 del VDP...
+C 0x419C ...bit 0 (CE): el VDP aun esta con una orden
+C 0x41A2 marca: copiando sprites
+C 0x41A4 los atributos y colores de sprite de la RAM a la VRAM (p00:422A)
+C 0x41AC un cuadro mas
+C 0x41B4 si el sonido ya esta sonando (interrupcion dentro de otra), se salta
+C 0x41B9 marca: sonido en marcha
+C 0x41BC los bancos del sonido, 4-5-6, sin tocar las copias de 0xDDF1-0xDDF3
+C 0x41C9 en el partido (estado 5-4): sonidos de fondo y la tecla F5 (p00:5DC4)
+C 0x41CC el motor de sonido de este cuadro (p04:6009 -> p06:B41E)
+C 0x41D5 devuelve los bancos que habia, leidos de sus copias
+C 0x41EA si no habia cuadro en marcha...
+C 0x41EF ...se lanza uno
+C 0x41F0 con las interrupciones abiertas: el cuadro puede durar mas de uno
+C 0x41F1 guarda el gancho H.TIMI...
+C 0x41F7 ...y lo deja en esta rutina por si el cuadro cambia el gancho
+C 0x41FD lee el mando y el teclado (p01:65F0)
+C 0x4200 el cuadro del juego: el estado de 0xDE00 (p00:4480)
+C 0x4203 vuelve a poner el gancho de antes
+C 0x420C cuadro acabado
+C 0x422A 0xED09 dice que copiar: 1 solo los colores, 2 todo con rotacion
+C 0x4230 ya pedido: se borra la peticion
+C 0x4235 1: los colores de sprite (0xDF00, 0x280 bytes) a la VRAM 0xF400...
+C 0x4241 ...y se espera al VDP
+C 0x4245 IX+0 cuenta los trozos copiados por rotacion
+C 0x424D el apunte de los trozos (0xE340-0xE35F) a cero
+C 0x425B los colores de los sprites 0-3 (64 bytes)...
+C 0x4267 ...0xE060-0xE0FF a la VRAM 0xF560 (los colores de los 10 sprites fijos de abajo)
+C 0x4273 los atributos de los sprites 0-3, que no rotan
+C 0x427F y los de 0xE158 en adelante (10 sprites), que tampoco
+C 0x428B la rotacion: 0xECE5 cuenta hacia atras...
+C 0x4291 ...y al llegar a 0 vuelve a 9, o a 10 si 0xE1A2 pasa de 0x78
+C 0x429D 0xED04 = cuantos sprites rotan
+C 0x42A1 primer trozo: los atributos desde el sprite 4 + (0xECE5 - 1)...
+C 0x42BB ...de 0xE110 en adelante...
+C 0x42BF ...a la VRAM desde 0xF610
+C 0x42C2 apunta el trozo en 0xE340 (para depurar o rehacer)
+C 0x42D0 copia el primer trozo
+C 0x42D3 si la rotacion no esta en 1, queda el segundo trozo: lo que da la vuelta
+C 0x42F0 ...a su sitio de la VRAM
+C 0x4306 copia el segundo trozo
+C 0x4309 lo mismo con los colores (16 bytes por sprite): el primer trozo...
+C 0x4327 ...de 0xDF40...
+C 0x432B ...a la VRAM 0xF440
+C 0x433C copia los colores del primer trozo
+C 0x433F y el segundo, si lo hay
+C 0x4376 copia los colores del segundo trozo
+C 0x437C 0xE347 = la rotacion de este cuadro
+C 0x4384 la rotacion en curso
+C 0x4387 un trozo mas
+C 0x43EF el slot primario de la pagina 1...
+C 0x43F6 ...y su marca de expandido (0xFCC1 + slot)
+C 0x4400 el subslot, de 0xFCC5 + slot
+C 0x4407 H = 0x80: la pagina 2
+C 0x4409 ENASLT: el cartucho tambien en 0x8000-0xBFFF
+C 0x440F el slot primario de la pagina 1 (la del cartucho)
+C 0x4416 ...con su marca de expandido (0xFCC1 + slot)
+C 0x4420 el subslot, de 0xFCC5 + slot
+C 0x4424 apunta el slot en 0xD2AA
+C 0x4428 el reloj de juego: 0xED4A cuenta cuadros hasta 60...
+C 0x442F ...0xED4B los segundos hasta 60...
+C 0x4434 ...0xED4C y 0xED4D los minutos en dos cifras...
+C 0x4439 ...0xED4E las horas hasta 6...
+C 0x4440 ...y 0xED4F-0xED50 lo que pasa de ahi
+C 0x4448 el reloj de juego a cero
+C 0x4455 una cifra del reloj que cuenta hasta 60: carry si no ha dado la vuelta
+C 0x445E la cifra siguiente, hasta 10: carry si no ha dado la vuelta
+C 0x4468 lee 32 bytes de la VRAM 0xF680 a 0xDDA0
+C 0x4474 si los dos primeros son 0 vuelve con Z
+C 0x4480 un cuadro mas (0xDE03, el reloj de las animaciones)
+C 0x4484 C = el estado (0xDE00), B = el paso (0xDE01)
+C 0x4489 en los estados 0-2 se vuelve por p00:4A42 (los avisos y la pantalla)
+C 0x4491 el estado A por la tabla de detras
+C 0x44A8 estado 0, paso 0: p14:872E cada cuadro...
+C 0x44B3 ...hasta que marque 0xDE0F...
+C 0x44B8 ...2 segundos de espera y al paso siguiente
+C 0x44C0 paso 1: la espera
+C 0x44C7 0xECEF = 0
+C 0x44CD paso 2: p15:BB87 cada cuadro...
+C 0x44D8 ...hasta que marque 0xE1D1...
+C 0x44DD ...el sonido 0x2D y al estado 0, paso 0
+C 0x44E6 paso 3: calla todo (sonido 1)...
+C 0x44EF ...borra la pantalla, carga la fuente (p00:5991: 161 caracteres a la VRAM 0) y p15:B670
+C 0x44FA estado 1: la espera del menu; al acabar...
+C 0x4501 ...el modo 0 (1PLAYER) y al estado siguiente
+C 0x4508 estado 2, paso 0: p15:AB40 cada cuadro...
+C 0x4513 ...hasta que marque 0xE1A0 (el modo elegido)
+C 0x4518 el sonido de la eleccion (p00:5E80)
+C 0x451D el menu: deja el estado y el despachador del menu a 0...
+C 0x4527 ...32 cuadros de espera...
+C 0x452C ...y el paso a 0
+C 0x452F paso 1: borra la pantalla, 17 caracteres a la VRAM 0xF818 (p00:52B5) y p15:AB1D
+C 0x453E 32 cuadros de espera y al paso siguiente
+C 0x4543 al paso siguiente
+C 0x4548 paso 2: la cuenta atras con el nombre del modo...
+C 0x4550 ...elegido en 0xE190: 1PLAYER...
+C 0x4559 ...2PLAYERS...
+C 0x455F ...PENNANT...
+C 0x4565 ...TEAM EDIT...
+C 0x456B ...WATCH...
+C 0x4571 ...o MEDIA SELECT
+C 0x4574 parpadea: el bit 2 de la cuenta elige pintarlo o borrarlo
+C 0x457D paso 3: MEDIA SELECT (modo 5) va aparte...
+C 0x4586 ...los demas vuelven al menu
+C 0x458B MEDIA SELECT: las marcas de 0xDD91-0xDD93 a cero
+C 0x4595 y un caracter en 0x18C0 (el cursor)
+C 0x459D paso 4: MEDIA SELECT (p15:AA3B) hasta que acabe (0xDD91)
+C 0x45B0 paso 5: la tecla F5 (SNSMAT fila 7, bit 1) decide si el motor acepta los sonidos 0x32-0x3C
+C 0x45BC 0xEFFA: 1 si no esta pulsada
+C 0x45C3 calla la musica (0x80) y el sonido 0x23
+C 0x45CD 160 cuadros de espera
+C 0x45D2 antes del partido: p00:5FF1, la fuente, p00:59AD, caracteres (p00:52B5, p00:52D9)...
+C 0x45E3 ...el color 7 a 0x77 0x07...
+C 0x45EB ...y en TEAM EDIT (modo 3) p15:B9DA
+C 0x45F3 0xE1A0 = 1
+C 0x45F8 32 cuadros
+C 0x45FD al estado siguiente
+C 0x4601 paso 0 del estado
+C 0x4606 borra la pantalla y 120 cuadros de espera
+C 0x4611 la cuenta del paso...
+C 0x461D ...0xD2B1 = 1: se sigue esperando
+C 0x4622 p13:6DF7 cada cuadro
+C 0x462B 0xD2B1 = 2: vuelta al menu
+C 0x4635 acabada la cuenta...
+C 0x463A ...el sonido 0x2F, p14:9EA9 y al paso siguiente
+C 0x464D paso siguiente: p14:9D49 hasta que marque 0xE1D1
+C 0x4657 y p15:A2ED
+C 0x465D p14:9F8A hasta que marque 0xE1D1
+C 0x4667 el reloj de juego a cero
+C 0x466A la musica del partido (0x32) si 0xEFFA lo deja; si no, el sonido 1
+C 0x4677 0xED13 y 0xED14 a 1
+C 0x467F p01:6770
+C 0x4682 0xE1CB = 1
+C 0x468A el partido (p02:9149)...
+C 0x468F ...0xEDA0 no 0: estado 6, con 1 o 2 segun 0xEDA0
+C 0x46A1 el fin del partido: 0xED87 lo pide...
+C 0x46A7 ...0xEDA1 vuelve al menu...
+C 0x46AE ...o un marcador llega a 99
+C 0x46BC 0xEDDA: este cuadro no se mira
+C 0x46C4 solo al acabar una baja (bit 0 de 0xE19B)
+C 0x46CA la diferencia de carreras: visitante - local
+C 0x46D1 C = 1 si gana el local
+C 0x46D8 si gana el local por 10 o mas, se acaba
+C 0x46E2 antes de la baja de la 9.a (0xE19B < 0x11) se sigue
+C 0x46E6 desde la 9.a, si el local va por delante se acaba
+C 0x46EE fin del partido: estado 9 y 128 cuadros
+C 0x46FB TEAM EDIT (modo 3) va a p15:B694
+C 0x4703 p00:596F hasta que marque 0xE1D1
+C 0x470B con el bit 4 de 0xDE02, p14:9697
+C 0x471B 60 cuadros, 0xD2B0 y 0xD2B1 a cero y al paso siguiente
+C 0x472A p14:9853 o p14:9A26 segun el paso...
+C 0x4742 ...hasta que marque 0xE1D1
+C 0x4747 sin 0xED9B, p15:AC91
+C 0x4754 p01:6098: con carry se acaba (al estado 5-4)
+C 0x4759 los bits de 0xDE02: el 3 no deja seguir...
+C 0x4760 ...el 4 y el 5 dicen que mando atiende
+C 0x476E con el bit 0 de 0xD6DC...
+C 0x4774 ...el disparo del segundo mando
+C 0x477B ...o el del primero
+C 0x4783 el disparo del segundo mando: p14:9C61
+C 0x478A el disparo del primero: p14:9BCC
+C 0x4799 al paso 1
+C 0x47A7 al paso 2
+C 0x47AC p01:64A5
+C 0x47AF al estado 5, paso 4: el partido
+C 0x47BC cada 32 cuadros...
+C 0x47C2 ...funde la paleta (p00:49D7) y la pone
+C 0x47CB mira si ya son negros los 13 colores
+C 0x47DA del todo negra: p01:6991, el color 0 a negro...
+C 0x47E4 ...los caracteres, el texto de 0x7CD1...
+C 0x47ED ...y dos numeros de 10 cifras: 0xD380 y 0xD47F
+C 0x47FF p01:60AC
+C 0x4802 con el bit 4 de 0xDE02, el texto de 0x7C79 y al paso siguiente
+C 0x4812 si no, al paso 5
+C 0x4818 paso 2: sin el bit 4 de 0xDE02, al paso 5
+C 0x4821 espera al disparo (bit 4 de 0xDE07)
+C 0x4827 caracteres (p00:52C7), p15:AC1A y p15:A792
+C 0x4836 0xDD9D: el texto de 0x7CB9 y al paso 9
+C 0x483C si no, el de 0x7C8A, o el de 0x7CA8 sin 0xDD8E
+C 0x484B las marcas 0xDD91-0xDD93 a cero
+C 0x4855 el color 7 a 0x77 0x07 y al paso siguiente
+C 0x486E espera al disparo recien pulsado
+C 0x4874 un partido nuevo: pantalla apagada y borrada...
+C 0x487A ...0xE194-0xEDE7 a cero (marcadores, entradas y todo el partido)...
+C 0x4887 ...p01:6770, los colores de equipo (p00:550E), el color 15 a 0x70 0x00...
+C 0x4895 ...la fuente y la pantalla encendida
+C 0x489B el despachador 0xD74C a 9, paso 0...
+C 0x48A3 ...estado 5 (el partido) y calla todo (sonido 1)
+C 0x48AF paso 3: sin 0xDD8E, a esperar el disparo
+C 0x48B5 p15:AAE1 con DE = 0xB840...
+C 0x48C1 ...hasta que marque 0xDD91
+C 0x48C6 0xDD93: partido nuevo
+C 0x48CC copia 0xDE02 a 0xD73F
+C 0x48D2 0xDD90 = 1
+C 0x48D7 con 0xDD0E = 0xFF y sin nada en H.SAVE (0xFFA7 = ret) se salta
+C 0x48E6 p15:BDD4, el texto de 0x7BDD, 0xD2B0 = 0 y al paso siguiente
+C 0x48F6 calla todo (sonido 1)
+C 0x48FB paso 4: p13:6F79 hasta que marque 0xD2B1; entonces al menu
+C 0x490E paso 5: espera los botones 1 o 2 (bits 4-5) de cualquier mando
+C 0x491D sin el bit 4 de 0xDE02, al menu
+C 0x4925 el sonido 0x31, pantalla borrada, p00:526E y p14:9E0E; al paso 6
+C 0x493F paso 6: p14:9E2F hasta que marque 0xED2F...
+C 0x494F ...0xD74C y 0xD74D a cero y al paso siguiente
+C 0x4958 paso 7: espera los botones 1 o 2
+C 0x4967 el sonido de la eleccion, el bit 6 de 0xDE02 a 0 y al menu
+C 0x4976 paso 8: p14:9F76 hasta 0xED2F; despachador a cero y al paso 7
+C 0x4992 paso 9: SNSMAT fila 6 bit 5 (F1) sin pulsar...
+C 0x499C ...0xDD9D = 1 o 2 elige
+C 0x49A6 el sonido 0x31, pantalla borrada, p00:5222 y p14:9F22; al paso 8
+C 0x49C0 p01:66B3 hasta que el bit 7 de 0xE1D1 lo marque
+C 0x49C8 copia los 45 bytes de p07:6003 a 0xE400 (con 7-8-9, p00:535A)
+C 0x49D7 funde la paleta de 0xE400: los 13 colores...
+C 0x49DC ...el rojo (nibble alto de E) baja uno...
+C 0x49F2 ...el azul (nibble bajo de E) baja uno...
+C 0x4A06 ...y el verde (D) baja uno
+C 0x4A0D guarda el color fundido
+C 0x4A16 0xED9B = 1 y estado 6
+C 0x4A20 p14:8461
+C 0x4A23 en la baja, el disparo del primer mando; en la alta, el del segundo
+C 0x4A2D estado 6: la cuenta de 0xDE04...
+C 0x4A32 ...el sonido 0x30, p01:668F y al estado 7
+C 0x4A42 la vuelta de los estados 0-2: el mando (p01:6608) y la tecla de 0xE333 (p01:65F6)
+C 0x4A4B sin nada pulsado, nada
+C 0x4A4E algo pulsado: la cuenta del estado a cero
+C 0x4A57 B = el paso de antes (0xDE04 = 0 ya)
+C 0x4A5A en el rotulo, solo los botones 1 y 2 (bits 4-5) arrancan
+C 0x4A5E 0xDE02 segun el modo: 1PLAYER 0x40...
+C 0x4A67 ...2PLAYERS 0x60...
+C 0x4A6C ...PENNANT 0x10...
+C 0x4A70 ...y los demas 0x08
+C 0x4A76 al estado 0, paso 3
+C 0x4A7B 0xE332 = 0
+C 0x4A80 p01:6577
+C 0x4A83 cualquier otra cosa: calla todo y vuelve al modo 1PLAYER
+C 0x4A94 p01:651C
+C 0x4A97 cambia el bit 0 de 0xE191
+C 0x4A9C lee BC bytes de la VRAM HL a DE
+C 0x4AA3 el puerto de datos del VDP (0x0006 de la BIOS)
+C 0x4AA8 de 256 en 256
+C 0x4AAF prepara la cuenta: A vueltas de B bytes (B = C)
+C 0x4AB4 C = 0: B vueltas de 256
+C 0x4AB5 si no, una vuelta mas para los C sueltos
+C 0x4AB7 HL = la direccion de la VRAM
+C 0x4ABB A vueltas de B bytes
+C 0x4ABF el puerto de datos del VDP (0x0007 de la BIOS)
+C 0x4AC4 de 256 en 256 (o B al final)
+C 0x4ACA rellena BC bytes de la VRAM HL con A
+C 0x4ACF D = C: los bytes sueltos...
+C 0x4AD4 ...y una vuelta mas si los hay
+C 0x4ADA escribe A una vez por byte
+C 0x4AE5 la direccion...
+C 0x4AED ...y el byte
+C 0x4AF2 el puerto de control del VDP
+C 0x4AF7 los 2 bits altos de la direccion (A14-A15)...
+C 0x4AFF ...a R#14
+C 0x4B03 los 8 bajos...
+C 0x4B06 ...y los 6 de en medio con el bit 6 a 1: escribir
+C 0x4B16 los 2 bits altos de la direccion a R#14...
+C 0x4B22 ...los 8 bajos...
+C 0x4B25 ...y los 6 de en medio con el bit 6 a 0: leer
+C 0x4B2D C = 0: los bytes tal cual
+C 0x4B30 el destino nuevo, de los 2 bytes del origen
+C 0x4B38 el puerto de datos en C', para no tocar BC
+C 0x4B3E la cuenta: 0 acaba
+C 0x4B42 B = la cuenta con el bit 7
+C 0x4B46 bit 7 a 0: una racha (un byte repetido)
+C 0x4B48 0x80 justo: otro destino
+C 0x4B4B 0x81-0xFF: B bytes tal cual
+C 0x4B4C un byte (girado si C lo pide)...
+C 0x4B50 ...a la VRAM
+C 0x4B57 la racha: el byte...
+C 0x4B5A ...B veces
+C 0x4B62 C = 0: sin girar
+C 0x4B66 C filas de 16x16 puntos (128 bytes cada una)
+C 0x4B69 la fila siguiente, 32 bytes mas alla
+C 0x4B72 un bloque de 16 lineas de 16 bytes, girado en espejo...
+C 0x4B75 ...cada byte del reves...
+C 0x4B7A ...a la VRAM DE...
+C 0x4B82 ...y la linea anterior (32 bytes mas atras)
+C 0x4B89 hasta 16 lineas
+C 0x4B8F un byte del origen; con el bit 0 de C, del reves
+C 0x4B94 da la vuelta a los 8 bits de A
+C 0x4BA5 rellena la pagina 0 entera con el color 0 (HMMV 256x256)...
+C 0x4BB1 ...R#23 (el desplazamiento vertical) a 0...
+C 0x4BB8 R#1 (copia en 0xF3E0) con el bit 6 a 1: pantalla encendida
+C 0x4BC3 y los sprites tambien
+C 0x4BC5 R#1 con el bit 6 a 0: pantalla negra
+C 0x4BD0 y los sprites apagados
+C 0x4BD5 Y = 216 en el primer atributo: no se pinta ninguno
+C 0x4BDA R#8 (copia en 0xFFE7) con el bit 1 a 1: sin sprites
+C 0x4BE5 R#8 con el bit 1 a 0: con sprites
+C 0x4BF2 B = el numero de color
+C 0x4BF3 el puerto de control...
+C 0x4BF9 ...R#16 = el color
+C 0x4BFF el puerto de la paleta
+C 0x4C00 rojo y azul...
+C 0x4C02 (una pausa para el VDP)
+C 0x4C04 ...y verde
+C 0x4C06 la copia en RAM de la paleta, 2 bytes por color
+C 0x4C12 y otra en la VRAM 0xF680 + 2 x color
+C 0x4C25 la paleta de arranque: 16 colores de 0x4C39
+C 0x4C2C rojo-azul y verde de cada uno
+C 0x4C31 uno a uno
+C 0x4C59 el color (0xFF acaba)
+C 0x4C5E rojo-azul y verde
+C 0x4C67 S#2...
+C 0x4C6C ...bit 0 (CE): el VDP aun esta con una orden
+C 0x4C73 los puertos del VDP de la BIOS (0x0006 lectura, 0x0007 escritura) + 1: los de control
+C 0x4C7A R#15 = el estado que se quiere leer
+C 0x4C81 lo lee
+C 0x4C84 y R#15 vuelve a 0, el que espera la BIOS
+C 0x4C9A R#36 en adelante con autoincremento (R#17 = 36)
+C 0x4CA5 DX = H...
+C 0x4CAA ...DY = L
+C 0x4CAF el largo (NX = H de BC)...
+C 0x4CB2 ...0 vale 256
+C 0x4CBD ...y el corto (NY = L)
+C 0x4CC1 LINE, en horizontal (ARG = 0)
+C 0x4CD0 R#36 en adelante con autoincremento
+C 0x4CF5 ARG = 1: el lado largo en vertical
+C 0x4CF8 LINE
+C 0x4CFE el lado de arriba (vertical: B = E)...
+C 0x4D02 ...el de la izquierda...
+C 0x4D06 ...el de la derecha...
+C 0x4D0F ...y el de abajo
+C 0x4D16 una linea vertical sin tocar los registros
+C 0x4D20 una linea horizontal sin tocar los registros
+C 0x4D2A el color, aparte
+C 0x4D34 R#36 en adelante: DX, DY (D = la pagina), NX, NY, color, ARG, orden
+C 0x4D49 NX = H de BC (0 vale 256)
+C 0x4D52 NY = L (0 vale 256)
+C 0x4D5A el color
+C 0x4D60 HMMV: rellena
+C 0x4D70 R#32 en adelante: SX, SY, DX, DY, NX, NY, ARG, orden
+C 0x4D82 la pagina de origen (bits 0-1 de A')
+C 0x4D88 DX = D, DY = E...
+C 0x4D8F ...con la pagina de destino (bits 2-3 de A')
+C 0x4D97 NX y NY
+C 0x4DA4 HMMM: copia el rectangulo
+C 0x4DAA HMMC desde la RAM HL: DX = D, DY = E, NX y NY de BC, color A'
+C 0x4DD3 el primer byte va en R#44
+C 0x4DDA HMMC
+C 0x4DE0 R#44 sin autoincremento...
+C 0x4DEA ...y cada byte cuando el VDP lo pide (S#2: TR, bit 7)
+C 0x4DF0 CE a 0: acabado
+C 0x4E05 R#32 en adelante
+C 0x4E17 las paginas en los bits 4-7 de A'...
+C 0x4E3C ...y la operacion logica en los bits 0-3
+C 0x4E41 LMMM: copia con operacion logica (TIMP: sin el color 0)
+C 0x4E47 un caracter...
+C 0x4E4A ...y 8 puntos a la derecha
+C 0x4E50 un caracter de un bit a 4 bits en 0xDE10: 8 filas
+C 0x4E58 la fila: 8 puntos en 8 bits
+C 0x4E5C dos puntos por byte: el bit a 1 da el color C...
+C 0x4E61 ...el 0, el color 0
+C 0x4E62 entra por la derecha de (HL)
+C 0x4E76 un caracter de un bit en la posicion DE (x, y)
+C 0x4E7A pasado a 4 bits en 0xDE10
+C 0x4E7E la direccion de SCREEN 5: y x 128 + x / 2...
+C 0x4E85 ...en la pagina 1 (0x8000 en adelante)
+C 0x4E8E 8 filas de 4 bytes...
+C 0x4E96 ...cada una 128 bytes mas abajo
+C 0x4E9F el caracter siguiente, 8 bytes despues
+C 0x4EA6 texto con [x y] delante, mascara 0xFF: pinta
+C 0x4EAB con [x y] delante, mascara 0: borra (todo caracter 0)
+C 0x4EB0 con [x y] delante y la mascara C de quien llama
+C 0x4EB5 en la posicion DE, sin [x y] delante
+C 0x4EC0 [x y]: D = x, E = y
+C 0x4EC4 el caracter
+C 0x4EC7 0xFF acaba y devuelve los bancos
+C 0x4ECB 0xFE trae otra posicion
+C 0x4ECE 0xFD es medio espacio
+C 0x4ED2 con la mascara: 0 borra
+C 0x4ED4 el caracter, de la fuente de la pagina 1
+C 0x4ED8 0x0C y 0x0D (estrechos) solo avanzan 4 puntos
+C 0x4EE0 los demas, 8
+C 0x4EE6 medio espacio: un rectangulo 4x8 de color 0
+C 0x4EF6 4 puntos a la derecha
+C 0x4EFC una lista de caracteres de la fuente de 0x38 (p00:4F44)
+C 0x4F00 0xFF acaba
+C 0x4F03 0xFE: la linea siguiente, con [dx] de sangria
+C 0x4F0B 8 puntos mas abajo
+C 0x4F11 el caracter y 8 puntos a la derecha
+C 0x4F1C el caracter A de la fuente de la fila 0 de la pagina 1
+C 0x4F21 su sitio en la hoja de la fuente
+C 0x4F24 8x8 puntos...
+C 0x4F27 ...de la pagina 1 a la 0 (HMMM)
+C 0x4F30 lo mismo con la fuente de la fila 0x28
+C 0x4F35 con la de la fila 0x30
+C 0x4F3A con la de la fila 0x68
+C 0x4F3F con la de la fila 0xA8
+C 0x4F44 el caracter A de la fuente de la fila 0x38, de la pagina 1...
+C 0x4F4D ...con las paginas 1 a 1 (A' = 5)
+C 0x4F60 en la hoja de 32 caracteres por fila: x = (A & 0x1F) x 8...
+C 0x4F67 ...y = (A >> 5) x 8 + C
+C 0x4F6F x += 8...
+C 0x4F73 ...y si da la vuelta, la fila de abajo
+C 0x4F79 B caracteres de 8x8 del bufer HL a la VRAM DE
+C 0x4F7D 4 bytes (8 puntos) a la derecha...
+C 0x4F80 ...hasta el borde (128 bytes por linea)...
+C 0x4F84 ...y entonces 8 lineas mas abajo
+C 0x4F8E un caracter: 8 filas de 4 bytes...
+C 0x4F99 ...cada una 128 bytes mas abajo
+C 0x4FA3 B = cuantas fichas
+C 0x4FA7 C = [paleta-tipo]
+C 0x4FAA el nibble alto elige la paleta...
+C 0x4FB0 ...en la tabla de DE
+C 0x4FB5 los bits 1-2: 2, 4 u 8 colores...
+C 0x4FC0 ...copiados a 0xEC00
+C 0x4FC8 DE = la direccion de la VRAM...
+C 0x4FCC ...B = cuantos caracteres...
+C 0x4FCE ...HL = el dibujo
+C 0x4FD3 lo pinta
+C 0x4FD8 la ficha siguiente
+C 0x4FDD el tipo: el nibble bajo de C
+C 0x4FE0 0: un bit por punto
+C 0x4FE3 1: un bit, al reves
+C 0x4FE6 2: dos bits
+C 0x4FE9 3: dos bits, al reves
+C 0x4FEC 4: tres bits; 5: tres bits, al reves
+C 0x4FF5 el bufer de 4 bits, en el HL' de reserva
+C 0x4FF9 B caracteres pasados a 4 bits
+C 0x5002 y del bufer a la VRAM
+C 0x5018 al reves: de derecha a izquierda (p00:513B)
+C 0x501E 8 filas de un byte
+C 0x5023 8 puntos: 4 bytes de 4 bits
+C 0x502C un bit...
+C 0x5031 ...elige uno de los 2 colores de 0xEC00...
+C 0x5038 ...en el nibble alto
+C 0x503B el bit siguiente...
+C 0x5044 ...en el nibble bajo
+C 0x5045 al bufer
+C 0x5077 8 filas de dos bytes
+C 0x5081 cada fila: el plano bajo en E, el alto en D
+C 0x5087 dos bits (uno de cada plano)...
+C 0x5090 ...eligen uno de los 4 colores...
+C 0x5099 ...y otros dos para el nibble bajo
+C 0x50A6 al bufer
+C 0x50D8 8 filas de tres bytes
+C 0x50E2 cada fila: tres planos en E, D y C
+C 0x50EA tres bits eligen uno de los 8 colores...
+C 0x50FE ...y otros tres el nibble bajo
+C 0x510F al bufer
+C 0x5115 un caracter del bufer, al reves: 8 filas...
+C 0x5124 ...de 4 bytes leidos hacia atras, con los nibbles cambiados
+C 0x512E la fila siguiente del bufer...
+C 0x5132 ...y de la VRAM
+C 0x513B HL al final de la primera fila
+C 0x513E un caracter al reves...
+C 0x5142 ...y 8 puntos a la derecha (o 8 lineas abajo al llegar al borde)
+C 0x5153 sin 0xE1CB, el dibujo de 0xBA9B o, con 0xE1FE, el de 0xBA8E (p15)
+C 0x5159 con 0xE1CB, segun la entrada (0xE19B / 2): la 7.a va a 0x96EE...
+C 0x5163 ...las demas al de p13:7925
+C 0x5177 los colores en la tabla de 0x51B2
+C 0x5185 los de p11, cada par con o sin 0xE1FE
+C 0x51CD 64 bytes de p11:8719 a los dibujos de sprite 0x40-0x47 (VRAM 0xFA00)
+C 0x51DF segun 0xE218 contra IX+7, el dibujo de p11:8699 o el de 0x86D9...
+C 0x51F0 ...a los dibujos de sprite 0x40-0x47
+C 0x5202 rachas de p12:BBFE a los dibujos de sprite 0x00-0x0B...
+C 0x520E ...y de p12:BC2F a los 0x0C en adelante
+C 0x5217 el color 8 a 0x73 0x07
+C 0x5222 la paleta de p07:6000 (p00:5561) y, con 10-11-12...
+C 0x5228 ...los dibujos de la lista p12:A05F
+C 0x5231 1248 bytes de dibujos de sprite (p12:B163) desde el 0x00
+C 0x523D la lista de caracteres de p11:9FEA en (0x00, 0x80)
+C 0x5246 160 bytes de p11:9F4A al bufer 0xE800...
+C 0x5251 ...y de ahi a la pantalla (p00:55CD)
+C 0x525D copia de la pagina 1 (0x40, 0x48) a (0x80, 0x80): 128 x 24 puntos
+C 0x526E la paleta, y con 10-11-12 las listas de dibujos de p12:A82F y p12:AD72...
+C 0x5286 ...128 bytes de dibujos de sprite (p12:B643)...
+C 0x5292 ...la lista de caracteres de p12:A7B8...
+C 0x529B ...y 160 bytes de p12:A718 al bufer y a la pantalla
+C 0x52B5 17 caracteres de un bit (p09:B942) en la VRAM 0xF818, color 0x0D
+C 0x52C7 11 caracteres de un bit (p09:B9DA) en (0x28, 0x00)...
+C 0x52D9 ...o en (0x20, 0x10)
+C 0x52E7 con 7-8-9: la lista de dibujos de p09:B07A...
+C 0x52F3 ...los caracteres de p09:B6B9 en (0x70, 0x28)...
+C 0x52FC ...y los colores 15 y 12
+C 0x530F con 13-14-15: 256 bytes de p14:8FD1 a los dibujos de sprite 0xE0...
+C 0x531E ...la lista de dibujos de p14:90DB...
+C 0x5327 ...y 1280 bytes de p14:8AD1 desde el 0x00
+C 0x5336 384 bytes de p14:8951 a los dibujos de sprite 0x40 en adelante
+C 0x5348 512 bytes de p14:8751 a los dibujos de sprite 0x00 en adelante
+C 0x535A copia con 7-8-9 puesto (HL, DE y BC de quien llama)
+C 0x5362 0xE800 = 0, 1, 2 ... 0x1D: una tira de numeros de caracter...
+C 0x536D ...a la pantalla en (0x20, 0x40)
+C 0x537C rachas de p12:BBC3 a los dibujos de sprite 0xA0 en adelante
+C 0x538E rachas de p10:76BE a los dibujos de sprite 0xC0 en adelante
+C 0x539D rachas a los dibujos de sprite 0xB0 (p12:BC3C), 0x70 (p10:79AD)...
+C 0x53B2 ...0xE0 (p10:7B90) y 0xC4 (p11:9380)...
+C 0x53C4 ...y el dibujo de 64 bytes 0x0D a los 0xF8
+C 0x53CC rachas de p11:814B con su destino delante
+C 0x53E7 128 bytes de p10:782D a los dibujos de sprite 0xC0
+C 0x53F4 128 bytes de p10:78AD a los 0xD0
+C 0x5403 0xED9F = 1 mientras se copian 128 bytes de p10:792D a los 0xE0
+C 0x5427 con la pantalla apagada: rachas de p11:8AD9 a los dibujos de sprite 0x00...
+C 0x5436 ...la paleta de p07:6000, el color 13 a 0x77 0x07...
+C 0x5447 ...la lista de dibujos de p09:A619...
+C 0x5450 ...las rachas de p09:AFC4 al bufer 0xE800...
+C 0x5459 ...y de ahi a la pantalla, 16 x 11 caracteres desde (0x80, 0x68)
+C 0x546B rachas de p11:8FE3 a los dibujos de sprite 0x00
+C 0x547A con 7-8-9: tres listas de dibujos (p07:6053, p07:6323, p07:69CA)
+C 0x549B dos listas de dibujos de p08 (0x8412 y 0x8B40)
+C 0x54B3 seis listas de dibujos: p07:6CC3, 73D6, 75EC, 78B3, 7EF1 y p09:B759
+C 0x54EF la lista de dibujos de p08:8B53
+C 0x54FE la ficha A de 4 bytes de la tabla HL: [paletas][lista] para p00:4FA3
+C 0x550E la paleta de p07:6000...
+C 0x5517 ...el color 11 del equipo de 0xD70A...
+C 0x552B ...y el color 8: con el bit 4 de 0xDE02 y sin el 5...
+C 0x5539 ...el del equipo de 0xE195 o de 0xE197 segun el bit 0 de 0xD6DC
+C 0x554C su color en la tabla p09:BFDE
+C 0x5561 la paleta de p07:6000
+C 0x556D la palabra A de la tabla: HL + 2A...
+C 0x5571 ...y se lee
+C 0x5576 rachas de p08:9220 al bufer 0xE800...
+C 0x5582 ...y de ahi 32 x 27 caracteres a (0, 0) (p00:55F0)
+C 0x5591 p02:988A y las rachas de p08:9178 a 8 x 12 caracteres en (0xB8, 0x08)
+C 0x55AF p02:9897 y las rachas de p08:91CC a 8 x 12 caracteres en (0x08, 0x08)
+C 0x55CD B caracteres por fila y C filas de la fuente de la fila 0x28 desde HL, en DE
+C 0x55D5 un caracter...
+C 0x55DA ...8 puntos a la derecha
+C 0x55E0 al acabar la fila...
+C 0x55E2 ...8 mas abajo y de vuelta a la x del principio
+C 0x55F0 lo mismo con la fuente de la fila 0x30
+C 0x5603 al acabar la fila, la siguiente
+C 0x5613 lo mismo con la fuente de la fila 0x68
+C 0x561D un caracter...
+C 0x5626 ...y la fila siguiente
+C 0x5636 lo mismo con la fuente de la fila 0xA8
+C 0x5640 un caracter...
+C 0x5649 ...y la fila siguiente
+C 0x5659 la cuenta: 0 acaba
+C 0x565D bit 7 a 0: una racha
+C 0x5663 0x80 justo: nada
+C 0x5667 0x81-0xFF: B bytes tal cual
+C 0x566F la racha: un byte B veces
+C 0x5677 rachas a la VRAM 0x6C00: las de p10:604D...
+C 0x5689 ...y 640 bytes de p10:7C4B...
+C 0x568E ...o, con 0xE1FE, las de p10:6808 y los 640 bytes de p10:7ECB
+C 0x5697 a la VRAM 0x7880
+C 0x56A3 copia en la pagina 1: 5 x 1 puntos de (0xF1, 0x00) a (0xF0, 0x00)
+C 0x56B1 un punto de (0xF9 + 0xE1D3, 0) a (0xFB, 0): el color del juego elegido
+C 0x56C4 los 7 dibujos de 128 bytes del juego 0xE1EB & 3 (p10:6FBE)...
+C 0x56C7 ...a la VRAM 0x7C80 en adelante
+C 0x56DB cada uno...
+C 0x56E0 ...128 bytes mas abajo
+C 0x56EB con el bit 2 de 0xE1EB, girado en espejo (p00:4B66)
+C 0x56F2 si no, tal cual
+C 0x56F9 copia un punto de (0xFF, 0x00) a (0xF9, 0x80)
+C 0x5716 el dibujo de 64 bytes A (p11:8759 + 64 A)...
+C 0x5722 ...a los dibujos de sprite 0xF8 (VRAM 0xFFC0)
+C 0x572E el dibujo de 128 bytes A (p11:8499 + 128 A)...
+C 0x573A ...a los dibujos de sprite 0x58 (VRAM 0xFAC0)
+C 0x5746 HL = DE + 64 A...
+C 0x574E HL = DE + 128 A
+C 0x575C y DE = BC, el destino
+C 0x5761 la ficha 0xE1F6 de 11 bytes de p10:6000 (0x6000 + 11 x n)
+C 0x577A [bits altos: color; bajos: cuantos]
+C 0x5783 cada uno...
+C 0x5787 ...el color 0xF0 o 0xF5 segun los bits altos...
+C 0x5791 ...el punto de origen en la pagina 1...
+C 0x5794 ...el byte de la ficha...
+C 0x5798 ...da el punto de destino (x a pares, y desde 0xD8)...
+C 0x579E ...y se copia un punto
+C 0x57AD D = (B & 1) x 0x80, E = B / 2 + C
+C 0x57B9 un rectangulo de color 0x11 en (0x54, 0x7C), 0x58 x 0x18
+C 0x57C6 con 7-8-9: la paleta de p09:BE86...
+C 0x57CF ...13 caracteres de un bit (p09:BCE6) con el color 1 en (0x08, 0x38)...
+C 0x57DB ...13 con el color 2 (p09:BD4E) en (0x70, 0x38)...
+C 0x57E7 ...26 con el color 3 (p09:BDB6) en (0xD8, 0x38)...
+C 0x57F3 ...y la lista de caracteres de p09:BCA5 en (0x40, 0x70)
+C 0x57FF los bancos del sonido sin tocar sus copias, con las interrupciones cerradas
+C 0x5815 el motor pide el sonido A (p04:6003)
+C 0x5818 devuelve los bancos que habia
+C 0x5832 p13:6D0E
+C 0x583B los sprites 18 y 19 (atributos 0xE148, 0xE14C) fuera de la pantalla
+C 0x5843 la base de la formacion: 0xE19D, o 0xEC76 sin 0xE1F7
+C 0x584F 0 o 3: C = 0; 1: C = 3; 2: C = 4
+C 0x5860 con 0xE1F3 = 2 se suma
+C 0x5868 si la formacion no cambia, no se vuelve a pintar el campo
+C 0x5871 la formacion nueva (0xE1F6) y sus puntos del campo (p00:5761)
+C 0x5877 las fichas de sprite de los jugadores de campo: p11:9911, o 0x991F con 0xE1FE
+C 0x5886 la lista de la formacion 0xE1F6: [n] y fichas de 4 bytes
+C 0x588E a los atributos desde el sprite 0
+C 0x5891 la y, mas el desplazamiento de 0xE1F9
+C 0x589A la x, mas el de 0xE1F5 (p00:5961 copia x y dibujo)
+C 0x58A2 el color: si la ficha lo trae (no 0 ni 7), ese...
+C 0x58A4 ...si no, el de la camiseta: 0x18 o 0x1B segun la media entrada...
+C 0x58AB ...y al reves con 0xEDD0
+C 0x58BD color a la ficha
+C 0x58C5 la pagina 1 (p00:56A3) y 20 fichas de sprite de p11:9D12 (o 0x9D62 con 0xE1FE) desde el sprite 0
+C 0x58DE los sprites 20 y 21 (0xE150, 0xE154) fuera...
+C 0x58E9 ...salvo en el juego 2 con el bit 1 de 0xE1EB: 2 fichas de p11:9F3A o 0x9F42
+C 0x5908 4 fichas del juego 0xE1EB & 3 (p11:9DB2), grupo 0xE1D3, a los sprites 22-25
+C 0x5929 la y + 0x48
+C 0x592F la x, al reves con el bit 2 de 0xE1EB...
+C 0x593A ...mas 0xE1E1
+C 0x5940 el color: el de la ficha o el de la camiseta
+C 0x5961 la x mas C, el dibujo, y Z si el color de la ficha es 0 (o NZ = 7)
+C 0x596F segun el modo (0xE190), p15:A43B o p13:6000
+C 0x5991 0xFAF6 = 1 mientras se carga la fuente: 161 caracteres de un bit (p12:B6C3), color 0x0D, en (0, 0) de la pagina 1
+C 0x59AD la fuente con el color 4 (p00:59BF), con 10-11-12, y vuelta a 1-2-3...
+C 0x59B6 ...o a 13-14-15
+C 0x59BF 161 caracteres de un bit (p12:B6C3) en (0x00, 0x28) con el color 4...
+C 0x59CB ...y el color 4 a 0x70 0x03
+C 0x59D3 p02:88A9 y p00:59EB con 7-8-9
+C 0x59DF el valor del equipo que batea: 0xED45 en la baja, 0xED44 en la alta
+# --- fin de lo escrito a mano ---
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0x4494 0x44A8 tabla_4494  10 destinos del despachador p00:4220 (call en p00:4491, el indice en A): 44A8, 44FA, 4508, 4548, 45D2, 4611, 472A, 47B8, 4A16, 4A2D; lo leen p00:4491 (20 bytes)
 F 0x4494 w8
@@ -21,3 +652,595 @@ F 0x5E74 16
 D 0x5FB5 0x5FF1 resto_5FB5  lo apuntan con el banco puesto p03:BBF7 (0x5FB5), p03:BC00 (0x5FC6), p03:BC06 (0x5FD0), p14:8600 (0x5FD0), p03:BC0D (0x5FDE), p14:8628 (0x5FDE); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p03:BBF7, p03:BC00, p03:BC06, p14:8600, p03:BC0D, p14:8628 (60 bytes)
 F 0x5FB5 16
 # --- fin de los bloques de bloques.py ---
+
+# --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+L 0x40F0 init INIT de la cabecera: deja en H.STKE (0xFEDA) un rst 0x30 con el slot del cartucho y 0x4102
+L 0x4102 arranque la puesta en marcha (desde H.STKE): pila en 0xD280, RAM a cero, bancos 0-1-2-3, H.TIMI a 0x418E y a esperar en `jr $`
+L 0x418E interrupcion H.TIMI: lee el estado del VDP, el sonido con 4-5-6 (p04:6009) y, si no esta ya en marcha (0xDE05), el cuadro del juego
+L 0x4216 hl_mas_a HL = HL + A
+L 0x421B de_mas_a DE = DE + A
+L 0x4220 despacha salta a la palabra A de la tabla que va pegada detras del `call`
+L 0x422A sprites_a_vram si 0xED09 lo pide, copia los colores (0xDF00) y los atributos (0xE100) de sprite a la VRAM 0xF400 / 0xF600
+L 0x438D bancos_1_2_3 pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+L 0x4392 bancos_7_8_9 pone los bancos 7, 8 y 9 (los graficos) y sus copias
+L 0x4397 bancos_10_11_12 pone los bancos 10, 11 y 12 (los graficos) y sus copias
+L 0x439C guarda_y_13_14_15 guarda el reparto en 0xED46-0xED48 (p00:43D9) y pone 13, 14 y 15
+L 0x439F bancos_13_14_15 pone los bancos 13, 14 y 15 y sus copias
+L 0x43BB devuelve_reparto vuelve a poner el reparto guardado en 0xED46-0xED48
+L 0x43D9 guarda_reparto copia 0xDDF1-0xDDF3 a 0xED46-0xED48
+L 0x43EC cartucho_en_pagina_2 pone el slot del cartucho tambien en 0x8000-0xBFFF (ENASLT con H = 0x80)
+L 0x440C slot_del_cartucho A = el slot de la pagina 1 (el cartucho) en el formato de ENASLT; lo apunta en 0xD2AA
+L 0x4480 cuadro_del_juego el estado del juego: despacha 0xDE00 (y 0xDE01 dentro) por la tabla de p00:4494
+L 0x4AB7 copia_a_vram copia BC bytes de HL a la VRAM DE
+L 0x4AE3 byte_a_vram escribe A en la VRAM HL
+L 0x4AF1 vram_para_escribir pone la direccion HL de la VRAM (17 bits, R#14) para escribir
+L 0x4B10 vram_para_leer pone la direccion HL de la VRAM (R#14) para leer
+L 0x4B2D rachas_con_destino rachas con el destino de la VRAM delante (2 bytes en DE)
+L 0x4B35 rachas_a_vram descomprime las rachas de DE a la VRAM HL (0 acaba, 0x80 trae otro destino)
+L 0x4B62 rachas descomprime las rachas de DE a la VRAM HL (C = 0: sin girar)
+L 0x4B9F borra_pantalla esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
+L 0x4BB8 enciende_pantalla R#1 con el bit 6 (BL) a 1 (WRTVDP)
+L 0x4BC5 apaga_pantalla R#1 con el bit 6 (BL) a 0 (WRTVDP)
+L 0x4BD2 esconde_sprites escribe 0xD8 (Y = 216: no se pinta ninguno) en la VRAM 0xF600, el primer atributo de sprite
+L 0x4BDA apaga_sprites R#8 con el bit 1 (SPD) a 1: no se pintan sprites
+L 0x4BE5 enciende_sprites R#8 con el bit 1 (SPD) a 0
+L 0x4BF0 pon_color el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
+L 0x4C59 pon_paleta fichas de 3 bytes [color][rojo-azul][verde] hasta 0xFF, con p00:4BF0
+L 0x4C67 espera_vdp espera a que el VDP acabe la orden (S#2 bit 0, CE)
+L 0x4C71 lee_estado A = el registro de estado A del VDP (R#15)
+L 0x4C91 linea orden LINE (0x70) del VDP desde HL
+L 0x4CC7 linea_vertical orden LINE (0x70) del VDP, el lado largo en vertical
+L 0x4CFE marco un marco de lineas: HL la esquina, DE el tamano
+L 0x4D2A rellena orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
+L 0x4D66 copia_rectangulo orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
+L 0x4DAA rectangulo_desde_ram orden HMMC (0xF0) del VDP: el rectangulo DE, BC de tamano, con los bytes de HL
+L 0x4DFB copia_logica orden LMMM (0x90 + operacion) del VDP: copia el rectangulo HL a DE, BC de tamano; las paginas en los bits 4-7 de A' y la operacion logica en los 0-3
+L 0x4E47 caracteres_de_un_bit pinta B caracteres de un bit por punto de HL, con el color C, desde DE
+L 0x4EA6 texto pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+L 0x4EAB texto_c0 como texto, con C = 0
+L 0x4EB5 texto_en_de pinta el texto HL en la posicion DE (sin [x y] delante)
+L 0x4EFC lista_de_caracteres pinta la lista de caracteres HL (0xFF acaba, 0xFE baja de linea) desde DE
+L 0x4F1C caracter pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+L 0x4F6F siguiente_columna D += 8; si da la vuelta, E += 8
+L 0x4FA3 dibujos pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+L 0x4FDD dibujo pinta un dibujo de B caracteres (tipo C & 0x0F: 1, 2 o 3 bits por punto) en el bufer 0xE400 y de ahi a la VRAM
+L 0x556D palabra_a HL = la palabra A de la tabla HL
+L 0x5659 rachas_a_ram descomprime las rachas de DE en la RAM HL
+L 0x57FF sonido pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+L 0x5BF1 numero pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
+L 0x5C7D esconde_atributos pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
+L 0x5CAC arranca_sonido el arranque del motor de sonido (p04:6000) con los bancos 4-5-6
+L 0x5DC4 sonidos_del_partido en el estado 5-4 (el partido): la tecla F5, la cuenta de 0xED99 y el sonido de fondo segun 0xE23C
+L 0x5FA4 multiplica HL = A x E (8 x 8 bits)
+C 0x4030 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4036 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x4039 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x403F bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x4042 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4048 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x404B bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4051 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x4054 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x405A bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x405D bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4063 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x4066 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x406C bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x406F bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4075 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x4078 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x407E bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x4081 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4087 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x408A bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4090 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x4093 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4099 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x409C bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x409F multiplica: HL = A x E (8 x 8 bits)
+C 0x40A2 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x40A5 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x40AB bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x40AE bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x40B4 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x40B7 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x40BD bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x40C0 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x40C6 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x40C9 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x40CF bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x40D2 bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
+C 0x40D8 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x40DE bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x40E4 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x40E7 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x40ED bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x40F1 slot_del_cartucho: A = el slot de la pagina 1 (el cartucho) en el formato de ENASLT; lo apunta en 0xD2AA
+C 0x4105 la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x4137 slot_del_cartucho: A = el slot de la pagina 1 (el cartucho) en el formato de ENASLT; lo apunta en 0xD2AA
+C 0x414A apunta a el estado del juego (indice del despachador principal)
+C 0x414D apunta a el paso dentro del estado
+C 0x415A apunta a la copia del banco de 0x4000 (0)
+C 0x415D el mapper: pone en 0x4000 el banco de A
+C 0x4163 el mapper: pone en 0x6000 el banco de A
+C 0x4169 el mapper: pone en 0x8000 el banco de A
+C 0x4170 el mapper: pone en 0xA000 el banco de A
+C 0x4199 lee_estado: A = el registro de estado A del VDP (R#15)
+C 0x419F apunta a las marcas de la interrupcion (bit 0: cuadro en marcha, bit 1: sonido, bit 2: lectura del VDP)
+C 0x41A7 apunta a las marcas de la interrupcion (bit 0: cuadro en marcha, bit 1: sonido, bit 2: lectura del VDP)
+C 0x41B1 apunta a las marcas de la interrupcion (bit 0: cuadro en marcha, bit 1: sonido, bit 2: lectura del VDP)
+C 0x41BE el mapper: pone en 0x6000 el banco de A
+C 0x41C2 el mapper: pone en 0x8000 el banco de A
+C 0x41C6 el mapper: pone en 0xA000 el banco de A
+C 0x41CF apunta a las marcas de la interrupcion (bit 0: cuadro en marcha, bit 1: sonido, bit 2: lectura del VDP)
+C 0x41D8 el mapper: pone en 0x6000 el banco de A
+C 0x41DB lee la copia del banco de 0x8000
+C 0x41DE el mapper: pone en 0x8000 el banco de A
+C 0x41E1 lee la copia del banco de 0xA000
+C 0x41E4 el mapper: pone en 0xA000 el banco de A
+C 0x41E7 apunta a las marcas de la interrupcion (bit 0: cuadro en marcha, bit 1: sonido, bit 2: lectura del VDP)
+C 0x4209 apunta a las marcas de la interrupcion (bit 0: cuadro en marcha, bit 1: sonido, bit 2: lectura del VDP)
+C 0x4222 hl_mas_a: HL = HL + A
+C 0x423E copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x4264 copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x4270 copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x427C copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x4288 copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x42A5 lee la rotacion de sprites de este cuadro
+C 0x42E2 lee cuantos sprites rotan (9 o 10)
+C 0x430D lee la rotacion de sprites de este cuadro
+C 0x4350 lee cuantos sprites rotan (9 o 10)
+C 0x438A copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x439C guarda_reparto: copia 0xDDF1-0xDDF3 a 0xED46-0xED48
+C 0x43A4 apunta a la copia del banco de 0x6000
+C 0x43A7 el mapper: pone en 0x6000 el banco de A
+C 0x43AD el mapper: pone en 0x8000 el banco de A
+C 0x43B3 el mapper: pone en 0xA000 el banco de A
+C 0x43BC lee el reparto guardado por p00:439C (3 bytes)
+C 0x43BF el mapper: pone en 0x6000 el banco de A
+C 0x43C2 guarda la copia del banco de 0x6000
+C 0x43C8 el mapper: pone en 0x8000 el banco de A
+C 0x43CB guarda la copia del banco de 0x8000
+C 0x43D1 el mapper: pone en 0xA000 el banco de A
+C 0x43D4 guarda la copia del banco de 0xA000
+C 0x43D9 lee la copia del banco de 0x6000
+C 0x43DC guarda el reparto guardado por p00:439C (3 bytes)
+C 0x43DF lee la copia del banco de 0x8000
+C 0x43E5 lee la copia del banco de 0xA000
+C 0x444B guarda el reloj de juego: cuadros (0-59) y el byte siguiente (16 bits)
+C 0x444E guarda el reloj de juego: minutos, cifra baja y el byte siguiente (16 bits)
+C 0x4451 guarda el reloj de juego: horas y el byte siguiente (16 bits)
+C 0x44AA bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x44B0 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x44BA guarda la cuenta atras del estado
+C 0x44C2 apunta a la cuenta atras del estado
+C 0x44CF bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x44D5 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x44DF sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x44E8 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x4502 guarda el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
+C 0x450A bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x4510 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4524 guarda el estado del juego (indice del despachador principal)
+C 0x4529 guarda la cuenta atras del estado
+C 0x4535 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x453B bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4540 guarda la cuenta atras del estado
+C 0x454A apunta a la cuenta atras del estado
+C 0x4577 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x457A texto_c0: como texto, con C = 0
+C 0x457F lee el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
+C 0x4598 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0x459F bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x45A5 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x45C5 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x45CA sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x45E8 pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
+C 0x45FA guarda la cuenta atras del estado
+C 0x4602 guarda el paso dentro del estado
+C 0x460B guarda la cuenta atras del estado
+C 0x4613 apunta a la cuenta atras del estado
+C 0x4628 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x463C sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x4652 lee la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x4662 lee la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x4695 apunta a el estado del juego (indice del despachador principal)
+C 0x46B5 lee las carreras del local (BCD; 0x99 acaba el partido)
+C 0x46F0 guarda el estado del juego (indice del despachador principal)
+C 0x46F5 guarda la cuenta atras del estado
+C 0x4706 lee la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x4712 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x4718 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x471D guarda la cuenta atras del estado
+C 0x472C bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x4732 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4739 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x473F bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4790 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x4796 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x479E bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x47A4 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x47B1 guarda el estado del juego (indice del despachador principal)
+C 0x47C5 apunta a el bufer de un dibujo a 4 bits antes de la VRAM
+C 0x47C8 pon_paleta: fichas de 3 bytes [color][rojo-azul][verde] hasta 0xFF, con p00:4BF0
+C 0x47E1 pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
+C 0x47EA texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x480C texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x4814 guarda el paso dentro del estado
+C 0x482A bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x4833 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4848 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x485A pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
+C 0x4863 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x4868 guarda el paso dentro del estado
+C 0x4877 borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
+C 0x487D apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
+C 0x4892 pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
+C 0x4898 enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
+C 0x48A5 guarda el estado del juego (indice del despachador principal)
+C 0x48AA sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x48BE bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x48EC texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x48F8 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x48FD bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x4903 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4910 lee los botones pulsados del mando 1 / cursores
+C 0x4917 lee los botones pulsados (segundo mando)
+C 0x4927 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x492A borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
+C 0x4930 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x4936 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x493B guarda el paso dentro del estado
+C 0x4941 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x4947 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x495A lee los botones pulsados del mando 1 / cursores
+C 0x4961 lee los botones pulsados (segundo mando)
+C 0x4978 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x497E bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x498E guarda el paso dentro del estado
+C 0x49A8 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x49AB borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
+C 0x49B1 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x49B7 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x49BC guarda el paso dentro del estado
+C 0x49C3 lee la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x49CB apunta a el bufer de un dibujo a 4 bits antes de la VRAM
+C 0x4A1D guarda el estado del juego (indice del despachador principal)
+C 0x4A34 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x4A3C guarda el estado del juego (indice del despachador principal)
+C 0x4A87 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x4A8E guarda el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
+C 0x4AB8 vram_para_escribir: pone la direccion HL de la VRAM (17 bits, R#14) para escribir
+C 0x4ACC vram_para_escribir: pone la direccion HL de la VRAM (17 bits, R#14) para escribir
+C 0x4B35 vram_para_escribir: pone la direccion HL de la VRAM (17 bits, R#14) para escribir
+C 0x4B6B de_mas_a: DE = DE + A
+C 0x4B9F esconde_sprites: escribe 0xD8 (Y = 216: no se pinta ninguno) en la VRAM 0xF600, el primer atributo de sprite
+C 0x4BA2 apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
+C 0x4BAE rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
+C 0x4BD7 byte_a_vram: escribe A en la VRAM HL
+C 0x4C0B hl_mas_a: HL = HL + A
+C 0x4C19 vram_para_escribir: pone la direccion HL de la VRAM (17 bits, R#14) para escribir
+C 0x4C62 pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
+C 0x4C69 lee_estado: A = el registro de estado A del VDP (R#15)
+C 0x4C6D espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
+C 0x4C91 espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
+C 0x4CC7 espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
+C 0x4D19 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+C 0x4D23 linea: orden LINE (0x70) del VDP desde HL
+C 0x4D2B espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
+C 0x4D67 espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
+C 0x4DAB espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
+C 0x4DEC lee_estado: A = el registro de estado A del VDP (R#15)
+C 0x4DFC espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
+C 0x4E92 copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x4EC8 devuelve_reparto: vuelve a poner el reparto guardado en 0xED46-0xED48
+C 0x4EF0 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
+C 0x4F15 siguiente_columna: D += 8; si da la vuelta, E += 8
+C 0x4F29 copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
+C 0x4F4F copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
+C 0x4F95 copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x500B apunta a el bufer de un dibujo a 4 bits antes de la VRAM
+C 0x504E apunta a el bufer de un dibujo a 4 bits antes de la VRAM
+C 0x505B apunta a el bufer de un dibujo a 4 bits antes de la VRAM
+C 0x5064 apunta a el bufer de un dibujo a 4 bits antes de la VRAM
+C 0x5071 apunta a el bufer de un dibujo a 4 bits antes de la VRAM
+C 0x50AF apunta a el bufer de un dibujo a 4 bits antes de la VRAM
+C 0x50BC apunta a el bufer de un dibujo a 4 bits antes de la VRAM
+C 0x50C5 apunta a el bufer de un dibujo a 4 bits antes de la VRAM
+C 0x50D2 apunta a el bufer de un dibujo a 4 bits antes de la VRAM
+C 0x511E vram_para_escribir: pone la direccion HL de la VRAM (17 bits, R#14) para escribir
+C 0x5174 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x517A dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x517D bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x51AD bancos_10_11_12: pone los bancos 10, 11 y 12 (los graficos) y sus copias
+C 0x51BE bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
+C 0x51C7 dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x51CA bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x51D9 copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x51DC bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x51ED bancos_10_11_12: pone los bancos 10, 11 y 12 (los graficos) y sus copias
+C 0x51F6 copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x51F9 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x51FF bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x520B rachas: descomprime las rachas de DE a la VRAM HL (C = 0: sin girar)
+C 0x5214 rachas: descomprime las rachas de DE a la VRAM HL (C = 0: sin girar)
+C 0x521C pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
+C 0x521F bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5225 bancos_10_11_12: pone los bancos 10, 11 y 12 (los graficos) y sus copias
+C 0x522E dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x523A copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x5243 lista_de_caracteres: pinta la lista de caracteres HL (0xFF acaba, 0xFE baja de linea) desde DE
+C 0x5254 apunta a el bufer de las rachas descomprimidas en RAM
+C 0x5268 copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
+C 0x526B bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5271 bancos_10_11_12: pone los bancos 10, 11 y 12 (los graficos) y sus copias
+C 0x527A dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x5283 dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x528F copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x5298 lista_de_caracteres: pinta la lista de caracteres HL (0xFF acaba, 0xFE baja de linea) desde DE
+C 0x52A9 apunta a el bufer de las rachas descomprimidas en RAM
+C 0x52B2 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x52C1 caracteres_de_un_bit: pinta B caracteres de un bit por punto de HL, con el color C, desde DE
+C 0x52C4 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x52D3 caracteres_de_un_bit: pinta B caracteres de un bit por punto de HL, con el color C, desde DE
+C 0x52D6 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x52E4 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x52F0 dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x52F9 lista_de_caracteres: pinta la lista de caracteres HL (0xFF acaba, 0xFE baja de linea) desde DE
+C 0x5301 pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
+C 0x5309 pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
+C 0x530C bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x531B copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x5324 dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x5330 copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x5333 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5342 copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x5345 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5354 copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x5357 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x535F bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5370 apunta a el bufer de las rachas descomprimidas en RAM
+C 0x5379 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x537F bancos_10_11_12: pone los bancos 10, 11 y 12 (los graficos) y sus copias
+C 0x5388 rachas: descomprime las rachas de DE a la VRAM HL (C = 0: sin girar)
+C 0x538B bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5397 rachas: descomprime las rachas de DE a la VRAM HL (C = 0: sin girar)
+C 0x539A bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x53A6 rachas: descomprime las rachas de DE a la VRAM HL (C = 0: sin girar)
+C 0x53AF rachas: descomprime las rachas de DE a la VRAM HL (C = 0: sin girar)
+C 0x53B8 rachas: descomprime las rachas de DE a la VRAM HL (C = 0: sin girar)
+C 0x53C1 rachas: descomprime las rachas de DE a la VRAM HL (C = 0: sin girar)
+C 0x53C9 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x53D2 rachas_con_destino: rachas con el destino de la VRAM delante (2 bytes en DE)
+C 0x53D5 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x53D8 bancos_10_11_12: pone los bancos 10, 11 y 12 (los graficos) y sus copias
+C 0x53E1 rachas: descomprime las rachas de DE a la VRAM HL (C = 0: sin girar)
+C 0x53E4 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x53F0 copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x53FD copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x5400 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5411 copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x5418 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x541E bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5424 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x542A bancos_10_11_12: pone los bancos 10, 11 y 12 (los graficos) y sus copias
+C 0x5433 rachas: descomprime las rachas de DE a la VRAM HL (C = 0: sin girar)
+C 0x543C pon_paleta: fichas de 3 bytes [color][rojo-azul][verde] hasta 0xFF, con p00:4BF0
+C 0x5444 pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
+C 0x544D dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x5456 rachas_a_ram: descomprime las rachas de DE en la RAM HL
+C 0x545C apunta a el bufer de las rachas descomprimidas en RAM
+C 0x5465 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5468 enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
+C 0x5474 rachas: descomprime las rachas de DE a la VRAM HL (C = 0: sin girar)
+C 0x5477 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5483 dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x548C dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x5495 dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x5498 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x54A4 dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x54AD dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x54B0 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x54BC dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x54C5 dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x54CE dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x54D7 dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x54E0 dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x54E9 dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x54EC bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x54F8 dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x54FB bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5500 hl_mas_a: HL = HL + A
+C 0x550B dibujos: pinta la lista de dibujos HL ([n] y fichas de 6 bytes) con las paletas de la tabla DE
+C 0x5514 pon_paleta: fichas de 3 bytes [color][rojo-azul][verde] hasta 0xFF, con p00:4BF0
+C 0x5520 hl_mas_a: HL = HL + A
+C 0x5528 pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
+C 0x5549 hl_mas_a: HL = HL + A
+C 0x5553 hl_mas_a: HL = HL + A
+C 0x555B pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
+C 0x555E bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5567 pon_paleta: fichas de 3 bytes [color][rojo-azul][verde] hasta 0xFF, con p00:4BF0
+C 0x556A bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x556E hl_mas_a: HL = HL + A
+C 0x5579 apunta a el bufer de las rachas descomprimidas en RAM
+C 0x557F rachas_a_ram: descomprime las rachas de DE en la RAM HL
+C 0x5585 apunta a el bufer de las rachas descomprimidas en RAM
+C 0x558E bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5594 bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
+C 0x559A apunta a el bufer de las rachas descomprimidas en RAM
+C 0x559D rachas_a_ram: descomprime las rachas de DE en la RAM HL
+C 0x55A3 apunta a el bufer de las rachas descomprimidas en RAM
+C 0x55AC bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x55B2 bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
+C 0x55B8 apunta a el bufer de las rachas descomprimidas en RAM
+C 0x55BB rachas_a_ram: descomprime las rachas de DE en la RAM HL
+C 0x55C1 apunta a el bufer de las rachas descomprimidas en RAM
+C 0x55CA bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5686 rachas: descomprime las rachas de DE a la VRAM HL (C = 0: sin girar)
+C 0x5691 rachas: descomprime las rachas de DE a la VRAM HL (C = 0: sin girar)
+C 0x569D copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x56A0 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x56AE copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
+C 0x56C1 copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
+C 0x56D5 palabra_a: HL = la palabra A de la tabla HL
+C 0x5704 copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
+C 0x5707 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x570C de_mas_a: DE = DE + A
+C 0x5724 copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x5727 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x573C copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x573F bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x57A3 copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
+C 0x57AA bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x57C3 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
+C 0x57CC pon_paleta: fichas de 3 bytes [color][rojo-azul][verde] hasta 0xFF, con p00:4BF0
+C 0x57D8 caracteres_de_un_bit: pinta B caracteres de un bit por punto de HL, con el color C, desde DE
+C 0x57E4 caracteres_de_un_bit: pinta B caracteres de un bit por punto de HL, con el color C, desde DE
+C 0x57F0 caracteres_de_un_bit: pinta B caracteres de un bit por punto de HL, con el color C, desde DE
+C 0x57F9 lista_de_caracteres: pinta la lista de caracteres HL (0xFF acaba, 0xFE baja de linea) desde DE
+C 0x57FC bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5808 el mapper: pone en 0x6000 el banco de A
+C 0x580C el mapper: pone en 0x8000 el banco de A
+C 0x5810 el mapper: pone en 0xA000 el banco de A
+C 0x581B el mapper: pone en 0x6000 el banco de A
+C 0x581E lee la copia del banco de 0x8000
+C 0x5821 el mapper: pone en 0x8000 el banco de A
+C 0x5824 lee la copia del banco de 0xA000
+C 0x5827 el mapper: pone en 0xA000 el banco de A
+C 0x5838 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5889 palabra_a: HL = la palabra A de la tabla HL
+C 0x58A8 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x58C2 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x58C8 bancos_10_11_12: pone los bancos 10, 11 y 12 (los graficos) y sus copias
+C 0x58D7 apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
+C 0x5910 palabra_a: HL = la palabra A de la tabla HL
+C 0x591E hl_mas_a: HL = HL + A
+C 0x5926 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5946 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x5972 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x597F bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5985 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5988 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x598E bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5996 bancos_10_11_12: pone los bancos 10, 11 y 12 (los graficos) y sus copias
+C 0x59A2 caracteres_de_un_bit: pinta B caracteres de un bit por punto de HL, con el color C, desde DE
+C 0x59A5 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x59B3 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x59BC bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x59C8 caracteres_de_un_bit: pinta B caracteres de un bit por punto de HL, con el color C, desde DE
+C 0x59D0 pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
+C 0x59D6 bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
+C 0x59DC bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5A04 palabra_a: HL = la palabra A de la tabla HL
+C 0x5A0C palabra_a: HL = la palabra A de la tabla HL
+C 0x5A38 bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
+C 0x5A3E bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5A4F hl_mas_a: HL = HL + A
+C 0x5A70 hl_mas_a: HL = HL + A
+C 0x5AE0 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x5B4D bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
+C 0x5B54 hl_mas_a: HL = HL + A
+C 0x5B5C rachas_a_ram: descomprime las rachas de DE en la RAM HL
+C 0x5B5F bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5B69 bancos_10_11_12: pone los bancos 10, 11 y 12 (los graficos) y sus copias
+C 0x5B6F hl_mas_a: HL = HL + A
+C 0x5B73 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5B76 bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
+C 0x5B7F palabra_a: HL = la palabra A de la tabla HL
+C 0x5BA2 de_mas_a: DE = DE + A
+C 0x5BB6 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5BC5 de_mas_a: DE = DE + A
+C 0x5BCC bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
+C 0x5BD2 palabra_a: HL = la palabra A de la tabla HL
+C 0x5BDC hl_mas_a: HL = HL + A
+C 0x5BE1 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5BE8 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0x5BEB siguiente_columna: D += 8; si da la vuelta, E += 8
+C 0x5C1B caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0x5C29 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
+C 0x5C51 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0x5C79 guarda la peticion de copiar sprites a la VRAM (1 colores, 2 todo)
+C 0x5C7D apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
+C 0x5C94 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5C9A hl_mas_a: HL = HL + A
+C 0x5CA0 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5CA3 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5CA9 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5CAE el mapper: pone en 0x6000 el banco de A
+C 0x5CB2 el mapper: pone en 0x8000 el banco de A
+C 0x5CB6 el mapper: pone en 0xA000 el banco de A
+C 0x5CBC lee la copia del banco de 0x6000
+C 0x5CBF el mapper: pone en 0x6000 el banco de A
+C 0x5CC2 lee la copia del banco de 0x8000
+C 0x5CC5 el mapper: pone en 0x8000 el banco de A
+C 0x5CC8 lee la copia del banco de 0xA000
+C 0x5CCB el mapper: pone en 0xA000 el banco de A
+C 0x5CD1 el mapper: pone en 0x6000 el banco de A
+C 0x5CD5 el mapper: pone en 0x8000 el banco de A
+C 0x5CD9 el mapper: pone en 0xA000 el banco de A
+C 0x5CE1 el mapper: pone en 0x6000 el banco de A
+C 0x5CE5 el mapper: pone en 0x8000 el banco de A
+C 0x5CE9 el mapper: pone en 0xA000 el banco de A
+C 0x5CED bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5CF3 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5CF6 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5CFC bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5CFF bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5D05 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5D08 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5D0E bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5D11 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5D17 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5D1A bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5D20 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5D23 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5D29 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5D2C bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5D32 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5D35 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5D3B bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5D3E bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5D44 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5D47 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5D4D bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5D50 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5D56 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5D59 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5D5F bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5D62 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5D68 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5D6B bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5D71 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5D74 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5D7A bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5D7D bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5D83 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5D86 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5D8C bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5D8F bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5D95 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5D98 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5D9E bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5DA1 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5DA6 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5DA9 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5DAF bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5DB2 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5DB8 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5DBB bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5DC1 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
+C 0x5DC9 apunta a el estado del juego (indice del despachador principal)
+C 0x5DDB lee si no es 0, el motor rechaza los sonidos 0x32-0x3C
+C 0x5E2C lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x5E3A hl_mas_a: HL = HL + A
+C 0x5E89 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x5E9F bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
+C 0x5F01 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x5F35 hl_mas_a: HL = HL + A
+C 0x5F81 bancos_7_8_9: pone los bancos 7, 8 y 9 (los graficos) y sus copias
+C 0x5F88 hl_mas_a: HL = HL + A
+C 0x5F8D multiplica: HL = A x E (8 x 8 bits)
+C 0x5F98 hl_mas_a: HL = HL + A
+C 0x5F9D multiplica: HL = A x E (8 x 8 bits)
+C 0x5FA1 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+# --- fin de las anotaciones de anota.py ---

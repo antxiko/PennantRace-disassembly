@@ -70,3 +70,138 @@ F 0xBB7D 16
 D 0xBD13 0xBE24 resto_BD13  lo apuntan con el banco puesto p15:BCB2 (0xBD13), p15:BCBC (0xBD31), p15:BBC5 (0xBD99), p15:BC12 (0xBDA2); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p15:BCB2, p15:BCBC, p15:BBC5, p15:BC12 (273 bytes)
 F 0xBD13 16
 # --- fin de los bloques de bloques.py ---
+
+# --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+C 0xA00A guarda la cuenta atras del estado
+C 0xA00F apunta a la cuenta atras del estado
+C 0xA063 apunta a la cuenta atras del estado
+C 0xA0DF guarda la cuenta atras del estado
+C 0xA0E5 apunta a la cuenta atras del estado
+C 0xA0F2 lee el contador de cuadros del juego (sube uno por cuadro)
+C 0xA172 espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
+C 0xA1C1 apunta a los colores de sprite (16 bytes por sprite) antes de la VRAM 0xF400
+C 0xA21E copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
+C 0xA222 siguiente_columna: D += 8; si da la vuelta, E += 8
+C 0xA23C siguiente_columna: D += 8; si da la vuelta, E += 8
+C 0xA253 siguiente_columna: D += 8; si da la vuelta, E += 8
+C 0xA264 copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
+C 0xA43E despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xA470 borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
+C 0xA48F copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0xA495 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xA49F linea: orden LINE (0x70) del VDP desde HL
+C 0xA4AA marco: un marco de lineas: HL la esquina, DE el tamano
+C 0xA4B4 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+C 0xA4BE linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+C 0xA4C8 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+C 0xA4D2 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+C 0xA4E9 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xA519 copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0xA521 byte_a_vram: escribe A en la VRAM HL
+C 0xA54A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0xA56B lee los botones recien pulsados del mando 1 / cursores
+C 0xA58F lee los botones recien pulsados del mando 1 / cursores
+C 0xA5A6 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xA5B8 lee los botones recien pulsados del mando 1 / cursores
+C 0xA5D1 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xA5D6 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0xA600 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0xA657 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0xA663 lee los botones recien pulsados del mando 1 / cursores
+C 0xA677 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0xA68E texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xA6AC hl_mas_a: HL = HL + A
+C 0xA6B3 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xAA51 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0xAA57 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0xAA5D texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xAA6F caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0xAA72 siguiente_columna: D += 8; si da la vuelta, E += 8
+C 0xAA84 lee los botones recien pulsados del mando 1 / cursores
+C 0xAAA4 apunta a la cuenta atras del estado
+C 0xAAB1 lee los botones recien pulsados del mando 1 / cursores
+C 0xAACC texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
+C 0xAAD6 apunta a la cuenta atras del estado
+C 0xAAF5 lee los botones recien pulsados del mando 1 / cursores
+C 0xAB01 lee los botones recien pulsados del mando 1 / cursores
+C 0xAB1D apunta a el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
+C 0xAB38 guarda el modo elegido en el menu (no 0: elegido)
+C 0xAB3D sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0xAB43 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xAB6F guarda el modo elegido en el menu (no 0: elegido)
+C 0xABBD hl_mas_a: HL = HL + A
+C 0xABD8 palabra_a: HL = la palabra A de la tabla HL
+C 0xAD09 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
+C 0xAD40 hl_mas_a: HL = HL + A
+C 0xAD7A hl_mas_a: HL = HL + A
+C 0xAD87 hl_mas_a: HL = HL + A
+C 0xADF1 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0xADF4 siguiente_columna: D += 8; si da la vuelta, E += 8
+C 0xADFA borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
+C 0xAE02 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0xAE10 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0xAE18 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0xAE26 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0xAE58 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xAE5E texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xAE64 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xAE6A texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xAE70 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xAE76 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xAE7C texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xAE82 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xAE88 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0xAEA1 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0xAEB7 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
+C 0xAEBF numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
+C 0xAECB apunta a las carreras del local (BCD; 0x99 acaba el partido)
+C 0xAED3 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
+C 0xAEE7 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
+C 0xAEFB numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
+C 0xAF0F numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
+C 0xAF23 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
+C 0xB02F caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0xB139 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
+C 0xB149 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
+C 0xB153 hl_mas_a: HL = HL + A
+C 0xB238 copia_logica: orden LMMM (0x90 + operacion) del VDP: copia el rectangulo HL a DE, BC de tamano; las paginas en los bits 4-7 de A' y la operacion logica en los 0-3
+C 0xB2D6 hl_mas_a: HL = HL + A
+C 0xB6AE hl_mas_a: HL = HL + A
+C 0xB713 hl_mas_a: HL = HL + A
+C 0xB788 lee los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
+C 0xB78F texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
+C 0xB7A2 hl_mas_a: HL = HL + A
+C 0xB853 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
+C 0xB9C8 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
+C 0xBA07 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
+C 0xBA5E copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
+C 0xBA71 marco: un marco de lineas: HL la esquina, DE el tamano
+C 0xBA7F copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
+C 0xBA8B rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
+C 0xBB4B apunta a el reloj de juego: minutos, cifra baja
+C 0xBB6C hl_mas_a: HL = HL + A
+C 0xBB8A despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0xBB97 borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
+C 0xBB9A esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
+C 0xBBA6 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
+C 0xBBB0 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0xBBB8 guarda la cuenta atras del estado
+C 0xBBBD apunta a la cuenta atras del estado
+C 0xBBD5 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0xBBDA sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0xBBDF guarda la cuenta atras del estado
+C 0xBBF3 apunta a la cuenta atras del estado
+C 0xBBFA guarda la cuenta atras del estado
+C 0xBC02 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
+C 0xBC09 guarda la peticion de copiar sprites a la VRAM (1 colores, 2 todo)
+C 0xBC0F espera_vdp: espera a que el VDP acabe la orden (S#2 bit 0, CE)
+C 0xBC4E copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
+C 0xBC57 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
+C 0xBC5F guarda la cuenta atras del estado
+C 0xBC64 apunta a la cuenta atras del estado
+C 0xBC6E guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0xBC9E lee el contador de cuadros del juego (sube uno por cuadro)
+C 0xBCB5 hl_mas_a: HL = HL + A
+C 0xBCBF hl_mas_a: HL = HL + A
+C 0xBCC8 apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
+# --- fin de las anotaciones de anota.py ---

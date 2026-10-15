@@ -1006,9 +1006,9 @@ DATA_partitura_AD2C:
 ; ======================================================================
 
 
-L_B15E:
+motor_arranque:		; calla todo (sonido 1), apaga el SCC y pone el mezclador del PSG a 0xBF
 	ld a,001h		;b15e
-	call L_B193		;b160
+	call motor_pide		;b160   ; motor_pide: empieza el sonido A: copia su cabecera (0x600A + 2 x A) y prepara cada canal
 	ld a,0ffh		;b163
 	ld hl,0efe2h		;b165
 	ld (hl),a			;b168
@@ -1021,11 +1021,11 @@ L_B15E:
 	ldir		;b174
 	call L_BE14		;b176
 	ld a,03fh		;b179
-	ld (09000h),a		;b17b
+	ld (09000h),a		;b17b   ; el mapper: pone en 0x8000 el banco de A
 	xor a			;b17e
 	ld (0988fh),a		;b17f
 	ld a,005h		;b182
-	ld (09000h),a		;b184
+	ld (09000h),a		;b184   ; el mapper: pone en 0x8000 el banco de A
 	ld a,0bfh		;b187
 	ld (0efdah),a		;b189
 	ld e,a			;b18c
@@ -1033,9 +1033,9 @@ L_B15E:
 	jp 00093h		;b18f   ; BIOS WRTPSG - Writes data to PSG-register
 L_B192:
 	ret			;b192
-L_B193:
+motor_pide:		; empieza el sonido A: copia su cabecera (0x600A + 2 x A) y prepara cada canal
 	ld b,a			;b193
-	ld a,(0effah)		;b194
+	ld a,(0effah)		;b194   ; lee si no es 0, el motor rechaza los sonidos 0x32-0x3C
 	or a			;b197
 	jr z,L_B1C7		;b198
 	ld a,b			;b19a
@@ -1076,7 +1076,7 @@ L_B1C7:
 	jp z,L_B3B0		;b1df
 	cp 084h		;b1e2
 	jp z,L_B36A		;b1e4
-	ld hl,0ee00h		;b1e7
+	ld hl,0ee00h		;b1e7   ; apunta a las fichas de los 8 canales de sonido (0x2D bytes cada una)
 	ld a,c			;b1ea
 	cp 02dh		;b1eb
 	jr nz,L_B1F2		;b1ed
@@ -1108,15 +1108,15 @@ L_B200:
 	inc hl			;b20e
 	ld d,(hl)			;b20f
 	ex de,hl			;b210
-	ld de,0efc4h		;b211
+	ld de,0efc4h		;b211   ; apunta a la cabecera del sonido que empieza (18 bytes)
 	ld bc,00012h		;b214
 	ldir		;b217
 	ld ix,0efc6h		;b219
-	ld hl,0efc4h		;b21d
+	ld hl,0efc4h		;b21d   ; apunta a la cabecera del sonido que empieza (18 bytes)
 	bit 7,(hl)		;b220
 	jr z,L_B23B		;b222
 	push ix		;b224
-	ld ix,0ee00h		;b226
+	ld ix,0ee00h		;b226   ; apunta a las fichas de los 8 canales de sonido (0x2D bytes cada una)
 	call L_B405		;b22a
 	pop ix		;b22d
 	inc hl			;b22f
@@ -1126,7 +1126,7 @@ L_B200:
 	inc ix		;b237
 	inc ix		;b239
 L_B23B:
-	ld hl,0efc4h		;b23b
+	ld hl,0efc4h		;b23b   ; apunta a la cabecera del sonido que empieza (18 bytes)
 	bit 6,(hl)		;b23e
 	jr z,L_B259		;b240
 	push ix		;b242
@@ -1140,7 +1140,7 @@ L_B23B:
 	inc ix		;b255
 	inc ix		;b257
 L_B259:
-	ld hl,0efc4h		;b259
+	ld hl,0efc4h		;b259   ; apunta a la cabecera del sonido que empieza (18 bytes)
 	bit 5,(hl)		;b25c
 	jr z,L_B277		;b25e
 	push ix		;b260
@@ -1154,7 +1154,7 @@ L_B259:
 	inc ix		;b273
 	inc ix		;b275
 L_B277:
-	ld hl,0efc4h		;b277
+	ld hl,0efc4h		;b277   ; apunta a la cabecera del sonido que empieza (18 bytes)
 	bit 4,(hl)		;b27a
 	jr z,L_B295		;b27c
 	push ix		;b27e
@@ -1168,7 +1168,7 @@ L_B277:
 	inc ix		;b291
 	inc ix		;b293
 L_B295:
-	ld hl,0efc4h		;b295
+	ld hl,0efc4h		;b295   ; apunta a la cabecera del sonido que empieza (18 bytes)
 	bit 3,(hl)		;b298
 	jr z,L_B2B3		;b29a
 	push ix		;b29c
@@ -1182,7 +1182,7 @@ L_B295:
 	inc ix		;b2af
 	inc ix		;b2b1
 L_B2B3:
-	ld hl,0efc4h		;b2b3
+	ld hl,0efc4h		;b2b3   ; apunta a la cabecera del sonido que empieza (18 bytes)
 	bit 2,(hl)		;b2b6
 	jr z,L_B2D1		;b2b8
 	push ix		;b2ba
@@ -1196,7 +1196,7 @@ L_B2B3:
 	inc ix		;b2cd
 	inc ix		;b2cf
 L_B2D1:
-	ld hl,0efc4h		;b2d1
+	ld hl,0efc4h		;b2d1   ; apunta a la cabecera del sonido que empieza (18 bytes)
 	bit 1,(hl)		;b2d4
 	jr z,L_B2EF		;b2d6
 	push ix		;b2d8
@@ -1210,7 +1210,7 @@ L_B2D1:
 	inc ix		;b2eb
 	inc ix		;b2ed
 L_B2EF:
-	ld hl,0efc4h		;b2ef
+	ld hl,0efc4h		;b2ef   ; apunta a la cabecera del sonido que empieza (18 bytes)
 	bit 0,(hl)		;b2f2
 	ret z			;b2f4
 	push ix		;b2f5
@@ -1306,11 +1306,11 @@ L_B375:
 	set 0,(hl)		;b37d
 L_B37F:
 	ld a,03fh		;b37f
-	ld (09000h),a		;b381
+	ld (09000h),a		;b381   ; el mapper: pone en 0x8000 el banco de A
 	ld a,(0eff4h)		;b384
 	ld (0988fh),a		;b387
 	ld a,005h		;b38a
-	ld (09000h),a		;b38c
+	ld (09000h),a		;b38c   ; el mapper: pone en 0x8000 el banco de A
 	ld a,0ffh		;b38f
 	ld hl,0efe2h		;b391
 	ld (hl),a			;b394
@@ -1352,7 +1352,7 @@ L_B3C5:
 	and 09bh		;b3c8
 	call L_BC93		;b3ca
 	ld a,03fh		;b3cd
-	ld (09000h),a		;b3cf
+	ld (09000h),a		;b3cf   ; el mapper: pone en 0x8000 el banco de A
 	ld a,(0eff3h)		;b3d2
 	and 0feh		;b3d5
 	ld (0988fh),a		;b3d7
@@ -1363,7 +1363,7 @@ L_B3C5:
 	ld (0988dh),a		;b3e4
 	ld (0988eh),a		;b3e7
 	ld a,005h		;b3ea
-	ld (09000h),a		;b3ec
+	ld (09000h),a		;b3ec   ; el mapper: pone en 0x8000 el banco de A
 	ld a,b			;b3ef
 	or a			;b3f0
 	ret nz			;b3f1
@@ -1390,7 +1390,7 @@ L_B405:
 	ld (ix+01eh),000h		;b415
 	ld (ix+026h),000h		;b419
 	ret			;b41d
-L_B41E:
+motor_cuadro:		; el sonido de un cuadro: avanza cada canal y escribe el PSG y el SCC
 	ld a,(0efdah)		;b41e
 	call L_BC93		;b421
 	ld a,(0fda2h)		;b424
@@ -1422,7 +1422,7 @@ L_B451:
 	call nz,L_B8D6		;b46b
 	ld a,001h		;b46e
 	ld (0efdbh),a		;b470
-	ld ix,0ee00h		;b473
+	ld ix,0ee00h		;b473   ; apunta a las fichas de los 8 canales de sonido (0x2D bytes cada una)
 	call L_B4E9		;b477
 	ld a,002h		;b47a
 	ld (0efdbh),a		;b47c
@@ -1490,15 +1490,15 @@ L_B512:
 	jp nz,L_B700		;b515
 	ld l,(ix+002h)		;b518
 	ld h,(ix+003h)		;b51b
-L_B51E:
+lee_partitura:		; lee la partitura del canal IX: 0xFF acaba, 0xD0-0xFE son ordenes y lo de abajo notas
 	ld a,(hl)			;b51e
 	cp 0ffh		;b51f
 	jp z,L_B8EE		;b521
 	cp 0d0h		;b524
 	jr c,L_B52F		;b526
-	call L_B92F		;b528
+	call orden_de_partitura		;b528   ; orden_de_partitura: la orden A de la partitura: 0xD0-0xDF octava y volumen (p06:BB99), 0xE0-0xFE por la tabla 0xB944
 	inc hl			;b52b
-	jp L_B51E		;b52c
+	jp lee_partitura		;b52c   ; lee_partitura: lee la partitura del canal IX: 0xFF acaba, 0xD0-0xFE son ordenes y lo de abajo notas
 L_B52F:
 	bit 0,(ix+009h)		;b52f
 	jp nz,L_B546		;b533
@@ -1660,7 +1660,7 @@ L_B624:
 	ld a,(hl)			;b639
 L_B63A:
 	set 1,(ix+009h)		;b63a
-	call L_B51E		;b63e
+	call lee_partitura		;b63e   ; lee_partitura: lee la partitura del canal IX: 0xFF acaba, 0xD0-0xFE son ordenes y lo de abajo notas
 	res 1,(ix+009h)		;b641
 	res 7,(ix+009h)		;b645
 	ld a,(ix+013h)		;b649
@@ -1956,7 +1956,7 @@ L_B852:
 	call L_B8EE		;b889
 L_B88C:
 	ld de,0002dh		;b88c
-	ld ix,0ee00h		;b88f
+	ld ix,0ee00h		;b88f   ; apunta a las fichas de los 8 canales de sonido (0x2D bytes cada una)
 	call L_B8EE		;b893
 	add ix,de		;b896
 	call L_B8EE		;b898
@@ -2039,7 +2039,7 @@ L_B92A:
 	res 2,(hl)		;b92a
 	res 3,(hl)		;b92c
 	ret			;b92e
-L_B92F:
+orden_de_partitura:		; la orden A de la partitura: 0xD0-0xDF octava y volumen (p06:BB99), 0xE0-0xFE por la tabla 0xB944
 	cp 0e0h		;b92f
 	jp c,L_BB99		;b931
 	and 01fh		;b934
@@ -2892,11 +2892,11 @@ L_BECC:
 	ld a,(hl)			;becc
 	ld c,a			;becd
 	ld a,03fh		;bece
-	ld (09000h),a		;bed0
+	ld (09000h),a		;bed0   ; el mapper: pone en 0x8000 el banco de A
 	ld a,c			;bed3
 	ld (de),a			;bed4
 	ld a,005h		;bed5
-	ld (09000h),a		;bed7
+	ld (09000h),a		;bed7   ; el mapper: pone en 0x8000 el banco de A
 	ret			;beda
 L_BEDB:
 	ld hl,0ee96h		;bedb
@@ -2947,7 +2947,7 @@ L_BF1D:
 	ld de,09860h		;bf2c
 L_BF2F:
 	ld a,03fh		;bf2f
-	ld (09000h),a		;bf31
+	ld (09000h),a		;bf31   ; el mapper: pone en 0x8000 el banco de A
 	xor a			;bf34
 	ld (0988fh),a		;bf35
 	ld b,020h		;bf38
@@ -2962,7 +2962,7 @@ L_BF3A:
 	ld a,(de)			;bf46
 	ld (hl),a			;bf47
 	ld a,005h		;bf48
-	ld (09000h),a		;bf4a
+	ld (09000h),a		;bf4a   ; el mapper: pone en 0x8000 el banco de A
 	ret			;bf4d
 L_BF4E:
 	nop			;bf4e

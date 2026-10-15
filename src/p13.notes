@@ -138,3 +138,149 @@ F 0x7BEA 16
 D 0x7E61 0x7E69 resto_7E61  lo apuntan con el banco puesto p14:9467 (0x7E61); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p14:9467 (8 bytes)
 F 0x7E61 16
 # --- fin de los bloques de bloques.py ---
+
+# --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+C 0x6019 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x604A despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x607E texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x608A guarda el estado del juego (indice del despachador principal)
+C 0x608D guarda el paso dentro del estado
+C 0x6092 guarda la cuenta atras del estado
+C 0x60D8 borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
+C 0x6105 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x615E texto_c0: como texto, con C = 0
+C 0x6164 texto_c0: como texto, con C = 0
+C 0x616A texto_c0: como texto, con C = 0
+C 0x616D esconde_sprites: escribe 0xD8 (Y = 216: no se pinta ninguno) en la VRAM 0xF600, el primer atributo de sprite
+C 0x6190 copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x61B6 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x61C9 linea: orden LINE (0x70) del VDP desde HL
+C 0x61D4 marco: un marco de lineas: HL la esquina, DE el tamano
+C 0x61DE linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+C 0x61E8 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+C 0x61F2 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+C 0x61FC linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+C 0x6205 texto_c0: como texto, con C = 0
+C 0x620B texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x622C sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x627B copia_a_vram: copia BC bytes de HL a la VRAM DE
+C 0x6283 byte_a_vram: escribe A en la VRAM HL
+C 0x631C despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x632C texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6347 lee los botones recien pulsados del mando 1 / cursores
+C 0x634E lee los botones pulsados del mando 1 / cursores
+C 0x6380 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x639D lee los botones recien pulsados del mando 1 / cursores
+C 0x63BE despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x63CA byte_a_vram: escribe A en la VRAM HL
+C 0x63E5 lee los botones recien pulsados del mando 1 / cursores
+C 0x63F7 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x6404 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6428 lee los botones recien pulsados del mando 1 / cursores
+C 0x642F lee los botones pulsados del mando 1 / cursores
+C 0x645F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x646A numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
+C 0x648A despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x649C lee los botones recien pulsados del mando 1 / cursores
+C 0x64AD texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x64D1 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x64DF borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
+C 0x64EB guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x6538 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0x6548 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6552 linea: orden LINE (0x70) del VDP desde HL
+C 0x655D marco: un marco de lineas: HL la esquina, DE el tamano
+C 0x6567 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+C 0x6571 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+C 0x657B linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+C 0x6585 linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
+C 0x658B texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6617 lee los botones recien pulsados del mando 1 / cursores
+C 0x663C lee los botones recien pulsados del mando 1 / cursores
+C 0x6653 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x6665 lee los botones recien pulsados del mando 1 / cursores
+C 0x667D texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6682 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x66BC hl_mas_a: HL = HL + A
+C 0x6734 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x67C6 hl_mas_a: HL = HL + A
+C 0x67CA de_mas_a: DE = DE + A
+C 0x67FA lee los botones recien pulsados del mando 1 / cursores
+C 0x680E sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x6814 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x681E hl_mas_a: HL = HL + A
+C 0x6825 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6846 lee los botones recien pulsados del mando 1 / cursores
+C 0x684F lee los botones recien pulsados del mando 1 / cursores
+C 0x6863 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x686F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x6889 hl_mas_a: HL = HL + A
+C 0x6892 byte_a_vram: escribe A en la VRAM HL
+C 0x6899 byte_a_vram: escribe A en la VRAM HL
+C 0x6916 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0x6948 lee los botones recien pulsados del mando 1 / cursores
+C 0x6951 lee los botones recien pulsados del mando 1 / cursores
+C 0x696E sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x697A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x698E sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x69A0 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x69CE hl_mas_a: HL = HL + A
+C 0x69D3 lee el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
+C 0x69E3 byte_a_vram: escribe A en la VRAM HL
+C 0x69EA byte_a_vram: escribe A en la VRAM HL
+C 0x6A25 lee el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
+C 0x6A97 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0x6AFA sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x6B37 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0x6B58 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
+C 0x6B6B byte_a_vram: escribe A en la VRAM HL
+C 0x6B79 copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
+C 0x6B85 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
+C 0x6B90 marco: un marco de lineas: HL la esquina, DE el tamano
+C 0x6B9E copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
+C 0x6BA4 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
+C 0x6BDC lee los botones recien pulsados del mando 1 / cursores
+C 0x6BE9 lee los botones recien pulsados del mando 1 / cursores
+C 0x6C18 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6C24 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0x6C4F hl_mas_a: HL = HL + A
+C 0x6C5C lee el contador de cuadros del juego (sube uno por cuadro)
+C 0x6C65 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0x6C74 hl_mas_a: HL = HL + A
+C 0x6C87 lee los botones recien pulsados del mando 1 / cursores
+C 0x6C9A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x6CA0 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6CAA hl_mas_a: HL = HL + A
+C 0x6CB1 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6D11 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x6D41 lee los botones recien pulsados del mando 1 / cursores
+C 0x6D55 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x6D5E texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6D76 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6D9C texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6DAA lee los botones recien pulsados del mando 1 / cursores
+C 0x6DD3 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6DE3 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6DFA despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x6E1B sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x6E75 lee los botones recien pulsados del mando 1 / cursores
+C 0x6E8F texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6F36 hl_mas_a: HL = HL + A
+C 0x6F7C despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x6F8F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x6FB5 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x6FBE lee los botones recien pulsados del mando 1 / cursores
+C 0x7001 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x7014 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x701D texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x7048 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x704B lee los botones recien pulsados del mando 1 / cursores
+C 0x705E sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x712E apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x7154 apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x7179 apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x719E apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x71D5 apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x729F apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
+C 0x72EC de_mas_a: DE = DE + A
+# --- fin de las anotaciones de anota.py ---

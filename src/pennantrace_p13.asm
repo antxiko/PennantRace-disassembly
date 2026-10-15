@@ -27,7 +27,7 @@ L_6000:
 	ret z			;6015
 	dec a			;6016
 	jr nz,$+111		;6017
-	ld (0e1d1h),a		;6019
+	ld (0e1d1h),a		;6019   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
 	ld a,(0dd8fh)		;601c
 	or a			;601f
 	jr z,L_6041		;6020
@@ -49,7 +49,7 @@ L_6041:
 	jr z,$+38		;6045
 	jp L_64DF		;6047
 L_604A:
-	call 04220h		;604a
+	call 04220h		;604a   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_604D: 15 destinos del despachador p00:4220 (call en p13:604A, el
@@ -74,7 +74,7 @@ L_606B:
 	ld (hl),080h		;6076
 	call 0ba82h		;6078
 	ld hl,07d19h		;607b
-	jp 04ea6h		;607e
+	jp 04ea6h		;607e   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 L_6081:
 	ld hl,0d2e1h		;6081
 	dec (hl)			;6084
@@ -82,10 +82,10 @@ L_6081:
 L_6086:
 	xor a			;6086
 	ld (0d74ch),a		;6087
-	ld (0de00h),a		;608a
-	ld (0de01h),a		;608d
+	ld (0de00h),a		;608a   ; guarda el estado del juego (indice del despachador principal)
+	ld (0de01h),a		;608d   ; guarda el paso dentro del estado
 	ld a,020h		;6090
-	ld (0de04h),a		;6092
+	ld (0de04h),a		;6092   ; guarda la cuenta atras del estado
 	ret			;6095
 L_6096:
 	ld hl,0d74ch		;6096
@@ -131,7 +131,7 @@ L_60CB:
 	ld (0d74dh),a		;60d4
 	ret			;60d7
 L_60D8:
-	call 04b9fh		;60d8
+	call 04b9fh		;60d8   ; borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
 	xor a			;60db
 	ld hl,0d74ch		;60dc
 	ld de,0d74dh		;60df
@@ -151,7 +151,7 @@ L_60D8:
 	jp L_6157		;60ff
 L_6102:
 	ld hl,06115h		;6102
-	call 04ea6h		;6105
+	call 04ea6h		;6105   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	xor a			;6108
 	ld (0dd91h),a		;6109
 	ld (0dd92h),a		;610c
@@ -188,12 +188,12 @@ L_6157:
 	ld a,c			;6157
 	ld (0d750h),a		;6158
 	ld hl,06115h		;615b
-	call 04eabh		;615e
+	call 04eabh		;615e   ; texto_c0: como texto, con C = 0
 	ld hl,06125h		;6161
-	call 04eabh		;6164
+	call 04eabh		;6164   ; texto_c0: como texto, con C = 0
 	ld hl,06130h		;6167
-	call 04eabh		;616a
-	call 04bd2h		;616d
+	call 04eabh		;616a   ; texto_c0: como texto, con C = 0
+	call 04bd2h		;616d   ; esconde_sprites: escribe 0xD8 (Y = 216: no se pinta ninguno) en la VRAM 0xF600, el primer atributo de sprite
 	call L_6187		;6170
 	ld a,(0d750h)		;6173
 	or a			;6176
@@ -207,7 +207,7 @@ L_6187:
 	ld de,0f800h		;6187
 	ld hl,06193h		;618a
 	ld bc,00020h		;618d
-	jp 04ab7h		;6190
+	jp 04ab7h		;6190   ; copia_a_vram: copia BC bytes de HL a la VRAM DE
 
 ; ----------------------------------------------------------------------
 ; DATOS copia_6193: 32 bytes que p00:4AB7 copia tal cual a la VRAM 0xF800; lo
@@ -224,7 +224,7 @@ DATA_copia_6193:
 
 L_61B3:
 	ld a,(0d74dh)		;61b3
-	call 04220h		;61b6
+	call 04220h		;61b6   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_61B9: 2 destinos del despachador p00:4220 (call en p13:61B6, el
@@ -244,32 +244,32 @@ L_61BD:
 	ld hl,00050h		;61c2
 	ld c,00dh		;61c5
 	ld b,000h		;61c7
-	call 04c91h		;61c9
+	call 04c91h		;61c9   ; linea: orden LINE (0x70) del VDP desde HL
 	ld hl,008c6h		;61cc
 	ld c,00dh		;61cf
 	ld de,0f20ch		;61d1
-	call 04cfeh		;61d4
+	call 04cfeh		;61d4   ; marco: un marco de lineas: HL la esquina, DE el tamano
 	ld hl,03ec6h		;61d7
 	ld c,00dh		;61da
 	ld b,00ch		;61dc
-	call 04cc7h		;61de
+	call 04cc7h		;61de   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
 	ld hl,076c6h		;61e1
 	ld c,00dh		;61e4
 	ld b,00ch		;61e6
-	call 04cc7h		;61e8
+	call 04cc7h		;61e8   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
 	ld hl,0a6c6h		;61eb
 	ld c,00dh		;61ee
 	ld b,00ch		;61f0
-	call 04cc7h		;61f2
+	call 04cc7h		;61f2   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
 	ld hl,0ccc6h		;61f5
 	ld c,00dh		;61f8
 	ld b,00ch		;61fa
-	call 04cc7h		;61fc
+	call 04cc7h		;61fc   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
 	call 059b6h		;61ff
 	ld hl,0613dh		;6202
-	call 04eabh		;6205
+	call 04eabh		;6205   ; texto_c0: como texto, con C = 0
 	ld hl,06294h		;6208
-	call 04ea6h		;620b
+	call 04ea6h		;620b   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	call L_6C9D		;620e
 	jp L_60AF		;6211
 L_6214:
@@ -283,7 +283,7 @@ L_6214:
 	ld (0d2b2h),a		;6224
 	call 081fch		;6227
 	ld a,02eh		;622a
-	call 057ffh		;622c
+	call 057ffh		;622c   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld hl,00101h		;622f
 	ld (0d753h),hl		;6232
 	ld de,0dd81h		;6235
@@ -314,10 +314,10 @@ L_6272:
 	ld de,0f600h		;6272
 	ld hl,06291h		;6275
 	ld bc,00003h		;6278
-	call 04ab7h		;627b
+	call 04ab7h		;627b   ; copia_a_vram: copia BC bytes de HL a la VRAM DE
 	ld hl,0f604h		;627e
 	ld a,0d8h		;6281
-	call 04ae3h		;6283
+	call 04ae3h		;6283   ; byte_a_vram: escribe A en la VRAM HL
 	ld hl,0f400h		;6286
 	ld a,007h		;6289
 	ld bc,00010h		;628b
@@ -363,7 +363,7 @@ DATA_nombres_de_equipo:
 
 L_6319:
 	ld a,(0d74dh)		;6319
-	call 04220h		;631c
+	call 04220h		;631c   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_631F: 2 destinos del despachador p00:4220 (call en p13:631C, el
@@ -381,7 +381,7 @@ L_6323:
 	call L_6BFB		;6323
 	call L_6B66		;6326
 	ld hl,07cefh		;6329
-	call 04ea6h		;632c
+	call 04ea6h		;632c   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	call L_6B50		;632f
 	ld hl,0d2e1h		;6332
 	ld (hl),008h		;6335
@@ -392,10 +392,10 @@ L_633A:
 	ld a,(0d759h)		;6340
 	or a			;6343
 	jp nz,L_60B9		;6344
-	ld a,(0de06h)		;6347
+	ld a,(0de06h)		;6347   ; lee los botones recien pulsados del mando 1 / cursores
 	and 003h		;634a
 	jr nz,L_6359		;634c
-	ld a,(0de07h)		;634e
+	ld a,(0de07h)		;634e   ; lee los botones pulsados del mando 1 / cursores
 	and 003h		;6351
 	ret z			;6353
 	ld hl,0d2e1h		;6354
@@ -424,7 +424,7 @@ L_6377:
 	call L_6B50		;6378
 	call L_6BFB		;637b
 	ld a,026h		;637e
-	jp 057ffh		;6380
+	jp 057ffh		;6380   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_6383:
 	call L_6C85		;6383
 	ld a,(0d759h)		;6386
@@ -436,7 +436,7 @@ L_6383:
 	ld a,(0da6bh)		;6396
 	cp b			;6399
 	jp z,L_6C81		;639a
-	ld a,(0de06h)		;639d
+	ld a,(0de06h)		;639d   ; lee los botones recien pulsados del mando 1 / cursores
 	and 010h		;63a0
 	ret z			;63a2
 	call L_6AB5		;63a3
@@ -451,7 +451,7 @@ L_63B5:
 	jp L_6A0D		;63b8
 L_63BB:
 	ld a,(0d74dh)		;63bb
-	call 04220h		;63be
+	call 04220h		;63be   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_63C1: 2 destinos del despachador p00:4220 (call en p13:63BE, el
@@ -468,7 +468,7 @@ DATA_tabla_63C1:
 L_63C5:
 	ld hl,0f600h		;63c5
 	ld a,0e0h		;63c8
-	call 04ae3h		;63ca
+	call 04ae3h		;63ca   ; byte_a_vram: escribe A en la VRAM HL
 	xor a			;63cd
 	ld (0d758h),a		;63ce
 	jp L_60AF		;63d1
@@ -479,7 +479,7 @@ L_63D4:
 	jp nz,L_60B4		;63dc
 	call L_6BDC		;63df
 	call L_6C49		;63e2
-	ld a,(0de06h)		;63e5
+	ld a,(0de06h)		;63e5   ; lee los botones recien pulsados del mando 1 / cursores
 	and 010h		;63e8
 	ret z			;63ea
 	call L_6C6E		;63eb
@@ -487,7 +487,7 @@ L_63D4:
 	jp L_6A0D		;63f1
 L_63F4:
 	ld a,(0d74dh)		;63f4
-	call 04220h		;63f7
+	call 04220h		;63f7   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_63FA: 2 destinos del despachador p00:4220 (call en p13:63F7, el
@@ -504,7 +504,7 @@ DATA_tabla_63FA:
 L_63FE:
 	call L_6B66		;63fe
 	ld hl,06412h		;6401
-	call 04ea6h		;6404
+	call 04ea6h		;6404   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	call L_6462		;6407
 	ld hl,0d2e1h		;640a
 	ld (hl),008h		;640d
@@ -529,10 +529,10 @@ L_641A:
 	ld a,(0d759h)		;6420
 	sub 002h		;6423
 	jp nz,L_60B9		;6425
-	ld a,(0de06h)		;6428
+	ld a,(0de06h)		;6428   ; lee los botones recien pulsados del mando 1 / cursores
 	and 003h		;642b
 	jr nz,L_643A		;642d
-	ld a,(0de07h)		;642f
+	ld a,(0de07h)		;642f   ; lee los botones pulsados del mando 1 / cursores
 	and 003h		;6432
 	ret z			;6434
 	ld hl,0d2e1h		;6435
@@ -563,12 +563,12 @@ L_6454:
 	call L_646D		;6459
 	ld (hl),a			;645c
 	ld a,026h		;645d
-	call 057ffh		;645f
+	call 057ffh		;645f   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_6462:
 	ld hl,0d754h		;6462
 	ld de,07098h		;6465
 	ld b,001h		;6468
-	jp 05bf1h		;646a
+	jp 05bf1h		;646a   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 L_646D:
 	push bc			;646d
 	ld b,00ah		;646e
@@ -590,7 +590,7 @@ L_647C:
 	ret			;6486
 L_6487:
 	ld a,(0d74dh)		;6487
-	call 04220h		;648a
+	call 04220h		;648a   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_648D: 2 destinos del despachador p00:4220 (call en p13:648A, el
@@ -609,7 +609,7 @@ L_6491:
 	ld a,(0d759h)		;6494
 	sub 003h		;6497
 	jp nz,L_60BE		;6499
-	ld a,(0de06h)		;649c
+	ld a,(0de06h)		;649c   ; lee los botones recien pulsados del mando 1 / cursores
 	and 010h		;649f
 	ret z			;64a1
 	call L_6B5B		;64a2
@@ -617,7 +617,7 @@ L_6491:
 	cp b			;64a8
 	ret nz			;64a9
 	ld hl,062d1h		;64aa
-	call 04ea6h		;64ad
+	call 04ea6h		;64ad   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	jp L_60AF		;64b0
 L_64B3:
 	ret			;64b3
@@ -634,7 +634,7 @@ L_64B4:
 	jr nz,L_64D9		;64cb
 	res 5,(hl)		;64cd
 	ld a,001h		;64cf
-	ld (0e1d1h),a		;64d1
+	ld (0e1d1h),a		;64d1   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
 	xor a			;64d4
 	ld (0d6dch),a		;64d5
 	ret			;64d8
@@ -643,12 +643,12 @@ L_64D9:
 	ld (0d74ch),a		;64db
 	ret			;64de
 L_64DF:
-	call 04b9fh		;64df
+	call 04b9fh		;64df   ; borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
 	ld a,(0d6e1h)		;64e2
 	dec a			;64e5
 	jp nz,L_64EF		;64e6
 	ld a,001h		;64e9
-	ld (0e1d1h),a		;64eb
+	ld (0e1d1h),a		;64eb   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
 	ret			;64ee
 L_64EF:
 	xor a			;64ef
@@ -681,7 +681,7 @@ L_64EF:
 	ld de,04c6ch		;6534
 L_6537:
 	ld a,c			;6537
-	call 04f1ch		;6538
+	call 04f1ch		;6538   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	ld a,e			;653b
 	add a,00ch		;653c
 	ld e,a			;653e
@@ -689,33 +689,33 @@ L_6537:
 	djnz L_6537		;6540
 	call L_6187		;6542
 	ld hl,0a710h		;6545
-	call 04ea6h		;6548
+	call 04ea6h		;6548   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld hl,00050h		;654b
 	ld c,00dh		;654e
 	ld b,000h		;6550
-	call 04c91h		;6552
+	call 04c91h		;6552   ; linea: orden LINE (0x70) del VDP desde HL
 	ld hl,008c6h		;6555
 	ld c,00dh		;6558
 	ld de,0f20ch		;655a
-	call 04cfeh		;655d
+	call 04cfeh		;655d   ; marco: un marco de lineas: HL la esquina, DE el tamano
 	ld hl,04ec6h		;6560
 	ld c,00dh		;6563
 	ld b,00ch		;6565
-	call 04cc7h		;6567
+	call 04cc7h		;6567   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
 	ld hl,07ec6h		;656a
 	ld c,00dh		;656d
 	ld b,00ch		;656f
-	call 04cc7h		;6571
+	call 04cc7h		;6571   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
 	ld hl,0aec6h		;6574
 	ld c,00dh		;6577
 	ld b,00ch		;6579
-	call 04cc7h		;657b
+	call 04cc7h		;657b   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
 	ld hl,0dec6h		;657e
 	ld c,00dh		;6581
 	ld b,00ch		;6583
-	call 04cc7h		;6585
+	call 04cc7h		;6585   ; linea_vertical: orden LINE (0x70) del VDP, el lado largo en vertical
 	ld hl,06594h		;6588
-	call 04ea6h		;658b
+	call 04ea6h		;658b   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	call L_6811		;658e
 	jp L_626C		;6591
 
@@ -797,7 +797,7 @@ L_6606:
 	call L_6846		;6610
 	xor a			;6613
 	call L_68A8		;6614
-	ld a,(0de06h)		;6617
+	ld a,(0de06h)		;6617   ; lee los botones recien pulsados del mando 1 / cursores
 	and 010h		;661a
 	ret z			;661c
 	call L_66C4		;661d
@@ -813,7 +813,7 @@ L_662A:
 	call L_6846		;6634
 	ld a,001h		;6637
 	call L_68A8		;6639
-	ld a,(0de06h)		;663c
+	ld a,(0de06h)		;663c   ; lee los botones recien pulsados del mando 1 / cursores
 	and 010h		;663f
 	ret z			;6641
 	call L_66F6		;6642
@@ -823,7 +823,7 @@ L_662A:
 	jp L_60CB		;664d
 L_6650:
 	ld a,(0d74dh)		;6650
-	call 04220h		;6653
+	call 04220h		;6653   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_6656: 2 destinos del despachador p00:4220 (call en p13:6653, el
@@ -842,7 +842,7 @@ L_665A:
 	ld a,(0d759h)		;665d
 	sub 002h		;6660
 	jp nz,L_60CB		;6662
-	ld a,(0de06h)		;6665
+	ld a,(0de06h)		;6665   ; lee los botones recien pulsados del mando 1 / cursores
 	and 010h		;6668
 	ret z			;666a
 	ld hl,(0d70ah)		;666b
@@ -856,9 +856,9 @@ L_665A:
 L_6677:
 	call L_6761		;6677
 	ld hl,065b8h		;667a
-	call 04ea6h		;667d
+	call 04ea6h		;667d   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,001h		;6680
-	ld (0e1d1h),a		;6682
+	ld (0e1d1h),a		;6682   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
 	ret			;6685
 L_6686:
 	ld a,(0d74fh)		;6686
@@ -900,7 +900,7 @@ L_66B5:
 	ld a,006h		;66b6
 	sub b			;66b8
 	ld hl,0d72ah		;66b9
-	call 04216h		;66bc
+	call 04216h		;66bc   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;66bf
 	pop hl			;66c0
 	ld (de),a			;66c1
@@ -971,7 +971,7 @@ L_6726:
 	ld bc,0000bh		;672d
 	ldir		;6730
 	ld a,027h		;6732
-	jp 057ffh		;6734
+	jp 057ffh		;6734   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_6737:
 	ld hl,0da6ch		;6737
 	ld de,08020h		;673a
@@ -1060,9 +1060,9 @@ L_67BC:
 	ld hl,0e340h		;67c1
 	ld d,h			;67c4
 	ld e,l			;67c5
-	call 04216h		;67c6
+	call 04216h		;67c6   ; hl_mas_a: HL = HL + A
 	ld a,c			;67c9
-	call 0421bh		;67ca
+	call 0421bh		;67ca   ; de_mas_a: DE = DE + A
 	ld a,(de)			;67cd
 	ld b,(hl)			;67ce
 	ld (hl),a			;67cf
@@ -1101,7 +1101,7 @@ L_67ED:
 	exx			;67f8
 	ret			;67f9
 L_67FA:
-	ld a,(0de06h)		;67fa
+	ld a,(0de06h)		;67fa   ; lee los botones recien pulsados del mando 1 / cursores
 	and 020h		;67fd
 	ret z			;67ff
 L_6800:
@@ -1113,19 +1113,19 @@ L_6800:
 L_6809:
 	ld (0d759h),a		;6809
 	ld a,026h		;680c
-	call 057ffh		;680e
+	call 057ffh		;680e   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_6811:
 	ld hl,06594h		;6811
-	call 04ea6h		;6814
+	call 04ea6h		;6814   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,(0d759h)		;6817
 	ld hl,06828h		;681a
 	add a,a			;681d
-	call 04216h		;681e
+	call 04216h		;681e   ; hl_mas_a: HL = HL + A
 	ld e,(hl)			;6821
 	inc hl			;6822
 	ld d,(hl)			;6823
 	ex de,hl			;6824
-	jp 04ea6h		;6825
+	jp 04ea6h		;6825   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 
 ; ----------------------------------------------------------------------
 ; DATOS textos_6828: 3 punteros a textos elegidos por 0xD759 (p13:6825 salta a
@@ -1161,11 +1161,11 @@ DATA_texto_6840:
 
 
 L_6846:
-	ld a,(0de06h)		;6846
+	ld a,(0de06h)		;6846   ; lee los botones recien pulsados del mando 1 / cursores
 	and 010h		;6849
 	ret nz			;684b
 	ld hl,0d74fh		;684c
-	ld a,(0de06h)		;684f
+	ld a,(0de06h)		;684f   ; lee los botones recien pulsados del mando 1 / cursores
 	rra			;6852
 	jr c,L_6868		;6853
 	rra			;6855
@@ -1177,7 +1177,7 @@ L_6846:
 	jr z,L_6882		;685e
 	inc (hl)			;6860
 	ld a,026h		;6861
-	call 057ffh		;6863
+	call 057ffh		;6863   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	jr L_6882		;6866
 L_6868:
 	ld a,(hl)			;6868
@@ -1185,7 +1185,7 @@ L_6868:
 	jr z,L_6882		;686a
 	dec (hl)			;686c
 	ld a,026h		;686d
-	call 057ffh		;686f
+	call 057ffh		;686f   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	jr L_6882		;6872
 L_6874:
 	call L_6B5B		;6874
@@ -1200,15 +1200,15 @@ L_6882:
 	ld a,(0d74fh)		;6882
 	ld hl,0689ch		;6885
 	add a,a			;6888
-	call 04216h		;6889
+	call 04216h		;6889   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;688c
 	inc hl			;688d
 	ld e,(hl)			;688e
 	ld hl,0f600h		;688f
-	call 04ae3h		;6892
+	call 04ae3h		;6892   ; byte_a_vram: escribe A en la VRAM HL
 	ld a,e			;6895
 	ld hl,0f601h		;6896
-	jp 04ae3h		;6899
+	jp 04ae3h		;6899   ; byte_a_vram: escribe A en la VRAM HL
 
 ; ----------------------------------------------------------------------
 ; DATOS pares_689C: 6 pares de bytes (0xD74F x 2, p13:6889): el primero va a
@@ -1298,7 +1298,7 @@ L_690E:
 	jr z,L_6916		;6913
 	add a,c			;6915
 L_6916:
-	call 04f1ch		;6916
+	call 04f1ch		;6916   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	ld a,d			;6919
 	add a,008h		;691a
 	ld d,a			;691c
@@ -1328,11 +1328,11 @@ L_6940:
 	sub 006h		;6943
 	ld (0e360h),a		;6945
 L_6948:
-	ld a,(0de06h)		;6948
+	ld a,(0de06h)		;6948   ; lee los botones recien pulsados del mando 1 / cursores
 	and 010h		;694b
 	ret nz			;694d
 	ld hl,0d74fh		;694e
-	ld a,(0de06h)		;6951
+	ld a,(0de06h)		;6951   ; lee los botones recien pulsados del mando 1 / cursores
 	rra			;6954
 	jr c,L_6993		;6955
 	rra			;6957
@@ -1350,7 +1350,7 @@ L_6948:
 	jr z,L_69A3		;6969
 	inc (hl)			;696b
 	ld a,026h		;696c
-	call 057ffh		;696e
+	call 057ffh		;696e   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	jr L_69A3		;6971
 L_6973:
 	ld a,(hl)			;6973
@@ -1358,7 +1358,7 @@ L_6973:
 	jr nc,L_69A3		;6975
 	dec (hl)			;6977
 	ld a,026h		;6978
-	call 057ffh		;697a
+	call 057ffh		;697a   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	jr L_69A3		;697d
 L_697F:
 	ld a,(0e360h)		;697f
@@ -1370,7 +1370,7 @@ L_697F:
 	inc (hl)			;698a
 	inc (hl)			;698b
 	ld a,026h		;698c
-	call 057ffh		;698e
+	call 057ffh		;698e   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	jr L_69A3		;6991
 L_6993:
 	dec (hl)			;6993
@@ -1383,7 +1383,7 @@ L_6993:
 	dec (hl)			;699c
 	dec (hl)			;699d
 	ld a,026h		;699e
-	call 057ffh		;69a0
+	call 057ffh		;69a0   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_69A3:
 	ld hl,0d751h		;69a3
 	ld a,(0d74fh)		;69a6
@@ -1408,9 +1408,9 @@ L_69C3:
 	sub (hl)			;69c9
 	ld hl,069edh		;69ca
 	add a,a			;69cd
-	call 04216h		;69ce
+	call 04216h		;69ce   ; hl_mas_a: HL = HL + A
 	ld e,030h		;69d1
-	ld a,(0e190h)		;69d3
+	ld a,(0e190h)		;69d3   ; lee el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
 	cp 003h		;69d6
 	jr z,L_69DC		;69d8
 	ld e,000h		;69da
@@ -1421,10 +1421,10 @@ L_69DC:
 	ld e,(hl)			;69df
 L_69E0:
 	ld hl,0f600h		;69e0
-	call 04ae3h		;69e3
+	call 04ae3h		;69e3   ; byte_a_vram: escribe A en la VRAM HL
 	ld a,e			;69e6
 	ld hl,0f601h		;69e7
-	jp 04ae3h		;69ea
+	jp 04ae3h		;69ea   ; byte_a_vram: escribe A en la VRAM HL
 
 ; ----------------------------------------------------------------------
 ; DATOS pares_69ED: 16 pares de bytes ((A - 0xD751) x 2, p13:69CE) que
@@ -1467,7 +1467,7 @@ L_6A17:
 	pop bc			;6a20
 	add hl,bc			;6a21
 	ld de,02860h		;6a22
-	ld a,(0e190h)		;6a25
+	ld a,(0e190h)		;6a25   ; lee el modo de juego (0 1PLAYER, 1 2PLAYERS, 2 PENNANT, 3 TEAM EDIT, 4 WATCH, 5 MEDIA SELECT)
 	cp 003h		;6a28
 	jr nz,L_6A2E		;6a2a
 	ld e,030h		;6a2c
@@ -1542,7 +1542,7 @@ L_6A86:
 	jr z,L_6A97		;6a93
 	add a,0a0h		;6a95
 L_6A97:
-	call 04f1ch		;6a97
+	call 04f1ch		;6a97   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	ld a,d			;6a9a
 	add a,008h		;6a9b
 	ld d,a			;6a9d
@@ -1611,7 +1611,7 @@ L_6AEC:
 	ld bc,0000bh		;6af3
 	ldir		;6af6
 	ld a,027h		;6af8
-	jp 057ffh		;6afa
+	jp 057ffh		;6afa   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_6AFD:
 	ld l,a			;6afd
 	ld h,000h		;6afe
@@ -1655,7 +1655,7 @@ L_6B31:
 L_6B33:
 	push bc			;6b33
 	call 09834h		;6b34
-	call 04f1ch		;6b37
+	call 04f1ch		;6b37   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	ld a,d			;6b3a
 	add a,008h		;6b3b
 	ld d,a			;6b3d
@@ -1676,7 +1676,7 @@ L_6B50:
 	ld hl,0d6e1h		;6b50
 	ld b,001h		;6b53
 	ld de,07898h		;6b55
-	jp 05bf1h		;6b58
+	jp 05bf1h		;6b58   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 L_6B5B:
 	ld a,(0d6e1h)		;6b5b
 	cp 001h		;6b5e
@@ -1688,31 +1688,31 @@ L_6B64:
 L_6B66:
 	ld hl,0f600h		;6b66
 	ld a,0e0h		;6b69
-	call 04ae3h		;6b6b
+	call 04ae3h		;6b6b   ; byte_a_vram: escribe A en la VRAM HL
 L_6B6E:
 	ld hl,02480h		;6b6e
 	ld de,02480h		;6b71
 	ld bc,0b030h		;6b74
 	ld a,004h		;6b77
-	call 04d66h		;6b79
+	call 04d66h		;6b79   ; copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 	ld hl,02480h		;6b7c
 	ld bc,0b030h		;6b7f
 	xor a			;6b82
 	ld d,000h		;6b83
-	call 04d2ah		;6b85
+	call 04d2ah		;6b85   ; rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 	ld hl,02480h		;6b88
 	ld c,00dh		;6b8b
 	ld de,0ae2eh		;6b8d
-	jp 04cfeh		;6b90
+	jp 04cfeh		;6b90   ; marco: un marco de lineas: HL la esquina, DE el tamano
 L_6B93:
 	ld hl,02480h		;6b93
 	ld de,02480h		;6b96
 	ld bc,0b030h		;6b99
 	ld a,001h		;6b9c
-	jp 04d66h		;6b9e
+	jp 04d66h		;6b9e   ; copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 L_6BA1:
 	ld bc,00004h		;6ba1
-	ld de,0e194h		;6ba4
+	ld de,0e194h		;6ba4   ; apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 	ld hl,06bd8h		;6ba7
 	ldir		;6baa
 	ld hl,0d680h		;6bac
@@ -1750,13 +1750,13 @@ DATA_inicio_e194:
 
 
 L_6BDC:
-	ld a,(0de06h)		;6bdc
+	ld a,(0de06h)		;6bdc   ; lee los botones recien pulsados del mando 1 / cursores
 	and 010h		;6bdf
 	ret nz			;6be1
 	call L_6B5B		;6be2
 	dec b			;6be5
 	ld hl,0d758h		;6be6
-	ld a,(0de06h)		;6be9
+	ld a,(0de06h)		;6be9   ; lee los botones recien pulsados del mando 1 / cursores
 	rra			;6bec
 	jr c,L_6BF7		;6bed
 	rra			;6bef
@@ -1791,7 +1791,7 @@ L_6C09:
 	call L_6B17		;6c12
 L_6C15:
 	ld hl,06c31h		;6c15
-	call 04ea6h		;6c18
+	call 04ea6h		;6c18   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	pop bc			;6c1b
 	ld de,04810h		;6c1c
 	ld c,002h		;6c1f
@@ -1799,7 +1799,7 @@ L_6C21:
 	ld a,c			;6c21
 	push bc			;6c22
 	push de			;6c23
-	call 04f1ch		;6c24
+	call 04f1ch		;6c24   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	pop de			;6c27
 	ld a,e			;6c28
 	add a,00ah		;6c29
@@ -1826,20 +1826,20 @@ DATA_texto_6C31:
 L_6C49:
 	ld a,(0d758h)		;6c49
 	ld hl,06c68h		;6c4c
-	call 04216h		;6c4f
+	call 04216h		;6c4f   ; hl_mas_a: HL = HL + A
 	ld d,048h		;6c52
 	ld e,(hl)			;6c54
 	ld a,(0d758h)		;6c55
 	inc a			;6c58
 	add a,001h		;6c59
 	ld c,a			;6c5b
-	ld a,(0de03h)		;6c5c
+	ld a,(0de03h)		;6c5c   ; lee el contador de cuadros del juego (sube uno por cuadro)
 	and 004h		;6c5f
 	jr nz,L_6C64		;6c61
 	ld c,a			;6c63
 L_6C64:
 	ld a,c			;6c64
-	jp 04f1ch		;6c65
+	jp 04f1ch		;6c65   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 
 ; ----------------------------------------------------------------------
 ; DATOS columnas_6C68: 6 bytes, uno por 0xD758 (p13:6C4F): la x de la flecha
@@ -1857,7 +1857,7 @@ L_6C6E:
 	ld a,(0d758h)		;6c6e
 L_6C71:
 	ld hl,0d70ah		;6c71
-	call 04216h		;6c74
+	call 04216h		;6c74   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;6c77
 	inc a			;6c78
 	ret z			;6c79
@@ -1871,7 +1871,7 @@ L_6C81:
 L_6C85:
 	ld e,020h		;6c85
 L_6C87:
-	ld a,(0de06h)		;6c87
+	ld a,(0de06h)		;6c87   ; lee los botones recien pulsados del mando 1 / cursores
 	and e			;6c8a
 	ret z			;6c8b
 	ld a,(0d759h)		;6c8c
@@ -1882,19 +1882,19 @@ L_6C87:
 L_6C95:
 	ld (0d759h),a		;6c95
 	ld a,026h		;6c98
-	call 057ffh		;6c9a
+	call 057ffh		;6c9a   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_6C9D:
 	ld hl,06ce6h		;6c9d
-	call 04ea6h		;6ca0
+	call 04ea6h		;6ca0   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,(0d759h)		;6ca3
 	ld hl,06cb4h		;6ca6
 	add a,a			;6ca9
-	call 04216h		;6caa
+	call 04216h		;6caa   ; hl_mas_a: HL = HL + A
 	ld e,(hl)			;6cad
 	inc hl			;6cae
 	ld d,(hl)			;6caf
 	ex de,hl			;6cb0
-	jp 04ea6h		;6cb1
+	jp 04ea6h		;6cb1   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 
 ; ----------------------------------------------------------------------
 ; DATOS textos_6CB4: 5 punteros a textos elegidos por 0xD759 (p13:6CB1 salta a
@@ -1955,7 +1955,7 @@ DATA_texto_6CE6:
 
 L_6D0E:
 	ld a,(0d2b0h)		;6d0e
-	call 04220h		;6d11
+	call 04220h		;6d11   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_6D14: 5 destinos del despachador p00:4220 (call en p13:6D11, el
@@ -1987,7 +1987,7 @@ L_6D31:
 	call 05d7dh		;6d3c
 	jr L_6D61		;6d3f
 L_6D41:
-	ld a,(0de06h)		;6d41
+	ld a,(0de06h)		;6d41   ; lee los botones recien pulsados del mando 1 / cursores
 	and 013h		;6d44
 	ret z			;6d46
 	bit 4,a		;6d47
@@ -1997,10 +1997,10 @@ L_6D41:
 	ld (0dd8fh),a		;6d50
 L_6D53:
 	ld a,001h		;6d53
-	call 057ffh		;6d55
+	call 057ffh		;6d55   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	call 0ba66h		;6d58
 	ld hl,07bddh		;6d5b
-	call 04ea6h		;6d5e
+	call 04ea6h		;6d5e   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 L_6D61:
 	ld hl,0d2b0h		;6d61
 	inc (hl)			;6d64
@@ -2012,7 +2012,7 @@ L_6D66:
 	jr z,L_6D88		;6d6e
 	call 0ba66h		;6d70
 	ld hl,07c22h		;6d73
-	call 04ea6h		;6d76
+	call 04ea6h		;6d76   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,080h		;6d79
 	ld (0d2e1h),a		;6d7b
 	ld a,001h		;6d7e
@@ -2030,14 +2030,14 @@ L_6D8D:
 	jr z,L_6D9C		;6d97
 	ld hl,07c06h		;6d99
 L_6D9C:
-	call 04ea6h		;6d9c
+	call 04ea6h		;6d9c   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	xor a			;6d9f
 	ld (0d2b1h),a		;6da0
 	inc a			;6da3
 	ld (0dd0ch),a		;6da4
 	jp 05d7dh		;6da7
 L_6DAA:
-	ld a,(0de06h)		;6daa
+	ld a,(0de06h)		;6daa   ; lee los botones recien pulsados del mando 1 / cursores
 	and 013h		;6dad
 	ret z			;6daf
 	bit 4,a		;6db0
@@ -2056,14 +2056,14 @@ L_6DC7:
 	ld a,002h		;6dcb
 	ld (0d2b0h),a		;6dcd
 	ld hl,07bddh		;6dd0
-	jp 04ea6h		;6dd3
+	jp 04ea6h		;6dd3   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 L_6DD6:
 	ld a,(0dd8fh)		;6dd6
 	dec a			;6dd9
 	call z,L_6B93		;6dda
 	call 0ba66h		;6ddd
 	ld hl,07cfah		;6de0
-	call 04ea6h		;6de3
+	call 04ea6h		;6de3   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,040h		;6de6
 	ld (0d2e1h),a		;6de8
 	ret			;6deb
@@ -2076,7 +2076,7 @@ L_6DEC:
 	ret			;6df6
 L_6DF7:
 	ld a,(0d2b0h)		;6df7
-	call 04220h		;6dfa
+	call 04220h		;6dfa   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_6DFD: 5 destinos del despachador p00:4220 (call en p13:6DFA, el
@@ -2101,7 +2101,7 @@ L_6E07:
 	jr nz,L_6E1E		;6e17
 L_6E19:
 	ld a,001h		;6e19
-	call 057ffh		;6e1b
+	call 057ffh		;6e1b   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_6E1E:
 	jr L_6E70		;6e1e
 L_6E20:
@@ -2156,7 +2156,7 @@ L_6E70:
 	inc (hl)			;6e73
 	ret			;6e74
 L_6E75:
-	ld a,(0de06h)		;6e75
+	ld a,(0de06h)		;6e75   ; lee los botones recien pulsados del mando 1 / cursores
 	and 013h		;6e78
 	ret z			;6e7a
 	bit 4,a		;6e7b
@@ -2167,7 +2167,7 @@ L_6E75:
 	jr nz,L_6E99		;6e87
 	call 0ba66h		;6e89
 	ld hl,07cfah		;6e8c
-	call 04ea6h		;6e8f
+	call 04ea6h		;6e8f   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,040h		;6e92
 	ld (0d2e1h),a		;6e94
 	jr L_6E70		;6e97
@@ -2284,7 +2284,7 @@ L_6F31:
 	ld a,c			;6f31
 	ld hl,0731fh		;6f32
 	add a,a			;6f35
-	call 04216h		;6f36
+	call 04216h		;6f36   ; hl_mas_a: HL = HL + A
 	ld e,(hl)			;6f39
 	inc hl			;6f3a
 	ld d,(hl)			;6f3b
@@ -2330,7 +2330,7 @@ L_6F68:
 	ret			;6f78
 L_6F79:
 	ld a,(0d2b0h)		;6f79
-	call 04220h		;6f7c
+	call 04220h		;6f7c   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_6F7F: 5 destinos del despachador p00:4220 (call en p13:6F7C, el
@@ -2348,7 +2348,7 @@ L_6F89:
 	xor a			;6f89
 	ld (0d2b1h),a		;6f8a
 	ld a,001h		;6f8d
-	call 057ffh		;6f8f
+	call 057ffh		;6f8f   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_6F92:
 	ld hl,0d2b0h		;6f92
 	inc (hl)			;6f95
@@ -2367,12 +2367,12 @@ L_6FA6:
 	ld (0d2b0h),a		;6fac
 	call 0ba66h		;6faf
 	ld hl,07c22h		;6fb2
-	call 04ea6h		;6fb5
+	call 04ea6h		;6fb5   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,0a0h		;6fb8
 	ld (0d2e1h),a		;6fba
 	ret			;6fbd
 L_6FBE:
-	ld a,(0de06h)		;6fbe
+	ld a,(0de06h)		;6fbe   ; lee los botones recien pulsados del mando 1 / cursores
 	and 013h		;6fc1
 	ret z			;6fc3
 	bit 4,a		;6fc4
@@ -2409,7 +2409,7 @@ L_6FF3:
 	ret			;6ffd
 L_6FFE:
 	ld a,(0d2b0h)		;6ffe
-	call 04220h		;7001
+	call 04220h		;7001   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_7004: 5 destinos del despachador p00:4220 (call en p13:7001, el
@@ -2427,10 +2427,10 @@ L_700E:
 	xor a			;700e
 	ld (0d2b1h),a		;700f
 	ld a,001h		;7012
-	call 057ffh		;7014
+	call 057ffh		;7014   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	call 0ba66h		;7017
 	ld hl,07d41h		;701a
-	call 04ea6h		;701d
+	call 04ea6h		;701d   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 L_7020:
 	ld hl,0d2b0h		;7020
 	inc (hl)			;7023
@@ -2451,9 +2451,9 @@ L_7034:
 	ld (0d2b0h),a		;703f
 	call 0ba66h		;7042
 	ld hl,07d09h		;7045
-	jp 04ea6h		;7048
+	jp 04ea6h		;7048   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 L_704B:
-	ld a,(0de06h)		;704b
+	ld a,(0de06h)		;704b   ; lee los botones recien pulsados del mando 1 / cursores
 	and 013h		;704e
 	ret z			;7050
 	bit 4,a		;7051
@@ -2462,7 +2462,7 @@ L_704B:
 	or a			;7059
 	jr z,L_7072		;705a
 	ld a,001h		;705c
-	call 057ffh		;705e
+	call 057ffh		;705e   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	xor a			;7061
 	ld (0d2b1h),a		;7062
 	ld a,080h		;7065
@@ -2571,7 +2571,7 @@ L_711D:
 	ld (0fd9ah),a		;7125
 	ld bc,07219h		;7128
 	ld hl,0713eh		;712b
-	ld de,0d280h		;712e
+	ld de,0d280h		;712e   ; apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 	call L_71B8		;7131
 	call L_721D		;7134
 	ld a,(0d2a9h)		;7137
@@ -2597,7 +2597,7 @@ L_7143:
 	ld (0fd9ah),a		;714b
 	ld bc,07164h		;714e
 	ld hl,0d680h		;7151
-	ld de,0d280h		;7154
+	ld de,0d280h		;7154   ; apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 	call L_71B8		;7157
 	call L_724C		;715a
 	ld a,(0d2a9h)		;715d
@@ -2623,7 +2623,7 @@ L_7168:
 	ld (0fd9ah),a		;7170
 	ld bc,07189h		;7173
 	ld hl,0d740h		;7176
-	ld de,0d280h		;7179
+	ld de,0d280h		;7179   ; apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 	call L_71B8		;717c
 	call L_724C		;717f
 	ld a,(0d2a9h)		;7182
@@ -2649,7 +2649,7 @@ L_718D:
 	ld (0fd9ah),a		;7195
 	ld bc,07219h		;7198
 	ld hl,0713eh		;719b
-	ld de,0d280h		;719e
+	ld de,0d280h		;719e   ; apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 	call L_71B8		;71a1
 	call L_724C		;71a4
 	ld hl,0d2b1h		;71a7
@@ -2680,7 +2680,7 @@ L_71C5:
 	ret			;71d3
 L_71D4:
 	push bc			;71d4
-	ld de,0d280h		;71d5
+	ld de,0d280h		;71d5   ; apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 	ld (0d2a5h),de		;71d8
 	push de			;71dc
 	push hl			;71dd
@@ -2797,7 +2797,7 @@ L_727A:
 	ld (hl),c			;729c
 	inc hl			;729d
 	ld (hl),b			;729e
-	ld de,0d280h		;729f
+	ld de,0d280h		;729f   ; apunta a la ficha de 0xD280 (nombre de 5 letras, 8 ceros y 4 bytes; p13:71B8)
 	ld (0d2a5h),de		;72a2
 	ld a,(0dd0eh)		;72a6
 	ld h,080h		;72a9
@@ -2837,7 +2837,7 @@ L_72D5:
 	jr z,L_72F1		;72e8
 L_72EA:
 	ld a,008h		;72ea
-	call 0421bh		;72ec
+	call 0421bh		;72ec   ; de_mas_a: DE = DE + A
 	jr L_72D5		;72ef
 L_72F1:
 	ld hl,0d2b2h		;72f1

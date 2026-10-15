@@ -37,3 +37,152 @@ F 0x9F58 16
 D 0x9F79 0x9F8A resto_9F79  lo apuntan con el banco puesto p02:9F70 (0x9F79); el tamano es lo que hay hasta lo siguiente, no sale de recorrerlo; lo leen p02:9F70 (17 bytes)
 F 0x9F79 16
 # --- fin de los bloques de bloques.py ---
+
+# --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
+C 0x817E hl_mas_a: HL = HL + A
+C 0x83CF lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x83D7 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x83DF lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x83F8 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x841B lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x8422 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x8429 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x8497 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x849E lee las carreras del visitante (BCD; 0x99 acaba el partido)
+C 0x84A2 lee las carreras del local (BCD; 0x99 acaba el partido)
+C 0x84C0 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x84E5 lee la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x8511 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x8537 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x8559 hl_mas_a: HL = HL + A
+C 0x8564 lee el contador de cuadros del juego (sube uno por cuadro)
+C 0x8589 lee el contador de cuadros del juego (sube uno por cuadro)
+C 0x8666 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x86AC sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x86DE lee la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x8765 hl_mas_a: HL = HL + A
+C 0x87AC sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x87CA sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x87D1 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x8829 palabra_a: HL = la palabra A de la tabla HL
+C 0x88AD lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x88DC hl_mas_a: HL = HL + A
+C 0x88E5 hl_mas_a: HL = HL + A
+C 0x88F2 hl_mas_a: HL = HL + A
+C 0x88FA lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x8934 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x89C6 palabra_a: HL = la palabra A de la tabla HL
+C 0x89EE palabra_a: HL = la palabra A de la tabla HL
+C 0x8A07 hl_mas_a: HL = HL + A
+C 0x8A22 palabra_a: HL = la palabra A de la tabla HL
+C 0x8AA4 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x8AA9 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x8AB2 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x8AC4 lee la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x8AD4 lee el contador de cuadros del juego (sube uno por cuadro)
+C 0x8AFE lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x8B06 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x8BBB despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x8C24 hl_mas_a: HL = HL + A
+C 0x8C7F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x8D7F hl_mas_a: HL = HL + A
+C 0x8E2F hl_mas_a: HL = HL + A
+C 0x8E95 hl_mas_a: HL = HL + A
+C 0x8ECD hl_mas_a: HL = HL + A
+C 0x8FA0 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x8FA5 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x8FDE texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x8FF3 hl_mas_a: HL = HL + A
+C 0x9022 hl_mas_a: HL = HL + A
+C 0x9063 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x9082 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x9087 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x90D8 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x9152 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x9169 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x91B9 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x91BF guarda el estado del juego (indice del despachador principal) y el byte siguiente (16 bits)
+C 0x91E4 apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
+C 0x91F3 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
+C 0x91F9 enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
+C 0x9208 guarda la rotacion de sprites de este cuadro
+C 0x920C guarda cuantos sprites rotan (9 o 10)
+C 0x9228 lee el contador de cuadros del juego (sube uno por cuadro)
+C 0x92D0 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
+C 0x92F3 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
+C 0x9311 apunta a la cuenta atras del estado
+C 0x932B lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x934B guarda la cuenta atras del estado
+C 0x9359 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x935E sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x9363 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x936F apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
+C 0x93CA apunta a la cuenta atras del estado
+C 0x93E3 guarda la cuenta atras del estado
+C 0x940A apunta a la cuenta atras del estado
+C 0x9413 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x9419 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
+C 0x9428 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x9432 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
+C 0x9447 guarda si no es 0, el partido se acaba
+C 0x9461 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x9468 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x9471 lee la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x947E apunta a la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x9491 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x94A1 guarda el estado del juego (indice del despachador principal)
+C 0x94C7 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x94CE lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x94E0 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x94E5 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x94EA sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x94EF sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x94F4 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x950F guarda si no es 0, el partido vuelve al menu
+C 0x9518 lee los botones recien pulsados del mando 1 / cursores y el byte siguiente (16 bits)
+C 0x951B lee los botones recien pulsados (segundo mando) y el byte siguiente (16 bits)
+C 0x951F lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x9541 lee los botones recien pulsados del mando 1 / cursores y el byte siguiente (16 bits)
+C 0x9544 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x95BD despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x95E7 lee el contador de cuadros del juego (sube uno por cuadro)
+C 0x9600 lee el contador de cuadros del juego (sube uno por cuadro)
+C 0x960D lee el contador de cuadros del juego (sube uno por cuadro)
+C 0x9645 lee la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x964C sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x96BC lee el contador de cuadros del juego (sube uno por cuadro)
+C 0x96E3 lee el contador de cuadros del juego (sube uno por cuadro)
+C 0x9708 lee el contador de cuadros del juego (sube uno por cuadro)
+C 0x9793 de_mas_a: DE = DE + A
+C 0x97E2 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x98B3 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0x9915 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x9966 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x9A0D sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x9A55 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x9AD4 de_mas_a: DE = DE + A
+C 0x9B1F guarda los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color]) y el byte siguiente (16 bits)
+C 0x9D56 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x9DBC sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x9DCC hl_mas_a: HL = HL + A
+C 0x9DE0 de_mas_a: DE = DE + A
+C 0x9DF4 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x9E4A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x9E5A hl_mas_a: HL = HL + A
+C 0x9E6E de_mas_a: DE = DE + A
+C 0x9E82 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x9E90 apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
+C 0x9E96 hl_mas_a: HL = HL + A
+C 0x9EAC esconde_sprites: escribe 0xD8 (Y = 216: no se pinta ninguno) en la VRAM 0xF600, el primer atributo de sprite
+C 0x9EB8 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
+C 0x9EBE apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
+C 0x9ECC texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x9ED7 marco: un marco de lineas: HL la esquina, DE el tamano
+C 0x9EE2 marco: un marco de lineas: HL la esquina, DE el tamano
+C 0x9F19 guarda la cuenta atras del estado
+C 0x9F1C guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x9F35 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
+C 0x9FA6 guarda la marca de 'acabado' que dejan las rutinas de cada paso
+C 0x9FC2 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+C 0x9FEA sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
+# --- fin de las anotaciones de anota.py ---

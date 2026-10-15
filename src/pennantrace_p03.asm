@@ -38,7 +38,7 @@ L_A00C:
 	ld hl,0e304h		;a01a
 	inc (hl)			;a01d
 	ld a,027h		;a01e
-	jp 057ffh		;a020
+	jp 057ffh		;a020   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_A023:
 	ld a,(0e19ch)		;a023
 	ld b,0ffh		;a026
@@ -61,7 +61,7 @@ L_A02F:
 L_A041:
 	ld (hl),b			;a041
 	ld a,026h		;a042
-	jp 057ffh		;a044
+	jp 057ffh		;a044   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_A047:
 	ld a,(0e19ch)		;a047
 	and 020h		;a04a
@@ -69,7 +69,7 @@ L_A047:
 	ld bc,00a09h		;a04f
 	call L_A0C6		;a052
 	ld a,027h		;a055
-	call 057ffh		;a057
+	call 057ffh		;a057   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,(0e30dh)		;a05a
 	call L_A20F		;a05d
 	ld d,018h		;a060
@@ -88,10 +88,10 @@ L_A047:
 	ld hl,0ec50h		;a085
 	ld d,h			;a088
 	ld e,l			;a089
-	call 04216h		;a08a
+	call 04216h		;a08a   ; hl_mas_a: HL = HL + A
 	ld b,(hl)			;a08d
 	ld a,(0e30dh)		;a08e
-	call 0421bh		;a091
+	call 0421bh		;a091   ; de_mas_a: DE = DE + A
 	ld a,(de)			;a094
 	ld (hl),a			;a095
 	ld a,b			;a096
@@ -125,7 +125,7 @@ L_A0BC:
 	ld (hl),b			;a0bc
 	ld a,b			;a0bd
 	ld d,018h		;a0be
-	ld bc,0e100h		;a0c0
+	ld bc,0e100h		;a0c0   ; apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 	jp L_A1CA		;a0c3
 L_A0C6:
 	ld a,b			;a0c6
@@ -152,7 +152,7 @@ L_A0D7:
 	call L_A1F6		;a0f3
 	jp c,L_A4C4		;a0f6
 	ld a,027h		;a0f9
-	call 057ffh		;a0fb
+	call 057ffh		;a0fb   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,002h		;a0fe
 	ld hl,0e30ah		;a100
 	or (hl)			;a103
@@ -172,7 +172,7 @@ L_A113:
 	ld hl,0e305h		;a121
 	inc (hl)			;a124
 	ld a,027h		;a125
-	jp 057ffh		;a127
+	jp 057ffh		;a127   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_A12A:
 	ld a,(0e19eh)		;a12a
 	ld b,0ffh		;a12d
@@ -195,7 +195,7 @@ L_A136:
 L_A148:
 	ld (hl),b			;a148
 	ld a,026h		;a149
-	jp 057ffh		;a14b
+	jp 057ffh		;a14b   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_A14E:
 	ld a,(0e19eh)		;a14e
 	and 020h		;a151
@@ -203,7 +203,7 @@ L_A14E:
 	ld bc,00a09h		;a156
 	call L_A1E5		;a159
 	ld a,027h		;a15c
-	call 057ffh		;a15e
+	call 057ffh		;a15e   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,(0e30eh)		;a161
 	call L_A20F		;a164
 	ld d,090h		;a167
@@ -222,10 +222,10 @@ L_A14E:
 	ld hl,0ec62h		;a18c
 	ld d,h			;a18f
 	ld e,l			;a190
-	call 04216h		;a191
+	call 04216h		;a191   ; hl_mas_a: HL = HL + A
 	ld b,(hl)			;a194
 	ld a,(0e30eh)		;a195
-	call 0421bh		;a198
+	call 0421bh		;a198   ; de_mas_a: DE = DE + A
 	ld a,(de)			;a19b
 	ld (hl),a			;a19c
 	ld a,b			;a19d
@@ -262,7 +262,7 @@ L_A1C3:
 	ld bc,0e110h		;a1c7
 L_A1CA:
 	ld hl,0a2dch		;a1ca
-	call 04216h		;a1cd
+	call 04216h		;a1cd   ; hl_mas_a: HL = HL + A
 	ld e,(hl)			;a1d0
 	ld a,d			;a1d1
 	ld h,b			;a1d2
@@ -278,7 +278,7 @@ L_A1D6:
 	add a,010h		;a1dc
 	djnz L_A1D6		;a1de
 	ld a,026h		;a1e0
-	jp 057ffh		;a1e2
+	jp 057ffh		;a1e2   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_A1E5:
 	ld a,b			;a1e5
 	ld (0e11fh),a		;a1e6
@@ -311,7 +311,7 @@ L_A20D:
 	ret			;a20e
 L_A20F:
 	ld hl,0a2dch		;a20f
-	call 04216h		;a212
+	call 04216h		;a212   ; hl_mas_a: HL = HL + A
 	ld e,(hl)			;a215
 	inc e			;a216
 	ret			;a217
@@ -319,7 +319,7 @@ L_A218:
 	push de			;a218
 	ld d,b			;a219
 	ld e,c			;a21a
-	call 0421bh		;a21b
+	call 0421bh		;a21b   ; de_mas_a: DE = DE + A
 	ld a,(de)			;a21e
 	pop de			;a21f
 L_A220:
@@ -359,13 +359,13 @@ L_A242:
 	add a,034h		;a250
 	ld d,a			;a252
 	ld a,090h		;a253
-	call 04f1ch		;a255
+	call 04f1ch		;a255   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	ld a,d			;a258
 	add a,004h		;a259
 	ld d,a			;a25b
 	ld hl,07eb6h		;a25c
 	ld c,0ffh		;a25f
-	jp 04eb5h		;a261
+	jp 04eb5h		;a261   ; texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
 L_A264:
 	ld b,a			;a264
 	add a,a			;a265
@@ -389,7 +389,7 @@ L_A27A:
 	ld bc,06808h		;a27b
 	xor a			;a27e
 	ld d,000h		;a27f
-	jp 04d2ah		;a281
+	jp 04d2ah		;a281   ; rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 L_A284:
 	push hl			;a284
 	push de			;a285
@@ -399,7 +399,7 @@ L_A284:
 	ld bc,03008h		;a289
 	ld a,000h		;a28c
 	ld d,000h		;a28e
-	call 04d2ah		;a290
+	call 04d2ah		;a290   ; rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 	pop af			;a293
 	pop bc			;a294
 	pop de			;a295
@@ -420,7 +420,7 @@ L_A2A6:
 L_A2AE:
 	ld a,(hl)			;a2ae
 	ld hl,0a2dch		;a2af
-	call 04216h		;a2b2
+	call 04216h		;a2b2   ; hl_mas_a: HL = HL + A
 	ld e,(hl)			;a2b5
 	ld a,e			;a2b6
 	ld (bc),a			;a2b7
@@ -448,25 +448,25 @@ DATA_resto_A2BC:
 
 L_A2ED:
 	call 04ba2h		;a2ed
-	call 04bd2h		;a2f0
+	call 04bd2h		;a2f0   ; esconde_sprites: escribe 0xD8 (Y = 216: no se pinta ninguno) en la VRAM 0xF600, el primer atributo de sprite
 	call 052b5h		;a2f3
 	call 05202h		;a2f6
-	call 05c7dh		;a2f9
+	call 05c7dh		;a2f9   ; esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 	ld hl,0a2bch		;a2fc
-	ld de,0e100h		;a2ff
+	ld de,0e100h		;a2ff   ; apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 	ld bc,00020h		;a302
 	ldir		;a305
 	call 05b1fh		;a307
 	ld hl,00e18h		;a30a
 	ld de,07385h		;a30d
 	ld c,00dh		;a310
-	call 04cfeh		;a312
+	call 04cfeh		;a312   ; marco: un marco de lineas: HL la esquina, DE el tamano
 	ld hl,08618h		;a315
 	ld de,07385h		;a318
 	ld c,00dh		;a31b
-	call 04cfeh		;a31d
+	call 04cfeh		;a31d   ; marco: un marco de lineas: HL la esquina, DE el tamano
 	ld hl,07e86h		;a320
-	call 04ea6h		;a323
+	call 04ea6h		;a323   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,002h		;a326
 	ld de,01028h		;a328
 	call L_A452		;a32b
@@ -494,7 +494,7 @@ L_A2ED:
 	ld hl,0d48ah		;a36c
 	call L_A220		;a36f
 	xor a			;a372
-	ld (0e1d1h),a		;a373
+	ld (0e1d1h),a		;a373   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
 	ld (0de0dh),a		;a376
 	ld (0de0eh),a		;a379
 	ld (0e304h),a		;a37c
@@ -544,7 +544,7 @@ L_A3B4:
 	add a,03ch		;a3c2
 	ld d,a			;a3c4
 	ld a,090h		;a3c5
-	call 04f1ch		;a3c7
+	call 04f1ch		;a3c7   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	ld a,d			;a3ca
 	sub 008h		;a3cb
 	ld d,a			;a3cd
@@ -580,13 +580,13 @@ L_A3EC:
 	add a,034h		;a3f6
 	ld d,a			;a3f8
 	ld a,090h		;a3f9
-	call 04f1ch		;a3fb
+	call 04f1ch		;a3fb   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	ld a,d			;a3fe
 	add a,004h		;a3ff
 	ld d,a			;a401
 	ld b,003h		;a402
 	call 05be6h		;a404
-	call 04f6fh		;a407
+	call 04f6fh		;a407   ; siguiente_columna: D += 8; si da la vuelta, E += 8
 	ld b,002h		;a40a
 	call 05be6h		;a40c
 	inc hl			;a40f
@@ -610,7 +610,7 @@ L_A425:
 	ld a,(hl)			;a425
 	inc hl			;a426
 	push af			;a427
-	call 04f1ch		;a428
+	call 04f1ch		;a428   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	pop af			;a42b
 	cp 00ch		;a42c
 	ld a,004h		;a42e
@@ -628,7 +628,7 @@ L_A43C:
 	inc hl			;a43d
 	push af			;a43e
 	add a,0a0h		;a43f
-	call 04f1ch		;a441
+	call 04f1ch		;a441   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	pop af			;a444
 	cp 00ch		;a445
 	ld a,004h		;a447
@@ -641,7 +641,7 @@ L_A44D:
 	ret			;a451
 L_A452:
 	push af			;a452
-	call 04f1ch		;a453
+	call 04f1ch		;a453   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	pop af			;a456
 	inc a			;a457
 	cp 00bh		;a458
@@ -656,8 +656,8 @@ L_A463:
 	ld a,(0de02h)		;a463
 	bit 3,a		;a466
 	ret nz			;a468
-	ld hl,(0de06h)		;a469
-	ld de,(0de08h)		;a46c
+	ld hl,(0de06h)		;a469   ; lee los botones recien pulsados del mando 1 / cursores y el byte siguiente (16 bits)
+	ld de,(0de08h)		;a46c   ; lee los botones recien pulsados (segundo mando) y el byte siguiente (16 bits)
 	bit 4,a		;a470
 	jr nz,L_A47F		;a472
 L_A474:
@@ -687,18 +687,18 @@ L_A492:
 	ld de,01450h		;a49d
 	ld bc,06a20h		;a4a0
 	ld a,004h		;a4a3
-	call 04d66h		;a4a5
+	call 04d66h		;a4a5   ; copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 	ld hl,014a8h		;a4a8
 	ld bc,0681ch		;a4ab
 	xor a			;a4ae
 	ld d,a			;a4af
-	call 04d2ah		;a4b0
+	call 04d2ah		;a4b0   ; rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 	ld hl,014a8h		;a4b3
 	ld de,0681ch		;a4b6
 	ld c,00dh		;a4b9
-	call 04cfeh		;a4bb
+	call 04cfeh		;a4bb   ; marco: un marco de lineas: HL la esquina, DE el tamano
 	ld hl,07d62h		;a4be
-	jp 04ea6h		;a4c1
+	jp 04ea6h		;a4c1   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 L_A4C4:
 	ld hl,0ed7eh		;a4c4
 	ld a,(hl)			;a4c7
@@ -709,18 +709,18 @@ L_A4C4:
 	ld de,08c50h		;a4cf
 	ld bc,06a20h		;a4d2
 	ld a,004h		;a4d5
-	call 04d66h		;a4d7
+	call 04d66h		;a4d7   ; copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 	ld hl,08ca8h		;a4da
 	ld bc,0681ch		;a4dd
 	xor a			;a4e0
 	ld d,a			;a4e1
-	call 04d2ah		;a4e2
+	call 04d2ah		;a4e2   ; rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 	ld hl,08ca8h		;a4e5
 	ld de,0681ch		;a4e8
 	ld c,00dh		;a4eb
-	call 04cfeh		;a4ed
+	call 04cfeh		;a4ed   ; marco: un marco de lineas: HL la esquina, DE el tamano
 	ld hl,07b48h		;a4f0
-	jp 04ea6h		;a4f3
+	jp 04ea6h		;a4f3   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 L_A4F6:
 	ld hl,0ed7dh		;a4f6
 	ld de,014a8h		;a4f9
@@ -739,14 +739,14 @@ L_A50A:
 	ld l,c			;a510
 	ld bc,06a20h		;a511
 	ld a,001h		;a514
-	jp 04d66h		;a516
+	jp 04d66h		;a516   ; copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 L_A519:
 	call 095bah		;a519
 	call 09566h		;a51c
 	call L_A876		;a51f
 	call 08636h		;a522
-	ld a,(0e1d1h)		;a525
-	call 04220h		;a528
+	ld a,(0e1d1h)		;a525   ; lee la marca de 'acabado' que dejan las rutinas de cada paso
+	call 04220h		;a528   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_A52B: 7 destinos del despachador p00:4220 (call en p03:A528, el
@@ -782,7 +782,7 @@ L_A539:
 	ld de,0ec98h		;a55e
 	ld bc,00040h		;a561
 	ldir		;a564
-	ld hl,0e194h		;a566
+	ld hl,0e194h		;a566   ; apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 	ld de,0ecdch		;a569
 	ld bc,00004h		;a56c
 	ldir		;a56f
@@ -801,7 +801,7 @@ L_A57E:
 	ld a,001h		;a58d
 	ld (0e337h),a		;a58f
 L_A592:
-	ld hl,0e1d1h		;a592
+	ld hl,0e1d1h		;a592   ; apunta a la marca de 'acabado' que dejan las rutinas de cada paso
 	inc (hl)			;a595
 	ret			;a596
 L_A597:
@@ -840,7 +840,7 @@ L_A597:
 	inc hl			;a5de
 	ld (hl),00fh		;a5df
 	ld a,(0e225h)		;a5e1
-	call 057ffh		;a5e4
+	call 057ffh		;a5e4   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,0e0h		;a5e7
 	ld (0e150h),a		;a5e9
 	ld (0e154h),a		;a5ec
@@ -939,7 +939,7 @@ L_A68E:
 	cp 003h		;a697
 	jr c,L_A6AC		;a699
 	ld hl,0ed19h		;a69b
-	ld a,(0e19bh)		;a69e
+	ld a,(0e19bh)		;a69e   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;a6a1
 	jr nc,L_A6A5		;a6a2
 	inc hl			;a6a4
@@ -1001,7 +1001,7 @@ L_A6F6:
 	ld b,016h		;a707
 L_A709:
 	ld a,b			;a709
-	jp 057ffh		;a70a
+	jp 057ffh		;a70a   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_A70D:
 	ld a,(0eddch)		;a70d
 	or a			;a710
@@ -1070,7 +1070,7 @@ L_A76C:
 	jp nc,051a1h		;a783
 	jp 05185h		;a786
 L_A789:
-	ld hl,0e1d1h		;a789
+	ld hl,0e1d1h		;a789   ; apunta a la marca de 'acabado' que dejan las rutinas de cada paso
 	ld (hl),006h		;a78c
 	inc hl			;a78e
 	ld (hl),0c0h		;a78f
@@ -1174,7 +1174,7 @@ L_A830:
 	ld a,(0e1d3h)		;a830
 	dec a			;a833
 	ld hl,0a83fh		;a834
-	call 04216h		;a837
+	call 04216h		;a837   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;a83a
 	ld (0e1d2h),a		;a83b
 	ret			;a83e
@@ -1238,12 +1238,12 @@ L_A876:
 	ld a,(0d6dch)		;a884
 	rra			;a887
 	jr nc,L_A894		;a888
-	ld a,(0e19bh)		;a88a
+	ld a,(0e19bh)		;a88a   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;a88d
 	jp nc,0777ah		;a88e
 	jp 075d5h		;a891
 L_A894:
-	ld a,(0e19bh)		;a894
+	ld a,(0e19bh)		;a894   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;a897
 	jp c,0777ah		;a898
 	jp 075d5h		;a89b
@@ -1315,7 +1315,7 @@ L_A8F5:
 	ld e,a			;a906
 	ld a,(0e1d5h)		;a907
 	sub 064h		;a90a
-	call 05fa4h		;a90c
+	call 05fa4h		;a90c   ; multiplica: HL = A x E (8 x 8 bits)
 	ld a,(0e1ebh)		;a90f
 	bit 2,a		;a912
 	call nz,05f71h		;a914
@@ -1332,7 +1332,7 @@ L_A924:
 	ld (0e1dah),hl		;a927
 	ret			;a92a
 L_A92B:
-	ld a,(0de03h)		;a92b
+	ld a,(0de03h)		;a92b   ; lee el contador de cuadros del juego (sube uno por cuadro)
 	rra			;a92e
 	ret z			;a92f
 	ld a,(0e19fh)		;a930
@@ -1395,7 +1395,7 @@ L_A993:
 	ld e,a			;a997
 	ld (0ed94h),a		;a998
 	ld a,(0ed12h)		;a99b
-	call 05fa4h		;a99e
+	call 05fa4h		;a99e   ; multiplica: HL = A x E (8 x 8 bits)
 	ex de,hl			;a9a1
 	ret			;a9a2
 L_A9A3:
@@ -1420,7 +1420,7 @@ L_A9BA:
 	ld e,a			;a9bd
 	ld a,(0e1d5h)		;a9be
 	sub 064h		;a9c1
-	call 05fa4h		;a9c3
+	call 05fa4h		;a9c3   ; multiplica: HL = A x E (8 x 8 bits)
 	ex de,hl			;a9c6
 	ld a,(0e1ebh)		;a9c7
 	bit 1,a		;a9ca
@@ -1532,7 +1532,7 @@ L_AAA9:
 L_AAAF:
 	add a,c			;aaaf
 	djnz L_AAAF		;aab0
-	jp 04216h		;aab2
+	jp 04216h		;aab2   ; hl_mas_a: HL = HL + A
 L_AAB5:
 	call L_AAD3		;aab5
 	ld a,(ix+006h)		;aab8
@@ -1552,7 +1552,7 @@ L_AACE:
 	ret			;aad2
 L_AAD3:
 	ld ix,(0ed8ah)		;aad3
-	ld a,(0e19bh)		;aad7
+	ld a,(0e19bh)		;aad7   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;aada
 	ret nc			;aadb
 	ld ix,(0ed88h)		;aadc
@@ -1735,14 +1735,14 @@ L_AC13:
 	ret			;ac1f
 L_AC20:
 	ld hl,0ed93h		;ac20
-	ld a,(0e19bh)		;ac23
+	ld a,(0e19bh)		;ac23   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;ac26
 	ret nc			;ac27
 	ld hl,0ed91h		;ac28
 	ret			;ac2b
 L_AC2C:
 	ld hl,0ed92h		;ac2c
-	ld a,(0e19bh)		;ac2f
+	ld a,(0e19bh)		;ac2f   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;ac32
 	ret nc			;ac33
 	ld hl,0ed90h		;ac34
@@ -1776,7 +1776,7 @@ L_AC4F:
 L_AC59:
 	ld hl,0ed5ah		;ac59
 	ld de,0ed64h		;ac5c
-	ld a,(0e19bh)		;ac5f
+	ld a,(0e19bh)		;ac5f   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;ac62
 	ret nc			;ac63
 	ld hl,0ed58h		;ac64
@@ -1812,7 +1812,7 @@ L_AC7C:
 	call 06194h		;ac8e
 L_AC91:
 	xor a			;ac91
-	ld hl,0e1d1h		;ac92
+	ld hl,0e1d1h		;ac92   ; apunta a la marca de 'acabado' que dejan las rutinas de cada paso
 	ld de,0e1d2h		;ac95
 	ld bc,0005eh		;ac98
 	ld (hl),a			;ac9b
@@ -1829,7 +1829,7 @@ L_ACA6:
 	ld (0ed3eh),a		;acb1
 	ld (0ed3fh),a		;acb4
 	ld (0e1b5h),a		;acb7
-	call 04bc5h		;acba
+	call 04bc5h		;acba   ; apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
 	ld a,001h		;acbd
 	ld (0ed9fh),a		;acbf
 	call 0547ah		;acc2
@@ -1838,7 +1838,7 @@ L_ACA6:
 	call 0537ch		;accb
 	xor a			;acce
 	ld (0e1a2h),a		;accf
-	call 05c7dh		;acd2
+	call 05c7dh		;acd2   ; esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 	call 095adh		;acd5
 	call L_AD26		;acd8
 	call L_B449		;acdb
@@ -1856,7 +1856,7 @@ L_ACA6:
 	call 069e9h		;acff
 	xor a			;ad02
 	ld (0ed9fh),a		;ad03
-	call 04bb8h		;ad06
+	call 04bb8h		;ad06   ; enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
 	xor a			;ad09
 	ld (0eddbh),a		;ad0a
 	ld hl,0e1cbh		;ad0d
@@ -1867,7 +1867,7 @@ L_ACA6:
 	ld a,01ah		;ad16
 L_AD18:
 	ld (hl),000h		;ad18
-	call 057ffh		;ad1a
+	call 057ffh		;ad1a   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	call 054b3h		;ad1d
 	call 0549bh		;ad20
 	jp 057b9h		;ad23
@@ -1985,7 +1985,7 @@ L_ADC3:
 	ld (0e33ch),a		;adcc
 	ld (0ed2ah),a		;adcf
 	ld a,006h		;add2
-	call 057ffh		;add4
+	call 057ffh		;add4   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,001h		;add7
 	ld (0eddfh),a		;add9
 	ld a,(0e1d0h)		;addc
@@ -2054,7 +2054,7 @@ L_AE46:
 	ld (0ed02h),a		;ae52
 	call L_B123		;ae55
 	ld a,045h		;ae58
-	call 057ffh		;ae5a
+	call 057ffh		;ae5a   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_AE5D:
 	ld hl,0ed08h		;ae5d
 	ld a,(hl)			;ae60
@@ -2481,9 +2481,9 @@ L_B0F5:
 	ld a,001h		;b0fc
 	ld (0ecech),a		;b0fe
 	ld hl,07e71h		;b101
-	call 04ea6h		;b104
+	call 04ea6h		;b104   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,012h		;b107
-	jp 057ffh		;b109
+	jp 057ffh		;b109   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_B10C:
 	ld a,(0e220h)		;b10c
 	ld l,a			;b10f
@@ -2508,10 +2508,10 @@ L_B125:
 	dec a			;b128
 	ld hl,07e69h		;b129
 	push bc			;b12c
-	call nz,04ea6h		;b12d
+	call nz,04ea6h		;b12d   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	pop bc			;b130
 	ld a,042h		;b131
-	call 057ffh		;b133
+	call 057ffh		;b133   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld hl,0e19ah		;b136
 	inc (hl)			;b139
 	ld a,(hl)			;b13a
@@ -2538,7 +2538,7 @@ L_B159:
 	jr nz,L_B163		;b15f
 	ld a,00eh		;b161
 L_B163:
-	jp 057ffh		;b163
+	jp 057ffh		;b163   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_B166:
 	xor a			;b166
 	ld (0e1a5h),a		;b167
@@ -2605,7 +2605,7 @@ L_B1D8:
 	call L_B219		;b1e5
 	ld a,(0ec46h)		;b1e8
 	ld hl,0de10h		;b1eb
-	call 04216h		;b1ee
+	call 04216h		;b1ee   ; hl_mas_a: HL = HL + A
 	ld d,000h		;b1f1
 L_B1F3:
 	ld b,000h		;b1f3
@@ -2715,7 +2715,7 @@ L_B2A3:
 	ld a,(0ec46h)		;b2ab
 	add a,010h		;b2ae
 	ld hl,0de10h		;b2b0
-	call 04216h		;b2b3
+	call 04216h		;b2b3   ; hl_mas_a: HL = HL + A
 	ld d,080h		;b2b6
 	call L_B1F3		;b2b8
 	ld a,(0e1a3h)		;b2bb
@@ -2739,9 +2739,9 @@ L_B2DA:
 	ld a,(0d380h)		;b2dd
 	ld hl,0e311h		;b2e0
 L_B2E3:
-	call 04f1ch		;b2e3
+	call 04f1ch		;b2e3   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	ld d,050h		;b2e6
-	jp 04eb5h		;b2e8
+	jp 04eb5h		;b2e8   ; texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
 L_B2EB:
 	ld de,0402ch		;b2eb
 	ld a,(0d47fh)		;b2ee
@@ -2956,7 +2956,7 @@ L_B449:
 	jr L_B443		;b44d
 L_B44F:
 	xor a			;b44f
-	ld (0e1d1h),a		;b450
+	ld (0e1d1h),a		;b450   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
 	ld hl,0e331h		;b453
 	ld (hl),080h		;b456
 	ld a,(0e1a6h)		;b458
@@ -2973,13 +2973,13 @@ L_B46F:
 	ld hl,00000h		;b46f
 	call L_B47E		;b472
 	call L_B4AD		;b475
-	jp 04bb8h		;b478
+	jp 04bb8h		;b478   ; enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
 L_B47B:
 	ld hl,000e0h		;b47b
 L_B47E:
 	ld (0e1a2h),hl		;b47e
 	ld (0e1b6h),hl		;b481
-	call 04bc5h		;b484
+	call 04bc5h		;b484   ; apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
 	call L_B440		;b487
 	inc a			;b48a
 	ld (0e1a6h),a		;b48b
@@ -2989,14 +2989,14 @@ L_B491:
 	ld (0edcbh),a		;b492
 	call L_B166		;b495
 L_B498:
-	call 05c7dh		;b498
+	call 05c7dh		;b498   ; esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 	call 05b1fh		;b49b
 	call 05c73h		;b49e
 	jp 051beh		;b4a1
 L_B4A4:
-	call 04bc5h		;b4a4
+	call 04bc5h		;b4a4   ; apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
 	call L_B491		;b4a7
-	jp 04bb8h		;b4aa
+	jp 04bb8h		;b4aa   ; enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
 L_B4AD:
 	ld c,0ffh		;b4ad
 	call L_B2EB		;b4af
@@ -3230,22 +3230,22 @@ L_B65F:
 L_B665:
 	push hl			;b665
 	ld a,c			;b666
-	call 05fa4h		;b667
+	call 05fa4h		;b667   ; multiplica: HL = A x E (8 x 8 bits)
 	ld e,h			;b66a
 	ld d,000h		;b66b
 	pop hl			;b66d
 	add hl,de			;b66e
 	ret			;b66f
 L_B670:
-	call 04bc5h		;b670
+	call 04bc5h		;b670   ; apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
 	call 04c25h		;b673
 	ld hl,02870h		;b676
 	ld bc,0a830h		;b679
 	xor a			;b67c
 	ld d,001h		;b67d
-	call 04d2ah		;b67f
+	call 04d2ah		;b67f   ; rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 	call 057c6h		;b682
-	call 04bb8h		;b685
+	call 04bb8h		;b685   ; enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
 	ld hl,0de0dh		;b688
 	ld (hl),03ch		;b68b
 	inc hl			;b68d
@@ -3255,7 +3255,7 @@ L_B670:
 	ret			;b693
 L_B694:
 	ld a,(0e1a1h)		;b694
-	call 04220h		;b697
+	call 04220h		;b697   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_B69A: 6 destinos del despachador p00:4220 (call en p03:B697, el
@@ -3317,15 +3317,15 @@ L_B6EB:
 	push hl			;b6ec
 	call L_BDD4		;b6ed
 	pop hl			;b6f0
-	call 04ea6h		;b6f1
+	call 04ea6h		;b6f1   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,005h		;b6f4
 	ld (0e1a1h),a		;b6f6
 	ret			;b6f9
 L_B6FA:
-	call 04bd2h		;b6fa
+	call 04bd2h		;b6fa   ; esconde_sprites: escribe 0xD8 (Y = 216: no se pinta ninguno) en la VRAM 0xF600, el primer atributo de sprite
 	call L_BDD4		;b6fd
 	ld hl,07b99h		;b700
-	call 04ea6h		;b703
+	call 04ea6h		;b703   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	xor a			;b706
 	ld (0dd0ch),a		;b707
 	call L_BCE5		;b70a
@@ -3357,12 +3357,12 @@ L_B737:
 	ld a,(0e1b3h)		;b73b
 	add a,d			;b73e
 	ld hl,0d433h		;b73f
-	call 04216h		;b742
+	call 04216h		;b742   ; hl_mas_a: HL = HL + A
 	jr L_B765		;b745
 L_B747:
 	ld a,(0e1b3h)		;b747
 	ld hl,0d380h		;b74a
-	call 04216h		;b74d
+	call 04216h		;b74d   ; hl_mas_a: HL = HL + A
 	jr L_B765		;b750
 L_B752:
 	ld b,a			;b752
@@ -3375,7 +3375,7 @@ L_B757:
 	ld a,(0e1b3h)		;b75b
 	add a,d			;b75e
 	ld hl,0d38bh		;b75f
-	call 04216h		;b762
+	call 04216h		;b762   ; hl_mas_a: HL = HL + A
 L_B765:
 	ld a,(0e1afh)		;b765
 	cp 09fh		;b768
@@ -3441,12 +3441,12 @@ L_B7C6:
 	or a			;b7c9
 	ret z			;b7ca
 	cp 09fh		;b7cb
-	ld de,(0e100h)		;b7cd
+	ld de,(0e100h)		;b7cd   ; lee los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color]) y el byte siguiente (16 bits)
 	jr nz,L_B7D4		;b7d1
 	xor a			;b7d3
 L_B7D4:
 	inc e			;b7d4
-	call 04f1ch		;b7d5
+	call 04f1ch		;b7d5   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	ld a,008h		;b7d8
 	ld hl,0e1a2h		;b7da
 	ld c,(hl)			;b7dd
@@ -3472,7 +3472,7 @@ L_B7E7:
 	cp 01fh		;b802
 	ret			;b804
 L_B805:
-	ld a,(0de07h)		;b805
+	ld a,(0de07h)		;b805   ; lee los botones pulsados del mando 1 / cursores
 	and 00fh		;b808
 	ret z			;b80a
 	ld hl,0e1b1h		;b80b
@@ -3586,7 +3586,7 @@ L_B8A6:
 	and 001h		;b8a9
 	jr nz,L_B8B2		;b8ab
 	ld a,030h		;b8ad
-	call 04216h		;b8af
+	call 04216h		;b8af   ; hl_mas_a: HL = HL + A
 L_B8B2:
 	ld a,(hl)			;b8b2
 L_B8B3:
@@ -3707,7 +3707,7 @@ L_B951:
 	xor a			;b963
 	jp L_B8B3		;b964
 L_B967:
-	ld a,(0de06h)		;b967
+	ld a,(0de06h)		;b967   ; lee los botones recien pulsados del mando 1 / cursores
 	and 013h		;b96a
 	ret z			;b96c
 	bit 4,a		;b96d
@@ -3739,7 +3739,7 @@ L_B995:
 	jr z,L_B9AA		;b99f
 	call L_BDE6		;b9a1
 	ld hl,07c22h		;b9a4
-	call 04ea6h		;b9a7
+	call 04ea6h		;b9a7   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 L_B9AA:
 	ld a,0b4h		;b9aa
 	ld (0d2e1h),a		;b9ac
@@ -3768,21 +3768,21 @@ L_B9D2:
 	ld (0e1a1h),a		;b9d4
 	jp L_BDF4		;b9d7
 L_B9DA:
-	call 04b9fh		;b9da
+	call 04b9fh		;b9da   ; borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
 	call L_BE18		;b9dd
 	xor a			;b9e0
 	ld (0ede6h),a		;b9e1
 	ld (0dd0ch),a		;b9e4
 	ld (0e1a2h),a		;b9e7
-	call 05c7dh		;b9ea
+	call 05c7dh		;b9ea   ; esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 	call 05202h		;b9ed
 	call 052b5h		;b9f0
 	xor a			;b9f3
 	ld de,02202h		;b9f4
-	call 04bf0h		;b9f7
+	call 04bf0h		;b9f7   ; pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
 	call L_BA8B		;b9fa
 	ld hl,0baafh		;b9fd
-	ld de,0e100h		;ba00
+	ld de,0e100h		;ba00   ; apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 	ld bc,00004h		;ba03
 	ldir		;ba06
 	ld de,0d381h		;ba08
@@ -3857,16 +3857,16 @@ L_BA6E:
 	ret			;ba8a
 L_BA8B:
 	ld hl,07ec6h		;ba8b
-	call 04ea6h		;ba8e
+	call 04ea6h		;ba8e   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld hl,07815h		;ba91
 	ld bc,0500dh		;ba94
-	call 04c91h		;ba97
+	call 04c91h		;ba97   ; linea: orden LINE (0x70) del VDP desde HL
 	ld hl,0288ah		;ba9a
 	ld bc,0d00dh		;ba9d
-	call 04c91h		;baa0
+	call 04c91h		;baa0   ; linea: orden LINE (0x70) del VDP desde HL
 	ld hl,028c5h		;baa3
 	ld bc,0d00dh		;baa6
-	call 04c91h		;baa9
+	call 04c91h		;baa9   ; linea: orden LINE (0x70) del VDP desde HL
 	jp 05d98h		;baac
 
 ; ----------------------------------------------------------------------
@@ -3980,7 +3980,7 @@ L_BBF3:
 	ld a,(0e1a2h)		;bbf3
 	ld b,a			;bbf6
 	ld de,05fb5h		;bbf7
-	call 0421bh		;bbfa
+	call 0421bh		;bbfa   ; de_mas_a: DE = DE + A
 	ld a,(de)			;bbfd
 	ld c,a			;bbfe
 	ld a,b			;bbff
@@ -3993,17 +3993,17 @@ L_BBF3:
 	ld hl,05fdeh		;bc0d
 L_BC10:
 	ld a,(0e1a3h)		;bc10
-	call 04216h		;bc13
+	call 04216h		;bc13   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;bc16
-	ld hl,0e100h		;bc17
+	ld hl,0e100h		;bc17   ; apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 	ld (hl),c			;bc1a
 	inc hl			;bc1b
 	ld (hl),a			;bc1c
 	ld a,026h		;bc1d
-	jp 057ffh		;bc1f
+	jp 057ffh		;bc1f   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_BC22:
 	ld a,(0d47fh)		;bc22
-	call 04220h		;bc25
+	call 04220h		;bc25   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_BC28: 7 destinos del despachador p00:4220 (call en p03:BC25, el
@@ -4019,7 +4019,7 @@ DATA_tabla_BC28:
 
 
 L_BC36:
-	ld a,(0de06h)		;bc36
+	ld a,(0de06h)		;bc36   ; lee los botones recien pulsados del mando 1 / cursores
 	and 013h		;bc39
 	ret z			;bc3b
 	bit 4,a		;bc3c
@@ -4053,14 +4053,14 @@ L_BC67:
 L_BC79:
 	call L_BDE6		;bc79
 	ld hl,07d4eh		;bc7c
-	call 04ea6h		;bc7f
+	call 04ea6h		;bc7f   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,040h		;bc82
 	ld (0d2e1h),a		;bc84
 	ld a,005h		;bc87
 	ld (0d47fh),a		;bc89
 	ret			;bc8c
 L_BC8D:
-	ld a,(0de06h)		;bc8d
+	ld a,(0de06h)		;bc8d   ; lee los botones recien pulsados del mando 1 / cursores
 	and 013h		;bc90
 	ret z			;bc92
 	bit 4,a		;bc93
@@ -4107,7 +4107,7 @@ L_BCE5:
 	ld bc,00818h		;bce8
 	xor a			;bceb
 	ld d,a			;bcec
-	call 04d2ah		;bced
+	call 04d2ah		;bced   ; rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 	ld a,(0dd0ch)		;bcf0
 	ld e,04ch		;bcf3
 	or a			;bcf5
@@ -4117,9 +4117,9 @@ L_BCFA:
 	ld d,058h		;bcfa
 	ld hl,07df7h		;bcfc
 	ld c,0ffh		;bcff
-	jp 04eb5h		;bd01
+	jp 04eb5h		;bd01   ; texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
 L_BD04:
-	ld a,(0de06h)		;bd04
+	ld a,(0de06h)		;bd04   ; lee los botones recien pulsados del mando 1 / cursores
 	and 010h		;bd07
 	jr nz,L_BD11		;bd09
 	call 05d3eh		;bd0b
@@ -4137,7 +4137,7 @@ L_BD11:
 	ld a,(0dd8fh)		;bd27
 	dec a			;bd2a
 	ld a,001h		;bd2b
-	call z,057ffh		;bd2d
+	call z,057ffh		;bd2d   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	jr L_BCD9		;bd30
 L_BD32:
 	call L_BDD4		;bd32
@@ -4147,7 +4147,7 @@ L_BD32:
 	jr z,L_BD41		;bd3c
 	ld hl,07c06h		;bd3e
 L_BD41:
-	call 04ea6h		;bd41
+	call 04ea6h		;bd41   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	xor a			;bd44
 	ld (0dd0ch),a		;bd45
 	call L_BCE5		;bd48
@@ -4180,12 +4180,12 @@ L_BD7C:
 	call L_BDF4		;bd81
 L_BD84:
 	ld a,02fh		;bd84
-	call 057ffh		;bd86
+	call 057ffh		;bd86   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld hl,0e1a1h		;bd89
 	inc (hl)			;bd8c
 	ret			;bd8d
 L_BD8E:
-	ld a,(0de06h)		;bd8e
+	ld a,(0de06h)		;bd8e   ; lee los botones recien pulsados del mando 1 / cursores
 	and 013h		;bd91
 	ret z			;bd93
 	bit 4,a		;bd94
@@ -4194,7 +4194,7 @@ L_BD8E:
 	or a			;bd9c
 	jr nz,L_BDB9		;bd9d
 	ld a,001h		;bd9f
-	call 057ffh		;bda1
+	call 057ffh		;bda1   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	call 05d8fh		;bda4
 	ld a,(0ede7h)		;bda7
 	ld (0d47fh),a		;bdaa
@@ -4222,7 +4222,7 @@ L_BDD4:
 	ld de,04040h		;bdd7
 	ld bc,05835h		;bdda
 	ld a,004h		;bddd
-	call 04d66h		;bddf
+	call 04d66h		;bddf   ; copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 	call L_BDE6		;bde2
 	ret			;bde5
 L_BDE6:
@@ -4230,31 +4230,31 @@ L_BDE6:
 	ld hl,05230h		;bde9
 	ld de,05734h		;bdec
 	ld c,00dh		;bdef
-	jp 04cfeh		;bdf1
+	jp 04cfeh		;bdf1   ; marco: un marco de lineas: HL la esquina, DE el tamano
 L_BDF4:
 	ld de,05230h		;bdf4
 	ld hl,04040h		;bdf7
 	ld bc,05835h		;bdfa
 	ld a,001h		;bdfd
-	jp 04d66h		;bdff
+	jp 04d66h		;bdff   ; copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 L_BE02:
 	ld hl,05230h		;be02
 	ld bc,05835h		;be05
 	xor a			;be08
 	ld d,a			;be09
-	jp 04d2ah		;be0a
+	jp 04d2ah		;be0a   ; rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 L_BE0D:
 	ld hl,0000ch		;be0d
 	ld bc,000c8h		;be10
 	xor a			;be13
 	ld d,a			;be14
-	jp 04d2ah		;be15
+	jp 04d2ah		;be15   ; rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 L_BE18:
 	ld hl,02480h		;be18
 	ld bc,0b030h		;be1b
 	xor a			;be1e
 	ld d,001h		;be1f
-	jp 04d2ah		;be21
+	jp 04d2ah		;be21   ; rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_BE24: lo apuntan con el banco puesto p03:BDC4 (0xBE24), p03:BC6A

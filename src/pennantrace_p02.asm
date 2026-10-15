@@ -233,7 +233,7 @@ L_8173:
 	ld a,(0ed9dh)		;8177
 	dec a			;817a
 	ld hl,081b8h		;817b
-	call 04216h		;817e
+	call 04216h		;817e   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;8181
 	ld (0ed41h),a		;8182
 	ret			;8185
@@ -607,20 +607,20 @@ L_83C9:
 	rra			;83cc
 	jr c,L_83D7		;83cd
 L_83CF:
-	ld a,(0e19bh)		;83cf
+	ld a,(0e19bh)		;83cf   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;83d2
 	ret c			;83d3
 	ld b,002h		;83d4
 	ret			;83d6
 L_83D7:
-	ld a,(0e19bh)		;83d7
+	ld a,(0e19bh)		;83d7   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;83da
 	ret nc			;83db
 	inc b			;83dc
 	ret			;83dd
 L_83DE:
 	inc b			;83de
-	ld a,(0e19bh)		;83df
+	ld a,(0e19bh)		;83df   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;83e2
 	ret c			;83e3
 	inc b			;83e4
@@ -634,7 +634,7 @@ L_83E6:
 	ld a,(0ed73h)		;83f3
 	or a			;83f6
 	ret z			;83f7
-	ld a,(0e19bh)		;83f8
+	ld a,(0e19bh)		;83f8   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;83fb
 	ld a,001h		;83fc
 	jr nc,L_8401		;83fe
@@ -656,17 +656,17 @@ L_8415:
 	rra			;8418
 	jr c,L_8422		;8419
 L_841B:
-	ld a,(0e19bh)		;841b
+	ld a,(0e19bh)		;841b   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;841e
 	ret nc			;841f
 	jr L_844C		;8420
 L_8422:
-	ld a,(0e19bh)		;8422
+	ld a,(0e19bh)		;8422   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;8425
 	ret c			;8426
 	jr L_842F		;8427
 L_8429:
-	ld a,(0e19bh)		;8429
+	ld a,(0e19bh)		;8429   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;842c
 	jr c,L_844C		;842d
 L_842F:
@@ -730,14 +730,14 @@ L_8487:
 L_8495:
 	ld a,b			;8495
 	or a			;8496
-	ld a,(0e19bh)		;8497
+	ld a,(0e19bh)		;8497   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	jr z,L_849D		;849a
 	cpl			;849c
 L_849D:
 	rra			;849d
-	ld a,(0e194h)		;849e
+	ld a,(0e194h)		;849e   ; lee las carreras del visitante (BCD; 0x99 acaba el partido)
 	ld b,a			;84a1
-	ld a,(0e196h)		;84a2
+	ld a,(0e196h)		;84a2   ; lee las carreras del local (BCD; 0x99 acaba el partido)
 	ld c,a			;84a5
 	jr c,L_84AC		;84a6
 	sub b			;84a8
@@ -760,7 +760,7 @@ L_84B0:
 	ld a,b			;84bc
 	cp 004h		;84bd
 	ret nc			;84bf
-	ld a,(0e19bh)		;84c0
+	ld a,(0e19bh)		;84c0   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	srl a		;84c3
 	cp 006h		;84c5
 	ret c			;84c7
@@ -787,7 +787,7 @@ L_84D5:
 L_84E2:
 	call L_8515		;84e2
 L_84E5:
-	ld a,(0e1d1h)		;84e5
+	ld a,(0e1d1h)		;84e5   ; lee la marca de 'acabado' que dejan las rutinas de cada paso
 	or a			;84e8
 	ret z			;84e9
 	xor a			;84ea
@@ -810,7 +810,7 @@ L_84EF:
 	cp 010h		;850c
 	ret nz			;850e
 	ld a,001h		;850f
-	ld (0e1d1h),a		;8511
+	ld (0e1d1h),a		;8511   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
 	ret			;8514
 L_8515:
 	ld hl,0e340h		;8515
@@ -829,7 +829,7 @@ L_8515:
 	cp 010h		;8532
 	ret nz			;8534
 	ld a,001h		;8535
-	ld (0e1d1h),a		;8537
+	ld (0e1d1h),a		;8537   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
 	ret			;853a
 L_853B:
 	xor a			;853b
@@ -849,13 +849,13 @@ L_854C:
 	ld a,0c0h		;8552
 	jr nz,L_85A3		;8554
 	ld a,(0e341h)		;8556
-	call 04216h		;8559
+	call 04216h		;8559   ; hl_mas_a: HL = HL + A
 	ld a,(0ed76h)		;855c
 	ld b,a			;855f
 	ld a,(hl)			;8560
 	cp b			;8561
 	jr nc,L_8570		;8562
-	ld a,(0de03h)		;8564
+	ld a,(0de03h)		;8564   ; lee el contador de cuadros del juego (sube uno por cuadro)
 	and 00fh		;8567
 	ret nz			;8569
 	ld a,002h		;856a
@@ -877,7 +877,7 @@ L_8582:
 	ld a,(0e342h)		;8582
 	cp 008h		;8585
 	jr z,L_8595		;8587
-	ld a,(0de03h)		;8589
+	ld a,(0de03h)		;8589   ; lee el contador de cuadros del juego (sube uno por cuadro)
 	and 00fh		;858c
 	ret nz			;858e
 	ld a,002h		;858f
@@ -998,7 +998,7 @@ L_864E:
 	jr L_8648		;8661
 L_8663:
 	ld a,(0e1f1h)		;8663
-	call 04220h		;8666
+	call 04220h		;8666   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_8669: 4 destinos del despachador p00:4220 (call en p02:8666, el
@@ -1045,7 +1045,7 @@ L_8696:
 	or a			;86a7
 	jr nz,L_86AF		;86a8
 	ld a,009h		;86aa
-	call 057ffh		;86ac
+	call 057ffh		;86ac   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_86AF:
 	ld hl,0e1f1h		;86af
 	inc (hl)			;86b2
@@ -1075,7 +1075,7 @@ L_86D8:
 	ld a,(0e338h)		;86d8
 	cp 003h		;86db
 	ret nc			;86dd
-	ld a,(0e1d1h)		;86de
+	ld a,(0e1d1h)		;86de   ; lee la marca de 'acabado' que dejan las rutinas de cada paso
 	cp 003h		;86e1
 	ret nz			;86e3
 	ld a,(0e1fah)		;86e4
@@ -1139,7 +1139,7 @@ L_8758:
 L_8761:
 	add a,c			;8761
 	ld hl,0876dh		;8762
-	call 04216h		;8765
+	call 04216h		;8765   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;8768
 	ld (0ed49h),a		;8769
 	ret			;876c
@@ -1176,7 +1176,7 @@ L_8788:
 	inc a			;87a6
 	ld (0ed2eh),a		;87a7
 	ld a,029h		;87aa
-	jp 057ffh		;87ac
+	jp 057ffh		;87ac   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_87AF:
 	ld a,(0e1eeh)		;87af
 	ld b,a			;87b2
@@ -1194,11 +1194,11 @@ L_87B9:
 	sra h		;87c4
 	rr l		;87c6
 	ld a,029h		;87c8
-	jp 057ffh		;87ca
+	jp 057ffh		;87ca   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_87CD:
 	call L_87D4		;87cd
 	ld a,b			;87d0
-	jp 057ffh		;87d1
+	jp 057ffh		;87d1   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_87D4:
 	ld a,(0e1f7h)		;87d4
 	or a			;87d7
@@ -1249,7 +1249,7 @@ L_8817:
 	sub b			;8825
 L_8826:
 	ld hl,08845h		;8826
-	call 0556dh		;8829
+	call 0556dh		;8829   ; palabra_a: HL = la palabra A de la tabla HL
 	ld a,r		;882c
 	and l			;882e
 	add a,h			;882f
@@ -1329,7 +1329,7 @@ L_887F:
 	ret			;88a8
 L_88A9:
 	ld ix,(0ed8ch)		;88a9
-	ld a,(0e19bh)		;88ad
+	ld a,(0e19bh)		;88ad   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;88b0
 	ret nc			;88b1
 	ld ix,(0ed8eh)		;88b2
@@ -1354,21 +1354,21 @@ L_88D3:
 L_88D9:
 	add a,c			;88d9
 	djnz L_88D9		;88da
-	jp 04216h		;88dc
+	jp 04216h		;88dc   ; hl_mas_a: HL = HL + A
 L_88DF:
 	ld a,(0ec4fh)		;88df
 	ld hl,0ec50h		;88e2
-	call 04216h		;88e5
+	call 04216h		;88e5   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;88e8
 	ld (0ed44h),a		;88e9
 	ld a,(0ec61h)		;88ec
 	ld hl,0ec62h		;88ef
-	call 04216h		;88f2
+	call 04216h		;88f2   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;88f5
 	ld (0ed45h),a		;88f6
 	ret			;88f9
 L_88FA:
-	ld a,(0e19bh)		;88fa
+	ld a,(0e19bh)		;88fa   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;88fd
 	ld a,(0ed44h)		;88fe
 	jr nc,L_8906		;8901
@@ -1400,7 +1400,7 @@ L_8924:
 	ret			;892f
 L_8930:
 	ld ix,(0ed88h)		;8930
-	ld a,(0e19bh)		;8934
+	ld a,(0e19bh)		;8934   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;8937
 	jr nc,L_890D		;8938
 	ld ix,(0ed8ah)		;893a
@@ -1485,7 +1485,7 @@ L_89B2:
 	jr c,L_89DD		;89c0
 	ld a,c			;89c2
 	ld hl,08a4dh		;89c3
-	call 0556dh		;89c6
+	call 0556dh		;89c6   ; palabra_a: HL = la palabra A de la tabla HL
 	ex de,hl			;89c9
 	ld h,b			;89ca
 	ld l,000h		;89cb
@@ -1510,7 +1510,7 @@ L_89E1:
 	jr nc,L_89DD		;89e8
 	ld a,c			;89ea
 	ld hl,08a59h		;89eb
-	call 0556dh		;89ee
+	call 0556dh		;89ee   ; palabra_a: HL = la palabra A de la tabla HL
 	ex de,hl			;89f1
 	ld h,b			;89f2
 	ld l,000h		;89f3
@@ -1526,7 +1526,7 @@ L_8A02:
 	ld a,(0e1fah)		;8a02
 	dec a			;8a05
 	ld c,a			;8a06
-	call 04216h		;8a07
+	call 04216h		;8a07   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;8a0a
 	ld hl,0e1f5h		;8a0b
 	add a,(hl)			;8a0e
@@ -1542,7 +1542,7 @@ L_8A1B:
 	ld a,(0e1fah)		;8a1b
 	dec a			;8a1e
 	ld hl,08a65h		;8a1f
-	call 0556dh		;8a22
+	call 0556dh		;8a22   ; palabra_a: HL = la palabra A de la tabla HL
 	ex de,hl			;8a25
 	ld h,0b0h		;8a26
 	ld l,000h		;8a28
@@ -1607,12 +1607,12 @@ L_8A89:
 	ld a,003h		;8a9d
 	ld (0e338h),a		;8a9f
 	ld a,007h		;8aa2
-	call 057ffh		;8aa4
+	call 057ffh		;8aa4   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,043h		;8aa7
-	call 057ffh		;8aa9
+	call 057ffh		;8aa9   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	call 058c5h		;8aac
 	ld hl,07e05h		;8aaf
-	jp 04ea6h		;8ab2
+	jp 04ea6h		;8ab2   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 L_8AB5:
 	ld a,(0e1d9h)		;8ab5
 	ld d,a			;8ab8
@@ -1624,7 +1624,7 @@ L_8AB5:
 	jr nc,L_8A89		;8ac1
 	ret			;8ac3
 L_8AC4:
-	ld a,(0e1d1h)		;8ac4
+	ld a,(0e1d1h)		;8ac4   ; lee la marca de 'acabado' que dejan las rutinas de cada paso
 	or a			;8ac7
 	ret z			;8ac8
 	ld a,(0ecdbh)		;8ac9
@@ -1634,7 +1634,7 @@ L_8AC4:
 	or a			;8ad1
 	jr nz,L_8AD4		;8ad2
 L_8AD4:
-	ld a,(0de03h)		;8ad4
+	ld a,(0de03h)		;8ad4   ; lee el contador de cuadros del juego (sube uno por cuadro)
 	rra			;8ad7
 	ret c			;8ad8
 	ld hl,0e23ch		;8ad9
@@ -1659,12 +1659,12 @@ L_8AE9:
 	rra			;8afb
 	jr c,L_8B06		;8afc
 L_8AFE:
-	ld a,(0e19bh)		;8afe
+	ld a,(0e19bh)		;8afe   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;8b01
 	jp c,078f2h		;8b02
 	ret			;8b05
 L_8B06:
-	ld a,(0e19bh)		;8b06
+	ld a,(0e19bh)		;8b06   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;8b09
 	jp nc,078f2h		;8b0a
 	ret			;8b0d
@@ -1763,7 +1763,7 @@ L_8BAF:
 L_8BB8:
 	ld a,c			;8bb8
 	and 00fh		;8bb9
-	call 04220h		;8bbb
+	call 04220h		;8bbb   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_8BBE: 3 destinos del despachador p00:4220 (call en p02:8BBB, el
@@ -1823,7 +1823,7 @@ L_8C1F:
 	ld b,a			;8c21
 	dec a			;8c22
 	add a,a			;8c23
-	call 04216h		;8c24
+	call 04216h		;8c24   ; hl_mas_a: HL = HL + A
 	ld e,(hl)			;8c27
 	inc hl			;8c28
 	ld d,(hl)			;8c29
@@ -1872,7 +1872,7 @@ L_8C5D:
 	ld (ix+00ch),a		;8c76
 	set 5,(ix+00bh)		;8c79
 	ld a,00ah		;8c7d
-	call 057ffh		;8c7f
+	call 057ffh		;8c7f   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_8C82:
 	ld a,(ix+002h)		;8c82
 	ld e,(ix+00eh)		;8c85
@@ -2006,7 +2006,7 @@ L_8D7A:
 	add a,a			;8d7a
 	add a,a			;8d7b
 	ld hl,0909eh		;8d7c
-	call 04216h		;8d7f
+	call 04216h		;8d7f   ; hl_mas_a: HL = HL + A
 	ld e,(hl)			;8d82
 	inc hl			;8d83
 	ld d,(hl)			;8d84
@@ -2106,7 +2106,7 @@ L_8DFF:
 	dec a			;8e2a
 	add a,a			;8e2b
 	ld hl,09141h		;8e2c
-	call 04216h		;8e2f
+	call 04216h		;8e2f   ; hl_mas_a: HL = HL + A
 	ld e,(hl)			;8e32
 	inc hl			;8e33
 	ld d,(hl)			;8e34
@@ -2167,7 +2167,7 @@ L_8E8D:
 	ld a,e			;8e92
 	add a,a			;8e93
 	push af			;8e94
-	call 04216h		;8e95
+	call 04216h		;8e95   ; hl_mas_a: HL = HL + A
 	ld c,(hl)			;8e98
 	inc hl			;8e99
 	ld b,(hl)			;8e9a
@@ -2196,7 +2196,7 @@ L_8EA5:
 	ld hl,09098h		;8ec9
 L_8ECC:
 	pop af			;8ecc
-	call 04216h		;8ecd
+	call 04216h		;8ecd   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;8ed0
 	inc hl			;8ed1
 	ld (ix+00eh),a		;8ed2
@@ -2319,9 +2319,9 @@ L_8F96:
 	ld (ix+000h),000h		;8f96
 	ld (ix+00bh),000h		;8f9a
 	ld a,01ch		;8f9e
-	call 057ffh		;8fa0
+	call 057ffh		;8fa0   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,044h		;8fa3
-	call 057ffh		;8fa5
+	call 057ffh		;8fa5   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	jp 066ebh		;8fa8
 L_8FAB:
 	bit 6,(ix+00dh)		;8fab
@@ -2355,7 +2355,7 @@ L_8FC6:
 	ret			;8fda
 L_8FDB:
 	ld hl,07e69h		;8fdb
-	call 04ea6h		;8fde
+	call 04ea6h		;8fde   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld (ix+000h),000h		;8fe1
 	ld (ix+00bh),000h		;8fe5
 	jp 0b11fh		;8fe9
@@ -2365,7 +2365,7 @@ L_8FEC:
 	add a,a			;8fee
 	push af			;8fef
 	ld hl,0908ch		;8ff0
-	call 04216h		;8ff3
+	call 04216h		;8ff3   ; hl_mas_a: HL = HL + A
 	ld c,(hl)			;8ff6
 	inc hl			;8ff7
 	ld b,(hl)			;8ff8
@@ -2389,7 +2389,7 @@ L_9001:
 	ld (ix+00ah),d		;901b
 	pop af			;901e
 	ld hl,09098h		;901f
-	call 04216h		;9022
+	call 04216h		;9022   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;9025
 	inc hl			;9026
 	ld (ix+00eh),a		;9027
@@ -2420,7 +2420,7 @@ L_9001:
 	or a			;905e
 	ret z			;905f
 	ld hl,0ed15h		;9060
-	ld a,(0e19bh)		;9063
+	ld a,(0e19bh)		;9063   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;9066
 	jr nc,L_906A		;9067
 	inc hl			;9069
@@ -2442,9 +2442,9 @@ L_9070:
 	ret			;907f
 L_9080:
 	ld a,01eh		;9080
-	call 057ffh		;9082
+	call 057ffh		;9082   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,044h		;9085
-	jp 057ffh		;9087
+	jp 057ffh		;9087   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 
 ; ----------------------------------------------------------------------
 ; DATOS resto_908A: lo apuntan con el banco puesto p02:8DE0 (0x908C), p02:8FF0
@@ -2487,7 +2487,7 @@ L_90C2:
 	ld hl,0912fh		;90d0
 	ld bc,0000ah		;90d3
 	ldir		;90d6
-	ld a,(0e19bh)		;90d8
+	ld a,(0e19bh)		;90d8   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;90db
 	ld de,0ec4fh		;90dc
 	ld hl,0d397h		;90df
@@ -2553,7 +2553,7 @@ L_9149:
 	call 04468h		;9149
 	call L_94F7		;914c
 	ld a,(0e1a1h)		;914f
-	call 04220h		;9152
+	call 04220h		;9152   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_9155: 7 destinos del despachador p00:4220 (call en p02:9152, el
@@ -2571,7 +2571,7 @@ DATA_tabla_9155:
 L_9163:
 	call 0ac7ch		;9163
 	call 04468h		;9166
-	ld a,(0e19bh)		;9169
+	ld a,(0e19bh)		;9169   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	sub 00ch		;916c
 	jr z,L_9173		;916e
 	dec a			;9170
@@ -2612,9 +2612,9 @@ L_91AB:
 	ret nc			;91b3
 	call 06491h		;91b4
 	ld a,01dh		;91b7
-	call 057ffh		;91b9
+	call 057ffh		;91b9   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld hl,00006h		;91bc
-	ld (0de00h),hl		;91bf
+	ld (0de00h),hl		;91bf   ; guarda el estado del juego (indice del despachador principal) y el byte siguiente (16 bits)
 	ret			;91c2
 L_91C3:
 	ld hl,0e310h		;91c3
@@ -2634,22 +2634,22 @@ L_91D5:
 	ret z			;91e0
 	jp 056b1h		;91e1
 L_91E4:
-	call 04bc5h		;91e4
+	call 04bc5h		;91e4   ; apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
 	call 0539dh		;91e7
 	call 053cch		;91ea
 	call 0b47bh		;91ed
 	call L_9CE6		;91f0
-	call 05c7dh		;91f3
+	call 05c7dh		;91f3   ; esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 	call 05d1ah		;91f6
-	call 04bb8h		;91f9
+	call 04bb8h		;91f9   ; enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
 	ld a,040h		;91fc
 	ld (0e339h),a		;91fe
 	ld a,002h		;9201
 	ld (0e1cfh),a		;9203
 	ld a,00bh		;9206
-	ld (0ece5h),a		;9208
+	ld (0ece5h),a		;9208   ; guarda la rotacion de sprites de este cuadro
 	dec a			;920b
-	ld (0ed04h),a		;920c
+	ld (0ed04h),a		;920c   ; guarda cuantos sprites rotan (9 o 10)
 	xor a			;920f
 	ld (0edd4h),a		;9210
 	ld (0e33eh),a		;9213
@@ -2660,7 +2660,7 @@ L_91E4:
 	ld (0e19fh),a		;9222
 	jp L_917C		;9225
 L_9228:
-	ld a,(0de03h)		;9228
+	ld a,(0de03h)		;9228   ; lee el contador de cuadros del juego (sube uno por cuadro)
 	rra			;922b
 	jr nc,L_923A		;922c
 	call 0b3deh		;922e
@@ -2747,7 +2747,7 @@ L_92BC:
 	ld hl,0ec98h		;92c8
 	ld bc,00040h		;92cb
 	ldir		;92ce
-	ld de,0e194h		;92d0
+	ld de,0e194h		;92d0   ; apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 	ld hl,0ecdch		;92d3
 	ld bc,00004h		;92d6
 	ldir		;92d9
@@ -2763,7 +2763,7 @@ L_92EC:
 	ld a,(0e33bh)		;92ec
 	and 003h		;92ef
 	jr nz,L_931C		;92f1
-	call 05c7dh		;92f3
+	call 05c7dh		;92f3   ; esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 	call L_98FC		;92f6
 	call L_9744		;92f9
 	call 05d08h		;92fc
@@ -2776,7 +2776,7 @@ L_930B:
 	ld (hl),000h		;930e
 	ret			;9310
 L_9311:
-	ld hl,0de04h		;9311
+	ld hl,0de04h		;9311   ; apunta a la cuenta atras del estado
 	ld (hl),080h		;9314
 	ld hl,0e1a1h		;9316
 	ld (hl),006h		;9319
@@ -2789,7 +2789,7 @@ L_931C:
 	jr z,L_9366		;9323
 	ld hl,0ed17h		;9325
 	ld de,0ed15h		;9328
-	ld a,(0e19bh)		;932b
+	ld a,(0e19bh)		;932b   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;932e
 	jr nc,L_9333		;932f
 	inc hl			;9331
@@ -2809,22 +2809,22 @@ L_9333:
 	ld a,004h		;9344
 	ld (0e1a1h),a		;9346
 	ld a,018h		;9349
-	ld (0de04h),a		;934b
+	ld (0de04h),a		;934b   ; guarda la cuenta atras del estado
 	call L_9386		;934e
 	ld (0ed21h),a		;9351
 	ld (0edc2h),a		;9354
 	ld a,02ch		;9357
-	call 057ffh		;9359
+	call 057ffh		;9359   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,01eh		;935c
-	call 057ffh		;935e
+	call 057ffh		;935e   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,03fh		;9361
-	jp 057ffh		;9363
+	jp 057ffh		;9363   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_9366:
 	xor a			;9366
 	ld (0ed23h),a		;9367
 	ld a,005h		;936a
 	ld (0e1a1h),a		;936c
-	ld de,0e194h		;936f
+	ld de,0e194h		;936f   ; apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 	ld hl,0ecdch		;9372
 	ld bc,00004h		;9375
 	ldir		;9378
@@ -2871,7 +2871,7 @@ L_93B3:
 	ld a,(0ed7ah)		;93c4
 	ld b,a			;93c7
 	djnz L_93D9		;93c8
-	ld hl,0de04h		;93ca
+	ld hl,0de04h		;93ca   ; apunta a la cuenta atras del estado
 	dec (hl)			;93cd
 	ret nz			;93ce
 	xor a			;93cf
@@ -2884,7 +2884,7 @@ L_93D9:
 	or a			;93df
 	ret nz			;93e0
 	ld a,0c0h		;93e1
-	ld (0de04h),a		;93e3
+	ld (0de04h),a		;93e3   ; guarda la cuenta atras del estado
 	ld hl,0ed7ah		;93e6
 	inc (hl)			;93e9
 	ret			;93ea
@@ -2913,16 +2913,16 @@ L_93FF:
 	pop de			;9408
 	ret			;9409
 L_940A:
-	ld hl,0de04h		;940a
+	ld hl,0de04h		;940a   ; apunta a la cuenta atras del estado
 	ld a,(hl)			;940d
 	or a			;940e
 	jr z,L_946E		;940f
 	dec (hl)			;9411
 	ret nz			;9412
-	ld a,(0e19bh)		;9413
+	ld a,(0e19bh)		;9413   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;9416
 	jr nc,L_9428		;9417
-	ld hl,0e194h		;9419
+	ld hl,0e194h		;9419   ; apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 	ld a,(hl)			;941c
 	inc hl			;941d
 	inc hl			;941e
@@ -2933,13 +2933,13 @@ L_9424:
 	cp 010h		;9424
 	jr nc,L_9445		;9426
 L_9428:
-	ld a,(0e19bh)		;9428
+	ld a,(0e19bh)		;9428   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	ld b,a			;942b
 	cp 010h		;942c
 	jr c,L_944B		;942e
 	ld a,b			;9430
 	rra			;9431
-	ld hl,0e194h		;9432
+	ld hl,0e194h		;9432   ; apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 	ld a,(hl)			;9435
 	inc hl			;9436
 	inc hl			;9437
@@ -2953,7 +2953,7 @@ L_9442:
 	jr z,L_944B		;9443
 L_9445:
 	ld a,001h		;9445
-	ld (0ed87h),a		;9447
+	ld (0ed87h),a		;9447   ; guarda si no es 0, el partido se acaba
 	ret			;944a
 L_944B:
 	ld a,001h		;944b
@@ -2968,22 +2968,22 @@ L_9458:
 	add hl,de			;945c
 	djnz L_9458		;945d
 	ld a,041h		;945f
-	call 057ffh		;9461
+	call 057ffh		;9461   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	jr L_946B		;9464
 L_9466:
 	ld a,040h		;9466
-	call 057ffh		;9468
+	call 057ffh		;9468   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_946B:
 	jp 0668fh		;946b
 L_946E:
 	call 066b3h		;946e
-	ld a,(0e1d1h)		;9471
+	ld a,(0e1d1h)		;9471   ; lee la marca de 'acabado' que dejan las rutinas de cada paso
 	rra			;9474
 	ret nc			;9475
 	ld c,001h		;9476
 	call 0b072h		;9478
 	call nc,062f7h		;947b
-	ld hl,0e19bh		;947e
+	ld hl,0e19bh		;947e   ; apunta a la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	inc (hl)			;9481
 	ld a,(hl)			;9482
 	cp 0c8h		;9483
@@ -2994,7 +2994,7 @@ L_9489:
 	ld a,001h		;9489
 	ld (0eddah),a		;948b
 	call L_838C		;948e
-	ld a,(0e19bh)		;9491
+	ld a,(0e19bh)		;9491   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;9494
 	ld hl,0ed84h		;9495
 	jr c,L_949B		;9498
@@ -3004,7 +3004,7 @@ L_949B:
 	or a			;949c
 	jr z,L_94A8		;949d
 	ld a,008h		;949f
-	ld (0de00h),a		;94a1
+	ld (0de00h),a		;94a1   ; guarda el estado del juego (indice del despachador principal)
 	xor a			;94a4
 	ld (0e1a1h),a		;94a5
 L_94A8:
@@ -3025,10 +3025,10 @@ L_94A8:
 	inc hl			;94c2
 	ld hl,0e1a1h		;94c3
 	ld (hl),a			;94c6
-	ld a,(0e19bh)		;94c7
+	ld a,(0e19bh)		;94c7   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;94ca
 	call nc,06754h		;94cb
-	ld a,(0e19bh)		;94ce
+	ld a,(0e19bh)		;94ce   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	cp 00ch		;94d1
 	jr z,L_94E3		;94d3
 	cp 00dh		;94d5
@@ -3038,17 +3038,17 @@ L_94A8:
 	jr nc,L_94E0		;94dc
 	ld a,037h		;94de
 L_94E0:
-	jp 057ffh		;94e0
+	jp 057ffh		;94e0   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_94E3:
 	ld a,03bh		;94e3
-	call 057ffh		;94e5
+	call 057ffh		;94e5   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,021h		;94e8
-	jp 057ffh		;94ea
+	jp 057ffh		;94ea   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_94ED:
 	ld a,03ch		;94ed
-	call 057ffh		;94ef
+	call 057ffh		;94ef   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,021h		;94f2
-	jp 057ffh		;94f4
+	jp 057ffh		;94f4   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_94F7:
 	ld a,(0edd0h)		;94f7
 	or a			;94fa
@@ -3061,14 +3061,14 @@ L_94F7:
 	and 001h		;9509
 	jr nz,L_9512		;950b
 	ld a,001h		;950d
-	ld (0eda1h),a		;950f
+	ld (0eda1h),a		;950f   ; guarda si no es 0, el partido vuelve al menu
 L_9512:
 	ld a,(0de02h)		;9512
 	bit 3,a		;9515
 	ret nz			;9517
-	ld hl,(0de06h)		;9518
-	ld de,(0de08h)		;951b
-	ld a,(0e19bh)		;951f
+	ld hl,(0de06h)		;9518   ; lee los botones recien pulsados del mando 1 / cursores y el byte siguiente (16 bits)
+	ld de,(0de08h)		;951b   ; lee los botones recien pulsados (segundo mando) y el byte siguiente (16 bits)
+	ld a,(0e19bh)		;951f   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;9522
 	jr c,L_9533		;9523
 	ld (0e19ch),hl		;9525
@@ -3085,8 +3085,8 @@ L_9533:
 	ld (0e19ch),de		;953c
 	ret			;9540
 L_9541:
-	ld hl,(0de06h)		;9541
-	ld a,(0e19bh)		;9544
+	ld hl,(0de06h)		;9541   ; lee los botones recien pulsados del mando 1 / cursores y el byte siguiente (16 bits)
+	ld a,(0e19bh)		;9544   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;9547
 	jr c,L_954E		;9548
 	ld (0e19eh),hl		;954a
@@ -3159,7 +3159,7 @@ L_95AD:
 	ret			;95b9
 L_95BA:
 	ld a,(0e1cch)		;95ba
-	call 04220h		;95bd
+	call 04220h		;95bd   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_95C0: 4 destinos del despachador p00:4220 (call en p02:95BD, el
@@ -3190,7 +3190,7 @@ L_95D1:
 	ld c,044h		;95e1
 	call 0b06eh		;95e3
 	ret c			;95e6
-	ld a,(0de03h)		;95e7
+	ld a,(0de03h)		;95e7   ; lee el contador de cuadros del juego (sube uno por cuadro)
 	and 008h		;95ea
 	ld c,a			;95ec
 	ld hl,0e178h		;95ed
@@ -3209,14 +3209,14 @@ L_95F2:
 	djnz L_95F2		;95fd
 	ret			;95ff
 L_9600:
-	ld a,(0de03h)		;9600
+	ld a,(0de03h)		;9600   ; lee el contador de cuadros del juego (sube uno por cuadro)
 	and 008h		;9603
 	ld c,a			;9605
 	ld b,002h		;9606
 	ld hl,0e169h		;9608
 	jr L_9618		;960b
 L_960D:
-	ld a,(0de03h)		;960d
+	ld a,(0de03h)		;960d   ; lee el contador de cuadros del juego (sube uno por cuadro)
 	and 008h		;9610
 	ld c,a			;9612
 	ld b,002h		;9613
@@ -3255,11 +3255,11 @@ L_9635:
 	ld a,b			;9641
 	and 00fh		;9642
 	ret z			;9644
-	ld a,(0e1d1h)		;9645
+	ld a,(0e1d1h)		;9645   ; lee la marca de 'acabado' que dejan las rutinas de cada paso
 	or a			;9648
 	ret z			;9649
 	ld a,025h		;964a
-	call 057ffh		;964c
+	call 057ffh		;964c   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,001h		;964f
 	ld (0ecebh),a		;9651
 	call L_96A3		;9654
@@ -3326,7 +3326,7 @@ L_96A8:
 	pop af			;96b9
 	rra			;96ba
 	ret nc			;96bb
-	ld a,(0de03h)		;96bc
+	ld a,(0de03h)		;96bc   ; lee el contador de cuadros del juego (sube uno por cuadro)
 	and 008h		;96bf
 	ld c,a			;96c1
 	ld hl,0e178h		;96c2
@@ -3352,7 +3352,7 @@ L_96C7:
 	inc de			;96e0
 	jr L_972B		;96e1
 L_96E3:
-	ld a,(0de03h)		;96e3
+	ld a,(0de03h)		;96e3   ; lee el contador de cuadros del juego (sube uno por cuadro)
 	and 008h		;96e6
 	ld c,a			;96e8
 	ld b,002h		;96e9
@@ -3376,7 +3376,7 @@ L_96EE:
 	res 1,(hl)		;9704
 	jr L_972B		;9706
 L_9708:
-	ld a,(0de03h)		;9708
+	ld a,(0de03h)		;9708   ; lee el contador de cuadros del juego (sube uno por cuadro)
 	and 008h		;970b
 	ld c,a			;970d
 	ld b,002h		;970e
@@ -3466,7 +3466,7 @@ L_978A:
 	sub 002h		;978d
 	add a,a			;978f
 	ld de,098dch		;9790
-	call 0421bh		;9793
+	call 0421bh		;9793   ; de_mas_a: DE = DE + A
 	ld a,(de)			;9796
 	cp 0d8h		;9797
 	jr nz,L_979C		;9799
@@ -3523,7 +3523,7 @@ L_97CC:
 L_97DD:
 	ld a,(ix+00bh)		;97dd
 	and 00fh		;97e0
-	call 04220h		;97e2
+	call 04220h		;97e2   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_97E5: 6 destinos del despachador p00:4220 (call en p02:97E2, el
@@ -3670,7 +3670,7 @@ L_98A4:
 L_98AF:
 	ld a,(0edd0h)		;98af
 	or a			;98b2
-	ld a,(0e19bh)		;98b3
+	ld a,(0e19bh)		;98b3   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	jr z,L_98C1		;98b6
 	rra			;98b8
 	ld a,01bh		;98b9
@@ -3714,7 +3714,7 @@ L_98FC:
 	jp L_9AF6		;990f
 L_9912:
 	ld a,(0e211h)		;9912
-	call 04220h		;9915
+	call 04220h		;9915   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
 ; DATOS tabla_9918: 4 destinos del despachador p00:4220 (call en p02:9915, el
@@ -3765,7 +3765,7 @@ L_9959:
 	ld hl,0eddeh		;9960
 	or (hl)			;9963
 	ld a,00bh		;9964
-	call z,057ffh		;9966
+	call z,057ffh		;9966   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,(0ec73h)		;9969
 	cp 002h		;996c
 	jr nz,L_997A		;996e
@@ -3864,7 +3864,7 @@ L_99FA:
 	rl h		;9a08
 	ret c			;9a0a
 	ld a,022h		;9a0b
-	call 057ffh		;9a0d
+	call 057ffh		;9a0d   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,001h		;9a10
 	ld (0edd2h),a		;9a12
 	ret			;9a15
@@ -3905,7 +3905,7 @@ L_9A34:
 	ret nz			;9a50
 	ld (hl),001h		;9a51
 	ld a,00ch		;9a53
-	jp 057ffh		;9a55
+	jp 057ffh		;9a55   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_9A58:
 	ld a,00ch		;9a58
 	ld (0ed7bh),a		;9a5a
@@ -3980,7 +3980,7 @@ L_9AC5:
 	pop hl			;9acf
 	jr c,L_9ADE		;9ad0
 	ld a,0d4h		;9ad2
-	call 0421bh		;9ad4
+	call 0421bh		;9ad4   ; de_mas_a: DE = DE + A
 	or a			;9ad7
 	sbc hl,de		;9ad8
 	rl h		;9ada
@@ -4022,7 +4022,7 @@ L_9AF6:
 	sub b			;9b1a
 	ld l,a			;9b1b
 	call L_9B99		;9b1c
-	ld (0e100h),hl		;9b1f
+	ld (0e100h),hl		;9b1f   ; guarda los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color]) y el byte siguiente (16 bits)
 	call L_9B4B		;9b22
 	ret c			;9b25
 	ld a,(0eddeh)		;9b26
@@ -4323,7 +4323,7 @@ L_9D49:
 	dec (hl)			;9d52
 	ret nz			;9d53
 	ld a,001h		;9d54
-	ld (0e1d1h),a		;9d56
+	ld (0e1d1h),a		;9d56   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
 	ret			;9d59
 L_9D5A:
 	call 05c73h		;9d5a
@@ -4382,7 +4382,7 @@ L_9DB6:
 	ld (hl),a			;9db6
 	call L_9E90		;9db7
 	ld a,026h		;9dba
-	jp 057ffh		;9dbc
+	jp 057ffh		;9dbc   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_9DBF:
 	ld a,(0e30dh)		;9dbf
 	ld b,a			;9dc2
@@ -4390,14 +4390,14 @@ L_9DBF:
 	ld (0ec58h),a		;9dc5
 	ld a,b			;9dc8
 	ld hl,0ec5dh		;9dc9
-	call 04216h		;9dcc
+	call 04216h		;9dcc   ; hl_mas_a: HL = HL + A
 	ld (hl),000h		;9dcf
 	ld a,(0e30dh)		;9dd1
 	ld hl,0d38bh		;9dd4
 	call 0a264h		;9dd7
 	ld a,(0e30dh)		;9dda
 	ld de,09ea5h		;9ddd
-	call 0421bh		;9de0
+	call 0421bh		;9de0   ; de_mas_a: DE = DE + A
 	ld a,(de)			;9de3
 	inc a			;9de4
 	ld e,a			;9de5
@@ -4408,7 +4408,7 @@ L_9DBF:
 	or (hl)			;9df0
 	ld (hl),a			;9df1
 	ld a,027h		;9df2
-	call 057ffh		;9df4
+	call 057ffh		;9df4   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld hl,0e103h		;9df7
 L_9DFA:
 	ld de,00004h		;9dfa
@@ -4462,7 +4462,7 @@ L_9E44:
 	ld (hl),a			;9e44
 	call L_9E8B		;9e45
 	ld a,026h		;9e48
-	jp 057ffh		;9e4a
+	jp 057ffh		;9e4a   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_9E4D:
 	ld a,(0e30eh)		;9e4d
 	ld b,a			;9e50
@@ -4470,14 +4470,14 @@ L_9E4D:
 	ld (0ec6ah),a		;9e53
 	ld a,b			;9e56
 	ld hl,0ec6fh		;9e57
-	call 04216h		;9e5a
+	call 04216h		;9e5a   ; hl_mas_a: HL = HL + A
 	ld (hl),000h		;9e5d
 	ld a,(0e30eh)		;9e5f
 	ld hl,0d48ah		;9e62
 	call 0a264h		;9e65
 	ld a,(0e30eh)		;9e68
 	ld de,09ea5h		;9e6b
-	call 0421bh		;9e6e
+	call 0421bh		;9e6e   ; de_mas_a: DE = DE + A
 	ld a,(de)			;9e71
 	inc a			;9e72
 	ld e,a			;9e73
@@ -4488,17 +4488,17 @@ L_9E4D:
 	or (hl)			;9e7e
 	ld (hl),a			;9e7f
 	ld a,027h		;9e80
-	call 057ffh		;9e82
+	call 057ffh		;9e82   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld hl,0e10fh		;9e85
 	jp L_9DFA		;9e88
 L_9E8B:
 	ld de,0e10ch		;9e8b
 	jr L_9E93		;9e8e
 L_9E90:
-	ld de,0e100h		;9e90
+	ld de,0e100h		;9e90   ; apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 L_9E93:
 	ld hl,09ea5h		;9e93
-	call 04216h		;9e96
+	call 04216h		;9e96   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;9e99
 	inc hl			;9e9a
 	ld b,003h		;9e9b
@@ -4526,26 +4526,26 @@ DATA_resto_9EA5:
 
 L_9EA9:
 	call 04ba2h		;9ea9
-	call 04bd2h		;9eac
+	call 04bd2h		;9eac   ; esconde_sprites: escribe 0xD8 (Y = 216: no se pinta ninguno) en la VRAM 0xF600, el primer atributo de sprite
 	call 052b5h		;9eaf
 	call 05202h		;9eb2
 	call 040e7h		;9eb5
-	call 05c7dh		;9eb8
+	call 05c7dh		;9eb8   ; esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 	ld hl,09f58h		;9ebb
-	ld de,0e100h		;9ebe
+	ld de,0e100h		;9ebe   ; apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 	ld bc,00018h		;9ec1
 	ldir		;9ec4
 	call 05b1fh		;9ec6
 	ld hl,07f55h		;9ec9
-	call 04ea6h		;9ecc
+	call 04ea6h		;9ecc   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld hl,0146ch		;9ecf
 	ld de,05850h		;9ed2
 	ld c,00dh		;9ed5
-	call 04cfeh		;9ed7
+	call 04cfeh		;9ed7   ; marco: un marco de lineas: HL la esquina, DE el tamano
 	ld hl,08c6ch		;9eda
 	ld de,05850h		;9edd
 	ld c,00dh		;9ee0
-	call 04cfeh		;9ee2
+	call 04cfeh		;9ee2   ; marco: un marco de lineas: HL la esquina, DE el tamano
 	ld hl,0d380h		;9ee5
 	ld de,01868h		;9ee8
 	call 05be4h		;9eeb
@@ -4565,8 +4565,8 @@ L_9EA9:
 	ld a,004h		;9f13
 	ld (0e308h),a		;9f15
 	xor a			;9f18
-	ld (0de04h),a		;9f19
-	ld (0e1d1h),a		;9f1c
+	ld (0de04h),a		;9f19   ; guarda la cuenta atras del estado
+	ld (0e1d1h),a		;9f1c   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
 	ret			;9f1f
 L_9F20:
 	ld c,004h		;9f20
@@ -4585,7 +4585,7 @@ L_9F22:
 	add a,03ch		;9f30
 	ld d,a			;9f32
 	ld a,090h		;9f33
-	call 04f1ch		;9f35
+	call 04f1ch		;9f35   ; caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 	ld a,d			;9f38
 	sub 008h		;9f39
 	ld d,a			;9f3b
@@ -4656,7 +4656,7 @@ L_9F8A:
 	call 0aa74h		;9f9e
 	call 0ab77h		;9fa1
 	ld a,001h		;9fa4
-	ld (0e1d1h),a		;9fa6
+	ld (0e1d1h),a		;9fa6   ; guarda la marca de 'acabado' que dejan las rutinas de cada paso
 	ret			;9fa9
 L_9FAA:
 	call L_9FC5		;9faa
@@ -4669,7 +4669,7 @@ L_9FAA:
 	ld a,001h		;9fbb
 	ld (0e302h),a		;9fbd
 	ld a,024h		;9fc0
-	jp 057ffh		;9fc2
+	jp 057ffh		;9fc2   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 L_9FC5:
 	ld a,(0e30ah)		;9fc5
 	and 001h		;9fc8
@@ -4687,7 +4687,7 @@ L_9FC5:
 	call 0a1f6h		;9fe2
 	jp c,0a492h		;9fe5
 	ld a,027h		;9fe8
-	call 057ffh		;9fea
+	call 057ffh		;9fea   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,001h		;9fed
 	ld hl,0e30ah		;9fef
 	or (hl)			;9ff2
