@@ -209,7 +209,7 @@ C 0x85F0 10 letras
 C 0x85F4 los 12 jugadores de campo desde (0x29, ...)
 C 0x85FA desde la y 0x29, 12 filas
 C 0x85FE una fila de 14 caracteres de la ficha...
-C 0x8600 las x de cada columna: la tabla p13:5FD0
+C 0x8600 las x de cada columna: la tabla p00:5FD0
 C 0x8603 la x de esta columna
 C 0x8609 el byte de la ficha...
 C 0x860A ...y el siguiente para la proxima
@@ -219,7 +219,7 @@ C 0x8614 ...y la fila siguiente, 8 mas abajo
 C 0x8618 las 12 filas
 C 0x861C los 4 lanzadores: filas de 19 desde (0xA4, ...) con las columnas de 0x5FDE
 C 0x8622 desde la y 0xA4, 4 filas de 19 bytes
-C 0x8628 las x de las columnas: p13:5FDE
+C 0x8628 las x de las columnas: p00:5FDE
 C 0x862B la x
 C 0x8631 el byte de la ficha
 C 0x8638 se pinta

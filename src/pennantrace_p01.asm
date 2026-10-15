@@ -188,7 +188,7 @@ L_6145:
 	call bateador_mas		;6145   ; eliminado por strikes: las luces a cero, el aviso (p01:6165)...
 	call L_6194		;6148
 	call L_6165		;614b
-	call 0b123h		;614e   ; ...p15:B123 y si no hay 3 outs (0xE19A)...
+	call 0b123h		;614e   ; ...p03:B123 y si no hay 3 outs (0xE19A)...
 	ld a,(0e19ah)		;6151   ; lee los outs de la media entrada
 	cp 003h		;6154
 	ret nc			;6156
@@ -324,7 +324,7 @@ L_620F:
 	ld hl,0e231h		;623f   ; apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 	ld bc,00040h		;6242
 	ldir		;6245
-	ld a,001h		;6247   ; con 0xED9F puesto, p15:AD26
+	ld a,001h		;6247   ; con 0xED9F puesto, p03:AD26
 	ld (0ed9fh),a		;6249
 	call 0ad26h		;624c
 	xor a			;624f
@@ -964,7 +964,7 @@ L_668F:
 	ld (0e1a5h),a		;6694
 	ld a,004h		;6697
 	ld (0e1c9h),a		;6699
-	ld hl,0e331h		;669c   ; ...160 cuadros, sprites fuera, p01:66E7 y p15:B47B...
+	ld hl,0e331h		;669c   ; ...160 cuadros, sprites fuera, p01:66E7 y p03:B47B...
 	ld (hl),0a0h		;669f
 	call 05c7dh		;66a1   ; esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 	call 05b1fh		;66a4   ; dibujos_de_sprites: los dibujos de los 32 sprites: compara el de cada atributo y copia los que cambian
@@ -979,16 +979,16 @@ L_66B3:
 	jr z,L_66D0		;66b8
 	ld a,(0de03h)		;66ba   ; lee el contador de cuadros del juego (sube uno por cuadro)
 	rra			;66bd
-	jp c,0b29ch		;66be   ; los impares, p15:B29C
+	jp c,0b29ch		;66be   ; los impares, p03:B29C
 	ld de,0fffch		;66c1
 	add hl,de			;66c4
 	jr c,L_66CA		;66c5
 	ld hl,00000h		;66c7
 L_66CA:
 	ld (0e1a2h),hl		;66ca   ; guarda el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
-	jp 0b1bdh		;66cd   ; los pares, p15:B1BD
+	jp 0b1bdh		;66cd   ; los pares, p03:B1BD
 L_66D0:
-	call 0b440h		;66d0   ; en 0: p15:B440 y la cuenta de 0xE331...
+	call 0b440h		;66d0   ; en 0: p03:B440 y la cuenta de 0xE331...
 	ld a,080h		;66d3
 	ld (0e1d1h),a		;66d5   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ld hl,0e331h		;66d8
@@ -1348,7 +1348,7 @@ L_6916:
 	ld (0e33bh),a		;6924   ; guarda lo que acaba la jugada: 1 home run, 2 jugada anulada
 	ret			;6927
 L_6928:
-	call 05b1fh		;6928   ; paso 7: los sprites, p02:98FC y la cuenta; al acabar p15:B44F
+	call 05b1fh		;6928   ; paso 7: los sprites, p02:98FC y la cuenta; al acabar p03:B44F
 	call 05c73h		;692b   ; pide_colores_sprite: pide copiar los colores de sprite (0xED09 = 1)
 	call 098fch		;692e
 	ld hl,0de04h		;6931   ; apunta a la cuenta atras del estado
@@ -1490,7 +1490,7 @@ L_6A24:
 	call 04d2ah		;6a34   ; rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 	pop de			;6a37
 	pop hl			;6a38
-	ld b,005h		;6a39   ; ...y pinta sus 5 letras (p15:A425)
+	ld b,005h		;6a39   ; ...y pinta sus 5 letras (p03:A425)
 	call 0a425h		;6a3b   ; letras_estrechas: B letras; 0x0C (estrecha) avanza 4, las demas 8
 	pop af			;6a3e
 	ret			;6a3f
@@ -1581,7 +1581,7 @@ DATA_resto_6AB1:
 
 
 L_6AC1:
-	call L_6B37		;6ac1   ; el campo: la cuenta de 0xEC48, p01:6F34, p14:8324 y p01:6F52...
+	call L_6B37		;6ac1   ; el campo: la cuenta de 0xEC48, p01:6F34, p02:8324 y p01:6F52...
 	call L_6F34		;6ac4
 	call 08324h		;6ac7
 	call L_6F52		;6aca
@@ -2349,7 +2349,7 @@ L_6FE8:
 	ret nz			;6ff3
 	bit 4,(ix+00bh)		;6ff4   ; mira el bit 4 de las marcas
 	ret nz			;6ff8
-	set 4,(ix+00bh)		;6ff9   ; ...se marca una vez y p15:B0F5
+	set 4,(ix+00bh)		;6ff9   ; ...se marca una vez y p03:B0F5
 	jp 0b0f5h		;6ffd
 L_7000:
 	ld (ix+000h),000h		;7000   ; el corredor queda fuera: su ficha a cero
@@ -2358,7 +2358,7 @@ L_7000:
 	and 007h		;700b
 	dec a			;700d
 	call z,bateador_mas		;700e   ; bateador_mas: un bateador mas: en 0xE1A1 = 3, solo la primera vez (0xEDD4)
-	ld hl,07e69h		;7011   ; el texto de p13:7E69 y p15:B11F
+	ld hl,07e69h		;7011   ; el texto de p13:7E69 y p03:B11F
 	call 04ea6h		;7014   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	jp 0b11fh		;7017
 L_701A:
@@ -2489,7 +2489,7 @@ L_7111:
 	ld (ix+000h),a		;7117   ; guarda el numero (bits 0-3) y el estado (bits 4-7)
 	ret			;711a
 L_711B:
-	ld a,(ix+00dh)		;711b   ; llegaba lanzando: p15:AF50, p15:AED0 y p15:B0B7
+	ld a,(ix+00dh)		;711b   ; llegaba lanzando: p03:AF50, p03:AED0 y p15:B0B7
 	and 0f0h		;711e
 	or 002h		;7120
 	ld (ix+00dh),a		;7122   ; guarda la base de destino (nibble alto; 2 abajo: llegado)
@@ -3278,10 +3278,10 @@ L_7674:
 	ld (0e1e4h),a		;7678
 	jr L_765C		;767b
 L_767D:
-	call 08318h		;767d   ; si p14:8318 dice que hay algo (0xED0A)...
+	call 08318h		;767d   ; si p02:8318 dice que hay algo (0xED0A)...
 	or a			;7680
 	ret z			;7681
-	ld (0ed0ah),a		;7682
+	ld (0ed0ah),a		;7682   ; guarda lo que decide el ordenador al defender (2: nada)
 	ld a,(0ed3eh)		;7685   ; ...antes del paso 2, o con la espera entre 0x18 y 0x27...
 	cp 002h		;7688
 	jr c,L_769F		;768a
@@ -3291,7 +3291,7 @@ L_767D:
 	jr nc,L_769F		;7692
 	cp 018h		;7694
 	ret c			;7696
-	ld hl,0ed0ah		;7697
+	ld hl,0ed0ah		;7697   ; apunta a lo que decide el ordenador al defender (2: nada)
 	ld a,(hl)			;769a
 	call L_76A6		;769b
 	ld (hl),b			;769e
@@ -3380,7 +3380,7 @@ L_7713:
 	ld b,000h		;771f
 	ret			;7721
 L_7722:
-	call 0aad3h		;7722   ; la eleccion: p15:AAD3 y los limites (p01:774B)...
+	call 0aad3h		;7722   ; la eleccion: p03:AAD3 y los limites (p01:774B)...
 	call L_774B		;7725
 	call L_7737		;7728   ; ...la tabla segun la ficha (p01:7737)...
 	ld a,r		;772b   ; ...y uno al azar de los 8: el tipo en 0xE1E7
@@ -3616,7 +3616,7 @@ L_789C:
 	add a,024h		;789f
 	ld b,a			;78a1
 	call L_78BB		;78a2
-	ld a,(0e1f5h)		;78a5
+	ld a,(0e1f5h)		;78a5   ; lee la x del bateador en la caja
 	cp b			;78a8
 	ld a,(0e19dh)		;78a9   ; lee el mando del bateador o los corredores
 	jr z,L_788E		;78ac
@@ -3640,8 +3640,8 @@ L_78C4:
 	ret z			;78c9
 	or a			;78ca
 	jr nz,L_78DD		;78cb
-	call 0860ch		;78cd   ; ...0: lo decide p14:860C...
-	ld a,(0ed79h)		;78d0
+	call 0860ch		;78cd   ; ...0: lo decide p02:860C...
+	ld a,(0ed79h)		;78d0   ; lee el toque del ordenador (0x21 toca, 0xFF no)
 	or a			;78d3
 	ret z			;78d4
 	cp 0ffh		;78d5
@@ -3650,13 +3650,13 @@ L_78C4:
 	pop hl			;78db
 	ret			;78dc
 L_78DD:
-	ld c,042h		;78dd   ; si no: con p15:B06E, el mando a cero y 0xED79 = 0xFF
+	ld c,042h		;78dd   ; si no: con p03:B06E, el mando a cero y 0xED79 = 0xFF
 	call 0b06eh		;78df   ; base_libre: carry si ningun corredor esta en la base C (con el bit 6)
 	ret nc			;78e2
 	xor a			;78e3
 	ld (0e19dh),a		;78e4   ; guarda el mando del bateador o los corredores
 	dec a			;78e7
-	ld (0ed79h),a		;78e8
+	ld (0ed79h),a		;78e8   ; guarda el toque del ordenador (0x21 toca, 0xFF no)
 	ret			;78eb
 L_78EC:
 	ld hl,0e19dh		;78ec   ; suelta el bit 4 (el bate)
@@ -3816,7 +3816,7 @@ L_79EC:
 L_7A01:
 	call L_7B3C		;7a01   ; si la base de delante esta ocupada (p01:7B3C) no
 	ret c			;7a04
-	call 0835eh		;7a05   ; p14:835E decide si corre
+	call 0835eh		;7a05   ; p02:835E decide si corre
 	jp c,que_vuelva		;7a08   ; que_vuelva: el corredor IX vuelve: segun su base, el mando 1, 4 o 2 con el bit 5
 	push ix		;7a0b   ; el defensor mas cerca (p01:7B07)...
 	call L_7B07		;7a0d
@@ -3828,7 +3828,7 @@ L_7A01:
 	ld a,(0ed32h)		;7a1a   ; ...salvo con 0xED32 = 2 o 0xECFF
 	cp 002h		;7a1d
 	jp z,que_vuelva		;7a1f   ; que_vuelva: el corredor IX vuelve: segun su base, el mando 1, 4 o 2 con el bit 5
-	ld a,(0ecffh)		;7a22
+	ld a,(0ecffh)		;7a22   ; lee 1 si la pelota va lejos para el exterior
 	or a			;7a25
 	ret z			;7a26
 	jp que_vuelva		;7a27   ; que_vuelva: el corredor IX vuelve: segun su base, el mando 1, 4 o 2 con el bit 5
@@ -3897,7 +3897,7 @@ L_7A7F:
 	ret nz			;7a94
 L_7A95:
 	xor a			;7a95   ; ...todo a cero y al paso 0
-	ld (0ed79h),a		;7a96
+	ld (0ed79h),a		;7a96   ; guarda el toque del ordenador (0x21 toca, 0xFF no)
 	ld (0ed72h),a		;7a99
 	inc a			;7a9c
 	ld (0ed08h),a		;7a9d
@@ -3993,7 +3993,7 @@ L_7B1C:
 	ld (0e22fh),bc		;7b2b   ; ...la menor
 	ret			;7b2f
 L_7B30:
-	ld d,000h		;7b30   ; la distancia del defensor A (p14:808A)
+	ld d,000h		;7b30   ; la distancia del defensor A (p02:808A)
 	ld e,a			;7b32
 	ld ix,0e271h		;7b33   ; apunta a las 9 fichas de 16 bytes de los defensores
 	add ix,de		;7b37
@@ -4068,7 +4068,7 @@ L_7B9C:
 	ld (0e19fh),a		;7b9d   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ret			;7ba0
 L_7BA1:
-	xor a			;7ba1   ; paso 0: todo a cero, 5 cuadros (0xEDD6), p15:B524, p14:80F2 y p14:814D
+	xor a			;7ba1   ; paso 0: todo a cero, 5 cuadros (0xEDD6), p15:B524, p02:80F2 y p02:814D
 	ld (0e19fh),a		;7ba2   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ld (0ed86h),a		;7ba5
 	ld h,a			;7ba8
@@ -4088,14 +4088,14 @@ L_7BC3:
 	ld a,(0ed7ch)		;7bc3   ; paso 1: espera (0xEDD6) salvo que la jugada empiece...
 	ld hl,0e1d0h		;7bc6   ; apunta a el bote de la pelota (lo que bajo del suelo; 0 sin botes)
 	or (hl)			;7bc9
-	ld hl,0ecffh		;7bca
+	ld hl,0ecffh		;7bca   ; apunta a 1 si la pelota va lejos para el exterior
 	or (hl)			;7bcd
 	jr nz,L_7BD5		;7bce
 	ld hl,0edd6h		;7bd0
 	dec (hl)			;7bd3
 	ret nz			;7bd4
 L_7BD5:
-	call L_7BBE		;7bd5   ; ...p14:80BA y, si 0xE22B baja de 0x30, p01:7D27 y p15:B531
+	call L_7BBE		;7bd5   ; ...p02:80BA y, si 0xE22B baja de 0x30, p01:7D27 y p15:B531
 	call 080bah		;7bd8
 	ld a,(0e22bh)		;7bdb   ; lee el defensor que va a por la pelota (desplazamiento de 16 en 16)
 	cp 030h		;7bde
@@ -4103,7 +4103,7 @@ L_7BD5:
 	call L_7D27		;7be1
 	jp 0b531h		;7be4
 L_7BE7:
-	ld a,(0e33ch)		;7be7   ; paso 2: con 0xE33C al paso siguiente; si no, p14:81F1 y p01:7D27
+	ld a,(0e33ch)		;7be7   ; paso 2: con 0xE33C al paso siguiente; si no, p02:81F1 y p01:7D27
 	or a			;7bea
 	jr nz,L_7BBE		;7beb
 	call 081f1h		;7bed
@@ -4300,20 +4300,20 @@ L_7D3C:
 	cp 0ffh		;7d3f
 	jr z,L_7D49		;7d41
 	ld b,a			;7d43
-	ld a,(0ed43h)		;7d44
+	ld a,(0ed43h)		;7d44   ; lee 1 si la pelota va fuera del alcance del defensor
 	or a			;7d47
 	ret z			;7d48
 L_7D49:
-	ld a,(0ed41h)		;7d49
+	ld a,(0ed41h)		;7d49   ; lee el segundo defensor que va a por la pelota (16 x n)
 	ld b,a			;7d4c
-	ld a,(0ecffh)		;7d4d
+	ld a,(0ecffh)		;7d4d   ; lee 1 si la pelota va lejos para el exterior
 	or a			;7d50
 	ret z			;7d51
-	ld a,(0ed42h)		;7d52
+	ld a,(0ed42h)		;7d52   ; lee el exterior que va a por la pelota (0x10, 0x20 o 0)
 	ld b,a			;7d55
 	ret			;7d56
 L_7D57:
-	xor a			;7d57   ; sin mando: segun 0xED02, p14:8278 o p14:8225 deciden...
+	xor a			;7d57   ; sin mando: segun 0xED02, p14:8278 o p02:8225 deciden...
 	ld (0e19fh),a		;7d58   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ld a,(0ed02h)		;7d5b
 	or a			;7d5e
@@ -4323,7 +4323,7 @@ L_7D57:
 L_7D66:
 	call 08278h		;7d66
 	or a			;7d69
-	jp nz,08035h		;7d6a   ; ...si hay que lanzar (p14:8035)
+	jp nz,08035h		;7d6a   ; ...si hay que lanzar (p02:8035)
 	jp L_7B9C		;7d6d
 L_7D70:
 	ld a,(0edd5h)		;7d70
@@ -4334,7 +4334,7 @@ L_7D70:
 	jp nz,08035h		;7d7a
 	jp L_7B9C		;7d7d
 L_7D80:
-	call 082a7h		;7d80   ; a que base lanzar: p14:82A7 y p01:7F3B...
+	call 082a7h		;7d80   ; a que base lanzar: p02:82A7 y p01:7F3B...
 	call L_7F3B		;7d83
 	ld ix,0e2a1h		;7d86   ; ...los 6 defensores de 0xE2A1: quien guarda esa base?
 	ld de,00010h		;7d8a
@@ -4362,7 +4362,7 @@ L_7DAE:
 	ld a,(0e220h)		;7db2   ; lee el defensor que tiene la pelota (1-9; 0 nadie)
 	cp 003h		;7db5
 	jr nz,paso_anterior		;7db7
-	ld a,(0ed6eh)		;7db9
+	ld a,(0ed6eh)		;7db9   ; lee la base a la que lanzar (1, 2, 4 u 8)
 	cp 008h		;7dbc
 	jr nz,paso_anterior		;7dbe
 	or 020h		;7dc0
@@ -4393,7 +4393,7 @@ L_7DE8:
 	or 010h		;7deb
 	ld (0e19fh),a		;7ded   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ld a,018h		;7df0
-	ld (0ed00h),a		;7df2
+	ld (0ed00h),a		;7df2   ; guarda la espera del lanzador del ordenador antes de lanzar
 	jp L_7BBE		;7df5
 L_7DF8:
 	call L_7F26		;7df8   ; lanzar o correr: la ficha del que tiene la pelota (p01:7F26)...
@@ -4428,7 +4428,7 @@ L_7E0A:
 	ld b,002h		;7e24
 	ret nc			;7e26
 	ld b,000h		;7e27
-	ld a,(0edc8h)		;7e29
+	ld a,(0edc8h)		;7e29   ; lee la base mas alta de los que no vuelven
 	cp d			;7e2c
 	jr z,L_7E32		;7e2d
 	dec d			;7e2f
@@ -4470,11 +4470,11 @@ L_7E6A:
 	jp nc,L_7DE8		;7e78
 	jr L_7EB6		;7e7b
 L_7E7D:
-	push bc			;7e7d   ; tiene la pelota en su base: p14:830F y 0xEDC7-0xEDC9
+	push bc			;7e7d   ; tiene la pelota en su base: p02:830F y 0xEDC7-0xEDC9
 	call 0830fh		;7e7e
 	pop bc			;7e81
 	jr nc,L_7E92		;7e82
-	ld hl,0edc7h		;7e84
+	ld hl,0edc7h		;7e84   ; apunta a la base mas alta de los corredores
 	ld a,(hl)			;7e87
 	inc hl			;7e88
 	cp (hl)			;7e89
@@ -4490,7 +4490,7 @@ L_7E92:
 	jr z,L_7EC3		;7e99
 	cp 042h		;7e9b
 	jp nz,paso_anterior		;7e9d   ; paso_anterior: al paso anterior (0xECE6 - 1)
-	call 0830fh		;7ea0   ; ...p14:830F, el corredor y su distancia...
+	call 0830fh		;7ea0   ; ...p02:830F, el corredor y su distancia...
 	jr nc,L_7F18		;7ea3
 	ld d,003h		;7ea5
 	call L_7EF7		;7ea7
@@ -4599,7 +4599,7 @@ L_7F56:
 L_7F5C:
 	dec (hl)			;7f5c
 	ret nz			;7f5d
-	xor a			;7f5e   ; ...al acabar, empieza a buscar al mas cerca (p14:8081)
+	xor a			;7f5e   ; ...al acabar, empieza a buscar al mas cerca (p02:8081)
 	ld (0ed25h),a		;7f5f
 	call 08081h		;7f62
 	ld (0ed26h),hl		;7f65
@@ -4620,7 +4620,7 @@ L_7F70:
 	ld a,(ix+00dh)		;7f86   ; lee la base de destino (nibble alto; 2 abajo: llegado)
 	or a			;7f89
 	jr nz,L_7FA6		;7f8a
-	call 0808ah		;7f8c   ; ...la distancia (p14:808A)...
+	call 0808ah		;7f8c   ; ...la distancia (p02:808A)...
 	ld b,h			;7f8f
 	ld c,l			;7f90
 	ld de,(0ed26h)		;7f91
@@ -4641,7 +4641,7 @@ L_7FAF:
 	ld (0e22bh),a		;7fb2   ; guarda el defensor que va a por la pelota (desplazamiento de 16 en 16)
 	jp L_7BBE		;7fb5
 L_7FB8:
-	call 081f1h		;7fb8   ; va a por la pelota: p14:81F1, p14:8115, el defensor y su direccion
+	call 081f1h		;7fb8   ; va a por la pelota: p02:81F1, p02:8115, el defensor y su direccion
 	call 08115h		;7fbb
 	call L_7D34		;7fbe
 	call L_7D27		;7fc1
@@ -4657,7 +4657,7 @@ L_7FDA:
 	ld a,(0ece6h)		;7fda   ; con 0xED0A y sin el paso 9, al paso 8
 	cp 009h		;7fdd
 	ret z			;7fdf
-	ld a,(0ed0ah)		;7fe0
+	ld a,(0ed0ah)		;7fe0   ; lee lo que decide el ordenador al defender (2: nada)
 	or a			;7fe3
 	ret z			;7fe4
 	ld a,008h		;7fe5
@@ -4673,7 +4673,7 @@ L_7FEB:
 	jr nc,$+24		;7ff7
 	dec a			;7ff9
 	ld a,006h		;7ffa
-	ld (0ed00h),a		;7ffc
+	ld (0ed00h),a		;7ffc   ; guarda la espera del lanzador del ordenador antes de lanzar
 
 ; ----------------------------------------------------------------------
 ; DATOS partida_7FFF: los 1 primeros bytes de una instruccion de 3 (CA BE 7B)

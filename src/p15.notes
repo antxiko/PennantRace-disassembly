@@ -1314,6 +1314,7 @@ C 0xB2D6 hl_mas_a: HL = HL + A
 C 0xB2F4 pelota_tras_robo: tras un robo, la pelota al lanzador o al receptor
 C 0xB2F9 pelota_al_lanzador: la pelota en manos del lanzador
 C 0xB30C lee la velocidad x de la pelota y el byte siguiente (16 bits)
+C 0xB31D guarda el tipo de golpe (1-7)
 C 0xB32C lee la velocidad x, byte alto de la pelota
 C 0xB33B guarda la y (vertical) del parador en corto (ficha 0xE2A1, defensor 6) y el byte siguiente (16 bits)
 C 0xB341 guarda la x (horizontal) del parador en corto (ficha 0xE2A1, defensor 6) y el byte siguiente (16 bits)
@@ -1404,6 +1405,9 @@ C 0xB537 guarda la y de destino del segunda base (ficha 0xE2C1, defensor 4) y el
 C 0xB544 lee la velocidad x de la pelota y el byte siguiente (16 bits)
 C 0xB54A menos_hl_15: HL = -HL
 C 0xB54F menos_de_15: DE = -DE
+C 0xB565 apunta a el tipo de golpe (1-7)
+C 0xB59A apunta a el tipo de golpe (1-7)
+C 0xB5B6 apunta a el tipo de golpe (1-7)
 C 0xB613 guarda las marcas del lanzador (ficha 0xE2F1, defensor 1)
 C 0xB619 guarda el defensor que tiene la pelota (1-9; 0 nadie)
 C 0xB631 guarda las marcas del lanzador (ficha 0xE2F1, defensor 1)

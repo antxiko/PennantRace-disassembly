@@ -6,7 +6,7 @@ C 0xA004 el color a 0...
 C 0xA006 ...4 bytes mas alla
 C 0xA00C el orden del visitante, primer paso: con el boton 2 elige el puesto...
 C 0xA00F sin el boton 2: la flecha
-C 0xA011 ...lo marca (p15:A4F6), cambia el color de la flecha y al paso 2 (sonido 0x27)
+C 0xA011 ...lo marca (p03:A4F6), cambia el color de la flecha y al paso 2 (sonido 0x27)
 C 0xA014 colores 0x09 / 0x0A
 C 0xA01A al segundo paso
 C 0xA01E el sonido 0x27
@@ -52,7 +52,7 @@ C 0xA0F6 no: el aviso (p03:A4C4)
 C 0xA0F9 ...el sonido 0x27, la marca, el texto y los sprites
 C 0xA0FE el bit 1 de 0xE30A: el local acabo
 C 0xA105 el caracter 2 en (0x28, 0x88)
-C 0xA10D y p14:9FFF con 0xE113
+C 0xA10D y p02:9FFF con 0xE113
 C 0xA113 con el boton 2 el puesto
 C 0xA116 sin el boton 2: la flecha
 C 0xA118 lo marca (p03:A501)
@@ -229,7 +229,7 @@ C 0xA566 el marcador a 0xECDC
 C 0xA571 las carreras por entrada a 0xEDA2 (32 bytes)
 C 0xA57E paso 1: el lanzador se coloca (p03:A844) hasta el boton 1...
 C 0xA581 con el boton 1...
-C 0xA587 ...p15:AC38, p15:AAE1 y 0xE337 = 1
+C 0xA587 ...p03:AC38, p03:AAE1 y 0xE337 = 1
 C 0xA58D ...0xE337 = 1: ya lanzo
 C 0xA592 al paso siguiente
 C 0xA597 paso 2: la espera de 0xE1D2...
@@ -625,7 +625,7 @@ C 0xAE6E cogida baja (altura < 6): el dibujo 0x40 y el 8
 C 0xAE79 alta: 0x48 / 10, o 0x50 / 9 con la velocidad x negativa
 C 0xAE8B salvo el receptor (sprite 0xF8), el dibujo nuevo
 C 0xAE95 el receptor: el dibujo de 64 bytes B
-C 0xAEA0 tocar base (p03:AF50), p15:B0B7 y la cogida al vuelo (p03:AED0)
+C 0xAEA0 tocar base (p03:AF50), p03:B0B7 y la cogida al vuelo (p03:AED0)
 C 0xAEA9 0xE302 y 0xED39 a 0
 C 0xAEB0 sin altura
 C 0xAEB6 estado 3: en la mano
@@ -966,7 +966,7 @@ C 0xB6B8 si alguna no es 0, sigue
 C 0xB6BF todas 0: el aviso de 0x7C62
 C 0xB6C1 ...0xE206 ocupado, el de p13:7C33...
 C 0xB6C7 0xE206 (lo que queda de aguante) no es 0: el aviso de 0x7C33
-C 0xB6CC ...algun jugador sin nombre, el de p13:7C4B...
+C 0xB6CC ...algun jugador sin nombre, el de p01:7C4B...
 C 0xB6D1 los 4 lanzadores: si alguno suma 0, el aviso
 C 0xB6D9 los 12 de campo: si alguno suma 0, el aviso de 0x7C4B
 C 0xB6E1 las dos cifras de cada uno...
@@ -1150,11 +1150,11 @@ C 0xBBE2 0xEDD1 = 1
 C 0xBBE9 despues de la 16, la 0
 C 0xBBF0 la columna 0
 C 0xBBF3 el cursor: la y de la fila (0x5FB5)...
-C 0xBBF7 la y de la tabla p13:5FB5
+C 0xBBF7 la y de la tabla p00:5FB5
 C 0xBBFF ...y la x de la columna: el nombre (0x5FC6), un jugador (0x5FD0) o un lanzador (0x5FDE)
-C 0xBC00 las x del nombre: p13:5FC6
-C 0xBC06 las de campo: p13:5FD0
-C 0xBC0D las de los lanzadores: p13:5FDE
+C 0xBC00 las x del nombre: p00:5FC6
+C 0xBC06 las de campo: p00:5FD0
+C 0xBC0D las de los lanzadores: p00:5FDE
 C 0xBC13 la x de la columna
 C 0xBC17 al sprite 0 y el sonido 0x26
 C 0xBC1A la y y la x del sprite 0
@@ -1386,6 +1386,7 @@ C 0xA67E paso_siguiente_3: al paso siguiente
 C 0xA68B paso_siguiente_3: al paso siguiente
 C 0xA69B apunta a los eliminados por strikes del visitante (BCD)
 C 0xA6B7 guarda la espera del paso del lanzamiento
+C 0xA6C6 guarda el golpe: 0 nada, 1 flojo (la bola baja), 2 golpe
 C 0xA6D9 lee los outs de la media entrada
 C 0xA6E4 apunta a el paso de la jugada (y de TEAM EDIT)
 C 0xA700 lee (la velocidad - 80) / 2
@@ -1431,10 +1432,14 @@ C 0xA9E0 menos_de: DE = -DE
 C 0xA9FF guarda la x del lanzador (0x71-0x7F)
 C 0xAA17 guarda foul (la jugada se anula y cuenta como strike hasta 2)
 C 0xAA1A guarda la jugada anulada (foul)
+C 0xAA1D guarda el bate da a la pelota (1; 2 con la formacion 5, 3 con la 6)
+C 0xAA20 guarda el toque del ordenador (0x21 toca, 0xFF no)
 C 0xAA26 guarda el resultado del lanzamiento: 1 strike, 2 bola, 3 pelotazo
 C 0xAA29 guarda el bote de la pelota (lo que bajo del suelo; 0 sin botes)
 C 0xAA2F guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0xAA32 guarda el paso del bateador del ordenador
+C 0xAA35 guarda 1 si la pelota va lejos para el exterior
+C 0xAA38 guarda lo que decide el ordenador al defender (2: nada)
 C 0xAA3B guarda los cuadros de efecto lateral
 C 0xAA44 guarda los cuadros de vuelo de la pelota lanzada
 C 0xAA47 guarda la direccion del efecto lateral fijada (0x04 izquierda, 0x08 derecha)

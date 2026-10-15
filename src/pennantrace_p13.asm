@@ -687,7 +687,7 @@ L_6537:
 	ld e,a			;653e
 	inc c			;653f
 	djnz L_6537		;6540
-	call L_6187		;6542   ; ...la flecha, el texto de p13:A710 y la tabla de la jornada...
+	call L_6187		;6542   ; ...la flecha, el texto de p15:A710 y la tabla de la jornada...
 	ld hl,0a710h		;6545
 	call 04ea6h		;6548   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld hl,00050h		;654b   ; una linea en la y 0x50

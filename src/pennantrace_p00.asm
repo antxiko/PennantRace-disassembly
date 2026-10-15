@@ -678,7 +678,7 @@ L_44E6:
 	call sonido		;44e8   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	xor a			;44eb
 	ld (0eff4h),a		;44ec   ; guarda el tono libre del canal 4 (bit 0 baja, bit 7 empieza)
-	call borra_pantalla		;44ef   ; ...borra la pantalla, carga la fuente (p00:5991: 161 caracteres a la VRAM 0) y p15:B670
+	call borra_pantalla		;44ef   ; ...borra la pantalla, carga la fuente (p00:5991: 161 caracteres a la VRAM 0) y p03:B670
 	call carga_la_fuente		;44f2   ; carga_la_fuente: carga la fuente: 161 caracteres de un bit (0xFAF6 = 1 mientras tanto)
 	call 0b670h		;44f5
 	jr paso_siguiente		;44f8
@@ -844,7 +844,7 @@ L_4622:
 	or a			;4638
 	ret nz			;4639
 L_463A:
-	ld a,02fh		;463a   ; ...el sonido 0x2F, p14:9EA9 y al paso siguiente
+	ld a,02fh		;463a   ; ...el sonido 0x2F, p02:9EA9 y al paso siguiente
 	call sonido		;463c   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	call 09ea9h		;463f
 	jp paso_siguiente		;4642   ; paso_siguiente: al paso siguiente del estado (0xDE01 + 1)
@@ -854,7 +854,7 @@ L_4645:
 	jr nz,L_4622		;4649
 	jr L_463A		;464b
 L_464D:
-	djnz L_465D		;464d   ; paso siguiente: p14:9D49 hasta que marque 0xE1D1
+	djnz L_465D		;464d   ; paso siguiente: p02:9D49 hasta que marque 0xE1D1
 	call 09d49h		;464f
 	ld a,(0e1d1h)		;4652   ; lee la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	or a			;4655
@@ -862,7 +862,7 @@ L_464D:
 	call 0a2edh		;4657   ; y p15:A2ED
 	jp paso_siguiente		;465a   ; paso_siguiente: al paso siguiente del estado (0xDE01 + 1)
 L_465D:
-	djnz L_468A		;465d   ; p14:9F8A hasta que marque 0xE1D1
+	djnz L_468A		;465d   ; p02:9F8A hasta que marque 0xE1D1
 	call 09f8ah		;465f
 	ld a,(0e1d1h)		;4662   ; lee la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	or a			;4665
@@ -951,7 +951,7 @@ L_46EE:
 	ld (0de04h),a		;46f5   ; guarda la cuenta atras del estado
 	jp paso_cero		;46f8   ; paso_cero: el paso del estado a 0
 L_46FB:
-	ld a,(0e190h)		;46fb   ; TEAM EDIT (modo 3) va a p15:B694
+	ld a,(0e190h)		;46fb   ; TEAM EDIT (modo 3) va a p03:B694
 	cp 003h		;46fe
 	jp z,0b694h		;4700
 	call L_596F		;4703   ; p00:596F hasta que marque 0xE1D1
@@ -1180,7 +1180,7 @@ L_48AD:
 	cp 0c9h		;48e1
 	jp z,L_4967		;48e3
 L_48E6:
-	call 0bdd4h		;48e6   ; p15:BDD4, el texto de 0x7BDD, 0xD2B0 = 0 y al paso siguiente
+	call 0bdd4h		;48e6   ; p03:BDD4, el texto de 0x7BDD, 0xD2B0 = 0 y al paso siguiente
 	ld hl,07bddh		;48e9
 	call texto		;48ec   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	xor a			;48ef
@@ -1345,7 +1345,7 @@ L_4A16:
 	ld (0ed9bh),a		;4a18
 	ld a,006h		;4a1b
 	ld (0de00h),a		;4a1d   ; guarda el estado del juego (indice del despachador principal)
-	call 08461h		;4a20   ; p14:8461
+	call 08461h		;4a20   ; p02:8461
 	ld a,(0e19bh)		;4a23   ; en la baja, el disparo del primer mando; en la alta, el del segundo
 	rra			;4a26
 	jp c,L_4790		;4a27

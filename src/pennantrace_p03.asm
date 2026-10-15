@@ -32,7 +32,7 @@ L_A00C:
 	ld a,b			;a00c   ; el orden del visitante, primer paso: con el boton 2 elige el puesto...
 	and 020h		;a00d
 	jr z,L_A023		;a00f   ; sin el boton 2: la flecha
-	call L_A4F6		;a011   ; ...lo marca (p15:A4F6), cambia el color de la flecha y al paso 2 (sonido 0x27)
+	call L_A4F6		;a011   ; ...lo marca (p03:A4F6), cambia el color de la flecha y al paso 2 (sonido 0x27)
 	ld bc,0090ah		;a014   ; colores 0x09 / 0x0A
 	call color_flecha_visitante		;a017   ; color_flecha_visitante: el color de la flecha del visitante (B) y de sus 3 sprites (C)
 	ld hl,0e304h		;a01a   ; al segundo paso
@@ -160,7 +160,7 @@ L_A0D7:
 	ld a,002h		;a105   ; el caracter 2 en (0x28, 0x88)
 	ld de,08828h		;a107
 	call L_A452		;a10a
-	ld hl,0e113h		;a10d   ; y p14:9FFF con 0xE113
+	ld hl,0e113h		;a10d   ; y p02:9FFF con 0xE113
 	jp 09fffh		;a110
 L_A113:
 	ld a,b			;a113   ; con el boton 2 el puesto
@@ -796,7 +796,7 @@ L_A57E:
 	ld a,(0e19fh)		;a581   ; con el boton 1...
 	and 010h		;a584
 	ret z			;a586
-	call L_AC38		;a587   ; ...p15:AC38, p15:AAE1 y 0xE337 = 1
+	call L_AC38		;a587   ; ...p03:AC38, p03:AAE1 y 0xE337 = 1
 	call L_AAE1		;a58a
 	ld a,001h		;a58d   ; ...0xE337 = 1: ya lanzo
 	ld (0e337h),a		;a58f
@@ -962,7 +962,7 @@ L_A6BF:
 	dec a			;a6c2   ; 0xED2E a 0
 	jr nz,L_A6D0		;a6c3
 	xor a			;a6c5
-	ld (0ed2eh),a		;a6c6
+	ld (0ed2eh),a		;a6c6   ; guarda el golpe: 0 nada, 1 flojo (la bola baja), 2 golpe
 	ld a,(0eddch)		;a6c9   ; con foul, p01:6267
 	or a			;a6cc
 	call nz,06267h		;a6cd
@@ -1463,16 +1463,16 @@ L_AA02:
 	ld (0edddh),a		;aa14
 	ld (0eddch),a		;aa17   ; guarda foul (la jugada se anula y cuenta como strike hasta 2)
 	ld (0eddeh),a		;aa1a   ; guarda la jugada anulada (foul)
-	ld (0ece0h),a		;aa1d
-	ld (0ed79h),a		;aa20
+	ld (0ece0h),a		;aa1d   ; guarda el bate da a la pelota (1; 2 con la formacion 5, 3 con la 6)
+	ld (0ed79h),a		;aa20   ; guarda el toque del ordenador (0x21 toca, 0xFF no)
 	ld (0ec75h),a		;aa23
 	ld (0e338h),a		;aa26   ; guarda el resultado del lanzamiento: 1 strike, 2 bola, 3 pelotazo
 	ld (0e1d0h),a		;aa29   ; guarda el bote de la pelota (lo que bajo del suelo; 0 sin botes)
 	ld (0eddfh),a		;aa2c
 	ld (0e19fh),a		;aa2f   ; guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 	ld (0eceeh),a		;aa32   ; guarda el paso del bateador del ordenador
-	ld (0ecffh),a		;aa35
-	ld (0ed0ah),a		;aa38
+	ld (0ecffh),a		;aa35   ; guarda 1 si la pelota va lejos para el exterior
+	ld (0ed0ah),a		;aa38   ; guarda lo que decide el ordenador al defender (2: nada)
 	ld (0ed12h),a		;aa3b   ; guarda los cuadros de efecto lateral
 	ld (0ed94h),a		;aa3e
 	ld (0e1eeh),a		;aa41
@@ -2092,7 +2092,7 @@ L_AE95:
 	ld a,b			;ae9c
 	call 05716h		;ae9d   ; dibujo_64: el dibujo de 64 bytes A (p11:8759 + 64 A)
 L_AEA0:
-	call L_AF50		;aea0   ; tocar base (p03:AF50), p15:B0B7 y la cogida al vuelo (p03:AED0)
+	call L_AF50		;aea0   ; tocar base (p03:AF50), p03:B0B7 y la cogida al vuelo (p03:AED0)
 	call L_B0B7		;aea3
 	call L_AED0		;aea6
 L_AEA9:
@@ -3292,7 +3292,7 @@ L_B6C1:
 	inc hl			;b6c8
 	or (hl)			;b6c9
 	jr nz,L_B6EB		;b6ca
-	ld hl,0e1fch		;b6cc   ; ...algun jugador sin nombre, el de p13:7C4B...
+	ld hl,0e1fch		;b6cc   ; ...algun jugador sin nombre, el de p01:7C4B...
 	ld b,004h		;b6cf
 L_B6D1:
 	ld a,(hl)			;b6d1   ; los 4 lanzadores: si alguno suma 0, el aviso
@@ -3979,18 +3979,18 @@ L_BBEE:
 L_BBF3:
 	ld a,(0e1a2h)		;bbf3   ; el cursor: la y de la fila (0x5FB5)...
 	ld b,a			;bbf6
-	ld de,05fb5h		;bbf7   ; la y de la tabla p13:5FB5
+	ld de,05fb5h		;bbf7   ; la y de la tabla p00:5FB5
 	call 0421bh		;bbfa   ; de_mas_a: DE = DE + A
 	ld a,(de)			;bbfd
 	ld c,a			;bbfe
 	ld a,b			;bbff   ; ...y la x de la columna: el nombre (0x5FC6), un jugador (0x5FD0) o un lanzador (0x5FDE)
-	ld hl,05fc6h		;bc00   ; las x del nombre: p13:5FC6
+	ld hl,05fc6h		;bc00   ; las x del nombre: p00:5FC6
 	or a			;bc03
 	jr z,L_BC10		;bc04
-	ld hl,05fd0h		;bc06   ; las de campo: p13:5FD0
+	ld hl,05fd0h		;bc06   ; las de campo: p00:5FD0
 	cp 00dh		;bc09
 	jr c,L_BC10		;bc0b
-	ld hl,05fdeh		;bc0d   ; las de los lanzadores: p13:5FDE
+	ld hl,05fdeh		;bc0d   ; las de los lanzadores: p00:5FDE
 L_BC10:
 	ld a,(0e1a3h)		;bc10   ; lee el byte alto del desplazamiento de la pantalla (en TEAM EDIT, la columna elegida)
 	call 04216h		;bc13   ; la x de la columna

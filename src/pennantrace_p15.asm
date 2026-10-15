@@ -2655,7 +2655,7 @@ L_B308:
 	jr L_B329		;b319
 L_B31B:
 	ld a,007h		;b31b   ; ...o hacia fuera: el tipo 7 y las coberturas de fuera
-	ld (0ed9dh),a		;b31d
+	ld (0ed9dh),a		;b31d   ; guarda el tipo de golpe (1-7)
 	call L_B45D		;b320   ; el lanzador (p15:B45D), el tercera base y el primera base
 	call L_B480		;b323
 	call L_B4C6		;b326
@@ -2901,7 +2901,7 @@ L_B55E:
 	ret nc			;b563
 L_B564:
 	pop hl			;b564   ; no vuelve a quien llamo: se queda aqui
-	ld hl,0ed9dh		;b565
+	ld hl,0ed9dh		;b565   ; apunta a el tipo de golpe (1-7)
 	ld a,(0e21bh)		;b568   ; hacia la izquierda: tipo 6; si no, 5
 	rla			;b56b
 	ld a,006h		;b56c
@@ -2927,7 +2927,7 @@ L_B58B:
 	or a			;b595
 	sbc hl,de		;b596
 	rl h		;b598
-	ld hl,0ed9dh		;b59a
+	ld hl,0ed9dh		;b59a   ; apunta a el tipo de golpe (1-7)
 	jr c,L_B5A8		;b59d
 	ld a,004h		;b59f   ; tipo 4: el lanzador y el primera base
 	ld (hl),a			;b5a1
@@ -2942,7 +2942,7 @@ L_B5B1:
 	or a			;b5b1
 	sbc hl,de		;b5b2
 	rl h		;b5b4
-	ld hl,0ed9dh		;b5b6
+	ld hl,0ed9dh		;b5b6   ; apunta a el tipo de golpe (1-7)
 	jr nc,L_B5C4		;b5b9
 	ld a,002h		;b5bb   ; tipo 2: el primera base y el tercera base
 	ld (hl),a			;b5bd

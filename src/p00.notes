@@ -104,7 +104,7 @@ C 0x44CD paso 2: p15:BB87 cada cuadro...
 C 0x44D8 ...hasta que marque 0xE1D1...
 C 0x44DD ...el sonido 0x2D y al estado 0, paso 0
 C 0x44E6 paso 3: calla todo (sonido 1)...
-C 0x44EF ...borra la pantalla, carga la fuente (p00:5991: 161 caracteres a la VRAM 0) y p15:B670
+C 0x44EF ...borra la pantalla, carga la fuente (p00:5991: 161 caracteres a la VRAM 0) y p03:B670
 C 0x44FA estado 1: la espera del menu; al acabar...
 C 0x4501 ...el modo 0 (1PLAYER) y al estado siguiente
 C 0x4508 estado 2, paso 0: p15:AB40 cada cuadro...
@@ -146,10 +146,10 @@ C 0x461D ...0xD2B1 = 1: se sigue esperando
 C 0x4622 p13:6DF7 cada cuadro
 C 0x462B 0xD2B1 = 2: vuelta al menu
 C 0x4635 acabada la cuenta...
-C 0x463A ...el sonido 0x2F, p14:9EA9 y al paso siguiente
-C 0x464D paso siguiente: p14:9D49 hasta que marque 0xE1D1
+C 0x463A ...el sonido 0x2F, p02:9EA9 y al paso siguiente
+C 0x464D paso siguiente: p02:9D49 hasta que marque 0xE1D1
 C 0x4657 y p15:A2ED
-C 0x465D p14:9F8A hasta que marque 0xE1D1
+C 0x465D p02:9F8A hasta que marque 0xE1D1
 C 0x4667 el reloj de juego a cero
 C 0x466A la musica del partido (0x32) si 0xEFFA lo deja; si no, el sonido 1
 C 0x4677 0xED13 y 0xED14 a 1
@@ -168,7 +168,7 @@ C 0x46D8 si gana el local por 10 o mas, se acaba
 C 0x46E2 antes de la baja de la 9.a (0xE19B < 0x11) se sigue
 C 0x46E6 desde la 9.a, si el local va por delante se acaba
 C 0x46EE fin del partido: estado 9 y 128 cuadros
-C 0x46FB TEAM EDIT (modo 3) va a p15:B694
+C 0x46FB TEAM EDIT (modo 3) va a p03:B694
 C 0x4703 p00:596F hasta que marque 0xE1D1
 C 0x470B con el bit 4 de 0xDE02, p14:9697
 C 0x471B 60 cuadros, 0xD2B0 y 0xD2B1 a cero y al paso siguiente
@@ -217,7 +217,7 @@ C 0x48C6 0xDD93: partido nuevo
 C 0x48CC copia 0xDE02 a 0xD73F
 C 0x48D2 0xDD90 = 1
 C 0x48D7 con 0xDD0E = 0xFF y sin nada en H.SAVE (0xFFA7 = ret) se salta
-C 0x48E6 p15:BDD4, el texto de 0x7BDD, 0xD2B0 = 0 y al paso siguiente
+C 0x48E6 p03:BDD4, el texto de 0x7BDD, 0xD2B0 = 0 y al paso siguiente
 C 0x48F6 calla todo (sonido 1)
 C 0x48FB paso 4: p13:6F79 hasta que marque 0xD2B1; entonces al menu
 C 0x490E paso 5: espera los botones 1 o 2 (bits 4-5) de cualquier mando
@@ -242,7 +242,7 @@ C 0x49F9 vuelven a su sitio rojo y azul
 C 0x4A06 el verde, uno menos si no es 0
 C 0x4A0D guarda el color fundido
 C 0x4A16 0xED9B = 1 y estado 6
-C 0x4A20 p14:8461
+C 0x4A20 p02:8461
 C 0x4A23 en la baja, el disparo del primer mando; en la alta, el del segundo
 C 0x4A2D estado 6: la cuenta de 0xDE04...
 C 0x4A32 ...el sonido 0x30, p01:668F y al estado 7

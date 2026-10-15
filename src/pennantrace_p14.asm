@@ -812,7 +812,7 @@ L_85F4:
 	ld c,00ch		;85fc
 L_85FE:
 	ld b,00eh		;85fe   ; una fila de 14 caracteres de la ficha...
-	ld hl,05fd0h		;8600   ; las x de cada columna: la tabla p13:5FD0
+	ld hl,05fd0h		;8600   ; las x de cada columna: la tabla p00:5FD0
 L_8603:
 	ld d,(hl)			;8603   ; la x de esta columna
 	inc hl			;8604
@@ -837,7 +837,7 @@ L_861C:
 	ld c,004h		;8624
 L_8626:
 	ld b,013h		;8626
-	ld hl,05fdeh		;8628   ; las x de las columnas: p13:5FDE
+	ld hl,05fdeh		;8628   ; las x de las columnas: p00:5FDE
 L_862B:
 	ld d,(hl)			;862b   ; la x
 	inc hl			;862c
