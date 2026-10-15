@@ -1112,7 +1112,7 @@ L_871A:
 	call L_87AF		;8721
 	ld (0e215h),de		;8724   ; guarda la velocidad y de la pelota y el byte siguiente (16 bits)
 	ld (0e21ah),hl		;8728   ; guarda la velocidad x de la pelota y el byte siguiente (16 bits)
-	ld (0e1dah),hl		;872b
+	ld (0e1dah),hl		;872b   ; guarda la velocidad x de la pelota lanzada (16 bits)
 	call L_8788		;872e   ; la bola baja (p02:8788)
 	ld a,(0ed2eh)		;8731
 	dec a			;8734
@@ -1122,7 +1122,7 @@ L_871A:
 	ld de,(0e215h)		;873b   ; lee la velocidad y de la pelota y el byte siguiente (16 bits)
 	sra d		;873f
 	rr e		;8741
-	ld (0e1d6h),de		;8743
+	ld (0e1d6h),de		;8743   ; guarda la velocidad y de la pelota lanzada (16 bits)
 	ld c,009h		;8747   ; la tabla 0x876D segun la formacion (0, 9 o 18) y el tipo (hasta 8)...
 	ld a,(0e1f6h)		;8749   ; lee la formacion del campo (0-6)
 	cp 005h		;874c
@@ -1226,13 +1226,13 @@ L_87FC:
 	call L_87F3		;87fc   ; el efecto: 0xE1DF + 0xED49...
 	ld hl,0ed49h		;87ff
 	ld b,(hl)			;8802
-	ld a,(0e1dfh)		;8803
+	ld a,(0e1dfh)		;8803   ; lee la altura de la pelota lanzada
 	add a,b			;8806
-	ld (0e1dfh),a		;8807
+	ld (0e1dfh),a		;8807   ; guarda la altura de la pelota lanzada
 	cp 080h		;880a   ; ...al pasar de 0x80 rebota (cambia de signo)
 	ret c			;880c
 	neg		;880d
-	ld (0e1dfh),a		;880f
+	ld (0e1dfh),a		;880f   ; guarda la altura de la pelota lanzada
 	ld a,(hl)			;8812
 	neg		;8813
 	ld (hl),a			;8815
@@ -1403,7 +1403,7 @@ L_8930:
 	ld a,(0e19bh)		;8934   ; lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 	rra			;8937
 	jr nc,L_890D		;8938
-	ld ix,(0ed8ah)		;893a
+	ld ix,(0ed8ah)		;893a   ; lee la ficha del lanzador del local (puntero) y el byte siguiente (16 bits)
 	jr L_890D		;893e
 L_8940:
 	ld a,(0e1f1h)		;8940   ; se mueve en la caja: con la direccion (bits 2-3 de 0xE19D)...
@@ -1451,7 +1451,7 @@ L_896E:
 	jr z,L_8997		;8982
 	cp 006h		;8984
 	jr z,L_89A6		;8986
-	ld a,(0e1dfh)		;8988
+	ld a,(0e1dfh)		;8988   ; lee la altura de la pelota lanzada
 	cp 00eh		;898b
 	ret c			;898d
 	cp 022h		;898e
@@ -1585,7 +1585,7 @@ L_8A71:
 	ld a,(0e1feh)		;8a76   ; ...la pelota a su altura (0xE1F5 a 0xE1F5 + 16)...
 	dec a			;8a79
 	jr z,L_8AB5		;8a7a
-	ld a,(0e1d9h)		;8a7c
+	ld a,(0e1d9h)		;8a7c   ; lee la x de la pelota lanzada
 	ld d,a			;8a7f
 	ld a,(0e1f5h)		;8a80
 	cp d			;8a83
@@ -1599,7 +1599,7 @@ L_8A89:
 	ret c			;8a8e
 	cp 0b8h		;8a8f
 	ret nc			;8a91
-	ld a,(0e1dfh)		;8a92
+	ld a,(0e1dfh)		;8a92   ; lee la altura de la pelota lanzada
 	cp 038h		;8a95
 	ret nc			;8a97
 	ld a,001h		;8a98   ; ...0xEC75 = 1, al paso 3, los sonidos 7 y 0x43...
@@ -1954,7 +1954,7 @@ L_8CF8:
 	jr nz,L_8D26		;8d18
 	ld a,001h		;8d1a
 	ld (0edc6h),a		;8d1c
-	ld a,(0e1d0h)		;8d1f
+	ld a,(0e1d0h)		;8d1f   ; lee el bote de la pelota (lo que bajo del suelo; 0 sin botes)
 	or a			;8d22
 	call nz,062f7h		;8d23   ; bateador_mas: un bateador mas: en 0xE1A1 = 3, solo la primera vez (0xEDD4)
 L_8D26:
@@ -2276,7 +2276,7 @@ L_8F49:
 	ld a,(0ed02h)		;8f4f
 	or a			;8f52
 	jr nz,L_8F5A		;8f53
-	ld a,(0e1d0h)		;8f55
+	ld a,(0e1d0h)		;8f55   ; lee el bote de la pelota (lo que bajo del suelo; 0 sin botes)
 	or a			;8f58
 	ret z			;8f59
 L_8F5A:
@@ -2416,7 +2416,7 @@ L_9001:
 	and 00fh		;9055
 	cp 003h		;9057
 	jr nc,L_9070		;9059
-	ld a,(0e1d0h)		;905b
+	ld a,(0e1d0h)		;905b   ; lee el bote de la pelota (lo que bajo del suelo; 0 sin botes)
 	or a			;905e
 	ret z			;905f
 	ld hl,0ed15h		;9060   ; apunta a los hits del visitante (BCD)
@@ -2628,7 +2628,7 @@ L_91C3:
 L_91D5:
 	ld a,(0e1e2h)		;91d5   ; si 0xE1D3 cambia, el punto de color de p00:56B1
 	ld b,a			;91d8
-	ld a,(0e1d3h)		;91d9
+	ld a,(0e1d3h)		;91d9   ; lee el paso del movimiento del lanzador
 	ld (0e1e2h),a		;91dc
 	cp b			;91df
 	ret z			;91e0
@@ -4283,7 +4283,7 @@ L_9CE6:
 	ld (0e230h),a		;9ced
 	ld (0e211h),a		;9cf0   ; guarda la ficha de 16 bytes de la pelota
 	ld (0e22ah),a		;9cf3
-	ld (0e1d0h),a		;9cf6
+	ld (0e1d0h),a		;9cf6   ; guarda el bote de la pelota (lo que bajo del suelo; 0 sin botes)
 	ld (0e33bh),a		;9cf9   ; guarda lo que acaba la jugada: 1 home run, 2 jugada anulada
 	ld (0ec73h),a		;9cfc
 	ld (0e19dh),a		;9cff   ; guarda el mando del bateador o los corredores
@@ -4394,7 +4394,7 @@ L_9DBF:
 	ld (hl),000h		;9dcf
 	ld a,(0e30dh)		;9dd1
 	ld hl,0d38bh		;9dd4   ; ...su nombre (p15:A264) y la marca (p15:A43C)...
-	call 0a264h		;9dd7
+	call 0a264h		;9dd7   ; ficha_de_lanzador: HL += A x 11 + 0xA8: la ficha del lanzador A
 	ld a,(0e30dh)		;9dda
 	ld de,09ea5h		;9ddd
 	call 0421bh		;9de0   ; de_mas_a: DE = DE + A
@@ -4474,7 +4474,7 @@ L_9E4D:
 	ld (hl),000h		;9e5d
 	ld a,(0e30eh)		;9e5f
 	ld hl,0d48ah		;9e62   ; ...su nombre y la marca...
-	call 0a264h		;9e65
+	call 0a264h		;9e65   ; ficha_de_lanzador: HL += A x 11 + 0xA8: la ficha del lanzador A
 	ld a,(0e30eh)		;9e68
 	ld de,09ea5h		;9e6b
 	call 0421bh		;9e6e   ; de_mas_a: DE = DE + A
@@ -4675,7 +4675,7 @@ L_9FC5:
 	and 001h		;9fc8
 	ret nz			;9fca
 	ld d,000h		;9fcb
-	call 0a298h		;9fcd
+	call 0a298h		;9fcd   ; flecha_de_fila: la flecha en la fila elegida: el visitante (D = 0) o el local
 	ld a,(0e304h)		;9fd0
 	dec a			;9fd3
 	jp z,0a047h		;9fd4
@@ -4684,7 +4684,7 @@ L_9FC5:
 	and 010h		;9fdb
 	jr z,$+47		;9fdd
 	ld de,0ec50h		;9fdf   ; ...p15:A1F6 y, si vale, el sonido 0x27 y la marca
-	call 0a1f6h		;9fe2
+	call 0a1f6h		;9fe2   ; orden_valido: el orden DE vale? sin huecos y un solo lanzador; carry si no
 	jp c,0a492h		;9fe5
 	ld a,027h		;9fe8
 	call 057ffh		;9fea   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes

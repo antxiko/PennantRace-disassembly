@@ -242,7 +242,7 @@ L_61A8:
 	ld hl,07df9h		;61a8   ; FOUR BALL (p13:7DF9)...
 	call 04ea6h		;61ab   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld b,017h		;61ae   ; ...el sonido 0x17, o 0x18 si 0xE1F0 llega a 0x28...
-	ld a,(0e1f0h)		;61b0
+	ld a,(0e1f0h)		;61b0   ; lee (la velocidad - 80) / 2
 	cp 028h		;61b3
 	jr c,L_61B9		;61b5
 	ld b,018h		;61b7
@@ -660,7 +660,7 @@ L_64B3:
 	ld a,004h		;64bc
 	call 04d66h		;64be   ; copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 	ld c,0ffh		;64c1
-	ld a,(0e1f0h)		;64c3
+	ld a,(0e1f0h)		;64c3   ; lee (la velocidad - 80) / 2
 L_64C6:
 	inc c			;64c6   ; ...entre 5 (C = las decenas)...
 	ld b,a			;64c7
@@ -2748,9 +2748,9 @@ L_72CB:
 	ld (0e1d1h),a		;72d6   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ld l,a			;72d9
 	ld a,(ix+003h)		;72da   ; lee la y, byte alto
-	ld (0e1d3h),a		;72dd
+	ld (0e1d3h),a		;72dd   ; guarda el paso del movimiento del lanzador
 	ld a,(ix+002h)		;72e0   ; lee la y (vertical)
-	ld (0e1d2h),a		;72e3
+	ld (0e1d2h),a		;72e3   ; guarda la espera del paso del lanzamiento
 	ld h,a			;72e6   ; ...suma la velocidad y ajusta el alto (p01:74A1)
 	add hl,de			;72e7
 	ld (ix+001h),l		;72e8   ; guarda la y, fraccion
@@ -2763,11 +2763,11 @@ L_72F1:
 	jr z,L_731B		;72f7
 	ld a,(ix+006h)		;72f9   ; lee la x, fraccion
 	ld l,a			;72fc
-	ld (0e1d4h),a		;72fd
+	ld (0e1d4h),a		;72fd   ; guarda la y de la pelota lanzada, fraccion
 	ld a,(ix+008h)		;7300   ; lee la x, byte alto
-	ld (0e1d6h),a		;7303
+	ld (0e1d6h),a		;7303   ; guarda la velocidad y de la pelota lanzada (16 bits)
 	ld a,(ix+007h)		;7306   ; lee la x (horizontal)
-	ld (0e1d5h),a		;7309
+	ld (0e1d5h),a		;7309   ; guarda la y de la pelota lanzada
 	ld h,a			;730c
 	ld de,(0ece3h)		;730d   ; ...suma la velocidad y ajusta el alto (p01:74C4)
 	add hl,de			;7311
@@ -2802,7 +2802,7 @@ L_7347:
 	jr z,L_735E		;734d
 	ld a,(0e1d1h)		;734f   ; lee la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ld (ix+001h),a		;7352   ; guarda la y, fraccion
-	ld hl,(0e1d2h)		;7355
+	ld hl,(0e1d2h)		;7355   ; lee la espera del paso del lanzamiento y el byte siguiente (16 bits)
 	ld (ix+002h),l		;7358   ; guarda la y (vertical)
 	ld (ix+003h),h		;735b   ; guarda la y, byte alto
 L_735E:
@@ -2810,9 +2810,9 @@ L_735E:
 	ld a,e			;7362
 	or d			;7363
 	jr z,L_7375		;7364
-	ld a,(0e1d4h)		;7366
+	ld a,(0e1d4h)		;7366   ; lee la y de la pelota lanzada, fraccion
 	ld (ix+006h),a		;7369   ; guarda la x, fraccion
-	ld hl,(0e1d5h)		;736c
+	ld hl,(0e1d5h)		;736c   ; lee la y de la pelota lanzada y el byte siguiente (16 bits)
 	ld (ix+007h),l		;736f   ; guarda la x (horizontal)
 	ld (ix+008h),h		;7372   ; guarda la x, byte alto
 L_7375:
@@ -3196,7 +3196,7 @@ DATA_tabla_75DE:
 
 L_75E8:
 	xor a			;75e8   ; paso 0: 0xE1E8 y 0xE1EC a cero y una espera al azar (0x70-0x7F) en 0xE1E5
-	ld (0e1e8h),a		;75e9
+	ld (0e1e8h),a		;75e9   ; guarda los cuadros de vuelo de la pelota lanzada
 	ld (0e1ech),a		;75ec
 	ld a,r		;75ef
 	and 00fh		;75f1
@@ -3217,7 +3217,7 @@ L_75FD:
 	and 001h		;760d
 	ret z			;760f
 	ld hl,0e1ech		;7610
-	ld de,0e1e1h		;7613
+	ld de,0e1e1h		;7613   ; apunta a la x del lanzador (0x71-0x7F)
 	ld a,(de)			;7616
 	cp (hl)			;7617
 	jr z,L_75F8		;7618
@@ -3541,7 +3541,7 @@ L_7819:
 	ret			;7823
 L_7824:
 	ld b,000h		;7824   ; la direccion del golpe segun 0xE1E6: sin nada 0; si no, 3 de 4 veces ninguna...
-	ld a,(0e1e6h)		;7826
+	ld a,(0e1e6h)		;7826   ; lee el efecto pedido al lanzar (0 recto, 1 o 2)
 	or a			;7829
 	ld c,a			;782a
 	ret z			;782b
@@ -3558,7 +3558,7 @@ L_7833:
 	ret			;783a
 L_783B:
 	ld b,000h		;783b   ; lo mismo sin el azar
-	ld a,(0e1e6h)		;783d
+	ld a,(0e1e6h)		;783d   ; lee el efecto pedido al lanzar (0 recto, 1 o 2)
 	or a			;7840
 	ret z			;7841
 	jr L_7833		;7842
@@ -3588,7 +3588,7 @@ L_786B:
 	ld a,(0e1feh)		;786b   ; donde va la pelota (0xE1D9 - 0x30, o + 0x24 con 0xE1FE)...
 	or a			;786e
 	jp nz,L_789C		;786f
-	ld a,(0e1d9h)		;7872
+	ld a,(0e1d9h)		;7872   ; lee la x de la pelota lanzada
 	sub 030h		;7875
 	ld b,a			;7877
 	call L_78B2		;7878
@@ -3612,7 +3612,7 @@ L_7894:
 	ld (0e19dh),a		;7898   ; guarda el mando del bateador o los corredores
 	ret			;789b
 L_789C:
-	ld a,(0e1d9h)		;789c
+	ld a,(0e1d9h)		;789c   ; lee la x de la pelota lanzada
 	add a,024h		;789f
 	ld b,a			;78a1
 	call L_78BB		;78a2
@@ -4086,7 +4086,7 @@ L_7BBE:
 	ret			;7bc2
 L_7BC3:
 	ld a,(0ed7ch)		;7bc3   ; paso 1: espera (0xEDD6) salvo que la jugada empiece...
-	ld hl,0e1d0h		;7bc6
+	ld hl,0e1d0h		;7bc6   ; apunta a el bote de la pelota (lo que bajo del suelo; 0 sin botes)
 	or (hl)			;7bc9
 	ld hl,0ecffh		;7bca
 	or (hl)			;7bcd
@@ -4114,7 +4114,7 @@ L_7BE7:
 	cp 080h		;7bf9
 	jr z,L_7C2B		;7bfb
 	ld a,(0ed32h)		;7bfd   ; con 0xED32, 0xE1D0 o 0xED86 = 2, a por la pelota (0xE1B8 = 0x80)
-	ld hl,0e1d0h		;7c00
+	ld hl,0e1d0h		;7c00   ; apunta a el bote de la pelota (lo que bajo del suelo; 0 sin botes)
 	or (hl)			;7c03
 	jr nz,L_7C0F		;7c04
 	ld a,(0ed86h)		;7c06

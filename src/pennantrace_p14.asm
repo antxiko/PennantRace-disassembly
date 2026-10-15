@@ -1313,7 +1313,7 @@ L_9348:
 	ld a,(0e33ch)		;937b   ; ...sin botes, con el bit 1, la valla (p14:9528)
 	or a			;937e
 	jr nz,L_9391		;937f   ; con la pelota cogida, p14:9391
-	ld a,(0e1d0h)		;9381
+	ld a,(0e1d0h)		;9381   ; lee el bote de la pelota (lo que bajo del suelo; 0 sin botes)
 	or a			;9384
 	jr z,L_93A1		;9385   ; sin botes (0xE1D0 = 0): p14:93A1
 	ld a,b			;9387

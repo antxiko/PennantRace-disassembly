@@ -36,7 +36,7 @@ DATA_resto_4000:
 
 L_4030:
 	call bancos_1_2_3		;4030   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
-	call 0a27ah		;4033
+	call 0a27ah		;4033   ; fila_en_blanco: una fila en blanco: 0x68 x 8 de color 0 en DE
 	jp bancos_13_14_15		;4036   ; bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 L_4039:
 	call bancos_1_2_3		;4039   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
@@ -44,7 +44,7 @@ L_4039:
 	jp bancos_13_14_15		;403f   ; bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 L_4042:
 	call bancos_1_2_3		;4042   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
-	call 0a1f6h		;4045
+	call 0a1f6h		;4045   ; orden_valido: el orden DE vale? sin huecos y un solo lanzador; carry si no
 	jp bancos_13_14_15		;4048   ; bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 L_404B:
 	call bancos_1_2_3		;404b   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
@@ -52,7 +52,7 @@ L_404B:
 	jp bancos_13_14_15		;4051   ; bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 L_4054:
 	call bancos_1_2_3		;4054   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
-	call 0a218h		;4057
+	call 0a218h		;4057   ; jugador_del_puesto: el jugador del puesto A del orden BC, en su fila
 	jp bancos_13_14_15		;405a   ; bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 L_405D:
 	call bancos_1_2_3		;405d   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
@@ -60,7 +60,7 @@ L_405D:
 	jp bancos_13_14_15		;4063   ; bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 L_4066:
 	call bancos_1_2_3		;4066   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
-	call 0a220h		;4069
+	call 0a220h		;4069   ; jugador_a: el jugador A en su fila (0 en blanco, 1-12 de campo, 13 o mas lanzador)
 	jp bancos_13_14_15		;406c   ; bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 L_406F:
 	call bancos_1_2_3		;406f   ; bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
@@ -3307,7 +3307,7 @@ L_56C4:
 	call bancos_10_11_12		;56c4   ; los 7 dibujos de 128 bytes del juego 0xE1EB & 3 (p10:6FBE)...
 	ld hl,07c00h		;56c7   ; ...a la VRAM 0x7C80 en adelante
 	ld (0e340h),hl		;56ca   ; guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
-	ld a,(0e1ebh)		;56cd
+	ld a,(0e1ebh)		;56cd   ; lee el estilo del lanzador (bits)
 	and 003h		;56d0
 	ld hl,06fbeh		;56d2
 	call palabra_a		;56d5   ; palabra_a: HL = la palabra A de la tabla HL
@@ -3611,7 +3611,7 @@ L_58DE:
 	ld a,(0e1d3h)		;58e9   ; ...salvo en el juego 2 con el bit 1 de 0xE1EB: 2 fichas de p11:9F3A o 0x9F42
 	cp 002h		;58ec
 	jr nz,L_5908		;58ee
-	ld a,(0e1ebh)		;58f0
+	ld a,(0e1ebh)		;58f0   ; lee el estilo del lanzador (bits)
 	bit 1,a		;58f3
 	jr z,L_5908		;58f5
 	ld hl,09f3ah		;58f7
@@ -3628,7 +3628,7 @@ L_5908:
 	ld hl,09db2h		;590d
 	call palabra_a		;5910   ; palabra_a: HL = la palabra A de la tabla HL
 	ld de,0e158h		;5913
-	ld a,(0e1d3h)		;5916
+	ld a,(0e1d3h)		;5916   ; lee el paso del movimiento del lanzador
 	or a			;5919
 	rla			;591a
 	rla			;591b
@@ -4071,7 +4071,7 @@ L_5BCC:
 	ld hl,0bb1ah		;5bcf
 	call palabra_a		;5bd2   ; palabra_a: HL = la palabra A de la tabla HL
 	ex de,hl			;5bd5
-	ld a,(0e1f0h)		;5bd6
+	ld a,(0e1f0h)		;5bd6   ; lee (la velocidad - 80) / 2
 	ld hl,0bbc4h		;5bd9
 	call hl_mas_a		;5bdc   ; hl_mas_a: HL = HL + A
 	ld a,(hl)			;5bdf

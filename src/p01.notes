@@ -666,6 +666,7 @@ C 0x6173 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vue
 C 0x6186 pide_colores_sprite: pide copiar los colores de sprite (0xED09 = 1)
 C 0x619C rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0x61AB texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
+C 0x61B0 lee (la velocidad - 80) / 2
 C 0x61BA sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x61BF sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x61CA lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
@@ -710,6 +711,7 @@ C 0x649C copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x,
 C 0x64A2 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x64B0 copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 C 0x64BE copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
+C 0x64C3 lee (la velocidad - 80) / 2
 C 0x64D7 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x64E4 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0x64F1 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
@@ -932,12 +934,17 @@ C 0x72C8 dibujo_64: el dibujo de 64 bytes A (p11:8759 + 64 A)
 C 0x72D3 lee la y, fraccion
 C 0x72D6 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x72DA lee la y, byte alto
+C 0x72DD guarda el paso del movimiento del lanzador
 C 0x72E0 lee la y (vertical)
+C 0x72E3 guarda la espera del paso del lanzamiento
 C 0x72E8 guarda la y, fraccion
 C 0x72EB guarda la y (vertical)
 C 0x72F9 lee la x, fraccion
+C 0x72FD guarda la y de la pelota lanzada, fraccion
 C 0x7300 lee la x, byte alto
+C 0x7303 guarda la velocidad y de la pelota lanzada (16 bits)
 C 0x7306 lee la x (horizontal)
+C 0x7309 guarda la y de la pelota lanzada
 C 0x7312 guarda la x, fraccion
 C 0x7315 guarda la x (horizontal)
 C 0x731E lee la y, byte alto
@@ -947,9 +954,12 @@ C 0x732E lee la x, byte alto
 C 0x7333 de_mas_a: DE = DE + A
 C 0x734F lee la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x7352 guarda la y, fraccion
+C 0x7355 lee la espera del paso del lanzamiento y el byte siguiente (16 bits)
 C 0x7358 guarda la y (vertical)
 C 0x735B guarda la y, byte alto
+C 0x7366 lee la y de la pelota lanzada, fraccion
 C 0x7369 guarda la x, fraccion
+C 0x736C lee la y de la pelota lanzada y el byte siguiente (16 bits)
 C 0x736F guarda la x (horizontal)
 C 0x7372 guarda la x, byte alto
 C 0x7379 lee el numero (bits 0-3) y el estado (bits 4-7)
@@ -1018,7 +1028,9 @@ C 0x75A4 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la
 C 0x75A7 lee el dibujo de su sprite
 C 0x75D8 lee el paso del lanzador del ordenador
 C 0x75DB despacha: salta a la palabra A de la tabla que va pegada detras del `call`
+C 0x75E9 guarda los cuadros de vuelo de la pelota lanzada
 C 0x75FE guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7613 apunta a la x del lanzador (0x71-0x7F)
 C 0x763C guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0x7662 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0x7670 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
@@ -1035,12 +1047,16 @@ C 0x77DB guarda el mando del bateador o los corredores
 C 0x77E3 lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0x77F5 menos_hl: HL = -HL
 C 0x7802 multiplica: HL = A x E (8 x 8 bits)
+C 0x7826 lee el efecto pedido al lanzar (0 recto, 1 o 2)
+C 0x783D lee el efecto pedido al lanzar (0 recto, 1 o 2)
 C 0x7857 guarda el mando del bateador o los corredores
 C 0x785A guarda el paso del bateador del ordenador
+C 0x7872 lee la x de la pelota lanzada
 C 0x787F lee el mando del bateador o los corredores
 C 0x788A guarda el mando del bateador o los corredores
 C 0x7890 guarda el mando del bateador o los corredores
 C 0x7898 guarda el mando del bateador o los corredores
+C 0x789C lee la x de la pelota lanzada
 C 0x78A9 lee el mando del bateador o los corredores
 C 0x78DF base_libre: carry si ningun corredor esta en la base C (con el bit 6)
 C 0x78E4 guarda el mando del bateador o los corredores
@@ -1085,7 +1101,9 @@ C 0x7B82 lee el paso de la defensa del ordenador
 C 0x7B85 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x7B9D guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0x7BA2 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
+C 0x7BC6 apunta a el bote de la pelota (lo que bajo del suelo; 0 sin botes)
 C 0x7BDB lee el defensor que va a por la pelota (desplazamiento de 16 en 16)
+C 0x7C00 apunta a el bote de la pelota (lo que bajo del suelo; 0 sin botes)
 C 0x7C24 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0x7C52 guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0x7C66 lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)

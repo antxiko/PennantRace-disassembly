@@ -891,18 +891,22 @@ L 0x5F71 menos_hl HL = -HL
 L 0x5F79 menos_de DE = -DE
 L 0x5FA4 multiplica HL = A x E (8 x 8 bits)
 C 0x4030 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4033 fila_en_blanco: una fila en blanco: 0x68 x 8 de color 0 en DE
 C 0x4036 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x4039 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x403F bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x4042 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4045 orden_valido: el orden DE vale? sin huecos y un solo lanzador; carry si no
 C 0x4048 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x404B bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x4051 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x4054 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4057 jugador_del_puesto: el jugador del puesto A del orden BC, en su fila
 C 0x405A bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x405D bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x4063 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x4066 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
+C 0x4069 jugador_a: el jugador A en su fila (0 en blanco, 1-12 de campo, 13 o mas lanzador)
 C 0x406C bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
 C 0x406F bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x4075 bancos_13_14_15: pone los bancos 13, 14 y 15 y sus copias
@@ -1343,6 +1347,7 @@ C 0x56A0 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3);
 C 0x56AE copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 C 0x56C1 copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 C 0x56CA guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
+C 0x56CD lee el estilo del lanzador (bits)
 C 0x56D5 palabra_a: HL = la palabra A de la tabla HL
 C 0x56E7 guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x5704 copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
@@ -1381,7 +1386,9 @@ C 0x58C2 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3);
 C 0x58C8 bancos_10_11_12: pone los bancos 10, 11 y 12 (los graficos) y sus copias
 C 0x58CE lee el lado por el que batea (0 si IX+6 de su ficha es 0x20, si no 1): elige las tablas del otro lado
 C 0x58D7 apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
+C 0x58F0 lee el estilo del lanzador (bits)
 C 0x5910 palabra_a: HL = la palabra A de la tabla HL
+C 0x5916 lee el paso del movimiento del lanzador
 C 0x591E hl_mas_a: HL = HL + A
 C 0x5926 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x5946 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
@@ -1420,6 +1427,7 @@ C 0x5BA2 de_mas_a: DE = DE + A
 C 0x5BB6 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x5BC5 de_mas_a: DE = DE + A
 C 0x5BD2 palabra_a: HL = la palabra A de la tabla HL
+C 0x5BD6 lee (la velocidad - 80) / 2
 C 0x5BDC hl_mas_a: HL = HL + A
 C 0x5BE1 bancos_1_2_3: pone los bancos 1, 2 y 3 (y sus copias en 0xDDF1-0xDDF3); conserva AF y HL
 C 0x5BE8 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
