@@ -19,7 +19,7 @@ disk or to the Game Master 2's SRAM.
 | data identified | 80,881 bytes |
 | routines | 2,933, **none thin** |
 | comment density | **43.7%** |
-| pictures drawn | 31, 8 of them animated (GIF); checked against the openMSX VRAM wherever they appear in its dumps |
+| pictures drawn | 32, 8 of them animated (GIF); checked against the openMSX VRAM wherever they appear in its dumps |
 | tunes | 26, checked against openMSX |
 | texts | 100, taken from the ROM |
 | tests | 12 |

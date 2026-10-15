@@ -449,7 +449,10 @@ def web(carpeta, escala=2):
     est = E.carga()
     for que, carp, t, png in E.PANTALLAS:
         e = est["%s/%s" % (carp, t)]
-        v = globals()[que](E.ram_de(e))
+        if que == "hoja_del_partido":
+            v = hoja_del_partido(E.ram_de(e), E.previa_de(e))
+        else:
+            v = globals()[que](E.ram_de(e))
         v.paleta = E.paleta_de(e)
         v.png(os.path.join(carpeta, png), pagina=0, escala=escala)
         print(png)
@@ -489,6 +492,36 @@ def member_change(ram):
         jugador_a(v, ram, 0xD38B, ram[0xEC50 + k], 0x50, y)
         y += 0x10 if k == 8 else 0x18 if k == 12 else 8
     v.caracter(0x9A, 0x3C, byte(13, 0x9BBB + ram[0xEC4F]))
+    return v
+
+
+# ------------------------------------------------------------------ la hoja del partido
+
+def hoja_del_partido(ram, previa=None):
+    """La hoja del partido acabado (p00:47DA): p01:6991 borra la pagina 0 en
+    cuatro rectangulos (las 0x18 primeras lineas, 0x28 x 0x30 a cada lado
+    desde la y 0x10 y todo desde la y 0x40), asi que la franja de (0x28,
+    0x18) a (0xD7, 0x3F) se queda con lo que hubiera (previa: la pagina 0 de
+    antes); el color 0 a 0x0703; el texto de p13:7CD1, los nombres de los
+    equipos (0xD380 y 0xD47F) en (0x48, 0x50) y (0xA8, 0x50) y los numeros
+    del partido de 0xED13-0xED1C en las x 0x58 y 0xB8 desde la y 0x60, de 12
+    en 12 (p01:60AC; los bateadores ya con uno menos)."""
+    v = base()
+    if previa is not None:
+        v.v[0:0x8000] = previa[0:0x8000]
+    v.rellena(0x00, 0x00, 0x100, 0x18, 0)
+    v.rellena(0x00, 0x10, 0x28, 0x30, 0)
+    v.rellena(0xD8, 0x10, 0x28, 0x30, 0)
+    v.rellena(0x00, 0x40, 0x100, 0x94, 0)
+    v.pon_color(0, 0x07, 0x03)
+    v.texto(13, 0x7CD1)
+    caracteres(v, ram[0xD380:0xD38A], 0x48, 0x50)
+    caracteres(v, ram[0xD47F:0xD489], 0xA8, 0x50)
+    for k in range(5):
+        numero(v, ram[0xED13 + 2 * k], 0x58, 0x60 + 12 * k)
+        numero(v, ram[0xED14 + 2 * k], 0xB8, 0x60 + 12 * k)
+    if ram[0xDE02] & 0x10:
+        v.texto(13, 0x7C79)
     return v
 
 

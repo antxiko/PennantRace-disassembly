@@ -63,7 +63,7 @@ The screens before and after a game. What changes from one session to
 another (the chosen teams, the option, the results) and the palette of that
 moment come from the RAM of an openMSX dump (`tools/estados_menus.json`);
 everything else from the code: `tools/menus.py` repeats its routines and
-`tools/coteja_menus.py` compares. **All eight checked: 0 bytes different** on
+`tools/coteja_menus.py` compares. **All nine checked: 0 bytes different** on
 the visible page.
 
 ![TEAM NAME SELECT](imagenes/menu_equipos.png)
@@ -110,6 +110,15 @@ four-step long division, `p15:AFBD`) and games behind the leader
 The visitors' substitution screen (`p14:9BCC`), opened from the pause: the 17
 on their list (batting order, bench and pitchers, with their gaps) and the
 mark on the batter.
+
+![The finished-game sheet](imagenes/menu_hoja.png)
+
+The finished-game sheet (`p00:47DA`): each team's 打数, 安打, 本塁打, 三振 and
+四死球 (`p01:60AC`), here from a WATCH game played to the end (12 to 2 in the
+sixth, by the ten-run rule). `p01:6991` clears the screen in four rectangles
+and leaves the top centre band untouched, so it keeps what was there: the
+half-drawn field at the end of the game. That band is the only part not drawn
+here; it comes from the dump of a moment before.
 
 ## The field
 

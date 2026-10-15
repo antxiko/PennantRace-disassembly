@@ -19,7 +19,7 @@ disco o en la SRAM del Game Master 2.
 | datos identificados | 80.881 bytes |
 | rutinas | 2.933, **ninguna floja** |
 | densidad de comentario | **43,7 %** |
-| imágenes dibujadas | 31, 8 de ellas animadas (GIF); cotejadas con la VRAM de openMSX en todo lo que sale en sus volcados |
+| imágenes dibujadas | 32, 8 de ellas animadas (GIF); cotejadas con la VRAM de openMSX en todo lo que sale en sus volcados |
 | músicas | 26, cotejadas con openMSX |
 | textos | 100, sacados de la ROM |
 | tests | 12 |

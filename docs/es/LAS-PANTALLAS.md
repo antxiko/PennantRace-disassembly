@@ -63,7 +63,7 @@ Las pantallas de antes y después del partido. Lo que cambia de una partida a
 otra (los equipos elegidos, la opción, los resultados) y la paleta de ese
 momento salen de la RAM de un volcado de openMSX (`tools/estados_menus.json`);
 todo lo demás, del código: `tools/menus.py` repite sus rutinas y
-`tools/coteja_menus.py` compara. **Cotejadas las ocho: 0 bytes distintos** en
+`tools/coteja_menus.py` compara. **Cotejadas las nueve: 0 bytes distintos** en
 la página que se ve.
 
 ![TEAM NAME SELECT](../imagenes/menu_equipos.png)
@@ -112,6 +112,16 @@ diferencia con el primero (`p15:B034`).
 El cambio de jugadores del visitante (`p14:9BCC`), que se abre desde la pausa:
 los 17 de su lista (el orden de bateo, los suplentes y los lanzadores, con sus
 huecos) y la marca en el que batea.
+
+![La hoja del partido](../imagenes/menu_hoja.png)
+
+La hoja del partido acabado (`p00:47DA`): 打数, 安打, 本塁打, 三振 y 四死球 de
+cada equipo (`p01:60AC`), aquí de un partido en WATCH jugado hasta el final
+(12 a 2 en la sexta, por la regla de las diez carreras). `p01:6991` borra la
+pantalla en cuatro rectángulos y deja sin tocar la franja de arriba en el
+centro, que se queda con lo que había: el campo a medio pintar del final del
+partido. Esa franja es lo único que no se dibuja aquí; sale del volcado de un
+instante antes.
 
 ## El campo
 

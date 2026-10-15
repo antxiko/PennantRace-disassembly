@@ -55,5 +55,23 @@ foreach k [opcion VRAM_POKES {}] {
     lassign [split $k :] t d v
     after time $t "poke $d $v"
 }
-foreach t $::TIEMPOS { after time $t "vuelca $t" }
-after time [expr {[lindex $::TIEMPOS end] + 1}] exit
+# VRAM_ESTADO "n": a toda velocidad, cuando el estado (0xDE00) llega a n se
+# vuelca a los segundos de VRAM_ESTADO_TIEMPOS (3 5 8 12) y se sale
+set ::ESTADO [opcion VRAM_ESTADO {}]
+proc mira_estado {} {
+    if {[debug read memory 0xDE00] == $::ESTADO} {
+        set t0 [machine_info time]
+        set ds [opcion VRAM_ESTADO_TIEMPOS {3 5 8 12}]
+        foreach d $ds { after time $d "vuelca fin$d" }
+        after time [expr {[lindex $ds end] + 1}] exit
+        return
+    }
+    after time 0.5 mira_estado
+}
+if {$::ESTADO ne ""} {
+    set throttle off
+    after time 1 mira_estado
+} else {
+    foreach t $::TIEMPOS { after time $t "vuelca $t" }
+}
+if {$::ESTADO eq ""} { after time [expr {[lindex $::TIEMPOS end] + 1}] exit }
