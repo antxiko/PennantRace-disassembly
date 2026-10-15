@@ -57,6 +57,54 @@ the five texts in a row at `p13:7D8F` and the marker, character 0x9A, on the
 row of the chosen mode (`p01:65AF`). With a disk drive and a Game Master 2 a
 sixth one appears, MEDIA SELECT. **Checked: 0 bytes different.**
 
+## The menus
+
+The screens before and after a game. What changes from one session to
+another (the chosen teams, the option, the results) and the palette of that
+moment come from the RAM of an openMSX dump (`tools/estados_menus.json`);
+everything else from the code: `tools/menus.py` repeats its routines and
+`tools/coteja_menus.py` compares. **All seven checked: 0 bytes different** on
+the visible page.
+
+![TEAM NAME SELECT](imagenes/menu_equipos.png)
+
+Choosing the teams (`p15:A470`): the title by mode, the two-column team list
+(`p13:6A0D`), with the chosen ones in colour 4, and the option bar
+(`p15:A67A`).
+
+![The starting pitchers](imagenes/menu_lanzadores.png)
+
+The starting pitchers (`p02:9EA9`): the game sign (`p14:9787`) and each
+team's four pitchers with their 防御率 (`p02:9F20`).
+
+![The line-up](imagenes/menu_alineacion.png)
+
+STARTING LINE-UP (`p03:A2ED`): each team's 12 fielders, with the names in
+narrow letters (the dakuten moves 4 pixels, `p03:A425`), and the pitcher on
+row 9, in colour 4 (`p03:A242`).
+
+![TEAM EDIT](imagenes/menu_team_edit.png)
+
+TEAM EDIT with a new team (`p03:B9E7`): the grey background, the text at
+`p13:7EC6` with the caps and the columns of starting values (`p14:8654`).
+
+![LEAGUE SELECTION](imagenes/menu_liga.png)
+
+LEAGUE SELECTION (`p13:61BD`): the league's teams, numbered, and the list of
+the six.
+
+![The PENNANT round](imagenes/menu_jornada.png)
+
+In PENNANT the pitchers screen carries the round (第 2 回戦, `p14:971A`) and
+VISITORS / HOME.
+
+![Results and standings](imagenes/menu_clasificacion.png)
+
+The round's results and the standings (`p15:ADFA`): the player's game, the
+other two drawn by lot, and the table with games, wins, losses, percentage (a
+four-step long division, `p15:AFBD`) and games behind the leader
+(`p15:B034`).
+
 ## The field
 
 ![The centre zone](imagenes/campo_1.png)
@@ -86,7 +134,7 @@ the centre zone.
 The pitching screen, seen from behind home plate (`p01:6352`): the background
 in runs from `p08:9220`, two frames and the text at `p13:7E1E` (S B O, the 回
 of the inning, HR and 打率). With no game going, the boxes and figures are
-empty. **Checked: 728 of 864 blocks identical**; the rest is the little bases
+empty. **Checked: 818 of 864 blocks identical**; the rest is the little bases
 window and the figures of the game being played.
 
 ![The signs](imagenes/letreros.png)
@@ -95,8 +143,9 @@ The signs are drawn on it as picture lists, in blue or red (the palettes at
 `p00:51B2`), each with a twin for a batter on the other side: PLAY BALL! when
 a half inning starts (`p13:7925`), LUCKY 7 in the seventh (`p11:96EE`), PLAY!
 (`p13:BA9B`), BALL! (`p11:9401`), STRIKE! (`p11:94BB`) and OUT!
-(`p11:95A8`). **Checked: STRIKE! and PLAY!** (both sides) identical byte for
-byte in seven dumps; the other four appear in none.
+(`p11:95A8`). **Checked: PLAY BALL!, PLAY!, BALL!, STRIKE! and OUT!**
+identical byte for byte in the dumps where they appear; LUCKY 7 appears in
+none.
 
 ## The players
 

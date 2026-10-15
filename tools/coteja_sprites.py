@@ -22,8 +22,11 @@ def lee_vdp(ruta):
             regs[int(m.group(1))] = int(m.group(2), 16)
         m = re.match(r"P(\d+) = 0x([0-9A-F]+)", ln)
         if m:
-            # getcolor da "RGB" en cifras 0-7, que el volcado escribio como numero
-            r, g, b = "%03d" % int(m.group(2), 16)
+            # getcolor da "RGB" en cifras 0-7 y el volcado lo escribio con
+            # format %X: Tcl lo lee en decimal, o en octal si empieza por 0
+            # (con el rojo a 0), y entonces sale por debajo de 100
+            n = int(m.group(2), 16)
+            r, g, b = ("%03d" % n) if n >= 100 else ("%03o" % n)
             pal[int(m.group(1))] = (int(r), int(g), int(b))
     return regs, pal
 

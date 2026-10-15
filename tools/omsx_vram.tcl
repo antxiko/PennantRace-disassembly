@@ -34,7 +34,24 @@ proc vuelca {etiqueta} {
         puts $g [format "%s = 0x%02X" $nombre [debug read memory $d]]
     }
     close $g
+    set h [open [file join $::SALIDA "ram-$etiqueta.bin"] wb]
+    fconfigure $h -translation binary
+    puts -nonewline $h [debug read_block memory 0 65536]
+    close $h
     screenshot [file join $::SALIDA "ver-$etiqueta.png"]
+}
+# VRAM_TECLAS "t:fila:mascara ...": a los t segundos se pulsa esa tecla de la
+# matriz del MSX (fila 8: 0x01 espacio, 0x10 izquierda, 0x20 arriba, 0x40
+# abajo, 0x80 derecha; fila 7: 0x80 RETURN) durante 0.15 s
+foreach k [opcion VRAM_TECLAS {}] {
+    lassign [split $k :] t f m
+    after time $t "keymatrixdown $f $m; after time 0.15 {keymatrixup $f $m}"
+}
+# VRAM_POKES "t:direccion:valor ...": a los t segundos se escribe ese byte de la
+# RAM (para llegar antes a una pantalla: p. ej. 0xED87 = 1 acaba el partido)
+foreach k [opcion VRAM_POKES {}] {
+    lassign [split $k :] t d v
+    after time $t "poke $d $v"
 }
 foreach t $::TIEMPOS { after time $t "vuelca $t" }
 after time [expr {[lindex $::TIEMPOS end] + 1}] exit

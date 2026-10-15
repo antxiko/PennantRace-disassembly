@@ -190,6 +190,12 @@ GALERIA = [
     ("menu.png",
      "El men&uacute; de modos (<code>p01:651C</code>).",
      "The mode menu (<code>p01:651C</code>)."),
+    ("menu_alineacion.png",
+     "STARTING LINE-UP (<code>p03:A2ED</code>).",
+     "STARTING LINE-UP (<code>p03:A2ED</code>)."),
+    ("menu_clasificacion.png",
+     "Los resultados y la clasificaci&oacute;n de PENNANT (<code>p15:ADFA</code>).",
+     "The PENNANT results and standings (<code>p15:ADFA</code>)."),
     ("campo_jugadores.gif",
      "Defensores y corredores en el campo, cambiando de pierna cada 8 cuadros "
      "(<code>p01:7280</code>, <code>p02:8FC8</code>).",

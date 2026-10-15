@@ -57,6 +57,56 @@ distintos.**
 carácter 0x9A, en la fila del modo elegido (`p01:65AF`). Con disco y Game
 Master 2 sale un sexto, MEDIA SELECT. **Cotejado: 0 bytes distintos.**
 
+## Los menús
+
+Las pantallas de antes y después del partido. Lo que cambia de una partida a
+otra (los equipos elegidos, la opción, los resultados) y la paleta de ese
+momento salen de la RAM de un volcado de openMSX (`tools/estados_menus.json`);
+todo lo demás, del código: `tools/menus.py` repite sus rutinas y
+`tools/coteja_menus.py` compara. **Cotejadas las siete: 0 bytes distintos** en
+la página que se ve.
+
+![TEAM NAME SELECT](../imagenes/menu_equipos.png)
+
+La elección de equipos (`p15:A470`): el título según el modo, la lista de
+equipos de dos columnas (`p13:6A0D`), con los elegidos en el color 4, y la
+barra de opciones (`p15:A67A`).
+
+![Los lanzadores iniciales](../imagenes/menu_lanzadores.png)
+
+Los lanzadores iniciales (`p02:9EA9`): el letrero del partido
+(`p14:9787`), y los cuatro lanzadores de cada equipo con su 防御率
+(`p02:9F20`).
+
+![La alineación](../imagenes/menu_alineacion.png)
+
+STARTING LINE-UP (`p03:A2ED`): los 12 de campo de cada equipo, con los
+nombres en letra estrecha (el dakuten avanza 4 puntos, `p03:A425`), y el
+lanzador en la fila 9, en el color 4 (`p03:A242`).
+
+![TEAM EDIT](../imagenes/menu_team_edit.png)
+
+TEAM EDIT con un equipo nuevo (`p03:B9E7`): el fondo gris, el texto de
+`p13:7EC6` con los topes y las columnas de los valores de partida
+(`p14:8654`).
+
+![LEAGUE SELECTION](../imagenes/menu_liga.png)
+
+LEAGUE SELECTION (`p13:61BD`): los equipos de la liga, numerados, y la lista
+de los seis.
+
+![La jornada de PENNANT](../imagenes/menu_jornada.png)
+
+En PENNANT, la pantalla de los lanzadores lleva la jornada (第 2 回戦,
+`p14:971A`) y VISITORS / HOME.
+
+![Los resultados y la clasificación](../imagenes/menu_clasificacion.png)
+
+Los resultados de la jornada y la clasificación (`p15:ADFA`): el partido del
+jugador, los otros dos echados a suertes, y la tabla con partidos, victorias,
+derrotas, porcentaje (una división larga de cuatro vueltas, `p15:AFBD`) y
+diferencia con el primero (`p15:B034`).
+
 ## El campo
 
 ![La zona del centro](../imagenes/campo_1.png)
@@ -86,7 +136,7 @@ demostración no sale de la zona del centro.
 La pantalla del lanzamiento, vista desde detrás de la casa (`p01:6352`): el
 fondo en rachas de `p08:9220`, dos marcos y el texto de `p13:7E1E` (S B O, el
 回 de la entrada, HR y 打率). Sin partido, las casillas y las cifras quedan
-vacías. **Cotejado: 728 de 864 bloques iguales**; lo demás es la ventanita de
+vacías. **Cotejado: 818 de 864 bloques iguales**; lo demás es la ventanita de
 las bases y las cifras del partido que se estaba jugando.
 
 ![Los letreros](../imagenes/letreros.png)
@@ -95,9 +145,9 @@ Los letreros se pintan sobre ella como listas de dibujos, en azul o en rojo
 (las paletas de `p00:51B2`), cada uno con su pareja para el bateador del otro
 lado: PLAY BALL! al empezar la media entrada (`p13:7925`), LUCKY 7 en la
 séptima (`p11:96EE`), PLAY! (`p13:BA9B`), BALL! (`p11:9401`), STRIKE!
-(`p11:94BB`) y OUT! (`p11:95A8`). **Cotejados: STRIKE! y PLAY!** (por los dos
-lados) iguales byte a byte en siete volcados; los otros cuatro no salen en
-ninguno.
+(`p11:94BB`) y OUT! (`p11:95A8`). **Cotejados: PLAY BALL!, PLAY!, BALL!,
+STRIKE! y OUT!** iguales byte a byte en los volcados donde salen; LUCKY 7 no
+sale en ninguno.
 
 ## Los jugadores
 

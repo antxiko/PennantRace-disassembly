@@ -222,9 +222,10 @@ class Vram:
 
     # ---------------------------------------------------------------- lineas
     def linea(self, x, y, largo, color, vertical=False):
-        """p00:4C91 / p00:4CC7: orden LINE de `largo` puntos (0 = 256) desde
-        (x, y) en la pagina 0."""
-        for k in range(largo or 256):
+        """p00:4C91 / p00:4CC7: orden LINE con el lado largo `largo` (0 = 256)
+        desde (x, y) en la pagina 0. El V9938 pinta del punto de salida al de
+        llegada, los dos incluidos: largo + 1 puntos."""
+        for k in range((largo or 256) + 1):
             if vertical:
                 self.pon_punto(x, (y + k) & 0xFF, color)
             else:
