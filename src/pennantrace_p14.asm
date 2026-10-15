@@ -79,7 +79,7 @@ L_805E:
 	ei			;8098
 	ret			;8099
 L_809A:
-	ld de,0d47fh		;809a   ; apunta a la ficha del local (255 bytes de p13:731F)
+	ld de,0d47fh		;809a   ; apunta a la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 	ld c,01ah		;809d
 	call 0f37dh		;809f
 	ld hl,000ffh		;80a2
@@ -1353,7 +1353,7 @@ L_93B1:
 	ld (0eddfh),a		;93c7
 	ret			;93ca
 L_93CB:
-	ld a,(0e1a2h)		;93cb   ; lee el desplazamiento de la pantalla (16 bits)
+	ld a,(0e1a2h)		;93cb   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 	add a,050h		;93ce
 	cp 0f0h		;93d0
 	jr c,L_93D6		;93d2
@@ -1373,7 +1373,7 @@ L_93E4:
 	ld (0ed39h),a		;93e8
 	inc a			;93eb
 	ld (0eddfh),a		;93ec
-	ld (0eddeh),a		;93ef
+	ld (0eddeh),a		;93ef   ; guarda la jugada anulada (foul)
 	call L_9401		;93f2
 	ret c			;93f5
 	ld a,01bh		;93f6
@@ -1429,7 +1429,7 @@ L_943A:
 L_9453:
 	call L_949A		;9453
 	ret nz			;9456
-	ld a,(0eddeh)		;9457
+	ld a,(0eddeh)		;9457   ; lee la jugada anulada (foul)
 	rra			;945a
 	ret c			;945b
 	ld a,002h		;945c
@@ -2259,7 +2259,7 @@ L_99A4:
 	dec (hl)			;99a7
 	ret nz			;99a8
 	ld a,001h		;99a9
-	ld (0e1d1h),a		;99ab   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld (0e1d1h),a		;99ab   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	call 0406fh		;99ae
 	call 0404bh		;99b1
 	ret			;99b4
@@ -2675,7 +2675,7 @@ L_9C6E:
 	jr c,L_9C97		;9c92
 	call L_9D42		;9c94
 L_9C97:
-	ld hl,0d47fh		;9c97   ; apunta a la ficha del local (255 bytes de p13:731F)
+	ld hl,0d47fh		;9c97   ; apunta a la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 	ld de,06000h		;9c9a
 	call 05be4h		;9c9d
 	ld a,002h		;9ca0
@@ -2742,7 +2742,7 @@ L_9CF6:
 	ld hl,07b63h		;9d1b
 	call 04ea6h		;9d1e   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	xor a			;9d21
-	ld (0e1d1h),a		;9d22   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld (0e1d1h),a		;9d22   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ld (0de0dh),a		;9d25
 	ld (0de0eh),a		;9d28
 	ld (0e304h),a		;9d2b

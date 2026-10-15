@@ -141,7 +141,7 @@ F 0x7E61 16
 
 # --- ANOTACIONES AUTOMATICAS (seccion que reescribe tools/anota.py; no editar a mano) ---
 C 0x6000 lee el despachador de los menus (y 0xD74D)
-C 0x6019 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+C 0x6019 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x6025 guarda las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0x604A despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x606B apunta a el despachador de los menus (y 0xD74D)
@@ -193,11 +193,11 @@ C 0x648A despacha: salta a la palabra A de la tabla que va pegada detras del `ca
 C 0x649C lee los botones recien pulsados del mando 1 / cursores
 C 0x64AD texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x64C2 apunta a las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
-C 0x64D1 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+C 0x64D1 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x64D5 guarda el equipo del jugador en PENNANT (bit 0)
 C 0x64DB guarda el despachador de los menus (y 0xD74D)
 C 0x64DF borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
-C 0x64EB guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+C 0x64EB guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x64F0 apunta a el despachador de los menus (y 0xD74D)
 C 0x6504 guarda el despachador de los menus (y 0xD74D)
 C 0x6507 apunta a variable de paso (cada rutina la usa a su manera)
@@ -216,7 +216,7 @@ C 0x663C lee los botones recien pulsados del mando 1 / cursores
 C 0x6653 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x6665 lee los botones recien pulsados del mando 1 / cursores
 C 0x667D texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0x6682 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+C 0x6682 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x66BC hl_mas_a: HL = HL + A
 C 0x6734 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x676B apunta a variable de paso (cada rutina la usa a su manera)
@@ -287,12 +287,12 @@ C 0x6E1B sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vue
 C 0x6E41 lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0x6E4A lee el equipo del jugador en PENNANT (bit 0)
 C 0x6E4F apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
-C 0x6E52 apunta a la ficha del local (255 bytes de p13:731F)
+C 0x6E52 apunta a la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 C 0x6E75 lee los botones recien pulsados del mando 1 / cursores
 C 0x6E8F texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0x6E9D lee variable de paso (cada rutina la usa a su manera)
 C 0x6EAF apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
-C 0x6EB7 apunta a la ficha del local (255 bytes de p13:731F)
+C 0x6EB7 apunta a la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 C 0x6EBD guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
 C 0x6F36 hl_mas_a: HL = HL + A
 C 0x6F3D lee variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)

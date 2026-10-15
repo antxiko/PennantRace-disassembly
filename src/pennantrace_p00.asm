@@ -321,7 +321,7 @@ L_4245:
 	ld a,(hl)			;428f
 	or a			;4290
 	jr nz,L_42A1		;4291   ; ...y al llegar a 0 vuelve a 9, o a 10 si 0xE1A2 pasa de 0x78
-	ld a,(0e1a2h)		;4293   ; lee el desplazamiento de la pantalla (16 bits)
+	ld a,(0e1a2h)		;4293   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 	cp 078h		;4296
 	ld a,009h		;4298
 	jr c,L_429D		;429a
@@ -856,7 +856,7 @@ L_4645:
 L_464D:
 	djnz L_465D		;464d   ; paso siguiente: p14:9D49 hasta que marque 0xE1D1
 	call 09d49h		;464f
-	ld a,(0e1d1h)		;4652   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld a,(0e1d1h)		;4652   ; lee la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	or a			;4655
 	ret z			;4656
 	call 0a2edh		;4657   ; y p15:A2ED
@@ -864,7 +864,7 @@ L_464D:
 L_465D:
 	djnz L_468A		;465d   ; p14:9F8A hasta que marque 0xE1D1
 	call 09f8ah		;465f
-	ld a,(0e1d1h)		;4662   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld a,(0e1d1h)		;4662   ; lee la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	or a			;4665
 	ret z			;4666
 	call L_4448		;4667   ; el reloj de juego a cero
@@ -955,7 +955,7 @@ L_46FB:
 	cp 003h		;46fe
 	jp z,0b694h		;4700
 	call L_596F		;4703   ; p00:596F hasta que marque 0xE1D1
-	ld a,(0e1d1h)		;4706   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld a,(0e1d1h)		;4706   ; lee la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	or a			;4709
 	ret z			;470a
 	ld a,(0de02h)		;470b   ; con el bit 4 de 0xDE02, p14:9697
@@ -1075,7 +1075,7 @@ L_47D1:
 	ld hl,0d380h		;47ed   ; ...y dos numeros de 10 cifras: 0xD380 y 0xD47F
 	ld de,04850h		;47f0
 	call L_5BE4		;47f3
-	ld hl,0d47fh		;47f6   ; apunta a la ficha del local (255 bytes de p13:731F)
+	ld hl,0d47fh		;47f6   ; apunta a la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 	ld de,0a850h		;47f9
 	call L_5BE4		;47fc
 	call 060ach		;47ff   ; p01:60AC
@@ -1283,7 +1283,7 @@ L_49A6:
 	ret			;49bf
 L_49C0:
 	call 066b3h		;49c0   ; p01:66B3 hasta que el bit 7 de 0xE1D1 lo marque
-	ld a,(0e1d1h)		;49c3   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld a,(0e1d1h)		;49c3   ; lee la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	rla			;49c6
 	ret nc			;49c7
 	ld hl,06003h		;49c8   ; copia los 45 bytes de p07:6003 a 0xE400 (con 7-8-9, p00:535A)

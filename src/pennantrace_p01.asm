@@ -49,7 +49,7 @@ L_6003:
 	ld a,(0ed3fh)		;6035
 	or a			;6038
 	ret nz			;6039
-	ld a,(0eddeh)		;603a
+	ld a,(0eddeh)		;603a   ; lee la jugada anulada (foul)
 	or a			;603d
 	ret nz			;603e
 	ld a,001h		;603f   ; 0xE33E = 1: ya suena
@@ -152,7 +152,7 @@ L_60AC:
 	ld de,05884h		;60fb
 	ld b,001h		;60fe
 	call 05bf1h		;6100   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
-	ld hl,0ed1ah		;6103
+	ld hl,0ed1ah		;6103   ; apunta a los eliminados por strikes del local (BCD)
 	ld de,0b884h		;6106
 	ld b,001h		;6109
 	call 05bf1h		;610b   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
@@ -959,7 +959,7 @@ L_663B:
 	ret			;668e
 L_668F:
 	xor a			;668f   ; antes del partido: 0xE1D1 = 0, 0xE1A5 = 1, 0xE1C9 = 4...
-	ld (0e1d1h),a		;6690   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld (0e1d1h),a		;6690   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	inc a			;6693
 	ld (0e1a5h),a		;6694
 	ld a,004h		;6697
@@ -985,17 +985,17 @@ L_66B3:
 	jr c,L_66CA		;66c5
 	ld hl,00000h		;66c7
 L_66CA:
-	ld (0e1a2h),hl		;66ca   ; guarda el desplazamiento de la pantalla (16 bits)
+	ld (0e1a2h),hl		;66ca   ; guarda el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 	jp 0b1bdh		;66cd   ; los pares, p15:B1BD
 L_66D0:
 	call 0b440h		;66d0   ; en 0: p15:B440 y la cuenta de 0xE331...
 	ld a,080h		;66d3
-	ld (0e1d1h),a		;66d5   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld (0e1d1h),a		;66d5   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ld hl,0e331h		;66d8
 	dec (hl)			;66db
 	ret nz			;66dc
 	ld a,001h		;66dd   ; ...al acabar, 0xE1D1 = 1
-	ld (0e1d1h),a		;66df   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld (0e1d1h),a		;66df   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ret			;66e2
 L_66E3:
 	ld c,026h		;66e3   ; una casilla con 0x26 (la X de la entrada que no se juega)
@@ -1120,7 +1120,7 @@ L_6786:
 	ld (0e19dh),a		;679f   ; guarda el mando del bateador o los corredores
 	call 08b0eh		;67a2
 	call L_66B3		;67a5   ; el desplazamiento (p01:66B3) hasta que acaba (bit 0 de 0xE1D1)
-	ld a,(0e1d1h)		;67a8   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld a,(0e1d1h)		;67a8   ; lee la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	rra			;67ab
 	ret nc			;67ac
 	call L_693E		;67ad   ; el campo nuevo (p01:693E) y los dibujos de p00:530F
@@ -2745,7 +2745,7 @@ L_72CB:
 	or d			;72d0
 	jr z,L_72F1		;72d1
 	ld a,(ix+001h)		;72d3   ; lee la y, fraccion
-	ld (0e1d1h),a		;72d6   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld (0e1d1h),a		;72d6   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ld l,a			;72d9
 	ld a,(ix+003h)		;72da   ; lee la y, byte alto
 	ld (0e1d3h),a		;72dd
@@ -2800,7 +2800,7 @@ L_7347:
 	ld a,e			;734b
 	or d			;734c
 	jr z,L_735E		;734d
-	ld a,(0e1d1h)		;734f   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld a,(0e1d1h)		;734f   ; lee la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ld (ix+001h),a		;7352   ; guarda la y, fraccion
 	ld hl,(0e1d2h)		;7355
 	ld (ix+002h),l		;7358   ; guarda la y (vertical)
@@ -3050,7 +3050,7 @@ L_74F6:
 L_7513:
 	call L_74E7		;7513
 	push hl			;7516
-	ld hl,(0e1a2h)		;7517   ; lee el desplazamiento de la pantalla (16 bits)
+	ld hl,(0e1a2h)		;7517   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 	ld de,0fff0h		;751a
 	add hl,de			;751d
 	ex de,hl			;751e
@@ -4043,7 +4043,7 @@ L_7B74:
 	ret			;7b78
 L_7B79:
 	call L_7FDA		;7b79   ; la defensa del ordenador: p01:7FDA y el paso de 0xECE6
-	ld a,(0eddeh)		;7b7c
+	ld a,(0eddeh)		;7b7c   ; lee la jugada anulada (foul)
 	rra			;7b7f
 	jr c,$+28		;7b80
 	ld a,(0ece6h)		;7b82   ; lee el paso de la defensa del ordenador

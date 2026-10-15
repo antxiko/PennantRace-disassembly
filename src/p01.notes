@@ -636,6 +636,7 @@ L 0x65BE prepara_maquina arranca el sonido, SCREEN 5 (CHGMOD), borde 0, cuatro r
 L 0x65F0 lee_mando lee el mando y el teclado: 0xDE07/0xDE09 lo pulsado y 0xDE06/0xDE08 lo recien pulsado
 L 0x6608 mandos_y_teclado D = el primer mando con espacio y cursores, E = el segundo con SHIFT, CTRL y GRAPH (activos a 1)
 L 0x66ED carreras_de_la_entrada suma C carreras al equipo que batea: al total (hasta 99) y a la casilla de la entrada
+C 0x603A lee la jugada anulada (foul)
 C 0x6046 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x6053 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0x60B9 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
@@ -647,6 +648,7 @@ C 0x60EA numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0x60ED apunta a los home runs del local (BCD)
 C 0x60F5 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0x6100 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
+C 0x6103 apunta a los eliminados por strikes del local (BCD)
 C 0x610B numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0x6116 numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 C 0x6119 apunta a las bases por bolas del local (BCD)
@@ -719,12 +721,12 @@ C 0x65BB texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
 C 0x65BE arranca_sonido: el arranque del motor de sonido (p04:6000) con los bancos 4-5-6
 C 0x65E5 apaga_sprites: R#8 con el bit 1 (SPD) a 1: no se pintan sprites
 C 0x65F3 apunta a los botones pulsados del mando 1 / cursores
-C 0x6690 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+C 0x6690 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x66A1 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 C 0x66BA lee el contador de cuadros del juego (sube uno por cuadro)
-C 0x66CA guarda el desplazamiento de la pantalla (16 bits)
-C 0x66D5 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
-C 0x66DF guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+C 0x66CA guarda el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+C 0x66D5 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
+C 0x66DF guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x66F2 apunta a las carreras del local por entrada (10 casillas, 12-13 el total)
 C 0x66F5 apunta a las carreras del local (BCD; 0x99 acaba el partido)
 C 0x66FD apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
@@ -736,7 +738,7 @@ C 0x675E apunta a las carreras del local por entrada (10 casillas, 12-13 el tota
 C 0x6764 apunta a las carreras del visitante por entrada (10 casillas, 12-13 el total)
 C 0x6768 hl_mas_a: HL = HL + A
 C 0x679F guarda el mando del bateador o los corredores
-C 0x67A8 lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
+C 0x67A8 lee la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x67C4 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x67CC lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0x67E5 guarda la cuenta atras del estado
@@ -887,7 +889,7 @@ C 0x7246 guarda la base de destino (nibble alto; 2 abajo: llegado)
 C 0x72A7 guarda el dibujo de su sprite
 C 0x72BF lee el contador de cuadros de la jugada (las piernas de los sprites)
 C 0x72D3 lee la y, fraccion
-C 0x72D6 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+C 0x72D6 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x72DA lee la y, byte alto
 C 0x72E0 lee la y (vertical)
 C 0x72E8 guarda la y, fraccion
@@ -902,7 +904,7 @@ C 0x7323 hl_mas_a: HL = HL + A
 C 0x732B lee la x (horizontal)
 C 0x732E lee la x, byte alto
 C 0x7333 de_mas_a: DE = DE + A
-C 0x734F lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
+C 0x734F lee la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0x7352 guarda la y, fraccion
 C 0x7358 guarda la y (vertical)
 C 0x735B guarda la y, byte alto
@@ -958,7 +960,7 @@ C 0x74E3 guarda la x, byte alto
 C 0x74ED palabra_a: HL = la palabra A de la tabla HL
 C 0x74FD apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0x750F apunta a las 9 fichas de 16 bytes de los defensores
-C 0x7517 lee el desplazamiento de la pantalla (16 bits)
+C 0x7517 lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 C 0x7523 lee el numero (bits 0-3) y el estado (bits 4-7)
 C 0x7529 lee la y (vertical)
 C 0x752C lee la y, byte alto
@@ -1016,6 +1018,7 @@ C 0x7AB3 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado
 C 0x7AD3 guarda el mando del bateador o los corredores
 C 0x7AF6 guarda el mando del bateador o los corredores
 C 0x7B33 apunta a las 9 fichas de 16 bytes de los defensores
+C 0x7B7C lee la jugada anulada (foul)
 C 0x7B82 lee el paso de la defensa del ordenador
 C 0x7B85 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0x7B9D guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)

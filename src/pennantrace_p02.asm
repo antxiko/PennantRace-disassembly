@@ -810,7 +810,7 @@ L_84EF:
 	cp 010h		;850c
 	ret nz			;850e
 	ld a,001h		;850f
-	ld (0e1d1h),a		;8511   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld (0e1d1h),a		;8511   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ret			;8514
 L_8515:
 	ld hl,0e340h		;8515   ; el local: 0xE19E, 0xE30C, 0xE30E y la lista de 0xEC62
@@ -829,7 +829,7 @@ L_8515:
 	cp 010h		;8532
 	ret nz			;8534
 	ld a,001h		;8535
-	ld (0e1d1h),a		;8537   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld (0e1d1h),a		;8537   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ret			;853a
 L_853B:
 	xor a			;853b   ; el mando que da el ordenador, segun el paso 0xED03:
@@ -1075,7 +1075,7 @@ L_86D8:
 	ld a,(0e338h)		;86d8   ; el contacto: solo en el cuadro 3 del lanzamiento (0xE1D1) y con el swing de 1 a 6
 	cp 003h		;86db
 	ret nc			;86dd
-	ld a,(0e1d1h)		;86de   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld a,(0e1d1h)		;86de   ; lee la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	cp 003h		;86e1
 	ret nz			;86e3
 	ld a,(0e1fah)		;86e4
@@ -1212,7 +1212,7 @@ L_87D4:
 	ret			;87e3
 L_87E4:
 	ld a,002h		;87e4   ; 0xE1A1 = 2, 0xECEB y 0xED0A a cero y p02:90B2
-	ld (0e1a1h),a		;87e6   ; guarda el paso de la jugada (p02:9149)
+	ld (0e1a1h),a		;87e6   ; guarda el paso de la jugada (y de TEAM EDIT)
 	xor a			;87e9
 	ld (0ecebh),a		;87ea
 	ld (0ed0ah),a		;87ed
@@ -1605,7 +1605,7 @@ L_8A89:
 	ld a,001h		;8a98   ; ...0xEC75 = 1, al paso 3, los sonidos 7 y 0x43...
 	ld (0ec75h),a		;8a9a
 	ld a,003h		;8a9d
-	ld (0e338h),a		;8a9f
+	ld (0e338h),a		;8a9f   ; guarda el resultado del lanzamiento: 1 strike, 2 bola, 3 pelotazo
 	ld a,007h		;8aa2
 	call 057ffh		;8aa4   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 	ld a,043h		;8aa7
@@ -1966,7 +1966,7 @@ L_8D2A:
 	ld b,a			;8d30
 	ld a,c			;8d31
 	ld (0ed83h),a		;8d32
-	ld a,(0eddeh)		;8d35
+	ld a,(0eddeh)		;8d35   ; lee la jugada anulada (foul)
 	or a			;8d38
 	jr nz,L_8D5B		;8d39
 	call 0b10ch		;8d3b   ; la pelota en esa base (p15:B10C)...
@@ -2082,10 +2082,10 @@ L_8DFF:
 	ld a,(0e33bh)		;8dff   ; con el mando: no antes de la jugada ni parado ni tirandose
 	or a			;8e02
 	ret nz			;8e03
-	ld a,(0e1a1h)		;8e04   ; lee el paso de la jugada (p02:9149)
+	ld a,(0e1a1h)		;8e04   ; lee el paso de la jugada (y de TEAM EDIT)
 	dec a			;8e07
 	ret z			;8e08
-	ld a,(0e1a1h)		;8e09   ; lee el paso de la jugada (p02:9149)
+	ld a,(0e1a1h)		;8e09   ; lee el paso de la jugada (y de TEAM EDIT)
 	cp 003h		;8e0c
 	ret c			;8e0e
 	ld a,(ix+00bh)		;8e0f   ; lee las marcas
@@ -2287,7 +2287,7 @@ L_8F5A:
 	or a			;8f64
 	ret nz			;8f65
 L_8F66:
-	ld a,(0eddeh)		;8f66
+	ld a,(0eddeh)		;8f66   ; lee la jugada anulada (foul)
 	or a			;8f69
 	ret nz			;8f6a
 L_8F6B:
@@ -2552,7 +2552,7 @@ DATA_resto_912F:
 L_9149:
 	call 04468h		;9149   ; la jugada: el reloj, p02:94F7 y el paso de 0xE1A1
 	call L_94F7		;914c
-	ld a,(0e1a1h)		;914f   ; lee el paso de la jugada (p02:9149)
+	ld a,(0e1a1h)		;914f   ; lee el paso de la jugada (y de TEAM EDIT)
 	call 04220h		;9152   ; despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 
 ; ----------------------------------------------------------------------
@@ -2740,7 +2740,7 @@ L_92B5:
 	djnz L_92A5		;92ba
 L_92BC:
 	call L_930B		;92bc   ; al paso 0 y, si la jugada se anula (bit 0 de 0xEDDE)...
-	ld a,(0eddeh)		;92bf
+	ld a,(0eddeh)		;92bf   ; lee la jugada anulada (foul)
 	and 001h		;92c2
 	ret z			;92c4
 	ld de,0e231h		;92c5   ; ...los corredores, el marcador y las casillas vuelven a como estaban
@@ -2778,7 +2778,7 @@ L_930B:
 L_9311:
 	ld hl,0de04h		;9311   ; el cambio de campo: 128 cuadros y al paso 6
 	ld (hl),080h		;9314
-	ld hl,0e1a1h		;9316   ; apunta a el paso de la jugada (p02:9149)
+	ld hl,0e1a1h		;9316   ; apunta a el paso de la jugada (y de TEAM EDIT)
 	ld (hl),006h		;9319
 	ret			;931b
 L_931C:
@@ -2807,7 +2807,7 @@ L_9333:
 	ld (0e339h),a		;933e
 	ld (0ed22h),a		;9341
 	ld a,004h		;9344
-	ld (0e1a1h),a		;9346   ; guarda el paso de la jugada (p02:9149)
+	ld (0e1a1h),a		;9346   ; guarda el paso de la jugada (y de TEAM EDIT)
 	ld a,018h		;9349
 	ld (0de04h),a		;934b   ; guarda la cuenta atras del estado
 	call L_9386		;934e   ; ...los que entran (p02:9386) en 0xED21 y 0xEDC2...
@@ -2823,7 +2823,7 @@ L_9366:
 	xor a			;9366   ; 2: al paso 5 y el marcador y las casillas vuelven a como estaban
 	ld (0ed23h),a		;9367
 	ld a,005h		;936a
-	ld (0e1a1h),a		;936c   ; guarda el paso de la jugada (p02:9149)
+	ld (0e1a1h),a		;936c   ; guarda el paso de la jugada (y de TEAM EDIT)
 	ld de,0e194h		;936f   ; apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 	ld hl,0ecdch		;9372
 	ld bc,00004h		;9375
@@ -2858,7 +2858,7 @@ L_93A6:
 	or a			;93ac
 	ret nz			;93ad
 	xor a			;93ae
-	ld (0e1a1h),a		;93af   ; guarda el paso de la jugada (p02:9149)
+	ld (0e1a1h),a		;93af   ; guarda el paso de la jugada (y de TEAM EDIT)
 	ret			;93b2
 L_93B3:
 	call 05c77h		;93b3   ; el home run: sprites, p02:98FC; sin velocidad, 0xE302 = 0...
@@ -2977,7 +2977,7 @@ L_946B:
 	jp 0668fh		;946b   ; y a preparar la otra media (p01:668F)
 L_946E:
 	call 066b3h		;946e   ; el desplazamiento al campo nuevo (p01:66B3)...
-	ld a,(0e1d1h)		;9471   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld a,(0e1d1h)		;9471   ; lee la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	rra			;9474
 	ret nc			;9475
 	ld c,001h		;9476   ; ...si el bateador no llego (p15:B072), cuenta como bateador
@@ -3006,7 +3006,7 @@ L_949B:
 	ld a,008h		;949f
 	ld (0de00h),a		;94a1   ; guarda el estado del juego (indice del despachador principal)
 	xor a			;94a4
-	ld (0e1a1h),a		;94a5   ; guarda el paso de la jugada (p02:9149)
+	ld (0e1a1h),a		;94a5   ; guarda el paso de la jugada (y de TEAM EDIT)
 L_94A8:
 	ld a,001h		;94a8   ; 0xE1CB = 1, corredores, cuenta y outs a cero
 	ld (0e1cbh),a		;94aa
@@ -3023,7 +3023,7 @@ L_94A8:
 	inc hl			;94c0
 	ld (hl),a			;94c1
 	inc hl			;94c2
-	ld hl,0e1a1h		;94c3   ; apunta a el paso de la jugada (p02:9149)
+	ld hl,0e1a1h		;94c3   ; apunta a el paso de la jugada (y de TEAM EDIT)
 	ld (hl),a			;94c6
 	ld a,(0e19bh)		;94c7   ; en la alta, borra las casillas de la entrada
 	rra			;94ca
@@ -3136,7 +3136,7 @@ L_9585:
 	ld a,001h		;958a
 	ld (0ed3fh),a		;958c
 	inc a			;958f
-	ld (0e1a1h),a		;9590   ; guarda el paso de la jugada (p02:9149)
+	ld (0e1a1h),a		;9590   ; guarda el paso de la jugada (y de TEAM EDIT)
 	ret			;9593
 L_9594:
 	ld c,042h		;9594   ; los marcadores de bases: segun quien esta en 1.a, 2.a y 3.a (p15:B06E)...
@@ -3245,7 +3245,7 @@ L_962D:
 	djnz L_962D		;9632
 	ret			;9634
 L_9635:
-	ld a,(0eddeh)		;9635
+	ld a,(0eddeh)		;9635   ; lee la jugada anulada (foul)
 	or a			;9638
 	ret nz			;9639
 	ld a,(0e19dh)		;963a   ; ...el boton 2 con una direccion, durante el lanzamiento: el robo...
@@ -3255,7 +3255,7 @@ L_9635:
 	ld a,b			;9641
 	and 00fh		;9642
 	ret z			;9644
-	ld a,(0e1d1h)		;9645   ; lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld a,(0e1d1h)		;9645   ; lee la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	or a			;9648
 	ret z			;9649
 	ld a,025h		;964a   ; ...el sonido 0x25, 0xECEB = 1 y al paso siguiente
@@ -3411,11 +3411,11 @@ L_972B:
 	ld a,(0e337h)		;9734
 	or a			;9737
 	ret nz			;9738
-	ld a,(0eddeh)		;9739
+	ld a,(0eddeh)		;9739   ; lee la jugada anulada (foul)
 	or a			;973c
 	ret nz			;973d
 	ld a,002h		;973e
-	ld (0e1a1h),a		;9740   ; guarda el paso de la jugada (p02:9149)
+	ld (0e1a1h),a		;9740   ; guarda el paso de la jugada (y de TEAM EDIT)
 L_9743:
 	ret			;9743
 L_9744:
@@ -3762,7 +3762,7 @@ L_9959:
 	xor a			;9959   ; bota: el sonido 0x0B (si la jugada sigue)...
 	ld (0eff4h),a		;995a
 	ld a,(0e33bh)		;995d   ; lee lo que acaba la jugada: 1 home run, 2 jugada anulada
-	ld hl,0eddeh		;9960
+	ld hl,0eddeh		;9960   ; apunta a la jugada anulada (foul)
 	or (hl)			;9963
 	ld a,00bh		;9964
 	call z,057ffh		;9966   ; sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -4025,7 +4025,7 @@ L_9AF6:
 	ld (0e100h),hl		;9b1f   ; guarda los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color]) y el byte siguiente (16 bits)
 	call L_9B4B		;9b22   ; la zona del campo de la pelota (p02:9B4B)...
 	ret c			;9b25
-	ld a,(0eddeh)		;9b26
+	ld a,(0eddeh)		;9b26   ; lee la jugada anulada (foul)
 	rra			;9b29
 	jr c,L_9B3A		;9b2a
 	ld a,(0e33bh)		;9b2c   ; ...si cambia y la jugada sigue, la zona nueva y p15:B4A4
@@ -4323,7 +4323,7 @@ L_9D49:
 	dec (hl)			;9d52
 	ret nz			;9d53
 	ld a,001h		;9d54
-	ld (0e1d1h),a		;9d56   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld (0e1d1h),a		;9d56   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ret			;9d59
 L_9D5A:
 	call 05c73h		;9d5a   ; los sprites, p15:A463, el mando del ordenador y la eleccion de los dos...
@@ -4549,7 +4549,7 @@ L_9EA9:
 	ld hl,0d380h		;9ee5   ; ...los nombres de los equipos (10 letras)...
 	ld de,01868h		;9ee8
 	call 05be4h		;9eeb
-	ld hl,0d47fh		;9eee   ; apunta a la ficha del local (255 bytes de p13:731F)
+	ld hl,0d47fh		;9eee   ; apunta a la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 	ld de,09068h		;9ef1
 	call 05be4h		;9ef4
 	ld hl,0d433h		;9ef7   ; ...los 4 lanzadores de cada uno (p02:9F20)...
@@ -4566,7 +4566,7 @@ L_9EA9:
 	ld (0e308h),a		;9f15
 	xor a			;9f18
 	ld (0de04h),a		;9f19   ; guarda la cuenta atras del estado
-	ld (0e1d1h),a		;9f1c   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld (0e1d1h),a		;9f1c   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ret			;9f1f
 L_9F20:
 	ld c,004h		;9f20   ; 4 lanzadores: el nombre (6 letras, p15:A425)...
@@ -4656,7 +4656,7 @@ L_9F8A:
 	call 0aa74h		;9f9e
 	call 0ab77h		;9fa1
 	ld a,001h		;9fa4
-	ld (0e1d1h),a		;9fa6   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld (0e1d1h),a		;9fa6   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ret			;9fa9
 L_9FAA:
 	call L_9FC5		;9faa   ; los dos equipos (p02:9FC5, p15:A0D7); con los dos (0xE30A = 3)...

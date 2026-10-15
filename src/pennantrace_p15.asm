@@ -743,7 +743,7 @@ L_A5CB:
 	ld hl,0a76ah		;a5ce
 	call 04ea6h		;a5d1   ; texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 	ld a,001h		;a5d4
-	ld (0e1d1h),a		;a5d6   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld (0e1d1h),a		;a5d6   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ret			;a5d9
 L_A5DA:
 	ld a,(0d74fh)		;a5da
@@ -1508,7 +1508,7 @@ L_AB73:
 	call L_ABB0		;ab79
 	call L_AB89		;ab7c
 	xor a			;ab7f
-	ld (0e1a1h),a		;ab80   ; guarda el paso de la jugada (p02:9149)
+	ld (0e1a1h),a		;ab80   ; guarda el paso de la jugada (y de TEAM EDIT)
 	ld a,008h		;ab83
 	ld (0de02h),a		;ab85   ; guarda las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 	ret			;ab88
@@ -1554,7 +1554,7 @@ L_ABB0:
 	ld de,0d380h		;abc9   ; apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 	call L_ABD5		;abcc
 	ld a,(0d70bh)		;abcf
-	ld de,0d47fh		;abd2   ; apunta a la ficha del local (255 bytes de p13:731F)
+	ld de,0d47fh		;abd2   ; apunta a la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 L_ABD5:
 	ld hl,0731fh		;abd5
 	call 0556dh		;abd8   ; palabra_a: HL = la palabra A de la tabla HL
@@ -2350,7 +2350,7 @@ L_B0E3:
 	ld bc,0feb0h		;b0f7
 	add hl,bc			;b0fa
 	jr nc,L_B0D9		;b0fb
-	ld hl,(0e1a2h)		;b0fd   ; lee el desplazamiento de la pantalla (16 bits)
+	ld hl,(0e1a2h)		;b0fd   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 	ld de,0ff30h		;b100
 	add hl,de			;b103
 	ret nc			;b104
@@ -2418,7 +2418,7 @@ L_B158:
 	ld (hl),001h		;b16d
 	call L_B1D8		;b16f
 	ret nc			;b172
-	ld hl,(0e1a2h)		;b173   ; lee el desplazamiento de la pantalla (16 bits)
+	ld hl,(0e1a2h)		;b173   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 	ld de,0ffa0h		;b176
 	add hl,de			;b179
 	ret nc			;b17a
@@ -2428,7 +2428,7 @@ L_B158:
 	dec a			;b181
 	jr z,L_B1A2		;b182
 	ld de,0a028h		;b184
-	ld a,(0eddeh)		;b187
+	ld a,(0eddeh)		;b187   ; lee la jugada anulada (foul)
 	rra			;b18a
 	ld a,005h		;b18b
 	jr nc,L_B14E		;b18d
@@ -2436,7 +2436,7 @@ L_B158:
 	jr L_B14E		;b191
 L_B193:
 	ld de,04828h		;b193
-	ld a,(0eddeh)		;b196
+	ld a,(0eddeh)		;b196   ; lee la jugada anulada (foul)
 	rra			;b199
 	ld a,006h		;b19a
 	jr nc,L_B14E		;b19c
@@ -2447,7 +2447,7 @@ L_B1A2:
 	ld de,0feb0h		;b1a5
 	add hl,de			;b1a8
 	ret nc			;b1a9
-	ld a,(0eddeh)		;b1aa
+	ld a,(0eddeh)		;b1aa   ; lee la jugada anulada (foul)
 	rra			;b1ad
 	ret nc			;b1ae
 	ld de,07898h		;b1af
@@ -3077,7 +3077,7 @@ DATA_texto_suelto_B68C:
 
 
 L_B693:
-	ld a,(0e1a2h)		;b693   ; lee el desplazamiento de la pantalla (16 bits)
+	ld a,(0e1a2h)		;b693   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 	cp 00dh		;b696
 	ld a,(0e1a3h)		;b698
 	jp nc,L_B801		;b69b
@@ -3085,7 +3085,7 @@ L_B693:
 	jr c,L_B70B		;b6a0
 	cp 00ch		;b6a2
 	jp c,L_B79B		;b6a4
-	ld a,(0e1a2h)		;b6a7   ; lee el desplazamiento de la pantalla (16 bits)
+	ld a,(0e1a2h)		;b6a7   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 	dec a			;b6aa
 	ld hl,0e1d8h		;b6ab
 	call 04216h		;b6ae   ; hl_mas_a: HL = HL + A
@@ -3154,7 +3154,7 @@ L_B709:
 	scf			;b709
 	ret			;b70a
 L_B70B:
-	ld a,(0e1a2h)		;b70b   ; lee el desplazamiento de la pantalla (16 bits)
+	ld a,(0e1a2h)		;b70b   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 	dec a			;b70e
 	add a,a			;b70f
 	ld hl,0e1b4h		;b710
@@ -3242,7 +3242,7 @@ L_B796:
 	ld (hl),c			;b799
 	ret			;b79a
 L_B79B:
-	ld a,(0e1a2h)		;b79b   ; lee el desplazamiento de la pantalla (16 bits)
+	ld a,(0e1a2h)		;b79b   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 	dec a			;b79e
 	ld hl,0e1cch		;b79f
 	call 04216h		;b7a2   ; hl_mas_a: HL = HL + A
@@ -3320,7 +3320,7 @@ L_B801:
 	jp z,L_B9CB		;b80f
 	cp 011h		;b812
 	jp z,L_B98C		;b814
-	ld a,(0e1a2h)		;b817   ; lee el desplazamiento de la pantalla (16 bits)
+	ld a,(0e1a2h)		;b817   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 	sub 00dh		;b81a
 	ld e,a			;b81c
 	ld d,000h		;b81d
@@ -3361,7 +3361,7 @@ L_B84B:
 	ld b,001h		;b851
 	jp 05bf1h		;b853   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 L_B856:
-	ld a,(0e1a2h)		;b856   ; lee el desplazamiento de la pantalla (16 bits)
+	ld a,(0e1a2h)		;b856   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 	sub 00dh		;b859
 	add a,a			;b85b
 	ld e,a			;b85c
@@ -3466,7 +3466,7 @@ DATA_resto_B8DC:
 
 
 L_B8E2:
-	ld a,(0e1a2h)		;b8e2   ; lee el desplazamiento de la pantalla (16 bits)
+	ld a,(0e1a2h)		;b8e2   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 	sub 00dh		;b8e5
 	add a,a			;b8e7
 	ld e,a			;b8e8
@@ -3503,7 +3503,7 @@ L_B91B:
 	ld b,003h		;b921
 	jp 05c34h		;b923
 L_B926:
-	ld a,(0e1a2h)		;b926   ; lee el desplazamiento de la pantalla (16 bits)
+	ld a,(0e1a2h)		;b926   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 	sub 00dh		;b929
 	ld e,a			;b92b
 	ld d,000h		;b92c
@@ -3573,7 +3573,7 @@ L_B981:
 	ld b,003h		;b987
 	jp 05c34h		;b989
 L_B98C:
-	ld a,(0e1a2h)		;b98c   ; lee el desplazamiento de la pantalla (16 bits)
+	ld a,(0e1a2h)		;b98c   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 	sub 00dh		;b98f
 	ld e,a			;b991
 	ld d,000h		;b992
@@ -3614,7 +3614,7 @@ L_B9C0:
 	ld b,001h		;b9c6
 	jp 05bf1h		;b9c8   ; numero: pinta B cifras BCD de HL (sin ceros a la izquierda) desde DE
 L_B9CB:
-	ld a,(0e1a2h)		;b9cb   ; lee el desplazamiento de la pantalla (16 bits)
+	ld a,(0e1a2h)		;b9cb   ; lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 	sub 00dh		;b9ce
 	ld e,a			;b9d0
 	ld d,000h		;b9d1
@@ -3869,8 +3869,8 @@ L_BB97:
 	call 0541bh		;bba9
 	call 052e1h		;bbac
 	xor a			;bbaf
-	ld (0e1d1h),a		;bbb0   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
-	ld (0e1a2h),a		;bbb3   ; guarda el desplazamiento de la pantalla (16 bits)
+	ld (0e1d1h),a		;bbb0   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
+	ld (0e1a2h),a		;bbb3   ; guarda el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 	ld a,020h		;bbb6
 	ld (0de04h),a		;bbb8   ; guarda la cuenta atras del estado
 	jr L_BC1D		;bbbb
@@ -3956,7 +3956,7 @@ L_BC64:
 	ret nz			;bc68
 	call 05dbbh		;bc69
 	ld a,001h		;bc6c
-	ld (0e1d1h),a		;bc6e   ; guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
+	ld (0e1d1h),a		;bc6e   ; guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 	ret			;bc71
 L_BC72:
 	ld hl,(0ecf0h)		;bc72

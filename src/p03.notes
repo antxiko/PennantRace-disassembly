@@ -1,4 +1,431 @@
 
+
+# --- A MANO: comentarios escritos leyendo el codigo ---
+C 0xA002 colores de los 4 sprites a cero y a la VRAM
+C 0xA00C el orden del visitante, primer paso: con el boton 2 elige el puesto...
+C 0xA011 ...lo marca (p15:A4F6), cambia el color de la flecha y al paso 2 (sonido 0x27)
+C 0xA023 con arriba o abajo, la flecha recorre los 9 puestos (0xE30D, da la vuelta)
+C 0xA041 y el sonido 0x26
+C 0xA047 segundo paso: con el boton 2...
+C 0xA04F ...cambia el color, el sonido 0x27...
+C 0xA05A ...pinta los dos jugadores en el puesto del otro (p03:A218)...
+C 0xA082 ...y los cambia en el orden (0xEC50)
+C 0xA098 al primer paso
+C 0xA09D con arriba o abajo, el jugador a meter (0xE30B, de 0 a 12)...
+C 0xA0BC ...y la flecha en su fila (p03:A1CA)
+C 0xA0C6 el color de la flecha (B) y de los 3 sprites (C)
+C 0xA0D7 el local, si no ha acabado: lo mismo con 0xE19E, 0xE305, 0xE30E y 0xE30C
+C 0xA0F0 con el boton 1, se acaba si el orden vale (p03:A1F6)...
+C 0xA0F9 ...el sonido 0x27, la marca, el texto y los sprites
+C 0xA113 con el boton 2 el puesto
+C 0xA12A con arriba o abajo, la flecha
+C 0xA14E segundo paso: cambia los dos
+C 0xA1A4 con arriba o abajo, el jugador
+C 0xA1CA la flecha: la y de la fila (0xA2DC) y 3 sprites de 16 en 16 en x...
+C 0xA1E0 ...y el sonido 0x26
+C 0xA1E5 el color de la flecha del local
+C 0xA1F6 el orden DE vale? los 9 puestos...
+C 0xA1FD ...que no haya huecos (0)...
+C 0xA201 ...y un solo lanzador (13 en adelante)
+C 0xA209 carry si no vale
+C 0xA20F E = la y de la fila A (0xA2DC) + 1
+C 0xA218 el jugador del puesto A del orden BC, en su fila:
+C 0xA220 hueco: la fila en blanco (p03:A27A)
+C 0xA228 de campo (1-12): su ficha de 14 bytes...
+C 0xA236 ...borra el sitio y pinta su nombre y sus numeros (p03:A3EC)
+C 0xA242 lanzador: su ficha de 11 bytes...
+C 0xA24B ...el nombre (p03:A439), un caracter 0x90...
+C 0xA25C ...y el texto de p13:7EB6
+C 0xA264 HL += (A x 11) + 0xA8 (las fichas de lanzador) y B = 6 letras
+C 0xA27A una fila en blanco: 0x68 x 8 en color 0
+C 0xA284 el sitio de un nombre en blanco: 0x30 x 8
+C 0xA298 la flecha de la fila elegida: el visitante (0xE30D) en x = 0x10...
+C 0xA2A6 ...el local (0xE30E) en x = 0x88
+C 0xA2AE su y de 0xA2DC al sprite
+C 0xA2ED la pantalla del orden de bateo: borrada, caracteres y 32 atributos de 0xA2BC...
+C 0xA30A ...dos marcos...
+C 0xA320 ...el texto de p13:7E86 y los rotulos (p03:A452)...
+C 0xA336 ...los nombres de los equipos...
+C 0xA348 ...sus 12 jugadores de campo y el lanzador elegido
+C 0xA372 los pasos de la pantalla a cero...
+C 0xA38B ...esperas de 8 cuadros...
+C 0xA399 ...y 0xEDD0 = 1 si en PENNANT el jugador lleva al local (bit 0 de 0xD6DC)
+C 0xA3B2 4 lanzadores: el nombre (p03:A422)...
+C 0xA3C1 ...un caracter 0x90...
+C 0xA3CA ...y dos numeros (1 y 2 cifras)
+C 0xA3E2 la fila siguiente, 8 mas abajo
+C 0xA3EA 12 jugadores de campo: el nombre (p03:A425)...
+C 0xA3F5 ...un caracter 0x90...
+C 0xA3FE ...dos numeros (3 y 2 cifras)...
+C 0xA411 ...y la fila siguiente (con un hueco despues de la 5.a)
+C 0xA422 borra el sitio y pinta un nombre:
+C 0xA425 B letras; 0x0C (estrecha) avanza 4, las demas 8
+C 0xA439 lo mismo con la fuente del color 4 (+0xA0)
+C 0xA452 los caracteres A a 10 en columna: los rotulos de los puestos
+C 0xA463 los mandos de los menus: el ordenador solo, nada...
+C 0xA469 ...el primero al visitante y el segundo al local...
+C 0xA47F ...en PENNANT, al reves si el jugador lleva al local
+C 0xA492 el aviso de orden que no vale del visitante: una vez (0xED7D)...
+C 0xA498 ...guarda el trozo de pantalla, un recuadro y el texto de p13:7D62
+C 0xA4C4 el del local (0xED7E), con p13:7B48
+C 0xA4F6 quita el aviso del visitante: devuelve el trozo guardado
+C 0xA501 el del local
+C 0xA519 el lanzamiento: los marcadores de bases, el robo, p03:A876, el bateo...
+C 0xA525 ...y el paso de 0xE1D1
+C 0xA539 paso 0: 0xE1D6-0xE1EA a cero (salvo 0xE1E1 y 0xE1E5)...
+C 0xA558 ...p03:AA02 y guarda corredores, marcador y casillas por si se anula
+C 0xA57E paso 1: el lanzador se coloca (p03:A844) hasta el boton 1...
+C 0xA587 ...p15:AC38, p15:AAE1 y 0xE337 = 1
+C 0xA592 al paso siguiente
+C 0xA597 paso 2: la espera de 0xE1D2...
+C 0xA59C ...la direccion del mando a 0xE1E6, p03:A830...
+C 0xA5A5 ...cada paso de 0xE1D3, los sprites (p00:58DE)...
+C 0xA5B1 ...al acabar, sale la pelota: velocidad, efecto, altura...
+C 0xA5BD ...la ficha 0xE1D9 de la pelota lanzada...
+C 0xA5D1 ...dos sprites (0xA4, color 13 y 0xAC, color 15)...
+C 0xA5E1 ...el sonido de 0xE225...
+C 0xA5E7 ...y los sprites 20 y 21 fuera
+C 0xA5F2 un cuadro mas de vuelo; la espera de 0xE1D2 para los sprites del lanzador
+C 0xA607 la y de la pelota (0xE1D4) mas su velocidad (0xE1D6)
+C 0xA612 sin golpe: el efecto (p03:A8F5), p03:A9BA y p03:A9A3
+C 0xA622 el sprite de la pelota (21) en (y, x)...
+C 0xA633 ...y el de la altura (20) en y - altura (0xE1DF, sin signo)
+C 0xA648 cerca de la caja (y >= 0xAC), 0xE1DD cuadros con el guante del receptor
+C 0xA65A sin golpe, el resultado (p03:A792)
+C 0xA661 al pasar de 0xC8, la pelota y su altura fuera de la pantalla...
+C 0xA671 ...sin velocidad...
+C 0xA67A ...y al paso siguiente si no hubo swing (o fue el 4.o) o fue toque
+C 0xA68E paso 4: el resultado (p03:A6E9)...
+C 0xA694 ...con el tercer strike, un eliminado por strikes mas al equipo que batea
+C 0xA6AC el dibujo del resultado (p03:A76C), las luces y la velocidad...
+C 0xA6B5 ...64 cuadros y 0xEDDD = 1
+C 0xA6BF con golpe flojo (0xED2E = 1), se acaba; con foul, p01:6267
+C 0xA6D0 0xE337 = 0; con robo y menos de 3 outs, 0xEDDF = 1 y al paso siguiente
+C 0xA6E9 el resultado (0xE338): 1 strike, 2 bola; lo demas, al paso 6
+C 0xA6F6 bola: una mas (hasta 4) y el sonido 0x15 (0x16 si va rapida)
+C 0xA70D strike: uno mas y el sonido 0x13 (0x14 si va rapida)
+C 0xA724 foul: el sonido 0x1B y un strike si no hay ya 2
+C 0xA732 con golpe: la pelota sigue en x con su velocidad...
+C 0xA73D ...strike (0xE338 = 1) mientras no pase nada
+C 0xA748 con golpe flojo y la velocidad x grande: foul (0xEDDC) y jugada anulada (0xEDDE)
+C 0xA75B el guante del receptor: dibujos 0xAC / 0xA4...
+C 0xA767 ...o 0xA8 / 0xA0
+C 0xA76C el rotulo del resultado: foul (p01:6508)...
+C 0xA779 ...bola (p00:5193), tercer strike (p00:51A1) o strike (p00:5185)
+C 0xA789 al paso 6 con 192 cuadros
+C 0xA792 el resultado sin golpe: swing al aire (p03:A7A6), por la zona (p03:A7B2), pelotazo...
+C 0xA79B ...si no, bola
+C 0xA7A6 con swing (0xE1F3 < 4): strike
+C 0xA7B2 por la zona: una vez (0xEC75), sin botes, x entre 0x6B y 0x85 y altura entre 0x0E y 0x21: strike
+C 0xA7DB la espera; al acabar, todo a cero (p03:A7E6) y p01:64FA
+C 0xA7E6 0xE1D1 y 0xED3E a cero y el rectangulo
+C 0xA7EF la espera y la base por bolas (p01:61C7)
+C 0xA7FD la y de la pelota a 0x6400 (la mano del lanzador)
+C 0xA806 la x de salida: 0xE1E1 mas 8 o -8 segun los bits de 0xE1EB...
+C 0xA819 ...o mas 12 o -12
+C 0xA825 la altura de salida: 0x18, o 0x0C con el bit 1 de 0xE1EB
+C 0xA830 la espera del paso 0xE1D3 de la tabla 0xA83F
+C 0xA844 el lanzador se coloca (p03:A857) y su x a los 4 sprites
+C 0xA857 con izquierda o derecha mueve 0xE1E1 entre 0x71 y 0x7F
+C 0xA876 el lanzador y el bateador del ordenador segun quien juega...
+C 0xA88A ...el ordenador lanza (p01:75D5) o batea (p01:777A)
+C 0xA89E el ordenador solo: los dos
+C 0xA8A4 el efecto pedido (0xE1E6): 0 recta, 1 hacia arriba, 2 hacia abajo
+C 0xA8BE la caida: segun el estilo y el efecto, mas 8 al azar, en 0xED37
+C 0xA8CA estilo con el bit 1: 0x6C, 0x12 o 0x29...
+C 0xA8DF ...si no: 0x3F, 0x3F o 4
+C 0xA8EA con el efecto 1, 0xE1E0 = 0
+C 0xA8F5 la x de la pelota en vuelo: el efecto lateral (p03:A943), el mando (p03:A92B)...
+C 0xA903 ...la curva: 0xED70 x (y - 0x64), al reves con el bit 2 de 0xE1EB...
+C 0xA918 ...en 0xE1D8
+C 0xA91C fuera de 0x10-0xEF, sin velocidad x
+C 0xA92B el mando cambia la curva (0xED70) en los cuadros impares
+C 0xA943 la velocidad x mas el efecto lateral
+C 0xA94F el efecto lateral: la direccion fijada (0xE1E9) y cuanto dura (0xED12)...
+C 0xA966 ...la primera direccion que se pulsa
+C 0xA979 izquierda: IX+17 x 2...
+C 0xA98B ...derecha: IX+16 x 2...
+C 0xA993 ...mas 0xED36, por 0xED12 cuadros
+C 0xA9A3 sin efecto lateral, cerca de la caja la altura baja (0xE1E0 cuadros)
+C 0xA9BA la caida vertical: 0xED37 x (y - 0x64)...
+C 0xA9C7 ...con el signo del efecto, mas 0x0C00 o 0x1800, en 0xE1DE
+C 0xA9E8 el bit 0 de 0xE1EB: si hay corredores
+C 0xA9F4 el lanzador: sus datos, p03:AC59, p03:AC6B y su x en 0x78
+C 0xA9FD el lanzador en el centro (0x78)
+C 0xAA02 un lanzamiento nuevo: el lanzador, los corredores, el cansancio (p03:ABAA)...
+C 0xAA0B ...2 pasos, todas las marcas de la jugada a cero...
+C 0xAA4A ...la pelota en la mano, la curva al azar y los sprites
+C 0xAA59 la curva al azar: 0x17-0x26, o 0x26-0x35 con el bit 1 de 0xE1EB...
+C 0xAA6C ...y el efecto 0-3 en 0xED36
+C 0xAA74 los dos lanzadores y el estilo
+C 0xAA7B el del visitante: el primer lanzador (13 en adelante) de su orden...
+C 0xAA87 ...su ficha de 19 bytes (desde 0xD433) en 0xED88...
+C 0xAA8D ...y el del local en 0xED8A
+C 0xAAA0 el primero de 13 en adelante, apuntado en BC
+C 0xAAA9 HL += (n - 13) x 19
+C 0xAAB5 el estilo (0xE1EB): bit 2 si IX+6 = 0x1A (zurdo?)...
+C 0xAAC3 ...bit 1 si IX+7 = 0x12
+C 0xAAD3 IX = el lanzador del equipo que defiende
+C 0xAAE1 la velocidad del lanzamiento: IX+8 >= 3, la minima (0x50)...
+C 0xAAEB ...si no, 0 o 100 (IX+8 >= 2)...
+C 0xAAF6 ...+ 10 x IX+9 - 10...
+C 0xAB06 ...+ IX+10 - 1...
+C 0xAB0D ...minimo 0x50
+C 0xAB15 en 0xE1EF...
+C 0xAB1E ...el lanzamiento elegido la cambia (p03:AB32)...
+C 0xAB22 ...la mitad de lo que pasa de 0x50 en 0xE1F0 (lo que se pinta)...
+C 0xAB28 ...y la velocidad de la pelota (p00:5BCC) en 0xE1D6 y 0xE1EA
+C 0xAB32 segun el mando al soltar: sin arriba-abajo, normal (sonido 3)...
+C 0xAB4B ...hacia abajo: +1/4 de velocidad, sonido 2...
+C 0xAB5D ...hacia arriba: -1/4, sonido 4 y la caida de IX+18
+C 0xAB77 el aguante (IX+14) de los dos lanzadores a 0xED90-0xED93
+C 0xAB94 la copia del aguante...
+C 0xABA5 (HL) = IX+14
+C 0xABAA el cansancio: cada lanzamiento resta 0xE1ED...
+C 0xABB9 ...al acabarse, baja la velocidad (p03:ABE2)...
+C 0xABBF ...y cada tanto pierde un punto de las curvas (IX+16, 17 y 18)
+C 0xABE2 la velocidad baja de 4 a 7 (sin bajar de 0x50)...
+C 0xABFD ...pasando a las decenas (IX+9) y a las centenas (IX+8)
+C 0xAC13 en el minimo: 0, 9, 1
+C 0xAC20 la copia del aguante del equipo que defiende: 0xED93 o 0xED91...
+C 0xAC2C ...0xED92 o 0xED90
+C 0xAC38 cuantas veces ha lanzado contra este bateador: la lista de 0xED64 / 0xED5C...
+C 0xAC42 ...busca al bateador...
+C 0xAC4A ...y copia la cuenta
+C 0xAC4F 0xE1EE = la cuenta y una mas (hasta 0xFF)
+C 0xAC59 HL = el lanzador del que defiende (0xED5A / 0xED58), DE = su lista (0xED64 / 0xED5C)
+C 0xAC6B mete al bateador en la lista si no esta (con la cuenta a 0)
+C 0xAC7C la media entrada nueva: borra las luces si no hubo jugada
+C 0xAC91 0xE1D1-0xE22F a cero, los corredores sin el bit 6...
+C 0xACAB ...y las marcas de la jugada
+C 0xACBA pantalla apagada y, con 0xED9F puesto, todo el campo: dibujos, colores, fondo...
+C 0xACCE ...el desplazamiento a 0, sprites...
+C 0xACD5 ...las bases, los marcadores, el bateador, el lanzador...
+C 0xACF9 ...el marcador grande, el lanzador y el bateador
+C 0xAD06 pantalla encendida
+C 0xAD09 la musica: 0x19 al empezar el partido (0xE1CB), si no 0x1A
+C 0xAD1D los dibujos del campo y el rectangulo
+C 0xAD26 los marcadores de las bases ocupadas: 1.a, 2.a y 3.a
+C 0xAD60 coge la pelota algun defensor? (p03:B087) con la pelota baja...
+C 0xAD74 ...los 9 defensores libres (sin IX+11)...
+C 0xAD81 ...a menos de 10 en y...
+C 0xAD96 ...y en x
+C 0xADB5 la coge: si no va a ninguna base, el dibujo con el guante (p00:51DF)
+C 0xADC3 0xE33C = 1, 0xED2A = 1, el sonido 6 y 0xEDDF = 1
+C 0xADDC si no ha botado ni es foul ni robo...
+C 0xADFD ...cogida al vuelo: el corredor mas adelantado que no esta en su base...
+C 0xAE10 ...el bateador (base 1) siempre...
+C 0xAE27 ...queda fuera
+C 0xAE37 cuenta como bateador (salvo robo)
+C 0xAE46 su ficha a cero, 0xED02 = 1 (cogida al vuelo), el out (p15:B123) y el sonido 0x45
+C 0xAE5D 0xED08 = 1
+C 0xAE66 el que la tiene (0xE220)...
+C 0xAE6E ...el dibujo: baja 0x40 / 8; alta 0x48 / 10 o 0x50 / 9 segun la velocidad x
+C 0xAE95 el receptor, el dibujo de 64 bytes
+C 0xAEA0 tocar base (p03:AF50), p15:B0B7 y la cogida al vuelo (p03:AED0)
+C 0xAEA9 la pelota cogida: estado 3, sin altura ni sombra
+C 0xAEBD HL = |HL - DE| y A = 1 si era negativo
+C 0xAED0 cogida al vuelo con el defensor en una base: los que salieron de ella...
+C 0xAEF3 ...antes de tiempo (la copia de 0xECA3)...
+C 0xAEFE ...o ahora (0xE23C)
+C 0xAF01 los 4 corredores que no estan parados: el de la base C...
+C 0xAF29 ...fuera si no volvio a su base (0xED0D, 0xED82)
+C 0xAF50 el que la coge en una base: la base de IX+13...
+C 0xAF73 ...forzada? (p03:AFF7); si no, nada...
+C 0xAF77 ...p03:B03A (el corredor de esa base): 1, 0xEDD7 = 1
+C 0xAF81 con 2 outs, cuenta como bateador
+C 0xAF8D el corredor de la base 0xE340...
+C 0xAFB0 ...fuera: 0xED0D, 0xED82 y p15:B06E
+C 0xAFBC su ficha a cero y el out
+C 0xAFC8 por cada corredor: forzado (bit 5 de IX+13) si la base de detras esta ocupada
+C 0xAFF7 forzado? las bases ocupadas en 0xE344...
+C 0xAFFF ...0xE341-0xE344 a cero; 0xE340 = la base...
+C 0xB00F ...copia los estados de los 4 corredores...
+C 0xB01D ...y cuenta los que estan antes de esa base
+C 0xB02B carry si no estan todas ocupadas por detras (no forzado)
+C 0xB03A el corredor que va a la base de 0xE340: el mas adelantado por detras...
+C 0xB051 ...en 0xE340
+C 0xB067 carry si nadie de la copia (0xECA3) esta en la base C
+C 0xB06E carry si ningun corredor esta en la base C (con el bit 6)
+C 0xB072 lo mismo sin mirar el bit 6
+C 0xB087 toca algun corredor el que tiene la pelota? su ficha...
+C 0xB09C ...su y y su x a 0xE340-0xE343...
+C 0xB0B1 ...y p01:6F90
+C 0xB0B7 pisa la base con la pelota: el corredor que va a ella...
+C 0xB0E5 ...una sola vez (bit 4)...
+C 0xB0EA ...con cogida al vuelo, solo si sigue fuera de su base...
+C 0xB0F5 ...fuera: 0xED0D, 0xECEC = 1, el texto de p13:7E71 y el sonido 0x12
+C 0xB10C HL = la y de la ficha del que tiene la pelota (0xE273 + 16 x (9 - n))
+C 0xB11F un out sin rotulo...
+C 0xB123 ...o con el (p13:7E69) si no es en el lanzamiento
+C 0xB131 el sonido 0x42 y un out mas
+C 0xB13B con 3, el cambio
+C 0xB13F cogida al vuelo del receptor: el sonido 0x10...
+C 0xB150 ...si no, 0x0D (o 0x0F sin rotulo)
+C 0xB159 el tercer out: 0x10, o 0x0E sin la espera de 0xE30F
+C 0xB166 el fondo entero: 8 tiras de mosaicos...
+C 0xB177 ...cada una de su base (p03:B317) por p00:5B76...
+C 0xB185 ...32 puntos mas abajo cada vez...
+C 0xB18F ...y a la pantalla (p03:B1A5)
+C 0xB1A5 la fuente segun la zona del campo (0xE1A6)
+C 0xB1BD el fondo al desplazarse: cada 8 puntos una tira nueva
+C 0xB1FE la tira en su fila de la pantalla (arriba si se baja, abajo si se sube)
+C 0xB214 una tira de 32 columnas
+C 0xB219 si la fila de mosaicos cambia, la tira nueva (p00:5B76)
+C 0xB232 A = |0xE1C9| (la velocidad del desplazamiento)
+C 0xB23B carry si el desplazamiento ha cruzado una fila de 8 (y va despacio)
+C 0xB24F va deprisa: la tira de la mitad y la del borde
+C 0xB25F HL = la ultima posicion + la mitad de la velocidad
+C 0xB273 la posicion de la tira: la columna en el bufer, la fila de 32...
+C 0xB281 ...y la fila de mosaicos (0xEC41 = 0xE1B2)...
+C 0xB28C ...subiendo, 0x38 filas mas abajo
+C 0xB29C la tira pendiente (p03:B2A3) y los sprites (p03:B440)
+C 0xB2A3 una vez (0xEDCB): la tira de abajo...
+C 0xB2BB ...y en la zona 1, los rotulos fijos del campo segun la fila:
+C 0xB2DA ...el nombre del visitante y sus casillas...
+C 0xB2EB ...el del local y las suyas...
+C 0xB2F6 ...13 caracteres de 0xB30A en la fila 0x18
+C 0xB317 la base de los mosaicos de la zona (0xE1A6): 0 p08:9B28, 1 p08:95B8 (y 0x9A58 desde la fila 0x70), 2 p09:A088
+C 0xB331 0xE1B1 = 1 la primera vez que la pelota cogida pasa de 0x130
+C 0xB349 el margen: 0x40, o 0x1C desde entonces
+C 0xB358 la camara: el borde de la pantalla y la pelota...
+C 0xB36D ...si la pelota sale por arriba (y < 0x188 con la pantalla abajo)...
+C 0xB384 ...la camara la sigue (0xE1B5 = 1)
+C 0xB38E la mitad de la altura de la pelota, hasta 0x70
+C 0xB3A0 hacia donde va la camara (0xE1A5): 1 abajo, 0xFF arriba, 0 quieta
+C 0xB3B6 la y de antes y la de ahora de la pelota (menos la altura)...
+C 0xB3DE el desplazamiento de la camara hacia la pelota...
+C 0xB3F5 ...solo si la pelota esta dentro de los limites del campo...
+C 0xB40E ...y fuera del margen de la pantalla (0xEC4A arriba, 0xEC4C abajo)
+C 0xB42A la velocidad de la camara (0xE1C9)...
+C 0xB438 ...el desplazamiento nuevo y las tiras (p03:B1BD)
+C 0xB440 R#23 = el desplazamiento (WRTVDP)
+C 0xB449 R#23 a 0
+C 0xB44F la vuelta al principio del campo: 128 cuadros (0xE331)...
+C 0xB45E ...en la zona 1, subiendo de 4 en 4 hasta 0
+C 0xB46F el campo entero desde arriba (p03:B47E), los rotulos y pantalla encendida
+C 0xB47B el campo desde 0xE0
+C 0xB47E el desplazamiento, pantalla apagada, R#23 y la zona siguiente...
+C 0xB48E ...los dibujos de p08 (p00:54EF)...
+C 0xB491 ...todo el fondo (p03:B166)...
+C 0xB498 ...los sprites y los dibujos de p07 (p00:51BE)
+C 0xB4A4 el fondo con la pantalla apagada
+C 0xB4AD los rotulos fijos del campo
+C 0xB4C1 el home run, paso 1: los corredores que entran, uno a uno (p01:6974)
+C 0xB4D2 paso 0: los de 2.a y 3.a entran (p03:B508)...
+C 0xB4E6 ...96 cuadros, los corredores a cero...
+C 0xB4F8 ...el bateador y el de 1.a en sus fichas de salida...
+C 0xB503 ...y al paso siguiente
+C 0xB508 una carrera (p01:66EB) y uno mas en 0xED21
+C 0xB510 la ficha de p15:B24F a 0xE241 (con 13-14-15, p00:5DA1)
+C 0xB518 la de p15:B23F a 0xE231
+C 0xB524 los puestos de la defensa: 0xECE7 (y) y 0xECE9 (x)
+C 0xB531 a donde va la pelota: su velocidad / 8 (p03:B5E8)...
+C 0xB538 ...la distancia al defensor y el alcance (p03:B5A3)...
+C 0xB53E ...si llega: 0xE1B8 = 0...
+C 0xB542 ...si no, un paso mas (0xE1B8 = 1) y otro mas lejos (2)
+C 0xB558 el puesto se adelanta con la velocidad (sin bajar de 0)
+C 0xB57B el alcance + 12 / + 9
+C 0xB588 carry si la distancia y o la x pasa del alcance
+C 0xB5A3 el alcance segun la velocidad vertical: 0xE226 x 12 / 256 + 6 y x 8 / 256 + 7
+C 0xB5BE la distancia del defensor IX a su puesto: |y| en 0xE1BD, |x| en 0xE1BB
+C 0xB5E8 la velocidad de la pelota / 16: x en 0xE1BF, y en 0xE1C1
+C 0xB5FB HL / 16 con signo
+C 0xB607 el puesto y: la velocidad y por el tiempo de vuelo (p03:B643) desde 0x184...
+C 0xB616 ...hacia atras sin bajar de 0
+C 0xB629 el puesto x: igual desde 0x138
+C 0xB643 la velocidad / 4 por la velocidad vertical / 4 (el tiempo de vuelo)
+C 0xB670 el menu de modos: pantalla apagada, paleta, un rectangulo...
+C 0xB682 ...la pantalla de p00:57C6 y encendida...
+C 0xB688 ...0xDE0D = 60, 0xDE0E = 0x31, 0xDE0F = 0
+C 0xB694 TEAM EDIT: el paso de 0xE1A1
+C 0xB6A6 paso: el cursor (p03:BB73); con el bit 5 de 0xE1AA, editar (p03:B712)
+C 0xB6B0 al acabar: sin nombre de equipo, el aviso de p13:7C62...
+C 0xB6C1 ...0xE206 ocupado, el de p13:7C33...
+C 0xB6CC ...algun jugador sin nombre, el de p13:7C4B...
+C 0xB6EB ...el aviso y al paso 5
+C 0xB6FA todo bien: sprites fuera, el texto de p13:7B99 y al paso siguiente
+C 0xB712 editar: la letra elegida (p03:B805, p03:B8BD, p03:B76F)...
+C 0xB726 ...en la fila 0: el nombre del equipo (0xD380)...
+C 0xB72C ...en 1-12: el jugador de campo (14 bytes)...
+C 0xB730 ...en 13 o mas: el lanzador (19 bytes desde 0xD433)
+C 0xB765 la letra (0x9F: espacio, 0)
+C 0xB76F la columna (0xE1A3) y la fila (0xE1A2): el nombre, el lado, el puesto, los numeros...
+C 0xB7C6 pinta la letra en el cursor y avanza
+C 0xB7E7 en la ultima columna con el bit de borrar...
+C 0xB7FD ...y la fila 10 con los cinco bits altos: Z
+C 0xB805 el cursor con los cursores (0xDE07), cada 8 cuadros (0xE1B1)
+C 0xB818 izquierda / derecha / abajo / arriba
+C 0xB821 derecha: la columna siguiente hasta el largo de la fila (10, 14 o 19)
+C 0xB837 izquierda: la anterior (de la primera a la ultima)
+C 0xB850 abajo: la fila siguiente (0-16, da la vuelta)
+C 0xB859 arriba: la anterior
+C 0xB861 si la columna no cabe en la fila nueva, la ultima
+C 0xB87B una letra del teclado: sin el bit 0 de 0xE1AC, espacio (0x9F)...
+C 0xB885 ...si no, la tabla de letras 0xBAB3, o 0xBB13 con 0xFCAD...
+C 0xB891 ...la primera tecla pulsada de las filas 0-5 (0xE1A4)...
+C 0xB8A6 ...sin mayusculas (bit 0 de 0xE1AA) la otra mitad de la tabla
+C 0xB8B3 si cambia, 0xE1B0 y 0xE1AF = la letra
+C 0xB8BD las 11 filas del teclado (SNSMAT) a 0xE1A4-0xE1AE
+C 0xB8CC una cifra: la primera tecla pulsada de las filas 0-1 y 9-10 (el teclado numerico)
+C 0xB90A el lado: espacio, 0x10, 0x0F o una de las teclas de 0xE1A7...
+C 0xB93E el brazo: 0x20 o 0x1A segun las teclas de 0xE1A8
+C 0xB951 0x23 o 0x12 segun 0xE1A9 y 0xE1A7
+C 0xB967 paso: los botones recien pulsados; el 1 vuelve a editar...
+C 0xB986 ...si no, 0xD2B0 y 0xDD0C a cero y al paso siguiente
+C 0xB990 al paso siguiente
+C 0xB995 paso: p13:6D0E (MEDIA SELECT) hasta 0xD2B1...
+C 0xB9A1 ...con 1, p03:BDE6 y el texto de p13:7C22
+C 0xB9AA 180 cuadros y al paso siguiente
+C 0xB9B2 la espera y al menu
+C 0xB9BA editar: lee el teclado y, si hay alguna tecla, al paso 1
+C 0xB9DA la pantalla de TEAM EDIT: borrada, p03:BE18...
+C 0xB9ED ...caracteres, el color 0 a 0x22 0x02...
+C 0xB9FD ...el cursor (4 bytes de 0xBAAF)...
+C 0xBA08 ...un equipo nuevo en 0xD380: todo a cero...
+C 0xBA15 ...12 jugadores de campo: lado 0x20 y numeros a 1...
+C 0xBA2F ...con 2 y 6 en los bytes 7 y 8...
+C 0xBA3F ...4 lanzadores: 0x20, 0x23 y numeros a 1...
+C 0xBA5C ...la RAM de la edicion a cero...
+C 0xBA69 ...12 pares 0x50 / 1 en 0xE1B4...
+C 0xBA76 ...0xE206 = 0x0480, las esperas, el teclado y p03:BDC1
+C 0xBA8B el texto de p13:7EC6 y tres lineas, y p14:8654
+C 0xBB73 la tecla RETURN (SNSMAT fila 7, bit 7) baja de fila (una vez por pulsacion)
+C 0xBB85 TAB (bit 3) a cero...
+C 0xBB91 ...si no, RETURN: salta al campo siguiente de la fila...
+C 0xBB9C ...en los de campo: 6, 7, 10, 12...
+C 0xBBBA ...en los lanzadores: 6, 8, 11, 14, 16, 17, 18
+C 0xBBDF la columna nueva y el cursor
+C 0xBBE2 la fila siguiente (0-16) y la columna 0
+C 0xBBF3 el cursor: la y de la fila (0x5FB5)...
+C 0xBBFF ...y la x de la columna: el nombre (0x5FC6), un jugador (0x5FD0) o un lanzador (0x5FDE)
+C 0xBC17 al sprite 0 y el sonido 0x26
+C 0xBC22 el dialogo de guardar el equipo: el paso de 0xD47F
+C 0xBC36 paso 0: con el boton 1 (SI / NO de 0xDD0C)...
+C 0xBC48 ...segun el soporte (0xDD8E): 3, el texto de 0xBE42; 0 sin 0xDDE0, el aviso de p13:7D4E
+C 0xBC62 dos pasos adelante
+C 0xBC8D paso: el boton 1 elige (0xDD8F = 0xDD0C + 1)
+C 0xBCA0 paso: la espera de 0xD481, despues lee (p00:5D86) y copia 6 bytes de 0xD482 a 0xD70A...
+C 0xBCC0 ...p00:5D62 y, con 0xD2B2 = 6, 0xEDE7 = 2
+C 0xBCD9 al paso siguiente del dialogo
+C 0xBCDE cambia SI / NO (0xDD0C)...
+C 0xBCE5 ...y pinta la flecha en la fila 0x4C o 0x58
+C 0xBD04 sin el boton: p00:5D3E y p00:5D47; con el, el equipo elegido (0xD74F)...
+C 0xBD1A ...0xD70A + 6, p00:5D50 y, si 0xDD8F = 1, calla
+C 0xBD32 el texto segun 0xDD8F (p13:7BEA o 0x7C06), SI / NO a cero y al paso 6
+C 0xBD56 graba (p00:5D59): con 0xD2B1 = 2 se acaba con 0xEDE7 = 4...
+C 0xBD60 ...si no, la pantalla de TEAM EDIT otra vez
+C 0xBD7C la espera y fuera del dialogo
+C 0xBD84 el sonido 0x2F y al paso siguiente de TEAM EDIT
+C 0xBD8E con el boton 1: calla, p00:5D8F y el paso de 0xEDE7
+C 0xBDC1 el recuadro del dialogo con el texto de 0xBE24, el paso a 0 y la flecha
+C 0xBDD4 guarda el trozo de pantalla de (0x30, 0x52) en la pagina 1 y pinta el recuadro
+C 0xBDE6 el recuadro: borrado y un marco
+C 0xBDF4 devuelve el trozo de pantalla
+C 0xBE02 borra el recuadro (0x35 x 0x58)
+C 0xBE0D borra la fila de 0x0C (0xC8 x 0)
+C 0xBE18 un rectangulo de color 1 en (0x80, 0x24), 0x30 x 0xB0
+# --- fin de lo escrito a mano ---
 # --- BLOQUES QUE LEE EL CODIGO (seccion que reescribe tools/bloques.py; no editar a mano) ---
 D 0xA000 0xA002 partida_A000  los 2 ultimos bytes de la instruccion de p02:9FFF (11 04 00), que empieza en el banco 2; lo leen p02:9FFF (2 bytes)
 F 0xA000 2
@@ -36,7 +463,6 @@ C 0xA085 apunta a el orden de bateo del visitante (9 numeros de jugador)
 C 0xA08A hl_mas_a: HL = HL + A
 C 0xA091 de_mas_a: DE = DE + A
 C 0xA0C0 apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
-C 0xA0F0 apunta a el orden de bateo del local (9 numeros de jugador)
 C 0xA0FB sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xA127 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xA14B sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
@@ -64,14 +490,11 @@ C 0xA2FF apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][c
 C 0xA312 marco: un marco de lineas: HL la esquina, DE el tamano
 C 0xA31D marco: un marco de lineas: HL la esquina, DE el tamano
 C 0xA323 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0xA336 apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
-C 0xA33F apunta a la ficha del local (255 bytes de p13:731F)
-C 0xA348 apunta a los jugadores del visitante (14 bytes cada uno)
+C 0xA33F apunta a la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 C 0xA357 apunta a los jugadores del visitante (14 bytes cada uno)
 C 0xA35D apunta a los jugadores del local (14 bytes cada uno)
 C 0xA36C apunta a los jugadores del local (14 bytes cada uno)
-C 0xA373 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
-C 0xA399 lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
+C 0xA373 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0xA3A6 lee el equipo del jugador en PENNANT (bit 0)
 C 0xA3C7 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0xA3FB caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
@@ -79,8 +502,6 @@ C 0xA407 siguiente_columna: D += 8; si da la vuelta, E += 8
 C 0xA428 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0xA441 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0xA453 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
-C 0xA463 lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
-C 0xA469 lee los botones recien pulsados del mando 1 / cursores y el byte siguiente (16 bits)
 C 0xA46C lee los botones recien pulsados (segundo mando) y el byte siguiente (16 bits)
 C 0xA483 lee el equipo del jugador en PENNANT (bit 0)
 C 0xA4A5 copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
@@ -92,158 +513,131 @@ C 0xA4E2 rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC
 C 0xA4ED marco: un marco de lineas: HL la esquina, DE el tamano
 C 0xA4F3 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xA516 copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
-C 0xA525 lee la marca de acabado de los pasos (y la x guardada en p01:72D3)
 C 0xA528 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0xA55B apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0xA566 apunta a las carreras del visitante (BCD; 0x99 acaba el partido)
 C 0xA571 apunta a las carreras del visitante por entrada (10 casillas, 12-13 el total)
 C 0xA581 lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
-C 0xA592 apunta a la marca de acabado de los pasos (y la x guardada en p01:72D3)
-C 0xA59C lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0xA5E4 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0xA694 lee los strikes de la cuenta (3 = eliminado)
+C 0xA69B apunta a los eliminados por strikes del visitante (BCD)
 C 0xA69E lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
+C 0xA6C9 lee foul (la jugada se anula y cuenta como strike hasta 2)
 C 0xA6D9 lee los outs de la media entrada
-C 0xA6E4 apunta a el paso de la jugada (p02:9149)
-C 0xA6F6 apunta a las bolas de la cuenta (4 = base por bolas, FOUR BALL)
+C 0xA6E4 apunta a el paso de la jugada (y de TEAM EDIT)
 C 0xA70A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xA713 apunta a los strikes de la cuenta (3 = eliminado)
 C 0xA729 apunta a los strikes de la cuenta (3 = eliminado)
+C 0xA742 guarda el resultado del lanzamiento: 1 strike, 2 bola, 3 pelotazo
+C 0xA754 guarda foul (la jugada se anula y cuenta como strike hasta 2)
+C 0xA757 guarda la jugada anulada (foul)
+C 0xA773 lee el resultado del lanzamiento: 1 strike, 2 bola, 3 pelotazo
 C 0xA77E lee los strikes de la cuenta (3 = eliminado)
-C 0xA789 apunta a la marca de acabado de los pasos (y la x guardada en p01:72D3)
+C 0xA7A0 apunta a el resultado del lanzamiento: 1 strike, 2 bola, 3 pelotazo
+C 0xA7AC apunta a el resultado del lanzamiento: 1 strike, 2 bola, 3 pelotazo
 C 0xA7E9 guarda el paso del lanzador del ordenador
 C 0xA837 hl_mas_a: HL = HL + A
-C 0xA857 lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0xA860 lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
-C 0xA876 lee las marcas del modo: bit 6 un jugador, 5 dos jugadores, 4 PENNANT (contra el ordenador), 3 el ordenador solo
 C 0xA884 lee el equipo del jugador en PENNANT (bit 0)
-C 0xA88A lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0xA894 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0xA90C multiplica: HL = A x E (8 x 8 bits)
-C 0xA92B lee el contador de cuadros del juego (sube uno por cuadro)
 C 0xA930 lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0xA959 lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0xA969 lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0xA99E multiplica: HL = A x E (8 x 8 bits)
 C 0xA9C3 multiplica: HL = A x E (8 x 8 bits)
+C 0xAA17 guarda foul (la jugada se anula y cuenta como strike hasta 2)
+C 0xAA1A guarda la jugada anulada (foul)
+C 0xAA26 guarda el resultado del lanzamiento: 1 strike, 2 bola, 3 pelotazo
 C 0xAA2F guarda el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0xAA32 guarda el paso del bateador del ordenador
-C 0xAA7B apunta a el orden de bateo del visitante (9 numeros de jugador)
-C 0xAA8D apunta a el orden de bateo del local (9 numeros de jugador)
 C 0xAAB2 hl_mas_a: HL = HL + A
 C 0xAAD7 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0xAB3F lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0xAC23 lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0xAC2F lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
 C 0xAC5F lee la media entrada (bit 0: 0 la alta, 1 la baja; 0x11 = la baja de la 9.a)
-C 0xAC92 apunta a la marca de acabado de los pasos (y la x guardada en p01:72D3)
+C 0xAC88 lee la jugada anulada (foul)
+C 0xAC92 apunta a la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
 C 0xACB1 guarda el paso del lanzador del ordenador
-C 0xACBA apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
-C 0xACCF guarda el desplazamiento de la pantalla (16 bits)
+C 0xACCF guarda el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 C 0xACD2 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
-C 0xAD06 enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
 C 0xAD1A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xAD63 lee la ficha de 16 bytes de la pelota
-C 0xAD74 apunta a las 9 fichas de 16 bytes de los defensores
 C 0xAD7B lee las marcas
-C 0xAD81 lee la y de la pelota (vertical) y el byte siguiente (16 bits)
 C 0xAD84 lee la y (vertical)
 C 0xAD87 lee la y, byte alto
-C 0xAD96 lee la x de la pelota y el byte siguiente (16 bits)
 C 0xAD99 lee la x (horizontal)
 C 0xAD9C lee la x, byte alto
 C 0xADBB lee el mando del que defiende o lanza (bits 0-3 direccion, 4 y 5 botones)
 C 0xADD4 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0xADFD apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
+C 0xADE8 lee la jugada anulada (foul)
 C 0xAE09 lee las marcas
 C 0xAE16 mira el bit 6 de las marcas
 C 0xAE31 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
-C 0xAE46 las marcas = 0x00
 C 0xAE4A el numero (bits 0-3) y el estado (bits 4-7) = 0x00
 C 0xAE5A sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xAE6B guarda el defensor que tiene la pelota (1-9; 0 nadie)
 C 0xAE79 apunta a la velocidad x de la pelota
-C 0xAE95 lee el defensor que tiene la pelota (1-9; 0 nadie)
 C 0xAEB8 guarda la ficha de 16 bytes de la pelota
 C 0xAEDC lee el defensor que tiene la pelota (1-9; 0 nadie)
 C 0xAEF0 guarda variable de paso (cada rutina la usa a su manera)
 C 0xAEFB guarda variable de paso (cada rutina la usa a su manera)
-C 0xAF01 apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
-C 0xAF29 lee variable de paso (cada rutina la usa a su manera)
 C 0xAF61 lee el defensor que tiene la pelota (1-9; 0 nadie)
-C 0xAF81 lee los outs de la media entrada
-C 0xAF8D lee variable de paso (cada rutina la usa a su manera)
 C 0xAF92 guarda variable de paso (cada rutina la usa a su manera)
 C 0xAF9A lee variable de paso (cada rutina la usa a su manera)
 C 0xAFA0 lee variable de paso (cada rutina la usa a su manera)
 C 0xAFA9 lee variable de paso (cada rutina la usa a su manera)
 C 0xB02F lee variable de paso (cada rutina la usa a su manera)
-C 0xB03A apunta a variable de paso (cada rutina la usa a su manera)
 C 0xB054 guarda variable de paso (cada rutina la usa a su manera)
-C 0xB087 lee el defensor que tiene la pelota (1-9; 0 nadie)
 C 0xB0A8 guarda variable de paso (cada rutina la usa a su manera) y el byte siguiente (16 bits)
-C 0xB0B7 lee el defensor que tiene la pelota (1-9; 0 nadie)
 C 0xB104 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xB109 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0xB10C lee el defensor que tiene la pelota (1-9; 0 nadie)
-C 0xB125 lee el paso de la jugada (p02:9149)
+C 0xB125 lee el paso de la jugada (y de TEAM EDIT)
 C 0xB12D texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xB133 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xB136 apunta a los outs de la media entrada
 C 0xB145 lee el defensor que tiene la pelota (1-9; 0 nadie)
 C 0xB163 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0xB1C6 lee el desplazamiento de la pantalla (16 bits)
+C 0xB1C6 lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 C 0xB1EE hl_mas_a: HL = HL + A
-C 0xB241 lee el desplazamiento de la pantalla (16 bits)
-C 0xB255 lee el desplazamiento de la pantalla (16 bits)
-C 0xB270 lee el desplazamiento de la pantalla (16 bits)
+C 0xB241 lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+C 0xB255 lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+C 0xB270 lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 C 0xB2B3 hl_mas_a: HL = HL + A
 C 0xB2DD lee la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 C 0xB2E0 apunta a las carreras del visitante por entrada (10 casillas, 12-13 el total)
 C 0xB2E3 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
 C 0xB2E8 texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
-C 0xB2EE lee la ficha del local (255 bytes de p13:731F)
+C 0xB2EE lee la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 C 0xB2F1 apunta a las carreras del local por entrada (10 casillas, 12-13 el total)
 C 0xB33B lee la y de la pelota (vertical) y el byte siguiente (16 bits)
-C 0xB35F lee el desplazamiento de la pantalla (16 bits)
+C 0xB35F lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 C 0xB37C lee la y de la pelota (vertical) y el byte siguiente (16 bits)
 C 0xB3BA lee la y de la pelota (vertical) y el byte siguiente (16 bits)
 C 0xB3C9 lee la y de la pelota (vertical) y el byte siguiente (16 bits)
 C 0xB3E9 lee la y de la pelota (vertical) y el byte siguiente (16 bits)
-C 0xB42F lee el desplazamiento de la pantalla (16 bits)
-C 0xB439 guarda el desplazamiento de la pantalla (16 bits)
-C 0xB440 lee el desplazamiento de la pantalla (16 bits)
-C 0xB44A guarda el desplazamiento de la pantalla (16 bits)
-C 0xB450 guarda la marca de acabado de los pasos (y la x guardada en p01:72D3)
-C 0xB45E apunta a el desplazamiento de la pantalla (16 bits)
-C 0xB46A guarda el desplazamiento de la pantalla (16 bits)
+C 0xB42F lee el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+C 0xB439 guarda el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+C 0xB44A guarda el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+C 0xB450 guarda la marca de acabado de los pasos; en el lanzamiento, su paso (p03:A525)
+C 0xB46A guarda el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 C 0xB478 enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
-C 0xB47E guarda el desplazamiento de la pantalla (16 bits)
 C 0xB484 apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
-C 0xB498 esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
-C 0xB4A4 apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
 C 0xB4AA enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
 C 0xB4C7 lee los corredores que entran con el home run
 C 0xB4D3 guarda los corredores que entran con el home run
 C 0xB4EB apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
 C 0xB50B apunta a los corredores que entran con el home run
 C 0xB51B apunta a las 4 fichas de 16 bytes de los corredores (0xE23C = su estado)
-C 0xB5E8 lee la velocidad x de la pelota y el byte siguiente (16 bits)
 C 0xB5F1 lee la velocidad y de la pelota y el byte siguiente (16 bits)
-C 0xB607 lee la velocidad y de la pelota y el byte siguiente (16 bits)
-C 0xB629 lee la velocidad x de la pelota y el byte siguiente (16 bits)
 C 0xB667 multiplica: HL = A x E (8 x 8 bits)
-C 0xB670 apaga_pantalla: R#1 con el bit 6 (BL) a 0 (WRTVDP)
 C 0xB67F rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0xB685 enciende_pantalla: R#1 con el bit 6 (BL) a 1 (WRTVDP)
-C 0xB694 lee el paso de la jugada (p02:9149)
 C 0xB697 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
 C 0xB6F1 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0xB6F6 guarda el paso de la jugada (p02:9149)
-C 0xB6FA esconde_sprites: escribe 0xD8 (Y = 216: no se pinta ninguno) en la VRAM 0xF600, el primer atributo de sprite
+C 0xB6F6 guarda el paso de la jugada (y de TEAM EDIT)
 C 0xB703 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0xB70D apunta a el paso de la jugada (p02:9149)
-C 0xB726 lee el desplazamiento de la pantalla (16 bits)
+C 0xB70D apunta a el paso de la jugada (y de TEAM EDIT)
 C 0xB742 hl_mas_a: HL = HL + A
 C 0xB74A apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
 C 0xB74D hl_mas_a: HL = HL + A
@@ -251,54 +645,41 @@ C 0xB75F apunta a los jugadores del visitante (14 bytes cada uno)
 C 0xB762 hl_mas_a: HL = HL + A
 C 0xB7CD lee los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color]) y el byte siguiente (16 bits)
 C 0xB7D5 caracter: pinta el caracter A de la fuente en la posicion DE (orden HMMM de 8x8)
-C 0xB7DA apunta a el desplazamiento de la pantalla (16 bits)
-C 0xB805 lee los botones pulsados del mando 1 / cursores
-C 0xB812 apunta a el desplazamiento de la pantalla (16 bits)
+C 0xB7DA apunta a el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+C 0xB812 apunta a el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 C 0xB8AF hl_mas_a: HL = HL + A
-C 0xB967 lee los botones recien pulsados del mando 1 / cursores
-C 0xB982 guarda el paso de la jugada (p02:9149)
-C 0xB990 apunta a el paso de la jugada (p02:9149)
+C 0xB982 guarda el paso de la jugada (y de TEAM EDIT)
 C 0xB9A7 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0xB9D4 guarda el paso de la jugada (p02:9149)
-C 0xB9DA borra_pantalla: esconde los sprites, apaga la pantalla, rellena la VRAM de 0, R#23 = 0 y la enciende
-C 0xB9E7 guarda el desplazamiento de la pantalla (16 bits)
+C 0xB9D4 guarda el paso de la jugada (y de TEAM EDIT)
+C 0xB9E7 guarda el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 C 0xB9EA esconde_atributos: pone las 32 fichas de sprite de 0xE100 fuera de la pantalla
 C 0xB9F7 pon_color: el color A de la paleta a D (rojo-azul) y E (verde), por R#16, y su copia en 0xDDC0 + 2 x A
 C 0xBA00 apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 C 0xBA0B apunta a la ficha del visitante (255 bytes de p13:731F: nombre de 11 letras y jugadores)
-C 0xBA5C apunta a el desplazamiento de la pantalla (16 bits)
-C 0xBA5F apunta a el paso de la jugada (p02:9149)
+C 0xBA5F apunta a el paso de la jugada (y de TEAM EDIT)
 C 0xBA8E texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
 C 0xBA97 linea: orden LINE (0x70) del VDP desde HL
 C 0xBAA0 linea: orden LINE (0x70) del VDP desde HL
 C 0xBAA9 linea: orden LINE (0x70) del VDP desde HL
-C 0xBB96 apunta a el desplazamiento de la pantalla (16 bits)
-C 0xBBE4 apunta a el desplazamiento de la pantalla (16 bits)
-C 0xBBF3 lee el desplazamiento de la pantalla (16 bits)
+C 0xBB96 apunta a el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
+C 0xBBE4 apunta a el desplazamiento de la pantalla, 16 bits (en TEAM EDIT, la fila elegida)
 C 0xBBFA de_mas_a: DE = DE + A
 C 0xBC13 hl_mas_a: HL = HL + A
-C 0xBC17 apunta a los atributos de sprite (32 fichas de 4 bytes [y][x][dibujo][color])
 C 0xBC1F sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0xBC22 lee la ficha del local (255 bytes de p13:731F)
 C 0xBC25 despacha: salta a la palabra A de la tabla que va pegada detras del `call`
-C 0xBC36 lee los botones recien pulsados del mando 1 / cursores
 C 0xBC7F texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0xBC89 guarda la ficha del local (255 bytes de p13:731F)
-C 0xBC8D lee los botones recien pulsados del mando 1 / cursores
-C 0xBCD9 apunta a la ficha del local (255 bytes de p13:731F)
+C 0xBC89 guarda la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 C 0xBCED rellena: orden HMMV (0xC0) del VDP: rellena el rectangulo HL (x, y), BC de tamano, con el color A'
 C 0xBD01 texto_en_de: pinta el texto HL en la posicion DE (sin [x y] delante)
-C 0xBD04 lee los botones recien pulsados del mando 1 / cursores
 C 0xBD2D sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
 C 0xBD41 texto: pinta el texto HL ([x y] y caracteres hasta 0xFF) con los bancos 13-14-15 y devuelve el reparto
-C 0xBD4D guarda la ficha del local (255 bytes de p13:731F)
-C 0xBD78 guarda la ficha del local (255 bytes de p13:731F)
+C 0xBD4D guarda la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
+C 0xBD78 guarda la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 C 0xBD86 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0xBD89 apunta a el paso de la jugada (p02:9149)
-C 0xBD8E lee los botones recien pulsados del mando 1 / cursores
+C 0xBD89 apunta a el paso de la jugada (y de TEAM EDIT)
 C 0xBDA1 sonido: pide el sonido A al motor (p04:6003) con los bancos 4-5-6 y vuelve al reparto de antes
-C 0xBDAA guarda la ficha del local (255 bytes de p13:731F)
-C 0xBDCB guarda la ficha del local (255 bytes de p13:731F)
+C 0xBDAA guarda la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
+C 0xBDCB guarda la ficha del local (255 bytes de p13:731F; en TEAM EDIT, el paso del dialogo de guardar)
 C 0xBDDF copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
 C 0xBDF1 marco: un marco de lineas: HL la esquina, DE el tamano
 C 0xBDFF copia_rectangulo: orden HMMM (0xD0) del VDP: copia el rectangulo HL (x, y) a DE, BC de tamano; las paginas en A'
