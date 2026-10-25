@@ -37,3 +37,30 @@ comment minimum. Every bank with code is over 40%.
   (the free tone) and diverts the engine start-up after the first time.
 - `tools/textos.py`, `tools/equipos.py` and `tools/fuente.py` take out the
   texts, the teams and the font.
+
+## Code shared with other Konami cartridges
+
+This disassembly has been compared, instruction by instruction, with
+every other Konami one in the series. A block counts when the same
+instructions, at least six of them from a label to its `ret` or its
+unconditional jump, are in both cartridges; the addresses are left
+aside, because they change from one cartridge to the next. Of the
+other 57, **46** have at least one block in common with this one;
+these are the ones that share the most:
+
+| Cartridge | Blocks | Instructions | For example (here = there) |
+|---|---:|---:|---|
+| [Gekitotsu Pennant Race 2](https://antxiko.github.io/PennantRace2-disassembly/) | 119 | 1,758 | `dibujos` (p00:4FA3) |
+| [King's Valley II](https://antxiko.github.io/KingsValley2-disassembly/) | 85 | 1,378 | `rachas_con_destino` (p00:4B2D) |
+| [Parodius](https://antxiko.github.io/Parodius-disassembly/) | 71 | 1,189 | `sonido` (p00:57FF) = `pide_sonido` |
+| [Salamander - Operation X](https://antxiko.github.io/Salamander-disassembly/) | 70 | 1,140 | `sonido` (p00:57FF) = `pide_sonido` |
+| [Nemesis 3 - The Eve of Destruction](https://antxiko.github.io/Nemesis3-disassembly/) | 61 | 973 | `cartucho_en_pagina_2` (p00:43EC) = `cartucho_en_8000` |
+| [Konami’s Game Master 2](https://antxiko.github.io/GameMaster2-disassembly/) | 59 | 976 | `rectangulo_desde_ram` (p00:4DAA) = `vdp_hmmc` |
+| [Contra](https://antxiko.github.io/Contra-disassembly/) | 56 | 1,007 | `nota_empieza` (p06:B6AF) |
+| [Hai no Majutsushi - Mahjong 2](https://antxiko.github.io/Majutsushi-disassembly/) | 52 | 581 | `cartucho_en_pagina_2` (p00:43EC) = `cartucho_en_8000` |
+| [Shalom: Knightmare III](https://antxiko.github.io/Shalom-disassembly/) | 43 | 539 | `cartucho_en_pagina_2` (p00:43EC) = `cartucho_en_8000` |
+| [F-1 Spirit — The Way to Formula 1](https://antxiko.github.io/F1Spirit-disassembly/) | 41 | 704 | `canal_ocupa` (p06:B305) = `SONIDO_CANAL` |
+
+The whole matrix, the 58 cartridges against each other, is on
+[The routines](https://antxiko.github.io/MSX-disassembly-database/THE-ROUTINES.html) in the series database, along
+with the method and the program that measures it.
