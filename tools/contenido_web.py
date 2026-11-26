@@ -99,75 +99,6 @@ PORTADA = {
 LEIDO = {"es": "<p>Le&iacute;do en el c&oacute;digo.</p>", "en": "<p>Read in the code.</p>"}
 COTEJADO = {"es": "<p>Cotejado con openMSX.</p>", "en": "<p>Checked against openMSX.</p>"}
 
-HALLAZGOS = {
-    "es": [
-        ("Graba en la SRAM del Game Master 2",
-         "<p>Adem&aacute;s de en disco, TEAM EDIT y PENNANT graban en el Game "
-         "Master 2 de Konami: lo busca por la marca <code>YZ</code> de "
-         "<code>0x4010</code>, pone su banco 4 en <code>0x8000</code> y llama "
-         "a su rutina de la SRAM con la orden en C (<code>p13:709A</code>, "
-         "<code>p13:721D</code>). En el desensamblado del Game Master 2 esa "
-         "rutina es <code>p04:8000</code>, la puerta de su sistema de "
-         "ficheros.</p>" + LEIDO["es"]),
-        ("La velocidad, en km/h y de verdad",
-         "<p>Las tres cifras SPD de la ficha del lanzador dan la velocidad de "
-         "la pelota: de 80 a 199 km/h (<code>p03:AAE1</code>). Pulsando abajo "
-         "al soltar va un cuarto m&aacute;s r&aacute;pida y arriba un cuarto "
-         "m&aacute;s lenta; con el aguante agotado pierde de 4 a 7 km/h "
-         "(<code>p03:ABAA</code>).</p>" + LEIDO["es"]),
-        ("La regla de las diez carreras",
-         "<p>Tras cualquier baja, diez carreras de diferencia acaban el partido "
-         "(<code>p02:9424</code>). Desde la novena manda la regla de siempre: "
-         "se acaba si el local va por delante o si no hay empate al cerrar la "
-         "entrada (<code>p02:9428</code>).</p>" + LEIDO["es"]),
-        ("PENNANT echa a suertes lo que no juegas",
-         "<p>Con un solo jugador, los otros dos partidos de la jornada no se "
-         "juegan: cada equipo saca de 0 a 15 carreras al azar y, si empatan, "
-         "uno de los dos se lleva una m&aacute;s (<code>p15:AC31</code>).</p>"
-         + LEIDO["es"]),
-        ("El home run son dos m&uacute;sicas a la vez",
-         "<p>El juego pide la 0x2C, que va en el PSG y en un canal del SCC, y "
-         "justo detr&aacute;s la 0x3F, que toca los otros tres canales del SCC "
-         "(<code>p02:9357</code>).</p>" + COTEJADO["es"]),
-        ("La m&uacute;sica sigue a los corredores",
-         "<p>Mientras se batea, el fondo depende de la base m&aacute;s adelantada "
-         "que est&eacute; ocupada y de qui&eacute;n batea: cuatro temas para el "
-         "visitante y cuatro para el local (<code>p00:5E74</code>).</p>"
-         + COTEJADO["es"]),
-    ],
-    "en": [
-        ("It saves to the Game Master 2's SRAM",
-         "<p>Besides disk, TEAM EDIT and PENNANT save to Konami's Game Master "
-         "2: it finds it by the <code>YZ</code> mark at <code>0x4010</code>, "
-         "puts its bank 4 at <code>0x8000</code> and calls its SRAM routine "
-         "with the command in C (<code>p13:709A</code>, <code>p13:721D</code>). "
-         "In the Game Master 2 disassembly that routine is "
-         "<code>p04:8000</code>, the door to its file system.</p>" + LEIDO["en"]),
-        ("The speed, in real km/h",
-         "<p>The three SPD digits on the pitcher's card give the speed of the "
-         "ball: 80 to 199 km/h (<code>p03:AAE1</code>). Pressing down on "
-         "release makes it a quarter faster and up a quarter slower; with no "
-         "stamina left it loses 4 to 7 km/h (<code>p03:ABAA</code>).</p>"
-         + LEIDO["en"]),
-        ("The ten-run rule",
-         "<p>After any bottom half, a ten-run lead ends the game "
-         "(<code>p02:9424</code>). From the ninth on the usual rule applies: it "
-         "ends if the home team is ahead or if the score is not tied when the "
-         "inning closes (<code>p02:9428</code>).</p>" + LEIDO["en"]),
-        ("PENNANT draws lots for the games you do not play",
-         "<p>With a single player the other two games of the round are not "
-         "played: each team gets 0 to 15 runs at random and, on a tie, one of "
-         "the two gets one more (<code>p15:AC31</code>).</p>" + LEIDO["en"]),
-        ("The home run is two tunes at once",
-         "<p>The game asks for 0x2C, on the PSG and one SCC channel, and right "
-         "after for 0x3F, which plays the other three SCC channels "
-         "(<code>p02:9357</code>).</p>" + COTEJADO["en"]),
-        ("The music follows the runners",
-         "<p>While a team bats, the background tune depends on the furthest "
-         "occupied base and on who is batting: four tunes for the visitors and "
-         "four for the home team (<code>p00:5E74</code>).</p>" + COTEJADO["en"]),
-    ],
-}
 
 LOGOTIPO = "rotulo.png"
 GALERIA = [
@@ -226,3 +157,49 @@ GALERIA = [
      "The sprite patterns of a game (<code>p00:537C</code>, "
      "<code>p00:539D</code>, <code>p00:53CC</code>)."),
 ]
+ESTILO = '\n:root{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;--linea:#23262e;\n  --rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}\n@media (prefers-color-scheme:light){:root{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;\n  --panel:#f7f6f2;--linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}}\n:root[data-theme="dark"]{--tinta:#cfd0d4;--suave:#83868f;--fondo:#000;--panel:#0c0e13;\n  --linea:#23262e;--rojo:#ff897d;--cyan:#65dbef;--verde:#3eb849;--oro:#ded087}\n:root[data-theme="light"]{--tinta:#191a1e;--suave:#5a5d66;--fondo:#e9e7e1;--panel:#f7f6f2;\n  --linea:#d0cdc5;--rojo:#b23f34;--cyan:#1c6b7c;--verde:#2b7734;--oro:#8a7420}\n*{box-sizing:border-box}\nbody{margin:0;background:var(--fondo);color:var(--tinta);padding:0 1.25rem 6rem;\n  font:15px/1.7 ui-monospace,"SF Mono",Menlo,Consolas,monospace}\n.w{max-width:1120px;margin:0 auto}\n.n{max-width:68ch}\nh1,h2,h3,h4{font-weight:400;text-wrap:balance}\na{color:var(--cyan)}\nimg{image-rendering:pixelated;max-width:100%;height:auto;display:block}\nheader.top{display:flex;flex-direction:column;align-items:center;gap:1.5rem;\n  padding:4rem 0 2rem;text-align:center}\nheader.top img{width:min(100%,642px)}\n.claim{max-width:60ch;color:var(--suave);font-size:1.05rem}\n.claim b{color:var(--tinta);font-weight:400}\n.ficha{display:flex;flex-wrap:wrap;justify-content:center;gap:0 1.5rem;width:100%;\n  font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--suave);\n  border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);padding:.85rem 0}\n.ficha b{color:var(--rojo);font-weight:400}\nnav{display:flex;flex-wrap:wrap;gap:1.25rem;justify-content:center;padding:1.25rem 0;\n  font-size:12px;letter-spacing:.08em;text-transform:uppercase}\nnav a{color:var(--suave);text-decoration:none;border-bottom:1px solid transparent}\nnav a:hover,nav a:focus{color:var(--tinta);border-bottom-color:var(--rojo)}\nnav.docs{border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);\n  margin-bottom:1rem}\nsection{margin-top:4.5rem;scroll-margin-top:1rem}\nsection>h2{font-size:1rem;letter-spacing:.1em;text-transform:uppercase;\n  border-left:3px solid var(--rojo);padding-left:.9rem;margin:0 0 1.5rem}\n.cifras{display:grid;gap:1px;background:var(--linea);border:1px solid var(--linea);\n  grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}\n.cifra{background:var(--panel);padding:1.1rem}\n.cifra b{display:block;font-size:1.7rem;color:var(--oro);font-weight:400;\n  font-variant-numeric:tabular-nums;line-height:1.2}\n.cifra span{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--suave)}\n.hall{border-top:1px solid var(--linea);padding-top:1.75rem;margin-top:2.5rem}\n.hall:first-of-type{border-top:0;padding-top:0;margin-top:0}\n.hall h3{margin:0 0 .75rem;font-size:1.15rem;color:var(--rojo)}\n.hall h4{color:var(--oro);margin:1.5rem 0 .5rem;font-size:.95rem}\n.hall p{margin:0 0 1rem}\npre.asm{background:var(--panel);border-left:2px solid var(--verde);margin:1.25rem 0;\n  padding:1rem 1.1rem;overflow-x:auto;font-size:13px;line-height:1.6;color:var(--tinta)}\n.par{display:grid;gap:1.25rem;grid-template-columns:1fr}\n@media(min-width:820px){.par{grid-template-columns:1fr 1fr}}\n.par figure{margin:0}\ntable{border-collapse:collapse;width:100%;margin:1.25rem 0;font-size:13px;display:block;\n  overflow-x:auto}\nth,td{text-align:left;padding:.5rem .75rem;border-bottom:1px solid var(--linea)}\nth{color:var(--suave);font-weight:400;font-size:11px;letter-spacing:.07em;text-transform:uppercase}\ntd.num{font-variant-numeric:tabular-nums;color:var(--oro)}\n.nivel{margin-top:2rem}\n.nivel h3{margin:0 0 .9rem;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase}\n.nivel em{color:var(--cyan);font-style:normal}\n.sep{color:var(--suave);margin:0 .6rem}\n.rejilla{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}\n.rejilla figure{margin:0;background:var(--panel);box-shadow:0 0 0 1px var(--linea)}\n.rejilla figcaption{display:flex;justify-content:space-between;padding:.45rem .65rem;\n  font-size:11px;color:var(--suave);border-top:1px solid var(--linea)}\n.dir{font-variant-numeric:tabular-nums;color:var(--verde)}\nfooter{margin-top:5rem;padding-top:1.5rem;border-top:1px solid var(--linea);\n  color:var(--suave);font-size:12px}\n\n/* Aviso de trabajo en curso: tiene que verse antes que las cifras, porque un\n   100% mal leido hace mas dano que no ponerlo. */\n.aviso{background:#3a2a10;border-left:3px solid var(--oro);margin:1.5rem auto;\n  padding:1rem 1.2rem;max-width:900px;border-radius:4px}\n.aviso p{margin:0;color:var(--tinta);font-size:15px;line-height:1.65}\n.galeria{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));\n  gap:1.5rem;margin:1.5rem 0}\n.galeria figure{margin:0}\n.galeria img{width:100%;height:auto;image-rendering:pixelated;\n  border:1px solid var(--linea);border-radius:3px}\n.galeria figcaption{color:var(--suave);font-size:13px;margin-top:.5rem}\naudio{display:block;width:100%;max-width:640px;margin:.75rem 0 1.5rem}\n'
+
+EDITOR = 'Konami'
+
+# La portada: las cifras y el pie tal como estaban
+for _i, _c in {'es': ([('100 %', 'del binario explicado'), ('2.933', 'rutinas comentadas, ninguna floja'), ('43,7 %', 'del listado comentado'), ('50.191', 'bytes de código'), ('80.881', 'bytes de datos'), ('0', 'bytes sin identificar')], 'El cartucho en cifras', 'Esto es trabajo de documentación y preservación: el código y los gráficos siguen siendo de sus autores y de Konami, y la imagen del cartucho no se distribuye.'), 'en': ([('100%', 'of the binary explained'), ('2,933', 'commented routines, none thin'), ('43.7%', 'of the listing commented'), ('50,191', 'bytes of code'), ('80,881', 'bytes of data'), ('0', 'bytes unidentified')], 'The cartridge in numbers', 'This is documentation and preservation work: the code and artwork still belong to their authors and to Konami, and the cartridge image is not distributed.')}.items():
+    PORTADA[_i]["cifras"] = _c[0]
+    PORTADA[_i]["h_num"] = _c[1]
+    PORTADA[_i]["pie_leg"] = _c[2]
+
+PAGINAS = [
+    [('THE-GAME.html', 'EL-JUEGO.html', 'The game', 'El juego',
+      'what the game is and how it plays',
+      'qu&eacute; es el juego y c&oacute;mo se juega'),
+     ('THE-SCREENS.html', 'LAS-PANTALLAS.html', 'The screens', 'Las pantallas',
+      'all of them are drawn with our own code',
+      'todas est&#225;n dibujadas con c&#243;digo propio'),
+     ('THE-TEXTS.html', 'LOS-TEXTOS.html', 'The texts', 'Los textos',
+      '100 texts taken from the ROM with tools/textos.py',
+      '100 textos sacados de la ROM con tools/textos.py'),
+     ('THE-PICTURES.html', 'LAS-IMAGENES.html', 'What the cartridge draws', 'Lo que el cartucho dibuja',
+      'every picture drawn from the ROM, with its caption',
+      'todas las im&aacute;genes dibujadas desde la ROM, con su pie'),
+     ('THE-MUSIC.html', 'LA-MUSICA.html', 'The music', 'La m&#250;sica',
+      'the tunes, from its own sound engine',
+      'las m&uacute;sicas, de su propio motor de sonido')],
+    [('CURIOSITIES.html', 'CURIOSIDADES.html', 'Curiosities', 'Curiosidades',
+      'what turned up when taking it apart, and what is still open',
+      'lo que apareci&oacute; al desmontarlo y lo que queda abierto')],
+    [('UNDER-THE-HOOD.html', 'POR-DENTRO.html', 'Under the hood', 'Por dentro',
+      'getting started, the cartridge and the code',
+      'empezar, el cartucho y el c&oacute;digo')],
+]
+
+VIEJAS = {
+    'FINDINGS.html': 'CURIOSITIES.html',
+    'HALLAZGOS.html': 'CURIOSIDADES.html',
+    'GETTING-STARTED.html': 'UNDER-THE-HOOD.html',
+    'EMPEZAR.html': 'POR-DENTRO.html',
+    'OPEN-QUESTIONS.html': 'CURIOSITIES.html',
+    'PREGUNTAS-ABIERTAS.html': 'CURIOSIDADES.html',
+    'THE-CARTRIDGE.html': 'UNDER-THE-HOOD.html',
+    'EL-CARTUCHO.html': 'POR-DENTRO.html',
+    'THE-CODE.html': 'UNDER-THE-HOOD.html',
+    'EL-CODIGO.html': 'POR-DENTRO.html',
+}

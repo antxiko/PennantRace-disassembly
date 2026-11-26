@@ -237,7 +237,7 @@ alternates the legs.
 ![The field poses](imagenes/campo_posturas.png)
 
 All the poses: fielders (and crouching, 0x40), runners and their slides (0xE0
-+ 8 per base, `p02:8C74`), the catcher's 14 (`p00:5716`, `p11:8759`) and the
+\+ 8 per base, `p02:8C74`), the catcher's 14 (`p00:5716`, `p11:8759`) and the
 5 of whoever holds the ball (`p00:572E`, `p11:8499`). The patterns are the
 game's (`p00:537C`, `p00:539D`, `p00:53CC`), **checked: identical** in the
 field dumps except those the game changes on the fly.
